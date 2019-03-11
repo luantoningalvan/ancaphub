@@ -1,18 +1,20 @@
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require('path');
 const devMode = process.env.NODE_ENV !== 'production'
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output:{
-    path: path.resolve(__dirname, 'public'),
-    filename: 'app.js'
+    path: __dirname + '/public',
+    filename: './app.js',
+    publicPath: '/'
   },
   devServer:{
     port:8080,
-    contentBase: './public'
+    contentBase: './public',
+    historyApiFallback: true,
   },
   resolve:{
     extensions: ['*', '.js', '.jsx'],
@@ -23,6 +25,9 @@ module.exports = {
   plugins:[
     new MiniCssExtractPlugin({
       filename: "style.css",
+    }),
+    new HtmlWebpackPlugin({
+      template: 'public/index.html'
     })
   ],
   module:{

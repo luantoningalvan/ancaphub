@@ -2,16 +2,20 @@ import React from 'react'
 import Header from './header'
 
 /* CSS FILES */
-import 'materialize-css/dist/css/materialize.min.css'
 import '../assets/css/common.css'
+import 'bulma/css/bulma.min.css'
 
 /* JS FILES */
-import 'materialize-css/dist/js/materialize.min.js'
 import '../assets/js/script.js'
+
+import MaterialIcon from 'material-icons-react';
 
 export default props => (
   <div>
     <Header />
+    <main>
+      {props.children}
+    </main>
   </div>
 )
 

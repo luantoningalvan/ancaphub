@@ -3,7 +3,6 @@ import Template from './template/template'
 
 export default props => (
   <Template>
-    <h1>Home</h1>
+    <h1>Artigos</h1>
   </Template>
 )
-
