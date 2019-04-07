@@ -10,6 +10,7 @@ Estão sendo utilizados no projeto
 - MongoDB
 - React
 - React Native
+- Materialize
 
 ## Como Rodar
 Basta fazer um clone do repositório, entrar em todas as pastas na raíz(cada uma correspondente a uma aplicação diferente) e instalar as respectivas dependências.
