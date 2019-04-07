@@ -28,6 +28,8 @@ export default class Tempalte extends Component {
         var instances = M.Dropdown.init(elems, {
             coverTrigger: false
         });
+
+        M.updateTextFields();
     }
 
     render(){

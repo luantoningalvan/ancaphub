@@ -18,10 +18,10 @@ export default props => (
                             </a>
 
                             <ul id="account-menu" className="dropdown-content">
-                                <li><a href="#!">one</a></li>
-                                <li><a href="#!">two</a></li>
+                                <li><a href="#!">Ver Perfil</a></li>
+                                <li><a href="#!">Configurações</a></li>
                                 <li className="divider"></li>
-                                <li><a href="#!">three</a></li>
+                                <li><a href="#!">Sair</a></li>
                             </ul>
                         </li>
 

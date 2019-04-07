@@ -47,3 +47,14 @@ header, main, footer {
 footer{
     padding:15px 0px;
 }
+
+.hero{
+    background: #e4e4e4;
+    height: 4rem;
+    padding: 1.4rem 0rem;
+    line-height: 100%
+}
+
+.hero .row{margin:0px auto}
+
+.hero h2{font-size: 1.2rem;font-weight: bold;margin: 0px;line-height: 100%}

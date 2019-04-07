@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import Template from '../template/template'
-import Container from '../layout/container'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getBookList } from './booksAction'
+
+import Template from '../template/template'
+import Hero from '../template/hero'
+import Container from '../layout/container'
+import Row from '../layout/row'
+import Grid from '../layout/grid'
 
 class App extends Component{
 
@@ -27,21 +31,25 @@ class App extends Component{
     render(){
         return(
             <Template>
+                <Hero title="Livros" />
                 <Container>
-                
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <td>Titulo</td>
-                            <td>Autor</td>
-                            <td>Ações</td>
-                        </tr>
-                    </thead>
+                    <Row>
+                        <Grid col="12">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <td>Titulo</td>
+                                        <td>Autor</td>
+                                        <td>Ações</td>
+                                    </tr>
+                                </thead>
 
-                    <tbody>
-                        {this.renderRows()}
-                    </tbody>
-                </table>
+                                <tbody>
+                                    {this.renderRows()}
+                                </tbody>
+                            </table>
+                        </Grid>
+                    </Row>
                 </Container>
             </Template>
         )
