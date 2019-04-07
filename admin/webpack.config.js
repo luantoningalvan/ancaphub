@@ -8,8 +8,8 @@ module.exports = {
   entry: './src/index.js',
   output:{
     path: __dirname + '/public',
-    filename: './app.js',
-    publicPath: '/'
+    filename: './bundle.js',
+    publicPath: '/',
   },
   devServer:{
     port:8080,

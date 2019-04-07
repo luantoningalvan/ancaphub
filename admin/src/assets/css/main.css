@@ -1,0 +1,49 @@
+body{
+    background-color: #f3f3f3
+}
+
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (min-width: 601px){
+    .container {
+        width: 95%;
+    }
+}
+
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+.sidenav li>a {
+    padding: 0 16px;
+}
+
+.sidenav .row{margin:0px;}
+
+.sidenav-header{
+    height: 64px;
+    color: white;
+    display: flex;
+    padding: 0 16px;
+    align-items: center;
+    border-right: 1px solid #424242 
+}
+
+.profile-image{height: 36px; position: relative; top: 14px;margin-right: 10px;}
+
+.sidenav-header h1{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    line-height: 64px;
+    margin: 0px;
+}
+
+footer{
+    padding:15px 0px;
+}
