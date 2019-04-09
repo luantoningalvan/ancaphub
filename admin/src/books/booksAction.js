@@ -9,3 +9,11 @@ export function getBookList(){
         payload: request
     }
 }
+
+export function create(values){
+    console.log(values)
+    return {
+        type: 'BOOK_ADDED',
+        payload: 'Teste'
+    }
+}

@@ -58,3 +58,8 @@ footer{
 .hero .row{margin:0px auto}
 
 .hero h2{font-size: 1.2rem;font-weight: bold;margin: 0px;line-height: 100%}
+
+main h3{font-size:1.5em; color:rgb(94, 94, 94); padding-bottom: 15px; border-bottom:1px solid #ccc; margin-bottom: 20px}
+.buy_links .card, .download_options .card{padding:10px;}
+.buy_links .row, .download_options .row{margin:0px}
+.buy_links .btn-form-array-control, .download_options .btn-form-array-control{margin:25px 5px;}

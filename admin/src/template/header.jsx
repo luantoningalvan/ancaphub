@@ -3,7 +3,8 @@ import { loadImage } from '../helpers/loadImage'
 
 export default props => (
     <header>
-        <nav className="grey darken-4 z-depth-0">
+        
+        <nav className="grey darken-4 z-depth-0 ">
             <div className="container">
                 <div className="nav-wrapper">
                     <a href="#!" className="brand-logo hide-on-large-only">AncapHub</a>
