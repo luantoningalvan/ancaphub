@@ -1,57 +1,58 @@
 import React, { Component } from 'react'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getBookList } from './booksAction'
 
 import Template from '../template/template'
 import Hero from '../template/hero'
-import Container from '../layout/container'
-import Row from '../layout/row'
-import Grid from '../layout/grid'
+import Container from '@material-ui/core/Container';
 
 class App extends Component{
 
     componentWillMount(){
-        const test = this.props.getBookList()
-        console.log(test)
+        this.props.getBookList()
     }
 
     renderRows(){
         const list = this.props.book.list || []
         return list.map(bc => (
-            <tr key={bc._id}>
-                <th>{bc.title}</th>
-                <th>{bc.author}</th>
-                <th className="table-actions">
-                </th>
-            </tr>
+            <TableRow key={bc._id}>
+                <TableCell>{bc.title}</TableCell>
+                <TableCell>{bc.author}</TableCell>                
+                <TableCell></TableCell>
+            </TableRow>
         ))
     }
 
     render(){
         return(
-            <Template>
-                <Hero title="Livros" />
-                <Container>
-                    <Row>
-                        <Grid col="12">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <td>Titulo</td>
-                                        <td>Autor</td>
-                                        <td>Ações</td>
-                                    </tr>
-                                </thead>
+        <Template>
+            <Hero title="Livros" />
 
-                                <tbody>
-                                    {this.renderRows()}
-                                </tbody>
-                            </table>
-                        </Grid>
-                    </Row>
-                </Container>
-            </Template>
+            <Container>
+                <Paper>
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Titulo</TableCell>
+                            <TableCell>Autor</TableCell>
+                            <TableCell>Ações</TableCell>
+                        </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                        {this.renderRows()}
+                    </TableBody>
+                    </Table>
+                </Paper>
+            </Container>
+        </Template>
         )
     }
 }

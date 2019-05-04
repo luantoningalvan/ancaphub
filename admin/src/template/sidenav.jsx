@@ -1,18 +1,43 @@
 import React from 'react'
-import MenuItem from './menuItem'
-import MenuTree from './menuTree'
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import MenuItem from '../template/menuItem'
+import MenuTree from '../template/menuTree'
+const drawerWidth = 240;
 
-export default props => (
-    <aside>
-        <ul id="slide-out" className="sidenav sidenav-fixed z-depth-0">
-            <li className="sidenav-header grey darken-4">
-                <h1>Ancap<span style={{color: 'yellow'}}>Hub</span></h1>
-            </li>
-            <MenuItem link="/" icon="dashboard" label="Dashboard" />
-            <MenuTree icon="library_books" label="Livros">
-                <MenuItem link="/books" label="Ver Livros" icon="list" />
-                <MenuItem link="/books/add" label="Adicionar Livro" icon="add" />
-            </MenuTree>
-        </ul>
-    </aside>
-)
+const useStyles = makeStyles(theme => ({
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    toolbar: theme.mixins.toolbar,
+}));
+
+export default props => {
+    const classes = useStyles();
+    
+    return(
+        <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="left"
+            open={props.open}
+            classes={{
+            paper: classes.drawerPaper,
+            }}
+        >
+            <div className={classes.toolbar} />
+            <List>
+                <MenuItem icon="dashboard" link="/dashboard" label="Dashboard"/>
+                <MenuTree icon="library_books" label="Livros">
+                    <MenuItem icon="view_list" link="/books" label="Ver Todos"/>
+                    <MenuItem icon="add" link="/books/add" label="Adicionar Novo"/>
+                </MenuTree>
+            </List>
+        </Drawer>
+    )
+}

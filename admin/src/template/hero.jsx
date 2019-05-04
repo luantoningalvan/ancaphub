@@ -1,5 +1,5 @@
 import React from 'react'
-import Container from '../layout/container'
+import Container from '@material-ui/core/Container';
 
 export default props => (
     <div className="hero">
