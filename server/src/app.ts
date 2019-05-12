@@ -23,14 +23,15 @@ class App {
   }
 
   private database (): void {
-    mongoose.connect('mongodb://localhost:27017')
+    mongoose.connect('mongodb://localhost:27017/ancaphub_db', { useNewUrlParser: true })
+    // Avoids deprecation warnings
+    mongoose.set('useCreateIndex', true);
+    mongoose.set('useFindAndModify', false);
   }
 
   public listenServer (): void {
-    this.express.listen(3333, (): void => {
-      console.log('Servidor iniciado na porta 3333', {
-        useNewUrlParser: true
-      })
+    this.express.listen(21018, (): void => {
+      console.log('Servidor iniciado na porta 21018')
     })
   }
 }
