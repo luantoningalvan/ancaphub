@@ -6,8 +6,8 @@ const routes = Router()
 const passport = require('passport')
 const passportSetup = require('./config/passport')
 
-routes.get('/books', BookController.index)
-routes.post('/books', BookController.create)
+routes.get('/books', AuthController.check, BookController.index)
+routes.post('/books', AuthController.check, BookController.create)
 
 //Auth with google
 routes.get('/auth/google', passport.authenticate('google', {
