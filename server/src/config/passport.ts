@@ -1,13 +1,15 @@
-import UserSchema from '../schemas/User'
-
-const passport = require('passport')
-const keys = require('./keys')
+import passport from 'passport'
+import keys from './keys'
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+import UserSchema from '../schemas/User'
+
+//Serialize
 passport.serializeUser((user, done) => {
     done(null, user.id)
 })
 
+//Deserialize
 passport.deserializeUser((id, done) => {
     UserSchema.findById(id)
         .then(user => {
@@ -27,6 +29,8 @@ passport.use(new GoogleStrategy({
     callbackURL: keys.google.callbackURL
 
 }, (accessToken, refreshToken, profile, done) => {
+
+        //Callback for GoogleStrategy
 
         const user_profile = {
             googleId: profile.id,
