@@ -20,6 +20,7 @@ routes.get('/test', (req, res) => {
 
 // Callback redirect Google
 routes.get('/auth/google/redirect', passport.authenticate('google'), (req,res) =>{
+    console.log(req.user)
     res.send("Redirected by google!")
 })
 

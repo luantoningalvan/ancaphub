@@ -3,6 +3,9 @@ module.exports = {
         clientID: '',
         clientSecret: '',
         callbackURL: "/auth/google/redirect"
+    },
+    session: {
+        cookieKey: ""
     }
 
 };

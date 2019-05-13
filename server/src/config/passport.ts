@@ -4,7 +4,22 @@ const passport = require('passport')
 const keys = require('./keys')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+passport.serializeUser((user, done) => {
+    done(null, user.id)
+})
 
+passport.deserializeUser((id, done) => {
+    UserSchema.findById(id)
+        .then(user => {
+            done(null, user)
+        })
+        .catch(err => {
+            console.log(err)
+            return
+        })
+})
+
+// Google Strategy
 passport.use(new GoogleStrategy({
     //Options for Google Strategy
     clientID: keys.google.clientID,
@@ -21,14 +36,11 @@ passport.use(new GoogleStrategy({
 
         UserSchema.findOneAndUpdate({googleId: profile.id}, user_profile, {upsert: true})
             .then(user => {
-                console.log(user)
-                return user
+                done(null, user)
             })
             .catch(err =>{
-                console.log(err)
-                return err
+                done(null, err)
             })
 
-       return
     })
 )
