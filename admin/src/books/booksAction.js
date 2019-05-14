@@ -11,6 +11,7 @@ export function getBookList(){
 }
 
 export function create(values){
+    console.log(values)
     const request = axios.post(`${BASE_URL}/books`, values)
     return {
         type: 'BOOK_ADDED',

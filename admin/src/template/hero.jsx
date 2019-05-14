@@ -1,13 +1,33 @@
 import React from 'react'
-import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
 
-export default props => (
-    <div className="hero">
-        <Container>
-            <div className="row">
-                <div className="col s12 m6 l4"><h2>{props.title}</h2></div>
-                <div className="col s12 m6 l8 right-align">{props.actions}</div>
-            </div>
-        </Container>
-    </div>
-)
+const useStyles = makeStyles({
+    pageHero: {
+      backgroundColor: '#e4e4e4',
+      height:'50px',
+      lineHeight:'50px'
+    },
+});
+
+export default props => {
+    const classes = useStyles()
+
+    return(
+        <div className={classes.pageHero}>
+            <Container>
+                <Grid container>
+                    <Grid item sm={4}>
+                        <Typography variant="h5" component="h2">
+                            {props.title}
+                        </Typography>
+                    </Grid>
+                    <Grid item sm={8}>{props.children}</Grid>
+                </Grid>
+            </Container>
+        </div>
+    )
+}
+
