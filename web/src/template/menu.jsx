@@ -1,38 +1,45 @@
 import React from 'react'
-import { Link, Switch, Route } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ItemMenu from './ItemMenu'
 
-import App from '../app'
-import Articles from '../articles'
-import Podcasts from '../podcasts'
-import Books from '../books'
+import HomeIcon from '@material-ui/icons/Home';
+import BookIcon from '@material-ui/icons/Book';
+import ArticleIcon from '@material-ui/icons/Description';
+import PodcastIcon from '@material-ui/icons/Mic';
 
-export default props => (
-  <div className="navbar-start">
-    <Link to="/" className="navbar-item">Home</Link>
-    <Link to="/livros" className="navbar-item">Livros</Link>
-    <Link to="/artigos" className="navbar-item">Artigos</Link>
-    <Link to="/podcasts" className="navbar-item">Podcasts</Link>
+const useStyles = makeStyles(theme => ({
+  drawer: {
+    width: 240,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: 240,
+  },
+  toolbar: theme.mixins.toolbar,
+}));
 
-    <div className="navbar-item has-dropdown is-hoverable">
-      <a className="navbar-link">
-        Categorias
-      </a>
 
-      <div className="navbar-dropdown">
-        <a className="navbar-item">
-          About
-        </a>
-        <a className="navbar-item">
-          Jobs
-        </a>
-        <a className="navbar-item">
-          Contact
-        </a>
-        <hr className="navbar-divider" />
-        <a className="navbar-item">
-          Report an issue
-        </a>
-      </div>
-    </div>
-  </div>
-)
+export default function Menu(props) {
+  const classes = useStyles();
+
+  return (
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      open={props.open}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <div className={classes.toolbar} />
+      <List>
+          <ItemMenu icon={(<HomeIcon />)} label="Home" link="/" />
+          <ItemMenu icon={(<BookIcon />)} label="Livros" link="/livros" />
+          <ItemMenu icon={(<ArticleIcon />)} label="Artigos" link="/artigos" />
+          <ItemMenu icon={(<PodcastIcon />)} label="Podcasts" link="/podcasts" />
+      </List>
+    </Drawer>
+  )
+}

@@ -4,14 +4,12 @@ import { signIn } from './authActions'
 import { bindActionCreators } from 'redux';
 
 import Template from '../template/template'
-import Hero from '../template/hero'
 import LoginForm from './loginForm'
 
 class Login extends Component {
   render(){
     return(
       <Template>
-        <Hero title="Login" /> 
         <div className="container">
           <LoginForm onSubmit={this.props.signIn} />
         </div>

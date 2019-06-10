@@ -7,9 +7,9 @@ import rootReducer from './rootReducer'
 import thunk from 'redux-thunk'
 
 import App from './app'
-import Livros from './books'
-import Podcasts from './podcasts'
-import Artigos from './articles'
+import Livros from './books/books'
+import Podcasts from './podcasts/podcasts'
+import Artigos from './articles/articles'
 import Login from './auth/login'
 import Cadastro from './auth/signup'
 
