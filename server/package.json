@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/loader.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "nodemon"
   },
@@ -10,11 +10,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parse": "^0.1.0",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "config": "^3.1.0",
     "express": "^4.17.1",
     "express-query-int": "^3.0.0",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.12",
     "node-restful": "^0.2.6",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^11.0.0"
   }
 }

@@ -24,8 +24,8 @@ const useStyles = () => makeStyles(theme => ({
     input: {
         display: 'none',
     },
-    fieldSpacing:{
-        marginBottom:'20px'
+    fieldSpacing: {
+        marginBottom: '20px'
     }
 }))
 
@@ -40,35 +40,29 @@ function AddBook(props) {
     return (
         <Template>
             <Hero title="Adicionar Livros" className={classes.fieldSpacing} />
-            
+
             <Box mt={3}>
-            <Container>
-                <Formik
-                    initialValues={{ title: '', author: '', description: '', download_options: [''], buy_links: [''] }}
-                    validate={values => {
-                        let errors = {};
-                        if (!values.title) {
-                            errors.title = 'Título necessário';
-                        } else if (!values.author) {
-                            errors.author = 'Autor necessário';
-                        }
-                        return errors;
-                    }}
-                    onSubmit={(values) => {
-                        props.create(values)
-                    }}
-                >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting,
-                        /* and other goodies */
-                    }) => (
-                            
+                <Container>
+                    <Formik
+                        initialValues={{ title: '', author: '', description: '', cover: null, download_options: [''], buy_links: [''] }}
+                        validate={values => {
+                            let errors = {};
+                            if (!values.title) {
+                                errors.title = 'Título necessário';
+                            } else if (!values.author) {
+                                errors.author = 'Autor necessário';
+                            }
+                            return errors;
+                        }}
+                        onSubmit={(values, actions) => {
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                                actions.setSubmitting(false);
+                            }, 1000);
+                        }}
+
+                        render={({ submitForm, values, setFieldValue }) => (
+
                             <Form encType="multipart/formdata">
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} sm={9}>
@@ -108,7 +102,7 @@ function AddBook(props) {
                                                 />
                                             </Grid>
 
-                                            
+
                                             <Grid item xs={12}>
                                                 <Paper>
                                                     Teste
@@ -118,26 +112,26 @@ function AddBook(props) {
                                     </Grid>
                                     <Grid item xs={12} sm={3}>
                                         <Grid container spacing={2}>
-                                            <Typography variant="h5" component="h2">
-                                                Capa do Livro
-                                            </Typography>
                                             <Grid item xs={12}>
-                                                <Field
-                                                    name="cover"
-                                                    label="Capa do Livro"
-                                                    component={SimpleFileUpload}
-                                                />
+                                                <Typography variant="h6" component="h2">
+                                                    Capa do Livro
+                                                </Typography>
+
+                                                <input id="file" name="cover" type="file" onChange={(event) => {
+                    setFieldValue("cover", event.currentTarget.files[0]);
+                  }} className="form-control" />
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
+                                
                                 <Button variant="contained" color="primary" className={classes.button} type="submit">
-                    Criar
-                </Button>
+                                    Criar
+                                </Button>
                             </Form>
                         )}
-                </Formik>
-            </Container>
+                    />
+                </Container>
             </Box>
         </Template>
     )

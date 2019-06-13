@@ -15,7 +15,6 @@ const BookSchema = new Schema({
     buyLinks: Array,
     avaliableFormats: {
         type: Array,
-        required: true
     },
     languages: Array
 })

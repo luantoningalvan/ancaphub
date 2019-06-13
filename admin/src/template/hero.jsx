@@ -7,8 +7,9 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles({
     pageHero: {
       backgroundColor: '#e4e4e4',
-      height:'50px',
-      lineHeight:'50px'
+      height:'60px',
+      display: 'flex',
+      alignItems:"center"
     },
 });
 
@@ -20,7 +21,7 @@ export default props => {
             <Container>
                 <Grid container>
                     <Grid item sm={4}>
-                        <Typography variant="h5" component="h2">
+                        <Typography variant="h6" component="h2">
                             {props.title}
                         </Typography>
                     </Grid>
