@@ -36,6 +36,7 @@ function AddBook(props) {
         document.title = 'Adicionar Livro'
     })
     const classes = useStyles()
+    const { errors } = this.state;
 
     return (
         <Template>

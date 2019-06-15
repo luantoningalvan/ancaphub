@@ -32,7 +32,7 @@ export default props => {
         >
             <div className={classes.toolbar} />
             <List>
-                <MenuItem icon="dashboard" link="/dashboard" label="Dashboard"/>
+                <MenuItem icon="dashboard" link="/" label="Dashboard"/>
                 <MenuTree icon="library_books" label="Livros">
                     <MenuItem icon="view_list" link="/books" label="Ver Todos"/>
                     <MenuItem icon="add" link="/books/add" label="Adicionar Novo"/>

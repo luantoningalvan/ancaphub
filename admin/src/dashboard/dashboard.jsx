@@ -1,12 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Template from '../template/template'
+import { connect } from 'react-redux'
 
-export default class App extends Component{
-    render(){
-        return(
-            <Template>
-                Dashboard
-            </Template>
-        )
-    }
+function Dashboard(props) {
+    return (
+        <Template>
+            Olá {props.auth.name}
+        </Template>
+    )
+
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(Dashboard)

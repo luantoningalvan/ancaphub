@@ -3,10 +3,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-
+const auth = require('../../middlewares/auth')
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const config = require('config');
 
 // Load model
 const User = require("../models/UserModel")
@@ -49,8 +50,9 @@ router.post("/login", (req, res) => {
     if (!isValid) {
         return res.status(400).json(errors);
     }
-    const email = req.body.email;
-    const password = req.body.password;
+    const {email, password} = req.body;
+    console.log(email)
+
     // Find user by email
     User.findOne({ email }).then(user => {
         // Check if user exists
@@ -60,26 +62,23 @@ router.post("/login", (req, res) => {
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
             if (isMatch) {
-                // User matched
-                // Create JWT Payload
-                const payload = {
-                    id: user.id,
-                    name: user.name
-                };
                 // Sign token
                 jwt.sign(
-                    payload,
+                    { id: user.id },
                     keys.secretOrKey,
-                    {
-                        expiresIn: 31556926 // 1 year in seconds
-                    },
+                    { expiresIn: 3600 },
                     (err, token) => {
-                        res.json({
-                            success: true,
-                            token: "Bearer " + token
-                        });
+                      if(err) throw err;
+                      res.json({
+                        token,
+                        user: {
+                          id: user.id,
+                          name: user.name,
+                          email: user.email
+                        }
+                      });
                     }
-                );
+                  )
             } else {
                 return res
                     .status(400)
@@ -88,6 +87,12 @@ router.post("/login", (req, res) => {
         });
     });
 });
+
+router.get('/user', auth, (req, res) => {
+    User.findById(req.user.id)
+      .select('-password')
+      .then(user => res.json(user));
+  });
 
 router.get("/", async (request, response) => {
     try {
