@@ -13,10 +13,10 @@ server.use(bodyParser.json())
 server.use(allowCors)
 server.use(queryParser())
 
-// Passport middleware
+// Middleware do Passport 
 server.use(passport.initialize());
 
-// Passport config
+// Configuração do Passport
 require("./config/passport")(passport);
 
 const books = require('./api/routes/BookRoutes')
@@ -26,7 +26,7 @@ server.use('/api/books/', books)
 server.use('/api/users/', users)
 
 server.listen(port, function() {
-    console.log(`BACKEND is running on port ${port}.`)
+    console.log(`BACKEND está rodando na porta ${port}.`)
 })
 
 module.exports = server
