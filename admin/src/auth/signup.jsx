@@ -45,13 +45,13 @@ const useStyles = makeStyles(theme => ({
 function SignUp(props) {
   const classes = useStyles();
   useEffect(() => {
-    // If logged in and user navigates to Register page, should redirect them to dashboard
+    // Caso o usuário estiver logado, redireciona para o painel de controle
     if (props.auth.isAuthenticated) {
       props.history.push("/");
     }
   });
 
- console.log(props)
+  console.log(props)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -72,7 +72,7 @@ function SignUp(props) {
             <Form className={classes.form}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                <Field
+                  <Field
                     component={TextField}
                     variant="outlined"
                     margin="normal"
@@ -80,13 +80,13 @@ function SignUp(props) {
                     fullWidth
                     label="Nome Completo"
                     name="name"
-                    autoComplete="email"
+                    autoComplete="name"
                     autoFocus
-                />
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Field
-                  component={TextField}
+                    component={TextField}
                     variant="outlined"
                     required
                     fullWidth
@@ -97,26 +97,25 @@ function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <Field
-                  component={TextField}
+                    component={TextField}
                     variant="outlined"
                     required
                     fullWidth
                     name="password"
                     label="Senha"
                     type="password"
-                    autoComplete="current-password"
+                    autoComplete="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Field
-                  component={TextField}
+                    component={TextField}
                     variant="outlined"
                     required
                     fullWidth
                     name="password2"
                     label="Confirmar Senha"
                     type="password"
-                    autoComplete="current-password"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -156,6 +155,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({register}, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ register }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

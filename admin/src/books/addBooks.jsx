@@ -119,13 +119,13 @@ function AddBook(props) {
                                                 </Typography>
 
                                                 <input id="file" name="cover" type="file" onChange={(event) => {
-                    setFieldValue("cover", event.currentTarget.files[0]);
-                  }} className="form-control" />
+                                                    setFieldValue("cover", event.currentTarget.files[0]);
+                                                }} className="form-control" />
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                
+
                                 <Button variant="contained" color="primary" className={classes.button} type="submit">
                                     Criar
                                 </Button>

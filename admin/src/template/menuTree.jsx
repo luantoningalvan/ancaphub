@@ -33,20 +33,20 @@ export default props => {
     })
 
     return (
-    <div>
-        <ListItem button onClick={handleClick}>
-            <ListItemIcon>
-                <Icon>{props.icon}</Icon>
-            </ListItemIcon>
-            <ListItemText primary={props.label} />
-            {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+        <div>
+            <ListItem button onClick={handleClick}>
+                <ListItemIcon>
+                    <Icon>{props.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={props.label} />
+                {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
 
-        <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                {children}
-            </List>
-        </Collapse>
-    </div>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    {children}
+                </List>
+            </Collapse>
+        </div>
     )
 }

@@ -12,7 +12,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./auth/authActions";
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers,devTools)
+const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
 
 // Import screens
 import Dashboard from './dashboard/dashboard'
@@ -30,21 +30,19 @@ if (localStorage.jwtToken) {
     const decoded = jwt_decode(token);
     // Set user and isAuthenticated
     store.dispatch(setCurrentUser(decoded));
-  // Check for expired token
+    // Check for expired token
     const currentTime = Date.now() / 1000; // to get in milliseconds
     if (decoded.exp < currentTime) {
-      // Logout user
-      store.dispatch(logoutUser());
-      // Redirect to login
-      window.location.href = "./login";
+        // Logout user
+        store.dispatch(logoutUser());
+        // Redirect to login
+        window.location.href = "./login";
     }
-  }
+}
 
-export default class App extends Component{
-
-    
-    render(){
-        return(
+export default class App extends Component {
+    render() {
+        return (
             <Provider store={store}>
                 <Router>
                     <Switch>
@@ -56,7 +54,7 @@ export default class App extends Component{
                         <Route path="/login" component={SignIn} />
                         <Route path="/cadastro" component={SignUp} />
 
-                        
+
                     </Switch>
                 </Router>
             </Provider>

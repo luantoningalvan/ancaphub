@@ -19,23 +19,23 @@ const useStyles = makeStyles(theme => ({
 
 export default props => {
     const classes = useStyles();
-    
-    return(
+
+    return (
         <Drawer
             className={classes.drawer}
             variant="persistent"
             anchor="left"
             open={props.open}
             classes={{
-            paper: classes.drawerPaper,
+                paper: classes.drawerPaper,
             }}
         >
             <div className={classes.toolbar} />
             <List>
-                <MenuItem icon="dashboard" link="/" label="Dashboard"/>
+                <MenuItem icon="dashboard" link="/" label="Dashboard" />
                 <MenuTree icon="library_books" label="Livros">
-                    <MenuItem icon="view_list" link="/books" label="Ver Todos"/>
-                    <MenuItem icon="add" link="/books/add" label="Adicionar Novo"/>
+                    <MenuItem icon="view_list" link="/books" label="Ver Todos" />
+                    <MenuItem icon="add" link="/books/add" label="Adicionar Novo" />
                 </MenuTree>
             </List>
         </Drawer>

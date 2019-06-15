@@ -6,17 +6,17 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
     pageHero: {
-      backgroundColor: '#e4e4e4',
-      height:'60px',
-      display: 'flex',
-      alignItems:"center"
+        backgroundColor: '#e4e4e4',
+        height: '60px',
+        display: 'flex',
+        alignItems: "center"
     },
 });
 
 export default props => {
     const classes = useStyles()
 
-    return(
+    return (
         <div className={classes.pageHero}>
             <Container>
                 <Grid container>

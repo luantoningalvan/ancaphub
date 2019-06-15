@@ -1,12 +1,11 @@
-
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-const BASE_URL = 'http://localhost:3000/api/users'
-
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "../types";
 
-// Register User
+const BASE_URL = 'http://localhost:3000/api/users'
+
+// Cadastro do Usuário
 export const register = (userData, history) => dispatch => {
   axios
     .post(`${BASE_URL}/register`, userData)
@@ -19,21 +18,19 @@ export const register = (userData, history) => dispatch => {
     );
 };
 
-// Login - get user token
+// Login - obtém o token do usuário
 export const login = userData => dispatch => {
   axios
     .post(`${BASE_URL}/login`, userData)
     .then(res => {
-      // Save to localStorage
-
-      // Set token to localStorage
+      // Seta o token no localstorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
+      // Seta o token no cabeçalho de autenticação
       setAuthToken(token);
-      // Decode token to get user data
+      // Decodifica o token para obter os dados do usuário
       const decoded = jwt_decode(token);
-      // Set current user
+      // Seta o usuário atual
       dispatch(setCurrentUser(decoded));
     })
     .catch(err =>
@@ -44,7 +41,7 @@ export const login = userData => dispatch => {
     );
 };
 
-// Set logged in user
+// Seta o usuário logado
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
@@ -52,19 +49,19 @@ export const setCurrentUser = decoded => {
   };
 };
 
-// User loading
+// Carregando usuário
 export const setUserLoading = () => {
   return {
     type: USER_LOADING
   };
 };
 
-// Log user out
+// Logout do usuário
 export const logoutUser = () => dispatch => {
-  // Remove token from local storage
+  // Remove o token do localstorage
   localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
+  // Remove o cabeçalho de autenticação para requisições futuras
   setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
+  // Seta o usuário atual para um objeto vazio {} também seta o isAuthenticated para falso
   dispatch(setCurrentUser({}));
 };

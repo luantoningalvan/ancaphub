@@ -18,7 +18,7 @@ export default props => {
     }))
     const classes = useStyles()
 
-    return(
+    return (
         <Link to={props.link} className="waves-effect waves-blue" className={classes.listItem}>
             <ListItem button className={(props.nested) ? classes.nested : null}>
                 <ListItemIcon>

@@ -21,220 +21,206 @@ import { bindActionCreators } from 'redux'
 import { logoutUser } from '../auth/authActions'
 
 const useStyles = makeStyles(theme => ({
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
     },
-    root: {
-        flexGrow: 1,
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
     },
-    title: {
-        flexGrow: 1,
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
-        },
+  },
+  searchIcon: {
+    width: theme.spacing(7),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 7),
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200,
+      },
     },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight:theme.spacing(1),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(1),
-          width: 'auto',
-        },
-      },
-      searchIcon: {
-        width: theme.spacing(7),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      inputRoot: {
-        color: 'inherit',
-      },
-      inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          width: 120,
-          '&:focus': {
-            width: 200,
-          },
-        },
-      },
-      sectionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up('md')]: {
-          display: 'flex',
-        },
-      },
-      sectionMobile: {
-        display: 'flex',
-        [theme.breakpoints.up('md')]: {
-          display: 'none',
-        },
-      },
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
 }));
 
 
 function Header(props) {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
-    function handleProfileMenuOpen(event) {
-      setAnchorEl(event.currentTarget);
-    }
-  
-    function handleMobileMenuClose() {
-      setMobileMoreAnchorEl(null);
-    }
-  
-    function handleMenuClose() {
-      setAnchorEl(null);
-      handleMobileMenuClose();
-    }
-  
-    function handleMobileMenuOpen(event) {
-      setMobileMoreAnchorEl(event.currentTarget);
-    }
-  
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-        <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
-      </Menu>
-    );
-  
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
-      >
-        <MenuItem>
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function handleProfileMenuOpen(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleMobileMenuClose() {
+    setMobileMoreAnchorEl(null);
+  }
+
+  function handleMenuClose() {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  }
+
+  function handleMobileMenuOpen(event) {
+    setMobileMoreAnchorEl(event.currentTarget);
+  }
+
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
+    </Menu>
+  );
+
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Mensagens</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton color="inherit">
+          <Badge badgeContent={0} color="secondary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notificações</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton color="inherit">
+          <AccountCircle />
+        </IconButton>
+        <p>Perfil</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  return (
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="Abrir/Fechar Barra Lateral"
+            onClick={props.handleDrawer}
+            edge="start"
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+          AncapHub
+            </Typography>
+
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Buscar..."
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+          />
+        </div>
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <MailIcon />
             </Badge>
           </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
           <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton color="inherit">
+          <IconButton
+            edge="end"
+            aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-    
-    return(
-    <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-            <If cond={!props.open}>
-                <IconButton
-                    color="inherit"
-                    aria-label="Open drawer"
-                    onClick={props.openDrawer}
-                    edge="start"
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-            </If>
-
-            <If cond={props.open}>
-                <IconButton
-                    color="inherit"
-                    aria-label="Open drawer"
-                    onClick={props.closeDrawer}
-                    edge="start"
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-            </If>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                AncapHub
-            </Typography>
-
-            <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Buscar..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-            </div>
-            <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-        {renderMenu}
-        {renderMobileMenu}
+        </div>
+        <div className={classes.sectionMobile}>
+          <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
+            <MoreIcon />
+          </IconButton>
+        </div>
+      </Toolbar>
+      {renderMenu}
+      {renderMobileMenu}
     </AppBar>
-    )
+  )
 }
-const mapDispatchToProps = (dispatch) => bindActionCreators({logoutUser}, dispatch) 
+const mapDispatchToProps = (dispatch) => bindActionCreators({ logoutUser }, dispatch)
 export default connect(null, mapDispatchToProps)(Header)
