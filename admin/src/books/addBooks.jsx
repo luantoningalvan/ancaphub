@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Formik, Field, FieldArray, Form, ErrorMessage } from 'formik'
-import { create } from './booksAction'
+import { create, upload } from './booksAction'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
@@ -35,6 +35,7 @@ const useStyles = () => makeStyles(theme => ({
 function AddBook(props) {
     useEffect(() => {
         document.title = 'Adicionar Livro'
+        console.log(props)
     })
     const classes = useStyles()
 
@@ -56,14 +57,11 @@ function AddBook(props) {
                         initialValues={{ title: '', author: '', description: '', cover: null, download_options: [''], buy_links: [''] }}
                         validationSchema={AddBookSchema}
                         onSubmit={(values, actions) => {
-                            setTimeout(() => {
-                                console.log(values);
-                                actions.setSubmitting(false);
-                            }, 1000);
+                                props.create(values)
                         }}
 
-                        render={(props) => {
-                            const { values, touched, errors, handleChange, handleBlur, setFieldValue } = props;
+                        render={(formikProps) => {
+                            const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
 
                             return (
                                 <Form encType="multipart/formdata">
@@ -121,17 +119,21 @@ function AddBook(props) {
                                                 </Grid>
                                             </Grid>
                                         </Grid>
+
                                         <Grid item xs={12} sm={3}>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12}>
                                                     <Typography variant="h6" component="h2">
                                                         Capa do Livro
-                                                </Typography>
+                                                    </Typography>
 
-                                                    <input id="file" name="cover" type="file" onChange={(e) => {
-                                                        console.log(e.target.files[0])
-							setFieldValue("cover", e.target.files[0])
-                                                    }} className="form-control" />
+                                                    <input id="file" name="cover" type="file" 
+                                                        onChange={(e) => {
+                                                            var file = e.target.files[0]
+                                                            setFieldValue("cover", file.name)
+                                                            props.upload({cover: file})
+                                                        }} className="form-control" 
+                                                    />
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -150,6 +152,5 @@ function AddBook(props) {
     )
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ create }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ create, upload }, dispatch)
 export default connect(null, mapDispatchToProps)(AddBook)
-

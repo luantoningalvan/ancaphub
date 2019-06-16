@@ -18,11 +18,30 @@ export function list() {
 // Cria um novo livro
 export function create(data) {
     return (dispatch) => {
+        console.log(data)
         if (data.name != "" || data.balance != "") {
             axios.post(BASE_URL, data)
                 .then(function (data) {
                     toastr.success('Sucesso', 'Livro Adicionado com Sucesso.')
                     dispatch({ type: "BOOK_ADDED", payload: true });
+                })
+                .catch(function (error) {
+                    console.error("Erro ao adicionar documento: ", error);
+                });
+        } else {
+            console.error("Um ou mais campos não foram preenchidos");
+        }
+    }
+}
+
+export function upload(data) {
+    return (dispatch) => {
+        if (data.cover != "") {
+            console.log(data)
+            axios.post("http://localhost:3000/upload", data)
+                .then(function (data) {
+                    toastr.success('Sucesso', 'Imagem Enviada com Sucesso.')
+                    dispatch({ type: "IMAGE_UPLOADED", payload: true });
                 })
                 .catch(function (error) {
                     console.error("Erro ao adicionar documento: ", error);
