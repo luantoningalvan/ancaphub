@@ -13,9 +13,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Formik, Field, Form } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { Formik, Form } from 'formik'
 import { register } from './authActions'
+import TextField from '@material-ui/core/TextField';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -51,7 +52,23 @@ function SignUp(props) {
     }
   });
 
-  console.log(props)
+  // Validação frontend do formulário
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, 'Nome muito curto!')
+      .max(50, 'Nome muito longo!')
+      .required('O campo nome é obrigatório!'),
+    email: Yup.string()
+      .email('E-mail inválido')
+      .required('O campo e-mail é obrigatório!'),
+    password: Yup.string()
+      .required('O campo senha é obrigatório!')
+      .min(6, 'Sua senha precisa ter no mínimo 6 caracteres.'),
+    password2: Yup.string()
+      .required('O campo confirmar senha é obrigatório!')
+      .oneOf([Yup.ref('password'), null], 'As senhas não coincidem')
+  });
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -65,77 +82,99 @@ function SignUp(props) {
 
         <Formik
           initialValues={{ name: '', email: '', password: '', password2: '' }}
+          validationSchema={SignupSchema}
           onSubmit={(values, actions) => {
             props.register(values, props.history)
           }}
-          render={props => (
-            <Form className={classes.form}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Nome Completo"
-                    name="name"
-                    autoComplete="name"
-                    autoFocus
-                  />
+          render={props => {
+            const { values, touched, errors, handleChange, handleBlur } = props;
+            
+            return (
+              <Form className={classes.form}>
+                {(props.errors) ? (<p>{props.errors.message}</p>) : (<p>Nada</p>)}
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoFocus
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="Nome Completo"
+                      name="name"
+                      autoComplete="name"
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.name && touched.name) && errors.name}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Endereço de e-mail"
+                      name="email"
+                      autoComplete="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.email && touched.email) && errors.email}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Senha"
+                      type="password"
+                      autoComplete="password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.password && touched.password) && errors.password}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password2"
+                      label="Confirmar Senha"
+                      type="password"
+                      value={values.password2}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.password2 && touched.password2) && errors.password2}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={<Checkbox value="allowExtraEmails" color="primary" />}
+                      label="Eu quero receber notificações em meu e-mail."
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label="Endereço de e-mail"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Senha"
-                    type="password"
-                    autoComplete="password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password2"
-                    label="Confirmar Senha"
-                    type="password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="Eu quero receber notificações em meu e-mail."
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Cadastro
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Cadastro
               </Button>
-            </Form>
-          )}
+              </Form>)
+          }}
         />
         <Grid container justify="flex-end">
           <Grid item>

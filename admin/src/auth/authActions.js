@@ -1,7 +1,8 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "../types";
+import { returnErrors } from '../errors/errorAction'
+import { LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL, REGISTER_SUCCESS, SET_CURRENT_USER, USER_LOADING } from "../types";
 
 const BASE_URL = 'http://localhost:3000/api/users'
 
@@ -9,13 +10,21 @@ const BASE_URL = 'http://localhost:3000/api/users'
 export const register = (userData, history) => dispatch => {
   axios
     .post(`${BASE_URL}/register`, userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
+    .then(res => {
+      history.push("/login")
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: REGISTER_SUCCESS,
+        payload: res.data
       })
-    );
+    })
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
+      );
+      dispatch({
+        type: REGISTER_FAIL
+      });
+    });
 };
 
 // Login - obtém o token do usuário
@@ -32,13 +41,19 @@ export const login = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Seta o usuário atual
       dispatch(setCurrentUser(decoded));
-    })
-    .catch(err =>
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: LOGIN_SUCCESS,
+        payload: res.data
       })
-    );
+    })
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+      );
+      dispatch({
+        type: LOGIN_FAIL
+      });
+    });
 };
 
 // Seta o usuário logado

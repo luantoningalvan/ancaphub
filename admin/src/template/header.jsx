@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import If from '../utils/if'
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import Avatar from '@material-ui/core/Avatar';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -87,6 +87,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  letterAvatar: {
+    backgroundColor: theme.palette.secondary.main
+  }
 }));
 
 
@@ -118,10 +121,12 @@ function Header(props) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      getContentAnchorEl={null}
     >
       <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
       <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
@@ -131,14 +136,16 @@ function Header(props) {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      getContentAnchorEl={null}
+      keepMounted
+      transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
         <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={0} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -154,7 +161,7 @@ function Header(props) {
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
-          <AccountCircle />
+          <Avatar className={classes.letterAvatar}>{props.user.name.substring(0,1)}</Avatar>
         </IconButton>
         <p>Perfil</p>
       </MenuItem>
@@ -173,9 +180,10 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-          AncapHub
-            </Typography>
+
+          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            AncapHub
+          </Typography>
 
         <div className={classes.search}>
           <div className={classes.searchIcon}>
@@ -208,7 +216,7 @@ function Header(props) {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle />
+            <Avatar className={classes.letterAvatar}>{props.user.name.substring(0,1)}</Avatar>
           </IconButton>
         </div>
         <div className={classes.sectionMobile}>
@@ -222,5 +230,7 @@ function Header(props) {
     </AppBar>
   )
 }
+
+const mapStateToProps = state => ({ user: state.auth.user });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ logoutUser }, dispatch)
-export default connect(null, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

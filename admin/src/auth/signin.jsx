@@ -13,8 +13,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Formik, Field, Form } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { Formik, Form } from 'formik'
+import TextField from '@material-ui/core/TextField';
+import * as Yup from 'yup';
 import { login } from './authActions'
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 function SignIn(props) {
   const classes = useStyles();
 
@@ -50,6 +52,15 @@ function SignIn(props) {
     if (props.auth.isAuthenticated) {
       props.history.push("/");
     }
+  });
+
+  // Validação frontend do formulário
+  const SigninSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('E-mail inválido')
+      .required('O campo e-mail é obrigatório!'),
+    password: Yup.string()
+      .required('O campo senha é obrigatório!')
   });
 
   return (
@@ -66,51 +77,62 @@ function SignIn(props) {
 
         <Formik
           initialValues={{ email: '', password: '' }}
+          validationSchema={SigninSchema}
           onSubmit={(values, actions) => {
             props.login(values)
           }}
-          render={props => (
-            <Form className={classes.form}>
-              <Field
-                component={TextField}
-                variant="outlined"
-                type="email"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Endereço de e-mail"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <Field
-                component={TextField}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Senha"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Manter-me logado"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Entrar
-                </Button>
-            </Form>
-          )}
+          render={props => {
+            const { values, touched, errors, handleChange, handleBlur } = props;
+
+            return (
+              <Form className={classes.form}>
+                <TextField
+                  autoFocus
+                  variant="outlined"
+                  type="email"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Endereço de e-mail"
+                  name="email"
+                  autoComplete="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={(errors.email && touched.email) && errors.email}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Senha"
+                  type="password"
+                  id="password"
+                  autoComplete="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={(errors.password && touched.password) && errors.password}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Manter-me logado"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Entrar
+                  </Button>
+              </Form>
+            )
+          }}
         />
         <Grid container>
           <Grid item xs>

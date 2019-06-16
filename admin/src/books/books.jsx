@@ -12,6 +12,7 @@ import { list } from './booksAction'
 import Template from '../template/template'
 import Hero from '../template/hero'
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 
 function App(props) {
 
@@ -20,30 +21,31 @@ function App(props) {
     return (
         <Template>
             <Hero title="Livros" />
-
-            <Container>
-                <Paper>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Titulo</TableCell>
-                                <TableCell>Autor</TableCell>
-                                <TableCell>Ações</TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {props.books.list.map(bc => (
-                                <TableRow key={bc._id}>
-                                    <TableCell>{bc.title}</TableCell>
-                                    <TableCell>{bc.author}</TableCell>
-                                    <TableCell></TableCell>
+            <Box mt={3}>
+                <Container>
+                    <Paper>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Titulo</TableCell>
+                                    <TableCell>Autor</TableCell>
+                                    <TableCell>Ações</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </Container>
+                            </TableHead>
+
+                            <TableBody>
+                                {props.books.list.map(bc => (
+                                    <TableRow key={bc._id}>
+                                        <TableCell>{bc.title}</TableCell>
+                                        <TableCell>{bc.author}</TableCell>
+                                        <TableCell></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </Container>
+            </Box>
         </Template>
     )
 }

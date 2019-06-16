@@ -54,7 +54,6 @@ export default class App extends Component {
                         <Route path="/login" component={SignIn} />
                         <Route path="/cadastro" component={SignUp} />
 
-
                     </Switch>
                 </Router>
             </Provider>
