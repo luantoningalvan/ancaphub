@@ -33,7 +33,7 @@ server.use('/api/books/', books)
 server.use('/api/users/', users)
 
 server.post('/upload', upload.single('cover'), function (req, res, next) {
-  console.log(req.file)
+  console.log(cover)
 })
 
 server.listen(port, function() {

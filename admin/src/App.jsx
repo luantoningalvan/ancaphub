@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./auth/authActions";
+import ReduxToastr from 'react-redux-toastr'
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
@@ -17,8 +19,8 @@ const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devT
 // Import screens
 import Dashboard from './dashboard/dashboard'
 import Books from './books/books'
-import AddBooks from './books/addBooks'
-
+import AddBooks from './books/bookFormPage'
+import EditBook from './books/bookFormPage'
 import SignIn from './auth/signin'
 import SignUp from './auth/signup'
 
@@ -44,12 +46,24 @@ export default class App extends Component {
     render() {
         return (
             <Provider store={store}>
+
+                <ReduxToastr
+                    timeOut={4000}
+                    newestOnTop={true}
+                    position="top-right"
+                    transitionIn="fadeIn"
+                    transitionOut="fadeOut"
+                    progressBar
+                    closeOnToastrClick
+                />
+
                 <Router>
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
 
                         <PrivateRoute exact path="/books/" component={Books} />
                         <PrivateRoute path="/books/add/" component={AddBooks} />
+                        <PrivateRoute path="/books/edit/:id" component={EditBook}/>
 
                         <Route path="/login" component={SignIn} />
                         <Route path="/cadastro" component={SignUp} />

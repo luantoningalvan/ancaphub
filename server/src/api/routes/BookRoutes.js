@@ -12,6 +12,15 @@ router.get("/", async (request, response) => {
     }
 });
 
+router.get("/:id", async (request, response) => {
+    try {
+        var result = await Book.findById(request.params.id).exec();
+        response.send(result);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+});
+
 // Cria um novo livro
 router.post("/", async (request, response) => {
     try {

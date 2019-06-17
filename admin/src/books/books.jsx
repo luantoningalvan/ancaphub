@@ -4,10 +4,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { list } from './booksAction'
+import { fetchAllBooks, deleteBook } from './booksAction'
 
 import Template from '../template/template'
 import Hero from '../template/hero'
@@ -16,7 +20,7 @@ import Box from '@material-ui/core/Box';
 
 function App(props) {
 
-    useEffect(() => props.list(), []);
+    useEffect(() => props.fetchAllBooks(), []);
 
     return (
         <Template>
@@ -27,18 +31,28 @@ function App(props) {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Titulo</TableCell>
-                                    <TableCell>Autor</TableCell>
-                                    <TableCell>Ações</TableCell>
+                                    <TableCell align="left">Titulo</TableCell>
+                                    <TableCell align="left">Autor</TableCell>
+                                    <TableCell align="right">Ações</TableCell>
                                 </TableRow>
                             </TableHead>
 
                             <TableBody>
-                                {props.books.list.map(bc => (
-                                    <TableRow key={bc._id}>
-                                        <TableCell>{bc.title}</TableCell>
-                                        <TableCell>{bc.author}</TableCell>
-                                        <TableCell></TableCell>
+                                {props.books.allBooks.map(book => (
+                                    <TableRow key={book._id}>
+                                        <TableCell align="left">{book.title}</TableCell>
+                                        <TableCell align="left">{book.author}</TableCell>
+                                        <TableCell align="right">
+                                            <Link to={`/books/edit/${book._id}`} >
+                                                <IconButton aria-label="Editar">
+                                                    <EditIcon />
+                                                </IconButton>
+                                            </Link>
+
+                                            <IconButton aria-label="Delete" onClick={() => props.deleteBook(book._id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -51,5 +65,5 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => ({ books: state.books })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ list }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks, deleteBook }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,9 +1,13 @@
-const INITIAL_STATE = { list: [] }
+const INITIAL_STATE = { allBooks: [], book: {} }
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case "FETCH_BOOKS":
-            return { ...state, list: action.payload }
+        case "FETCH_ALL_BOOKS":
+            return { ...state, allBooks: action.payload }
+        case "NEW_BOOK":
+            return { ...state, book: {} }
+        case "FETCH_BOOK":
+            return { ...state, book: action.payload }    
         default:
             return state
     }
