@@ -18,7 +18,6 @@ export function fetchBook(id) {
     return (dispatch) => {
         axios.get(`${BASE_URL}/${id}`)
             .then((book) => {
-                console.log(book)
                 dispatch({ type: "FETCH_BOOK", payload: book.data });
             }).catch((error) => {
                 console.error("Erro ao obter dados do livro: ", error);
@@ -52,9 +51,10 @@ export function updateBook(data) {
     return (dispatch) => {
         if (data.title != "" || data.description != "") {
             axios.put(`${BASE_URL}/${data._id}`, data)
-                .then(function (data) {
+                .then(function (book) {
                     toastr.success('Sucesso', 'Livro Atualizado com Sucesso.')
                     dispatch({ type: "BOOK_UPDATED", payload: true });
+                    dispatch(fetchBook(book.data._id));
                 })
                 .catch(function (error) {
                     console.error("Erro ao atualizar livro: ", error);

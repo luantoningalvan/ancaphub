@@ -10,15 +10,17 @@ import BookForm from './bookForm'
 import isEmpty from 'is-empty'
 
 function BookFormPage(props) {
-
+    const { id } = props.match.params;
+    
     useEffect( () => {
-        const { id } = props.match.params;
         if (id) {
+            console.log("sim")
             props.fetchBook(id);
         } else{
+            console.log("nao")
             props.prepareToCreateNewBook();
         }
-    }, []);
+    }, [id]);
 
     const isNew = isEmpty(props.book)
     
