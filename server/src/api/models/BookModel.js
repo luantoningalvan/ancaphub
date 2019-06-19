@@ -13,8 +13,9 @@ const BookSchema = new Schema({
     description: String,
     cover: String,
     buyLinks: Array,
-    avaliableFormats: {
+    downloadOptions: {
         type: Array,
+        required: true
     },
     languages: Array
 })
