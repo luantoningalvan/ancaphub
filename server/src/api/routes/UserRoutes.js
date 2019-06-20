@@ -55,7 +55,7 @@ router.post("/login", (req, res) => {
         return res.status(400).json(errors);
     }
 
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
     
     // Encontra o usuário através do e-mail correspondente
     User.findOne({ email }).then(user => {
@@ -67,27 +67,33 @@ router.post("/login", (req, res) => {
         // Verifica a senha
         bcrypt.compare(password, user.password).then(isMatch => {
             if (isMatch) {
-                // Verificação deu positivo
-                // Cria o Payload JWT 
-                const payload = {
-                    id: user.id,
-                    name: user.name
-                };
+                if(user.role.includes(role)){
+                    // Verificação deu positivo
+                    // Cria o Payload JWT 
+                    const payload = {
+                        id: user.id,
+                        name: user.name
+                    };
 
-                // Token de autenticação
-                jwt.sign(
-                    payload,
-                    keys.secretOrKey,
-                    {
-                        expiresIn: 31556926 // 1 ano em segundos
-                    },
-                    (err, token) => {
-                        res.json({
-                            success: true,
-                            token: "Bearer " + token
-                        });
-                    }
-                );
+                    // Token de autenticação
+                    jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        {
+                            expiresIn: 31556926 // 1 ano em segundos
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: "Bearer " + token
+                            });
+                        }
+                    );
+                } else {
+                    return res
+                        .status(403)
+                        .json({ permissiondanied: "Seu nível de usuário não é suficiente para acessar esta página." });
+                }
             } else {
                 return res
                     .status(400)

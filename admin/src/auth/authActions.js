@@ -2,33 +2,14 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { returnErrors } from '../errors/errorAction'
-import { LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL, REGISTER_SUCCESS, SET_CURRENT_USER, USER_LOADING } from "../types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, SET_CURRENT_USER, USER_LOADING } from "../types";
 
 const BASE_URL = 'http://localhost:3000/api/users'
 
-// Cadastro do Usuário
-export const register = (userData, history) => dispatch => {
-  axios
-    .post(`${BASE_URL}/register`, userData)
-    .then(res => {
-      history.push("/login")
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      })
-    })
-    .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
-      );
-      dispatch({
-        type: REGISTER_FAIL
-      });
-    });
-};
-
 // Login - obtém o token do usuário
-export const login = userData => dispatch => {
+export const login = data => dispatch => {
+  const userData = { ...data, role: "admin"}
+
   axios
     .post(`${BASE_URL}/login`, userData)
     .then(res => {

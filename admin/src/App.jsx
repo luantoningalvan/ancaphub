@@ -22,7 +22,6 @@ import Books from './books/books'
 import AddBooks from './books/bookFormPage'
 import EditBook from './books/bookFormPage'
 import SignIn from './auth/signin'
-import SignUp from './auth/signup'
 
 if (localStorage.jwtToken) {
     // Set auth token header auth
@@ -60,14 +59,12 @@ export default class App extends Component {
                 <Router>
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
-
+                        
                         <PrivateRoute exact path="/books/" component={Books} />
                         <PrivateRoute path="/books/add/" component={AddBooks} />
                         <PrivateRoute path="/books/edit/:id" component={EditBook}/>
 
                         <Route path="/login" component={SignIn} />
-                        <Route path="/cadastro" component={SignUp} />
-
                     </Switch>
                 </Router>
             </Provider>

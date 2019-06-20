@@ -140,11 +140,6 @@ function SignIn(props) {
               Esqueceu a senha?
                 </Link>
           </Grid>
-          <Grid item>
-            <Link component={RouterLink} to='/cadastro' underline='none' color="textPrimary">
-              Não tem uma conta? Crie uma
-                </Link>
-          </Grid>
         </Grid>
       </div>
 
