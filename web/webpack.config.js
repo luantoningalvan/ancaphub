@@ -12,9 +12,10 @@ module.exports = {
     publicPath: '/'
   },
   devServer:{
-    port:8080,
+    port:8081,
     contentBase: './public',
     historyApiFallback: true,
+    headers: { "Access-Control-Allow-Origin": "http://localhost:3000" }
   },
   resolve:{
     extensions: ['*', '.js', '.jsx'],
