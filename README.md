@@ -15,8 +15,10 @@ Estão sendo utilizados no projeto
 ## Como Rodar
 Basta fazer um clone do repositório, entrar em todas as pastas na raíz(cada uma correspondente a uma aplicação diferente) e instalar as respectivas dependências.
 
-Para rodar o servidor entre na pasta server e utilize o comando `$ npm start`
+Para rodar o servidor entre na pasta /server e utilize o comando `$ npm start`. Ele será executado na porta :3000
 
-Para rodar o painel administrativo/webapp entre na pasta admin ou web respectivamente e utilize o comando `$ npm run dev`
+Para rodar o Painel Administrativo entre na pasta /admin e utilize o comando `$ npm run dev`. Ele será executado na porta :8080
+
+Para rodar a Versão Web entre na pasta /web e utilize o comando `$ npm run dev`. Ela será executada na porta :8081
 
 O aplicativo contém apenas a estrutura padrão do react-native, ele não será alterado no momento.
