@@ -2,8 +2,10 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './rootReducer'
+import promise from 'redux-promise'
+import multi from 'redux-multi'
 import thunk from 'redux-thunk'
+import reducers from './rootReducer'
 
 // Telas
 // # Página Inicial
@@ -19,11 +21,8 @@ import Podcasts from './podcasts/podcasts'
 // # Artigos
 import Articles from './articles/articles'
 
-// # Autenticação
-import Signin from './auth/login'
-import Signup from './auth/signup'
-
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
 
 export default function App() {
   return (
@@ -38,9 +37,6 @@ export default function App() {
           <Route path="/podcasts" component={Podcasts} />
 
           <Route path="/artigos" component={Articles} />
-
-          <Route path="/login" component={Signin} />
-          <Route path="/cadastro" component={Signup} />
         </Switch>
       </Router>
     </Provider>

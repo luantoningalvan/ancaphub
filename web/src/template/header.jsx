@@ -7,16 +7,10 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import AuthDialog from '../auth/authDialog'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -82,71 +76,27 @@ const useStyles = makeStyles(theme => ({
 
 function PrimarySearchAppBar(props) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  function handleProfileMenuOpen(event) {
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleMobileMenuClose() {
-    setMobileMoreAnchorEl(null);
-  }
-
-  function handleMenuClose() {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  }
-
-  function handleMobileMenuOpen(event) {
-    setMobileMoreAnchorEl(event.currentTarget);
-  }
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="Show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-    </Menu>
-  );
 
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar style={{width: '100%', display: "flex", flexDirection: 'row', alignContent: 'space-around'}}>
-          <div style={{display: "flex",alignItems: 'center', flexGrow: '1'}}>
-          <IconButton
-            color="inherit"
-            aria-label="Abrir menu lateral"
-            onClick={props.openDrawer}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            AncapHub
+        <Toolbar style={{ width: '100%', display: "flex", flexDirection: 'row', alignContent: 'space-around' }}>
+          <div style={{ display: "flex", alignItems: 'center', flexGrow: '1' }}>
+            <IconButton
+              color="inherit"
+              aria-label="Abrir menu lateral"
+              onClick={props.openDrawer}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" noWrap>
+              AncapHub
           </Typography>
           </div>
 
-          <div className={classes.search} style={{flexGrow: '1'}}>
+          <div className={classes.search} style={{ flexGrow: '1' }}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -160,27 +110,16 @@ function PrimarySearchAppBar(props) {
             />
           </div>
 
-          <div style={{flexGrow: '1', display: 'flex',justifyContent: "flex-end"}}>
-          <div className={classes.sectionDesktop}>
-            <Button aria-label="Entrar" color="secondary">
-              Entrar
-            </Button>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="Show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          <div style={{ flexGrow: '1', display: 'flex', justifyContent: "flex-end" }}>
+            <div className={classes.sectionDesktop}>
+              <AuthDialog />
+            </div>
+            <div className={classes.sectionMobile}>
+              <AuthDialog />
+            </div>
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
     </div>
   );
 }

@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default function BookCard(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
     function handleClick(event) {
       setAnchorEl(event.currentTarget);
@@ -57,9 +58,9 @@ export default function BookCard(props) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" href={`/livros/${book._id}`} color="primary">
-                        Ver Detalhes
-                    </Button>
+                        <Button size="small" color="primary" component={AdapterLink} to={`/livros/${book._id}`}>
+                            Ver Detalhes
+                        </Button>
                     <Button size="small" color="secondary" onClick={handleClick}>
                         Baixar
                         <DownloadIcon className={classes.rightIcon} />
