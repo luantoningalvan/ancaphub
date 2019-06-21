@@ -6,12 +6,22 @@ import rootReducer from './rootReducer'
 import thunk from 'redux-thunk'
 
 // Telas
+// # Página Inicial
 import Home from './home/home'
-import Livros from './books/books'
+
+// # Livros
+import Books from './books/books'
+import SingleBook from './books/singleBook'
+
+// # Podcasts
 import Podcasts from './podcasts/podcasts'
-import Artigos from './articles/articles'
-import Login from './auth/loginForm'
-import Cadastro from './auth/signup'
+
+// # Artigos
+import Articles from './articles/articles'
+
+// # Autenticação
+import Signin from './auth/login'
+import Signup from './auth/signup'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -21,11 +31,16 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/livros" component={Livros} />
+
+          <Route exact path="/livros" component={Books} />
+          <Route path="/livros/:id" component={SingleBook} />
+
           <Route path="/podcasts" component={Podcasts} />
-          <Route path="/artigos" component={Artigos} />
-          <Route path="/login" component={Login} />
-          <Route path="/cadastro" component={Cadastro} />
+
+          <Route path="/artigos" component={Articles} />
+
+          <Route path="/login" component={Signin} />
+          <Route path="/cadastro" component={Signup} />
         </Switch>
       </Router>
     </Provider>

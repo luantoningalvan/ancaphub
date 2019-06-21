@@ -12,3 +12,14 @@ export function fetchAllBooks() {
             })
     }
 }
+
+export function fetchBook(id) {
+    return (dispatch) => {
+        axios.get(`${BASE_URL}/${id}`)
+            .then((book) => {
+                dispatch({ type: "FETCH_BOOK", payload: book.data });
+            }).catch((error) => {
+                console.error("Erro ao obter dados do livro: ", error);
+            })
+    }
+}

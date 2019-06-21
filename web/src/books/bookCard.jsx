@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     media: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function SingleBook(props) {
+export default function BookCard(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -56,7 +57,7 @@ export default function SingleBook(props) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" href={`/livros/${book._id}`} color="primary">
                         Ver Detalhes
                     </Button>
                     <Button size="small" color="secondary" onClick={handleClick}>
@@ -80,7 +81,7 @@ export default function SingleBook(props) {
                         onClose={handleClose}
                     >
                         {book.downloadOptions.map(download => (
-                            <MenuItem component="a" href={download.file} target="_blank">{download.type}</MenuItem>
+                            <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
                         ))}
                         
                     </Menu>

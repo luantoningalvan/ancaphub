@@ -29,7 +29,7 @@ function BooksList(props) {
       </Box>
       
       <Grid container spacing={2}>
-      {props.books.allBooks.map((book, index) => (
+      {props.books.map((book, index) => (
         <BookCard book={book} key={index}/>
       ))}
       </Grid>
@@ -37,7 +37,7 @@ function BooksList(props) {
   )
 }
 
-const mapStateToProps = (state) => ({ books: state.books })
+const mapStateToProps = (state) => ({ books: state.books.allBooks })
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(BooksList)
