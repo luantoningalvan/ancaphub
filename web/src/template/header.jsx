@@ -11,7 +11,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AuthDialog from '../auth/authDialog'
-
+import LoggedUserMenu from '../auth/loggedUserMenu'
 const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -112,10 +112,18 @@ function PrimarySearchAppBar(props) {
 
           <div style={{ flexGrow: '1', display: 'flex', justifyContent: "flex-end" }}>
             <div className={classes.sectionDesktop}>
-              <AuthDialog />
+              {!props.logged ? (
+                <AuthDialog />
+              ) : (
+                <LoggedUserMenu />
+              )}
             </div>
             <div className={classes.sectionMobile}>
-              <AuthDialog />
+              {props.logged ? (
+                <AuthDialog />
+              ) : (
+                <LoggedUserMenu />
+              )}
             </div>
           </div>
         </Toolbar>

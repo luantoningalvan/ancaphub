@@ -12,21 +12,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
+    tab: {
+        width: '100%',
+        paddingTop: "10px",
+        paddingBottom: "10px",
     },
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    button: {
+      marginTop: "10px"
+    }
 }));
 
-function Login(props) {
+function SignInForm(props) {
+  const classes = useStyles()
   const SigninSchema = Yup.object().shape({
     email: Yup.string()
       .email('E-mail inválido')
@@ -35,68 +32,76 @@ function Login(props) {
       .required('O campo senha é obrigatório!')
   });
 
-  const classes = useStyles();
-  
   return (
-    <Formik
-    initialValues={{ email: '', password: '' }}
-    validationSchema={SigninSchema}
-    onSubmit={(values, actions) => {
-      props.signIn(values)
-    }}
-    render={props => {
-      const { values, touched, errors, handleChange, handleBlur } = props;
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={SigninSchema}
+        onSubmit={(values, actions) => {
+          props.signIn(values)
+        }}
+        render={props => {
+          const { values, touched, errors, handleChange, handleBlur } = props;
 
-      return (
-        <Form className={classes.form}>
-          <TextField
-            autoFocus
-            variant="outlined"
-            type="email"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Endereço de e-mail"
-            name="email"
-            autoComplete="email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={(errors.email && touched.email) && errors.email}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Senha"
-            type="password"
-            id="password"
-            autoComplete="password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={(errors.password && touched.password) && errors.password}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Manter-me logado"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Entrar
-            </Button>
-        </Form>
-      )
-    }}
-  />
+          return (
+            <Form className={classes.tab}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <TextField
+                    autoFocus
+                    variant="outlined"
+                    type="email"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Endereço de e-mail"
+                    name="email"
+                    autoComplete="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={(errors.email && touched.email) && errors.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Senha"
+                    type="password"
+                    id="password"
+                    autoComplete="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={(errors.password && touched.password) && errors.password}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Manter-me logado"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                  >
+                    Entrar
+                  </Button>
+                </Grid>
+              </Grid>
+            </Form>
+          )
+        }}
+      />
   )
 }
 
@@ -108,4 +113,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ signIn }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm)

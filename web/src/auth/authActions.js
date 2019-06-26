@@ -6,42 +6,51 @@ import { returnErrors } from '../errors/errorAction'
 const BASE_URL = 'http://localhost:3000/api/users'
 
 export const signIn = data => dispatch => {
-    const userData = { ...data, role: "user"}
-    console.log(userData)
-    axios
-      .post(`${BASE_URL}/login`, userData)
-      .then(res => {
-        // Seta o token no localstorage
-        const { token } = res.data;
-        localStorage.setItem("jwtToken", token);
-        // Seta o token no cabeçalho de autenticação
-        setAuthToken(token);
-        // Decodifica o token para obter os dados do usuário
-        const decoded = jwt_decode(token);
-        // Seta o usuário atual
-        dispatch(setCurrentUser(decoded));
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: res.data
-        })
+  const userData = { ...data, role: "user" }
+  console.log(userData)
+  axios
+    .post(`${BASE_URL}/login`, userData)
+    .then(res => {
+      // Seta o token no localstorage
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      // Seta o token no cabeçalho de autenticação
+      setAuthToken(token);
+      // Decodifica o token para obter os dados do usuário
+      const decoded = jwt_decode(token);
+      // Seta o usuário atual
+      dispatch(setCurrentUser(decoded));
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: res.data
       })
-      .catch(err => {
-        dispatch(
-          
-          console.log(err)
-        );
-        dispatch({
-          type: 'LOGIN_FAIL'
-        });
-      });
-  };
+    })
+    .catch(err => {
 
-export const signUp = (values) => {
-    return {
-        type: 'CADASTRO',
-        dispatch: values
-    }
-}
+        console.log(err)
+      dispatch({
+        type: 'LOGIN_FAIL'
+      });
+    });
+};
+
+// Cadastro do Usuário
+export const signUp = (userData, history) => dispatch => {
+  axios
+    .post(`${BASE_URL}/register`, userData)
+    .then(res => {
+      dispatch({
+        type: 'REGISTER_SUCCESS',
+        payload: res.data
+      })
+    })
+    .catch(err => {
+        console.log(err)
+      dispatch({
+        type: 'REGISTER_FAIL'
+      });
+    });
+};
 
 // Seta o usuário logado
 export const setCurrentUser = decoded => {
