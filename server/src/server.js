@@ -27,10 +27,12 @@ server.use(passport.initialize());
 require("./config/passport")(passport);
 
 const books = require('./api/routes/BookRoutes')
+const articles = require('./api/routes/ArticleRoutes')
 const users = require('./api/routes/UserRoutes')
 const categories = require('./api/routes/CategoryRoutes')
 
 server.use('/api/books/', books)
+server.use('/api/articles/', articles)
 server.use('/api/users/', users)
 server.use('/api/categories/', categories)
 

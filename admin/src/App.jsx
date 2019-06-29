@@ -17,10 +17,20 @@ const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
 
 // Import screens
+/// Dashboard
 import Dashboard from './dashboard/dashboard'
+
+/// Books
 import Books from './books/books'
-import AddBooks from './books/bookFormPage'
+import AddBook from './books/bookFormPage'
 import EditBook from './books/bookFormPage'
+
+/// Articles
+import Articles from './articles/articles'
+import AddArticle from './articles/articleFormPage'
+import EditArticle from './articles/articleFormPage'
+
+/// Auth
 import SignIn from './auth/signin'
 
 if (localStorage.jwtToken) {
@@ -61,8 +71,12 @@ export default class App extends Component {
                         <PrivateRoute exact path="/" component={Dashboard} />
                         
                         <PrivateRoute exact path="/books/" component={Books} />
-                        <PrivateRoute path="/books/add/" component={AddBooks} />
+                        <PrivateRoute path="/books/add/" component={AddBook} />
                         <PrivateRoute path="/books/edit/:id" component={EditBook}/>
+
+                        <PrivateRoute exact path="/articles/" component={Articles} />
+                        <PrivateRoute path="/articles/add/" component={AddArticle} />
+                        <PrivateRoute path="/articles/edit/:id" component={EditArticle}/>
 
                         <Route path="/login" component={SignIn} />
                     </Switch>

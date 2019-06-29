@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
 
 export default props => {
     const useStyles = makeStyles(theme => ({
@@ -21,9 +20,7 @@ export default props => {
     return (
         <Link to={props.link} className="waves-effect waves-blue" className={classes.listItem}>
             <ListItem button className={(props.nested) ? classes.nested : null}>
-                <ListItemIcon>
-                    <Icon>{props.icon}</Icon>
-                </ListItemIcon>
+                <ListItemIcon>{props.icon}</ListItemIcon>
                 <ListItemText primary={props.label} />
             </ListItem>
         </Link>

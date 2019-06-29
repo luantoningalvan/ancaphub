@@ -11,19 +11,20 @@ import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchAllBooks, deleteBook } from './bookActions'
+import { fetchAllArticles, deleteArticle } from './articleActions'
 
 import Template from '../template/template'
 import Hero from '../template/hero'
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
-function Books(props) {
-    useEffect(() => props.fetchAllBooks(), []);
+function Articles(props) {
+
+    useEffect(() => props.fetchAllArticles(), []);
 
     return (
         <Template>
-            <Hero title="Livros" />
+            <Hero title="Artigos" />
             <Box mt={3}>
                 <Container>
                     <Paper>
@@ -37,18 +38,18 @@ function Books(props) {
                             </TableHead>
 
                             <TableBody>
-                                {props.books.allBooks.map(book => (
-                                    <TableRow key={book._id}>
-                                        <TableCell align="left">{book.title}</TableCell>
-                                        <TableCell align="left">{book.author}</TableCell>
+                                {props.articles.allArticles.map(article => (
+                                    <TableRow key={article._id}>
+                                        <TableCell align="left">{article.title}</TableCell>
+                                        <TableCell align="left">{article.author}</TableCell>
                                         <TableCell align="right">
-                                            <Link to={`/books/edit/${book._id}`} >
+                                            <Link to={`/articles/edit/${article._id}`} >
                                                 <IconButton aria-label="Editar">
                                                     <EditIcon />
                                                 </IconButton>
                                             </Link>
 
-                                            <IconButton aria-label="Delete" onClick={() => props.deleteBook(book._id)}>
+                                            <IconButton aria-label="Delete" onClick={() => props.deleteArticle(article._id)}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
@@ -63,6 +64,6 @@ function Books(props) {
     )
 }
 
-const mapStateToProps = (state) => ({ books: state.books })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks, deleteBook }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(Books)
+const mapStateToProps = (state) => ({ articles: state.articles })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllArticles, deleteArticle }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(Articles)

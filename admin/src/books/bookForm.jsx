@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Formik, Field, FieldArray, getIn, Form } from 'formik'
-import { createBook, updateBook } from './booksAction'
+import { createBook, updateBook } from './bookActions'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
@@ -231,9 +231,12 @@ function BookForm(props) {
                                             />
                                         </Box>
 
-                                        <div className={classes.imagePreview}>
-                                            <img src={values.cover} style={{width:'100%'}} />
-                                        </div>
+                                        {values.cover != "" && (
+                                            <div className={classes.imagePreview}>
+                                                <img src={values.cover} style={{width:'100%'}} />
+                                            </div>
+                                        )}
+
                                     </Grid>
 
                                     <Grid item xs={12}>

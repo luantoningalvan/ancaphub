@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { prepareToCreateNewBook, fetchBook } from './booksAction'
+import { prepareToCreateNewBook, fetchBook } from './bookActions'
 import Container from '@material-ui/core/Container'
 import Template from '../template/template'
 import Hero from '../template/hero'
