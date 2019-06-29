@@ -11,27 +11,25 @@ import isEmpty from 'is-empty'
 
 function BookFormPage(props) {
     const { id } = props.match.params;
-    
+
     useEffect( () => {
         if (id) {
-            console.log("sim")
             props.fetchBook(id);
         } else{
-            console.log("nao")
             props.prepareToCreateNewBook();
         }
     }, [id]);
 
     const isNew = isEmpty(props.book)
-    
+
     return (
         <Template>
             <Hero title={isNew ? "Adicionar Livro" : `Editar ${props.book.title}`} />
 
             <Box mt={3}>
                 <Container>
-                    <BookForm 
-                        isNew={isNew} 
+                    <BookForm
+                        isNew={isNew}
                         bookData={props.book}
                     />
                 </Container>

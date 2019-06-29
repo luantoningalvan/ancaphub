@@ -7,7 +7,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Formik, FieldArray, getIn, Form } from 'formik'
+import { Formik, Field, FieldArray, getIn, Form } from 'formik'
 import { createBook, updateBook } from './booksAction'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -24,13 +24,13 @@ import Box from '@material-ui/core/Box';
 import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import Link from '@material-ui/core/Link';
+import ChooseCategory from '../components/categories/chooseCategory'
 
 const useStyles = makeStyles(theme => ({
     imagePreview: {
         overflow: "hidden",
     }
 }))
-
 
 function BookForm(props) {
     const classes = useStyles()
@@ -47,7 +47,7 @@ function BookForm(props) {
                     type: Yup.string()
                         .required("O campo tipo é obrigatório!"),
                     file: Yup.string()
-                        .required("O campo arquivo é obrigatório!")           
+                        .required("O campo arquivo é obrigatório!")
                 })
             )
             .ensure()
@@ -56,7 +56,7 @@ function BookForm(props) {
     })
 
     const isNew = props.isNew
-    const initialFormValues = { title: '', author: '', description: '', cover: '', downloadOptions: null, buy_links: [''] }
+    const initialFormValues = { title: '', author: '', description: '', cover: '', downloadOptions: null, buy_links: [''], categories: [] }
 
     return (
         <Formik
@@ -71,12 +71,11 @@ function BookForm(props) {
                     return props.updateBook(values);
                 }
             }}
-            
-            
+
+
 
             render={(formikProps) => {
                 const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
-                console.log(values)
                 return (
                     <Form encType="multipart/form-data" autoComplete="off">
                         <Grid container spacing={3}>
@@ -134,7 +133,7 @@ function BookForm(props) {
                                                         Opções de Download
                                                     </Typography>
                                                 </Box>
-                                                
+
                                                 <FieldArray
                                                     name="downloadOptions"
                                                     render={arrayHelpers => (
@@ -193,7 +192,7 @@ function BookForm(props) {
                                                                     <Link href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
                                                                         + Adicionar
                                                                     </Link>
-                                                                    
+
                                                                 </Typography>
                                                                 {typeof errors.downloadOptions === 'string' ? <p>{errors.downloadOptions}</p> : null}
                                                             </Grid>
@@ -235,6 +234,16 @@ function BookForm(props) {
                                         <div className={classes.imagePreview}>
                                             <img src={values.cover} style={{width:'100%'}} />
                                         </div>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" component="h2">
+                                            Categorias
+                                        </Typography>
+
+                                        <Box my={2}>
+                                          <Field component={ChooseCategory} name="categories" />
+                                        </Box>
                                     </Grid>
                                 </Grid>
                             </Grid>

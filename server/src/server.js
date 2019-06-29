@@ -28,9 +28,12 @@ require("./config/passport")(passport);
 
 const books = require('./api/routes/BookRoutes')
 const users = require('./api/routes/UserRoutes')
+const categories = require('./api/routes/CategoryRoutes')
 
 server.use('/api/books/', books)
 server.use('/api/users/', users)
+server.use('/api/categories/', categories)
+
 
 server.post('/upload', upload.single('cover'), function (req, res, next) {
   console.log(cover)
