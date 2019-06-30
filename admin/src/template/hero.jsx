@@ -20,15 +20,14 @@ export default props => {
         <div className={classes.pageHero}>
             <Container>
                 <Grid container>
-                    <Grid item sm={4}>
-                        <Typography variant="h6" component="h2">
+                    <Grid item sm={8}>
+                        <Typography variant="h6" component="h2" noWrap>
                             {props.title}
                         </Typography>
                     </Grid>
-                    <Grid item sm={8}>{props.children}</Grid>
+                    <Grid item sm={4}>{props.children}</Grid>
                 </Grid>
             </Container>
         </div>
     )
 }
-

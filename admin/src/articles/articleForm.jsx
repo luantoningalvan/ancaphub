@@ -16,6 +16,7 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import * as Yup from 'yup';
 import ChooseCategory from '../components/categories/chooseCategory'
+import RichTextEditor from '../components/editor/RichTextEditor'
 
 const useStyles = makeStyles(theme => ({
     imagePreview: {
@@ -54,8 +55,6 @@ function ArticleForm(props) {
                 }
             }}
 
-
-
             render={(formikProps) => {
                 const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
                 return (
@@ -93,17 +92,7 @@ function ArticleForm(props) {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <TextField
-                                            multiline
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Conteúdo"
-                                            name="content"
-                                            value={values.content}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            helperText={(errors.content && touched.content) && errors.content}
-                                        />
+                                        <Field component={RichTextEditor} name="content" />
                                     </Grid>
                                 </Grid>
                             </Grid>
