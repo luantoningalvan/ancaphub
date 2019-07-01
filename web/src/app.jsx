@@ -18,11 +18,13 @@ import Home from './home/home'
 import Books from './books/books'
 import SingleBook from './books/singleBook'
 
+
 // # Podcasts
 import Podcasts from './podcasts/podcasts'
 
 // # Artigos
 import Articles from './articles/articles'
+import SingleArticle from './articles/singleArticle'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
@@ -57,7 +59,8 @@ export default function App() {
 
           <Route path="/podcasts" component={Podcasts} />
 
-          <Route path="/artigos" component={Articles} />
+          <Route exact path="/artigos" component={Articles} />
+          <Route path="/artigos/:id" component={SingleArticle} />
         </Switch>
       </Router>
     </Provider>
