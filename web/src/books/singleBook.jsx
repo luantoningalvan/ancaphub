@@ -11,7 +11,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import IconButton from '@material-ui/core/IconButton';
-import Categories from '../components/categories'
+import Categories from '../components/categories/showElementCategories'
 
 const useStyles = makeStyles(theme => ({
     media: {

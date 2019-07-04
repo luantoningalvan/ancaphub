@@ -16,7 +16,7 @@ import '../assets/js/script.js'
 const theme = createMuiTheme({
   palette: {
       primary: {
-        main: '#000',
+        main: '#131313',
       },
       secondary: {
           main: '#f9a825',

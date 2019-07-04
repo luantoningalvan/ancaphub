@@ -5,14 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { fetchArticle } from './articleActions'
 import { Typography, Box, Grid } from '@material-ui/core'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
-import DownloadIcon from '@material-ui/icons/CloudDownload'
-import IconButton from '@material-ui/core/IconButton'
-import parse from 'html-react-parser'
-import Categories from '../components/categories'
+import Categories from '../components/categories/showElementCategories'
 
 const useStyles = makeStyles(theme => ({
     media: {
