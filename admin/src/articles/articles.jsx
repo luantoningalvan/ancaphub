@@ -68,6 +68,21 @@ function Articles(props) {
                                 ))}
                             </TableBody>
                         </Table>
+                        <TablePagination
+                          rowsPerPageOptions={[]}
+                          component="div"
+                          count={total}
+                          rowsPerPage={clientPageSize}
+                          page={clientCurrentPage - 1}
+                          backIconButtonProps={{
+                            'aria-label': 'Previous Page',
+                          }}
+                          nextIconButtonProps={{
+                            'aria-label': 'Next Page',
+                          }}
+                          onChangePage={(e, page) => setCurrentPage(page + 1)}
+                          labelDisplayedRows={({ from, to, count }) => (`${from}-${to} de ${count}`)}
+                        />
                         </React.Fragment>
                       ) :(
                         <Box p={2}>
