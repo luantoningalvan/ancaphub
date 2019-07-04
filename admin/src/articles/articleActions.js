@@ -4,7 +4,6 @@ const BASE_URL = 'http://localhost:3000/api/articles'
 
 // Obtém a lista de todos os artigos
 export function fetchAllArticles() {
-    console.log('bom dia')
     return (dispatch) => {
         axios.get(BASE_URL)
             .then((articles) => {

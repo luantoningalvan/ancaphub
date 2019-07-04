@@ -31,8 +31,6 @@ function Books(props) {
     return page <= parseInt(total / pageSize) ? page * pageSize : total
   }
 
-  console.log(total)
-
     return (
         <Template>
             <Hero title="Livros" />
