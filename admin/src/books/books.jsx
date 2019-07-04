@@ -4,6 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TablePagination from '@material-ui/core/TablePagination';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,21 +13,34 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchAllBooks, deleteBook } from './bookActions'
-
+import isEmpty from 'is-empty'
 import Template from '../template/template'
 import Hero from '../template/hero'
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function Books(props) {
-    useEffect(() => props.fetchAllBooks(), []);
+  const { books, page, pageSize, total } = props.books
+  const [clientCurrentPage, setCurrentPage] = React.useState(1)
+  const [clientPageSize, setPageSize] = React.useState(20)
+
+  useEffect(() => props.fetchAllBooks(clientCurrentPage, clientPageSize), [clientCurrentPage]);
+
+  const checkHowManyBooksAreAlreadyLoaded = () => {
+    return page <= parseInt(total / pageSize) ? page * pageSize : total
+  }
+
+  console.log(total)
 
     return (
         <Template>
             <Hero title="Livros" />
-            <Box mt={3}>
+            <Box my={3}>
                 <Container>
                     <Paper>
+                    {books && !isEmpty(books) ? (
+                      <React.Fragment>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -37,7 +51,7 @@ function Books(props) {
                             </TableHead>
 
                             <TableBody>
-                                {props.books.allBooks.map(book => (
+                                {books.map(book => (
                                     <TableRow key={book._id}>
                                         <TableCell align="left">{book.title}</TableCell>
                                         <TableCell align="left">{book.author}</TableCell>
@@ -56,13 +70,35 @@ function Books(props) {
                                 ))}
                             </TableBody>
                         </Table>
+                        <TablePagination
+                          rowsPerPageOptions={[]}
+                          component="div"
+                          count={total}
+                          rowsPerPage={clientPageSize}
+                          page={clientCurrentPage - 1}
+                          backIconButtonProps={{
+                            'aria-label': 'Previous Page',
+                          }}
+                          nextIconButtonProps={{
+                            'aria-label': 'Next Page',
+                          }}
+                          onChangePage={(e, page) => setCurrentPage(page + 1)}
+                          labelDisplayedRows={({ from, to, count }) => (`${from}-${to} de ${count}`)}
+                        />
+                        </React.Fragment>
+                      ) :(
+                        <Box p={2}>
+                          <Typography variant="body2">Nenhum livro cadastrado.</Typography>
+                        </Box>
+                      )}
                     </Paper>
+
                 </Container>
             </Box>
         </Template>
     )
 }
 
-const mapStateToProps = (state) => ({ books: state.books })
+const mapStateToProps = (state) => ({ books: state.books.allBooks })
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks, deleteBook }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Books)
