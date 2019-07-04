@@ -4,7 +4,6 @@ const BASE_URL = 'http://localhost:3000/api/books'
 // Obtém a lista de todos os livros
 export function fetchAllBooks(page = 2, pageSize = 2, order="desc", filter="", filterOn="") {
     return (dispatch) => {
-        console.log(`${BASE_URL}?page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}`)
         axios.get(`${BASE_URL}?page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}`)
             .then((books) => {
                 dispatch({ type: "FETCH_ALL_BOOKS", payload: books.data });

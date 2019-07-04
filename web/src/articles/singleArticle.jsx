@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { fetchArticle } from './articleActions'
 import { Typography, Box, Grid } from '@material-ui/core'
+import parse from 'html-react-parser'
 import Categories from '../components/categories/showElementCategories'
 
 const useStyles = makeStyles(theme => ({

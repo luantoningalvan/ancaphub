@@ -41,7 +41,7 @@ function BooksList(props) {
 
   useEffect(() => props.fetchAllBooks(clientCurrentPage, clientPageSize, order), [clientCurrentPage, order]);
   useEffect(() => props.fetchAllCategories(), []);
-  
+
   const checkHowManyBooksAreAlreadyLoaded = () => {
     return page <= parseInt(total / pageSize) ? page * pageSize : total
   }
@@ -96,7 +96,7 @@ function BooksList(props) {
                   Todas
                 </MenuItem>
                 {!isEmpty(props.categories) && props.categories.allCategories.map( category => (
-                  <MenuItem value={category._id}>{category.name}</MenuItem>
+                  <MenuItem value={category._id} key={category._id}>{category.name}</MenuItem>
                 ))}
                 </Select>
               </FormControl>
@@ -131,7 +131,7 @@ function BooksList(props) {
           )
         }
       </Grid>
-      
+
     </Template>
   )
 }
