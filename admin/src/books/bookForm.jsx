@@ -25,16 +25,9 @@ import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import Link from '@material-ui/core/Link';
 import ChooseCategory from '../components/categories/chooseCategory'
-
-const useStyles = makeStyles(theme => ({
-    imagePreview: {
-        overflow: "hidden",
-    }
-}))
+import ImageUpload from '../components/imageUpload/imageUpload'
 
 function BookForm(props) {
-    const classes = useStyles()
-
     // Validação frontend do formulário
     const BookSchema = Yup.object().shape({
         title: Yup.string()
@@ -218,25 +211,7 @@ function BookForm(props) {
                                             Capa do Livro
                                         </Typography>
 
-                                        <Box my={2}>
-                                            <TextField
-                                                variant="outlined"
-                                                fullWidth
-                                                label="Capa (link da imagem)"
-                                                name="cover"
-                                                value={values.cover}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                helperText={(errors.cover && touched.cover) && errors.cover}
-                                            />
-                                        </Box>
-
-                                        {values.cover != "" && (
-                                            <div className={classes.imagePreview}>
-                                                <img src={values.cover} style={{width:'100%'}} />
-                                            </div>
-                                        )}
-
+                                        <Field component={ImageUpload} name="cover" />                               
                                     </Grid>
 
                                     <Grid item xs={12}>
