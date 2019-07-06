@@ -26,6 +26,9 @@ import Podcasts from './podcasts/podcasts'
 import Articles from './articles/articles'
 import SingleArticle from './articles/singleArticle'
 
+// # Usuários
+import Profile from './users/userProfile'
+
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
 
@@ -61,6 +64,8 @@ export default function App() {
 
           <Route exact path="/artigos" component={Articles} />
           <Route path="/artigos/:id" component={SingleArticle} />
+
+          <Route exact path="/usuario/:id" component={Profile} />
         </Switch>
       </Router>
     </Provider>

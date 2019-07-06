@@ -3,11 +3,10 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { returnErrors } from '../errors/errorAction'
 
-const BASE_URL = 'http://localhost:3000/api/users'
+const BASE_URL = 'http://localhost:3000/api/auth'
 
 export const signIn = data => dispatch => {
   const userData = { ...data, role: "user" }
-  console.log(userData)
   axios
     .post(`${BASE_URL}/login`, userData)
     .then(res => {
@@ -26,8 +25,7 @@ export const signIn = data => dispatch => {
       })
     })
     .catch(err => {
-
-        console.log(err)
+      console.log(err)
       dispatch({
         type: 'LOGIN_FAIL'
       });

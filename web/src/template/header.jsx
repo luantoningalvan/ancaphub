@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function PrimarySearchAppBar(props) {
+function Header(props) {
   const classes = useStyles();
 
   return (
@@ -119,7 +119,7 @@ function PrimarySearchAppBar(props) {
               )}
             </div>
             <div className={classes.sectionMobile}>
-              {props.logged ? (
+              {!props.logged ? (
                 <AuthDialog />
               ) : (
                 <LoggedUserMenu />
@@ -132,4 +132,4 @@ function PrimarySearchAppBar(props) {
   );
 }
 
-export default PrimarySearchAppBar;
+export default Header;
