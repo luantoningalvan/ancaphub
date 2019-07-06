@@ -13,31 +13,30 @@ Retorna uma lista com todos os livros
 sendo filter o termo a ser pesquisado e filterOn o(s) campo(s) a ser(em) pesquisado(s) 
 Ex: ?filter=Propriedade&&filterOn=title
 */
+
 router.get('/', (req, res, next) => {
-  const pageSize = req.query.pageSize ? req.query.pageSize : 2
+  const pageSize = req.query.pageSize ? req.query.pageSize : 10
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0
   const filter = req.query.filter || ''
   const filterOn = req.query.filterOn || ''
   const sortBy = req.query.sortBy || 'title'
   const orderBy = req.query.orderBy || 'asc'
-  const sortQuery = {
-    [sortBy]: orderBy
-  }
+  const category = req.query.category || ''
+  const sortQuery = { [sortBy]: orderBy }
+
   let filterQuery = {}
+
   if (filter.length > 0) {
     const regx = new RegExp(filter, 'i')
-    if (filterOn.length > 0) {
-      filterQuery = {
-        [filterOn]: regx
-      }
-    } else {
-      filterQuery = {
-        name: regx
-      }
-    }
-  } 
 
-  console.log(filterQuery)
+    if (filterOn.length > 0) {
+      filterQuery = { ...filterQuery, [filterOn]: regx }
+    } else {
+      filterQuery = { ...filterQuery, title: regx }
+    }
+  }
+  
+  if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   Book.countDocuments(filterQuery)
     .then(bookCount => {
@@ -63,6 +62,7 @@ router.get('/', (req, res, next) => {
     })
 })
 
+// Retorna um livro de acordo com seu id
 router.get("/:id", async (request, response) => {
   try {
     var result = await Book.findById(request.params.id).exec();

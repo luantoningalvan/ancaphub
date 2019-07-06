@@ -36,10 +36,10 @@ function BooksList(props) {
   const { books, page, pageSize, total } = props.books
   const [clientCurrentPage, setCurrentPage] = React.useState(1)
   const [clientPageSize, setPageSize] = React.useState(12)
-  const [categorySelected, selectCategory] = React.useState('*') // Não é funcional ainda
+  const [categorySelected, selectCategory] = React.useState('')
   const [order, setOrder] = React.useState('asc')
 
-  useEffect(() => props.fetchAllBooks(clientCurrentPage, clientPageSize, order), [clientCurrentPage, order]);
+  useEffect(() => props.fetchAllBooks(clientCurrentPage, clientPageSize, order, '', '', categorySelected), [clientCurrentPage, order, categorySelected]);
   useEffect(() => props.fetchAllCategories(), []);
 
   const checkHowManyBooksAreAlreadyLoaded = () => {
@@ -92,7 +92,7 @@ function BooksList(props) {
                   value={categorySelected}
                   onChange={(e) => selectCategory(e.target.value)}
                 >
-                <MenuItem value="*">
+                <MenuItem value="">
                   Todas
                 </MenuItem>
                 {!isEmpty(props.categories) && props.categories.allCategories.map( category => (
@@ -104,7 +104,7 @@ function BooksList(props) {
 
             <Grid item xs={3}>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-simple">Ordem</InputLabel>
+                <InputLabel>Ordem</InputLabel>
                 <Select
                   value={order}
                   onChange={(e) => setOrder(e.target.value)}

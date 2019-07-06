@@ -2,32 +2,30 @@ const express = require('express')
 const router = express.Router();
 const Article = require("../models/ArticleModel")
 
-// Retorna uma lista de todos os livros
+// Retorna uma lista de todos os artigos
 router.get('/', (req, res, next) => {
-  const pageSize = req.query.pageSize ? req.query.pageSize : 2
+  const pageSize = req.query.pageSize ? req.query.pageSize : 10
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0
   const filter = req.query.filter || ''
   const filterOn = req.query.filterOn || ''
   const sortBy = req.query.sortBy || 'title'
   const orderBy = req.query.orderBy || 'asc'
-  const sortQuery = {
-    [sortBy]: orderBy
-  }
+  const category = req.query.category || ''
+  const sortQuery = { [sortBy]: orderBy }
+
   let filterQuery = {}
+
   if (filter.length > 0) {
     const regx = new RegExp(filter, 'i')
+
     if (filterOn.length > 0) {
-      filterQuery = {
-        [filterOn]: regx
-      }
+      filterQuery = { ...filterQuery, [filterOn]: regx }
     } else {
-      filterQuery = {
-        name: regx
-      }
+      filterQuery = { ...filterQuery, title: regx }
     }
   }
-
-  console.log(filterQuery)
+  
+  if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   Article.countDocuments(filterQuery)
     .then(articleCount => {
@@ -48,13 +46,12 @@ router.get('/', (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log('Erro ao encontrar livro:', err)
-      return res.status(500).json({ msg: 'Nenhum livro encontrado' })
+      console.log('Erro ao encontrar artigos:', err)
+      return res.status(500).json({ msg: 'Nenhum artigo encontrado' })
     })
 })
 
-
-// Retorna um livro de acordo com seu id
+// Retorna um artigo de acordo com seu id
 router.get("/:id", async (request, response) => {
     try {
         var result = await Article.findById(request.params.id).exec();
@@ -64,7 +61,7 @@ router.get("/:id", async (request, response) => {
     }
 });
 
-// Cria um novo livro
+// Cria um novo artigo
 router.post("/", async (request, response) => {
     try {
         var article = new Article(request.body);
@@ -75,7 +72,7 @@ router.post("/", async (request, response) => {
     }
 });
 
-// Edita um livro através de seu id
+// Edita um artigo através de seu id
 router.put("/:id", async (request, response) => {
     try {
         var article = await Article.findById(request.params.id).exec();
@@ -87,7 +84,7 @@ router.put("/:id", async (request, response) => {
     }
 });
 
-// Deleta um livro através de seu id
+// Deleta um artigo através de seu id
 router.delete("/:id", async (request, response) => {
     try {
         var result = await Article.deleteOne({ _id: request.params.id }).exec();

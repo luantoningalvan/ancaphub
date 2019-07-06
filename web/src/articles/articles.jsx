@@ -36,10 +36,10 @@ function ArticlesList(props) {
   const { articles, page, pageSize, total } = props.articles
   const [clientCurrentPage, setCurrentPage] = React.useState(1)
   const [clientPageSize, setPageSize] = React.useState(12)
-  const [categorySelected, selectCategory] = React.useState('*') // Não é funcional ainda
+  const [categorySelected, selectCategory] = React.useState('')
   const [order, setOrder] = React.useState('asc')
 
-  useEffect(() => props.fetchAllArticles(clientCurrentPage, clientPageSize, order), [clientCurrentPage, order]);
+  useEffect(() => props.fetchAllArticles(clientCurrentPage, clientPageSize, order, '', '', categorySelected), [clientCurrentPage, order, categorySelected]);
   useEffect(() => props.fetchAllCategories(), []);
 
   const checkHowManyItemsAreAlreadyLoaded = () => {
