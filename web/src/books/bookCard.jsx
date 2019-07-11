@@ -6,11 +6,13 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
+import SaveIcon from '@material-ui/icons/SaveAlt'
+import AddToLibraryIcon from '@material-ui/icons/LibraryAdd'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +41,7 @@ export default function BookCard(props) {
     return (
         <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card>
-                <CardActionArea>
+                <CardActionArea component={AdapterLink} to={`/livros/${book._id}`}>
                     <CardMedia
                         className={classes.media}
                         image={book.cover}
@@ -58,13 +60,15 @@ export default function BookCard(props) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                        <Button size="small" color="primary" component={AdapterLink} to={`/livros/${book._id}`}>
-                            Ver Detalhes
-                        </Button>
-                    <Button size="small" color="secondary" onClick={handleClick}>
-                        Baixar
-                        <DownloadIcon className={classes.rightIcon} />
-                    </Button>
+                    <IconButton size="small" color="primary" >
+                        <SaveIcon />
+                    </IconButton>
+                    <IconButton size="small" color="primary">
+                        <AddToLibraryIcon />
+                    </IconButton>
+                    <IconButton size="small" color="primary" onClick={handleClick}>
+                        <DownloadIcon/>
+                    </IconButton>
                     <Menu
                         id={`menubook-${book._id}`}
                         getContentAnchorEl={null}
