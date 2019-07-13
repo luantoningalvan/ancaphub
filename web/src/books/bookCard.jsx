@@ -12,7 +12,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import SaveIcon from '@material-ui/icons/SaveAlt'
-import AddToLibraryIcon from '@material-ui/icons/LibraryAdd'
+import UpdateLibraryButton from '../components/updateLibraryButton'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +28,6 @@ export default function BookCard(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
     function handleClick(event) {
       setAnchorEl(event.currentTarget);
     }
@@ -38,6 +37,7 @@ export default function BookCard(props) {
     }
 
     const { book } = props;
+
     return (
         <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card>
@@ -63,9 +63,7 @@ export default function BookCard(props) {
                     <IconButton size="small" color="primary" >
                         <SaveIcon />
                     </IconButton>
-                    <IconButton size="small" color="primary">
-                        <AddToLibraryIcon />
-                    </IconButton>
+                    <UpdateLibraryButton item={book._id} type="book" added={book.userWhoAddedToTheLibrary && book.userWhoAddedToTheLibrary.includes(props.user.id)} />
                     <IconButton size="small" color="primary" onClick={handleClick}>
                         <DownloadIcon/>
                     </IconButton>

@@ -8,11 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import DownloadIcon from '@material-ui/icons/CloudDownload'
-import { Link } from 'react-router-dom'
+import UpdateLibraryButton from '../components/updateLibraryButton'
 import striptags from 'striptags'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     media: {
@@ -25,18 +23,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function ArticleCard(props) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
-    function handleClick(event) {
-      setAnchorEl(event.currentTarget);
-    }
-
-    function handleClose() {
-      setAnchorEl(null);
-    }
-
-    const { _id, title, author, cover, content } = props.article
+    const { _id, title, author, cover, content, userWhoAddedToTheLibrary } = props.article
     return (
         <Grid item xs={3}>
             <Card>
@@ -62,6 +51,7 @@ export default function ArticleCard(props) {
                   <Button size="small" color="primary" component={AdapterLink} to={`/artigos/${_id}`}>
                     Ver Artigo
                   </Button>
+                  <UpdateLibraryButton item={_id} type="article" added={userWhoAddedToTheLibrary && userWhoAddedToTheLibrary.includes(props.user.id)} />
                 </CardActions>
             </Card>
         </Grid>

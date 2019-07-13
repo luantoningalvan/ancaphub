@@ -22,7 +22,8 @@ const BookSchema = new Schema({
         type: Array,
         required: true
     },
-    categories: [CategorySchema]
+    categories: [CategorySchema],
+    userWhoAddedToTheLibrary: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('Book', BookSchema);

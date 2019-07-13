@@ -2,6 +2,7 @@
   const initialState = {
     allUsers: [],
     user: {},
+    userLibrary: {},
     loading: false
   };
   
@@ -16,7 +17,12 @@
           return{
             ...state,
             user: action.payload
-          }  
+          }
+      case "GET_USER_LIBRARY_SUCCESS":
+        return {
+          ...state,
+          userLibrary: action.payload
+        }      
       default:
         return state;
     }

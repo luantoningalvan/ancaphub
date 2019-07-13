@@ -32,7 +32,7 @@ function LoggedUserMenu(props) {
       case '/usuario/:id/seguidores':
         return (<UserFollowers />)
       case '/usuario/:id/biblioteca':
-        return (<UserLibrary />)
+        return (<UserLibrary authUser={props.authUser} />)
       default:
         console.log(props.match.path)
     }
@@ -63,7 +63,7 @@ function LoggedUserMenu(props) {
   );
 }
 
-const mapStateToProps = state => ({ user: state.users.user })
+const mapStateToProps = state => ({ authUser: state.auth.user, user: state.users.user })
 const mapDispatchToProps = dispatch => bindActionCreators({ getUser }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggedUserMenu)
