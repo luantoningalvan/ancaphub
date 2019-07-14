@@ -74,3 +74,21 @@ export const logoutUser = () => dispatch => {
   // Seta o usuário atual para um objeto vazio {} também seta o isAuthenticated para falso
   dispatch(setCurrentUser({}));
 };
+
+export const updateLibrary = (item, type, action) => (dispatch, getState) => {
+  const state = getState()
+  const userId = state.auth.user.id
+  axios.put(`${BASE_URL}/${userId}/library`, { item, type, action })
+    .then(user => {
+      dispatch({
+        type: 'UPDATE_LIBRARY_SUCCESS',
+        payload: user.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: 'UPDATE_LIBRARY_FAIL',
+        payload: err
+      });
+    });
+}

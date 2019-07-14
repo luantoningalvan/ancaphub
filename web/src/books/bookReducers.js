@@ -11,7 +11,7 @@ export default (state = INITIAL_STATE, action) => {
         case "SELECT_BOOKS_ORDER": 
             return { ...state, filters: { ...state.filters, order: action.payload } }
         case "SELECT_BOOKS_PAGE": 
-            return { ...state, filters: { ...state.filters, page: action.payload } }                 
+            return { ...state, filters: { ...state.filters, page: action.payload } }                    
         default:
             return state
     }

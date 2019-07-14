@@ -51,7 +51,7 @@ export default function ArticleCard(props) {
                   <Button size="small" color="primary" component={AdapterLink} to={`/artigos/${_id}`}>
                     Ver Artigo
                   </Button>
-                  <UpdateLibraryButton item={_id} type="article" added={userWhoAddedToTheLibrary && userWhoAddedToTheLibrary.includes(props.user.id)} />
+                  {/*<UpdateLibraryButton item={article._id} type="article" />*/}
                 </CardActions>
             </Card>
         </Grid>

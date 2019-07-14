@@ -3,23 +3,30 @@ import IconButton from '@material-ui/core/IconButton';
 import AddToLibraryIcon from '@material-ui/icons/LibraryAdd'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateLibrary } from '../users/userActions'
+import { updateLibrary } from '../auth/authActions'
+import isEmpty from 'is-empty'
 
 function addToLibraryButton(props) {
-	if(props.added){
-		return (
-			<IconButton size="small" color="secondary" onClick={() => props.updateLibrary(props.item, props.type, 'remove')}>
-				<AddToLibraryIcon />
-			</IconButton>
-		)
-	} else {
-		return (
-			<IconButton size="small" color="primary" onClick={() => props.updateLibrary(props.item, props.type, 'add')}>
-				<AddToLibraryIcon />
-			</IconButton>
-		)
+	var isAdded = false
+
+	if(props.type == "book"){
+		isAdded = !isEmpty(props.library) && props.library[0].books.includes(props.item)
+	} else if(props.type == "article") {
+		isAdded = !isEmpty(props.library) && props.library[0].articles.includes(props.item)
 	}
+
+	console.log(props.library)
+
+	return (
+		<IconButton size="small" color={isAdded ? "secondary" : "primary"} onClick={() => props.updateLibrary(props.item, props.type)}>
+			<AddToLibraryIcon />
+		</IconButton>
+	)
+
 }
+const mapStateToProps = (state) => ({
+	library: state.auth.user.library
+})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ updateLibrary }, dispatch)
-export default connect(null, mapDispatchToProps)(addToLibraryButton)
+export default connect(mapStateToProps, mapDispatchToProps)(addToLibraryButton)

@@ -22,7 +22,7 @@
         return {
           ...state,
           userLibrary: action.payload
-        }      
+        }
       default:
         return state;
     }

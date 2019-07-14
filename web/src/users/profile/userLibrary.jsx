@@ -19,9 +19,13 @@ function UserLibrary(props) {
         <Typography variant="h6" component="h2">Livros</Typography>
 
         <Grid container spacing={2}>
-          { props.library && !isEmpty(props.library) ? props.library[0].books.map((book, index) => 
+          { !isEmpty(props.library) && (props.library[0].books.length > 0) ? props.library[0].books.map((book, index) => 
             <BookCard book={book} key={index} user={props.authUser}/>
-          ): (<p>Nenhum livro cadastrado na biblioteca.</p>)}
+          ): (
+          <Box p={1}>
+            <Typography variant="body2" component="p">Nenhum livro cadastrado na biblioteca.</Typography>
+          </Box> 
+          )}
         </Grid>
       </Box>
 
@@ -29,9 +33,13 @@ function UserLibrary(props) {
         <Typography variant="h6" component="h2">Artigos</Typography>
         
         <Grid container spacing={2}>
-          { props.library && !isEmpty(props.library) ? props.library[0].articles.map((article, index) => 
+          { !isEmpty(props.library) && (props.library[0].articles.length > 0) ? props.library[0].articles.map((article, index) => 
             <ArticleCard article={article} key={index} user={props.authUser} />
-          ): (<p>Nenhum artigo cadastrado na biblioteca.</p>)}
+          ): (
+          <Box p={1}>
+            <Typography variant="body2" component="p">Nenhum artigo cadastrado na biblioteca.</Typography>
+          </Box>
+          )}
         </Grid>
       </Box>
     </Box>

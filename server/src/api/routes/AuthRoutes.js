@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const Book = require("../models/BookModel")
+const Article = require("../models/ArticleModel")
 
 // Validação dos campos
 const validateRegisterInput = require("../validation/register");
@@ -102,5 +104,48 @@ router.post("/login", (req, res) => {
         });
     });
 });
+
+// Adiciona ou remove itens da biblioteca do usuário
+router.put("/:id/library", async (request, response) => {
+	try {
+		const user = await User.findById(request.params.id)
+
+		if (request.body.type == "book") {
+			const book = await Book.findById(request.body.item)
+			
+			if (book.userWhoAddedToTheLibrary.filter(u => u.toString() === request.params.id).length > 0) {
+				book.userWhoAddedToTheLibrary.pull(request.params.id)
+				user.updateOne({ _id: request.params.id }, { $pull: { 'library.books': { $in: [ request.body.item ] } } })
+				await book.save()
+				var result = await user.save()
+			} else {
+				book.userWhoAddedToTheLibrary.push(request.params.id)
+				user.updateOne({ _id: request.params.id }, { $push: { 'library.books': { $in: [ request.body.item ] } } })
+				await book.save()
+				var result = await user.save()
+			}
+		} else if (request.body.type == "article") {
+            const article = await Book.findById(request.body.item)
+
+			if (article.userWhoAddedToTheLibrary.filter(u => u.toString() === request.params.id).length > 0) {
+				article.userWhoAddedToTheLibrary.pull(request.params.id)
+				user.updateOne({ _id: request.params.id }, { $pull: { 'library.articles': { $in: [ request.body.item ] } } })
+				await article.save()
+				var result = await user.save()
+			} else {
+				article.userWhoAddedToTheLibrary.push(request.params.id)
+				user.updateOne({ _id: request.params.id }, { $push: { 'library.articles': { $in: [ request.body.item ] } } })
+				await article.save()
+				var result = await user.save()
+			}
+		} else {
+			response.status(500).send("Tipo de item inválido");
+		}
+
+		response.status(200).json(result.library);
+	} catch (error) {
+		response.status(500).send(`Erro ao adicionar item à biblioteca: ${error}`);
+	}
+})
 
 module.exports = router

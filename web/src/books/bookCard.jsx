@@ -63,7 +63,7 @@ export default function BookCard(props) {
                     <IconButton size="small" color="primary" >
                         <SaveIcon />
                     </IconButton>
-                    <UpdateLibraryButton item={book._id} type="book" added={book.userWhoAddedToTheLibrary && book.userWhoAddedToTheLibrary.includes(props.user.id)} />
+                    {/*<UpdateLibraryButton item={book._id} type="book" />*/}
                     <IconButton size="small" color="primary" onClick={handleClick}>
                         <DownloadIcon/>
                     </IconButton>

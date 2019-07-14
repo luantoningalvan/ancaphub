@@ -19,6 +19,11 @@
           ...state,
           loading: true
         };
+      case "UPDATE_LIBRARY_SUCCESS":     
+        return {
+          ...state,
+          user: { ...state.user, library: action.payload }
+        } 
       default:
         return state;
     }
