@@ -1,25 +1,25 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
-import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux'
-import * as Yup from 'yup';
-import { signUp } from './authActions'
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import * as Yup from 'yup';
+import { makeStyles } from '@material-ui/core/styles';
+import { Formik, Form } from 'formik'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { signUp } from './authActions'
 
 const useStyles = makeStyles(theme => ({
-    tab: {
-        width: '100%',
-        paddingTop: "10px",
-        paddingBottom: "10px",
-    },
-    button: {
-      marginTop: "10px"
-    }
+  tab: {
+    width: '100%',
+    paddingTop: "10px",
+    paddingBottom: "10px",
+  },
+  button: {
+    marginTop: "10px"
+  }
 }));
 
 function SignUpForm(props) {
@@ -42,6 +42,7 @@ function SignUpForm(props) {
   });
 
   return (
+    <React.Fragment>
       <Formik
         initialValues={{ name: '', email: '', password: '', password2: '' }}
         validationSchema={SignupSchema}
@@ -142,22 +143,18 @@ function SignUpForm(props) {
                     className={classes.button}
                   >
                     Cadastrar
-                  </Button>
+                    </Button>
                 </Grid>
               </Grid>
             </Form>
           )
         }}
       />
+    </React.Fragment>
   )
 }
 
-function mapStateToProps(state) {
-  return { login: state.auth }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ signUp }, dispatch)
-}
+const mapStateToProps = state => ({ serverErrors: state.errors.errors })
+const mapDispatchToProps = dispatch => bindActionCreators({ signUp }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)

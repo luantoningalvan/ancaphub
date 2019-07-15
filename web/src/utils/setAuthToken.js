@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
+
 const setAuthToken = token => {
   if (token) {
-    // Aplica o token de autorização para todas as requisições caso esteja logado
-    axios.defaults.headers.common["Authorization"] = token;
+    axios.defaults.headers.common['x-auth-token'] = token;
   } else {
-    // Deleta o cabeçalho de autenticação
-    delete axios.defaults.headers.common["Authorization"];
+    delete axios.defaults.headers.common['x-auth-token'];
   }
 };
+
 export default setAuthToken;

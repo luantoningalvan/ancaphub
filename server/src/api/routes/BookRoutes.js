@@ -35,7 +35,7 @@ router.get('/', (req, res, next) => {
       filterQuery = { ...filterQuery, title: regx }
     }
   }
-  
+
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   Book.countDocuments(filterQuery)
@@ -44,7 +44,7 @@ router.get('/', (req, res, next) => {
         return res.status(400).json([])
       }
       Book.find(filterQuery)
-        .limit(pageSize)
+        .limit(parseInt(pageSize))
         .skip(currentPage * pageSize)
         .sort(sortQuery)
         .then(books => {

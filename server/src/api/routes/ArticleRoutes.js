@@ -1,9 +1,13 @@
 const express = require('express')
 const router = express.Router();
 const Article = require("../models/ArticleModel")
+const auth = require('../middleware/auth')
 
-// Retorna uma lista de todos os artigos
+// @route 	GET api/articles
+// @desc 	  Retorna uma lista de todos os artigos
+// @access 	Public
 router.get('/', (req, res, next) => {
+  console.log
   const pageSize = req.query.pageSize ? req.query.pageSize : 10
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0
   const filter = req.query.filter || ''
@@ -24,7 +28,7 @@ router.get('/', (req, res, next) => {
       filterQuery = { ...filterQuery, title: regx }
     }
   }
-  
+
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   Article.countDocuments(filterQuery)
@@ -33,7 +37,7 @@ router.get('/', (req, res, next) => {
         return res.status(400).json([])
       }
       Article.find(filterQuery)
-        .limit(pageSize)
+        .limit(parseInt(pageSize))
         .skip(currentPage * pageSize)
         .sort(sortQuery)
         .then(articles => {
@@ -51,47 +55,55 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// Retorna um artigo de acordo com seu id
+// @route 	GET api/articles
+// @desc 		Retorna um artigo de acordo com seu id
+// @access 	Public
 router.get("/:id", async (request, response) => {
-    try {
-        var result = await Article.findById(request.params.id).exec();
-        response.send(result);
-    } catch (error) {
-        response.status(500).send(error);
-    }
+  try {
+    var result = await Article.findById(request.params.id).exec();
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
 });
 
-// Cria um novo artigo
-router.post("/", async (request, response) => {
-    try {
-        var article = new Article(request.body);
-        var result = await article.save();
-        response.send(result);
-    } catch (error) {
-        response.status(500).send(error);
-    }
+// @route 	POST api/articles
+// @desc 		Cria um novo artigo
+// @access 	Private
+router.post("/", auth, async (request, response) => {
+  try {
+    var article = new Article(request.body);
+    var result = await article.save();
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
 });
 
-// Edita um artigo através de seu id
-router.put("/:id", async (request, response) => {
-    try {
-        var article = await Article.findById(request.params.id).exec();
-        article.set(request.body);
-        var result = await article.save();
-        response.send(result);
-    } catch (error) {
-        response.status(500).send(error);
-    }
+// @route 	PUT api/articles/:id
+// @desc 		Edita um arquivo através de seu ID
+// @access 	Private
+router.put("/:id", auth, async (request, response) => {
+  try {
+    var article = await Article.findById(request.params.id).exec();
+    article.set(request.body);
+    var result = await article.save();
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
 });
 
-// Deleta um artigo através de seu id
-router.delete("/:id", async (request, response) => {
-    try {
-        var result = await Article.deleteOne({ _id: request.params.id }).exec();
-        response.send(result);
-    } catch (error) {
-        response.status(500).send(error);
-    }
+// @route 	DELETE api/articles/:id
+// @desc 		Deleta um artigo através de seu id
+// @access 	Private
+router.delete("/:id", auth, async (request, response) => {
+  try {
+    var result = await Article.deleteOne({ _id: request.params.id }).exec();
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
 });
 
 module.exports = router

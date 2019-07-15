@@ -53,7 +53,7 @@ function SignInForm(props) {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="login-email"
                     label="Endereço de e-mail"
                     name="email"
                     autoComplete="email"
@@ -72,7 +72,7 @@ function SignInForm(props) {
                     name="password"
                     label="Senha"
                     type="password"
-                    id="password"
+                    id="login-password"
                     autoComplete="password"
                     value={values.password}
                     onChange={handleChange}

@@ -41,7 +41,7 @@ function LoggedUserMenu(props) {
       getContentAnchorEl={null}
     >
       <Link component={AdapterLink} to={`/usuario/${props.user.id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
-      <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
+      <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
     </Menu>
   );
 

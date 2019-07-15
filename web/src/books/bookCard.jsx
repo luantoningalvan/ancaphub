@@ -12,7 +12,6 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import SaveIcon from '@material-ui/icons/SaveAlt'
-import UpdateLibraryButton from '../components/updateLibraryButton'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -63,7 +62,6 @@ export default function BookCard(props) {
                     <IconButton size="small" color="primary" >
                         <SaveIcon />
                     </IconButton>
-                    {/*<UpdateLibraryButton item={book._id} type="book" />*/}
                     <IconButton size="small" color="primary" onClick={handleClick}>
                         <DownloadIcon/>
                     </IconButton>

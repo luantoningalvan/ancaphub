@@ -1,94 +1,91 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import { returnErrors } from '../errors/errorAction'
+import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT, CLEAR_PROFILE } from '../utils/types'
+import { setErrors, clearErrors } from '../errors/errorActions'
 
-const BASE_URL = 'http://localhost:3000/api/auth'
+export const signUp = ({ name, email, password, password2 }) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
 
-export const signIn = data => dispatch => {
-  const userData = { ...data, role: "user" }
-  axios
-    .post(`${BASE_URL}/login`, userData)
-    .then(res => {
-      // Seta o token no localstorage
-      const { token } = res.data;
-      localStorage.setItem("jwtToken", token);
-      // Seta o token no cabeçalho de autenticação
-      setAuthToken(token);
-      // Decodifica o token para obter os dados do usuário
-      const decoded = jwt_decode(token);
-      // Seta o usuário atual
-      dispatch(setCurrentUser(decoded));
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: res.data
-      })
+  const body = JSON.stringify({ name, email, password, password2 })
+
+  try {
+    const res = await axios.post('/api/users', body, config)
+    dispatch(clearErrors())
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
     })
-    .catch(err => {
-      console.log(err)
-      dispatch({
-        type: 'LOGIN_FAIL'
-      });
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      dispatch(setErrors(errors))
+    }
+
+    dispatch({
+      type: REGISTER_FAIL
     });
+
+  }
 };
 
-// Cadastro do Usuário
-export const signUp = (userData, history) => dispatch => {
-  axios
-    .post(`${BASE_URL}/register`, userData)
-    .then(res => {
-      dispatch({
-        type: 'REGISTER_SUCCESS',
-        payload: res.data
-      })
-    })
-    .catch(err => {
-        console.log(err)
-      dispatch({
-        type: 'REGISTER_FAIL'
-      });
-    });
-};
-
-// Seta o usuário logado
-export const setCurrentUser = decoded => {
-  return {
-    type: 'SET_CURRENT_USER',
-    payload: decoded
+// Login User
+export const signIn = ({ email, password }) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
   };
-};
 
-// Carregando usuário
-export const setUserLoading = () => {
-  return {
-    type: 'USER_LOADING'
-  };
-};
+  const body = JSON.stringify({ email, password });
 
-// Logout do usuário
-export const logoutUser = () => dispatch => {
-  // Remove o token do localstorage
-  localStorage.removeItem("jwtToken");
-  // Remove o cabeçalho de autenticação para requisições futuras
-  setAuthToken(false);
-  // Seta o usuário atual para um objeto vazio {} também seta o isAuthenticated para falso
-  dispatch(setCurrentUser({}));
-};
+  try {
+    const res = await axios.post('/api/auth', body, config);
 
-export const updateLibrary = (item, type, action) => (dispatch, getState) => {
-  const state = getState()
-  const userId = state.auth.user.id
-  axios.put(`${BASE_URL}/${userId}/library`, { item, type, action })
-    .then(user => {
-      dispatch({
-        type: 'UPDATE_LIBRARY_SUCCESS',
-        payload: user.data
-      });
-    })
-    .catch(err => {
-      dispatch({
-        type: 'UPDATE_LIBRARY_FAIL',
-        payload: err
-      });
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data
     });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      dispatch(setErrors(errors))
+    }
+
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+};
+
+// Carrega usuário
+export const loadUser = () => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token)
+  }
+
+  try {
+    const res = await axios.get('/api/auth');
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR
+    });
+  }
 }
+
+// Logout / Clear Profile
+export const logoutUser = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};

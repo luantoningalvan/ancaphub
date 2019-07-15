@@ -1,33 +1,23 @@
-const port = 3000
 
-require("./config/database")
-const bodyParser = require('body-parser')
 const express = require('express')
 const server = express()
 const cors = require('cors')
-const queryParser = require('express-query-int')
-const passport = require("passport");
+require("./config/database")
 
-var corsOptions = {
+const port = 3000
+const corsOptions = {
   origin: ['http://localhost:8080', 'http://localhost:8081'],
   optionsSuccessStatus: 200
 }
 
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.json())
+server.use(express.json({ extended: false }))
 server.use(cors(corsOptions))
-server.use(queryParser())
 
-// Middleware do Passport
-server.use(passport.initialize());
-
-// Configuração do Passport
-require("./config/passport")(passport);
-
+// Rotas
 const books = require('./api/routes/BookRoutes')
 const articles = require('./api/routes/ArticleRoutes')
 const categories = require('./api/routes/CategoryRoutes')
-const users = require('./api/routes/UserRoutes')
+const users = require('./api/routes/UsersRoutes')
 const auth = require('./api/routes/AuthRoutes')
 
 server.use('/api/books/', books)

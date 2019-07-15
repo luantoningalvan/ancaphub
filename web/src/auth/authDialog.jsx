@@ -5,8 +5,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Login from '../auth/login'
-import Signup from '../auth/signup'
+import Login from './login'
+import Signup from './signup'
 
 export default function authDialog() {
     const [open, setOpen] = React.useState(false);
@@ -40,16 +40,16 @@ export default function authDialog() {
                 aria-labelledby="alert-dialog-title"
             >
                 <DialogContent>
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            variant="fullWidth"
-                        >
-                            <Tab label="Entrar" />
-                            <Tab label="Cadastro" />
-                        </Tabs>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                    >
+                        <Tab label="Entrar" />
+                        <Tab label="Cadastro" />
+                    </Tabs>
                     <SwipeableViews
                         index={value}
                         onChangeIndex={handleChangeIndex}
