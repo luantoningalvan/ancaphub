@@ -30,32 +30,32 @@ function LoggedUserMenu(props) {
     setAnchorEl(null)
   }
 
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      getContentAnchorEl={null}
-    >
-      <Link component={AdapterLink} to={`/usuario/${props.user.id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
-      <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
-    </Menu>
-  );
-
   return (
     <React.Fragment>
-      <IconButton
-        edge="end"
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit"
-      >
-        <Avatar className={classes.letterAvatar}>{props.user.name.substring(0, 1)}</Avatar>
-      </IconButton>
-      {renderMenu}
+      {props.user != null && (
+        <React.Fragment>
+          <IconButton
+            edge="end"
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+            <Avatar className={classes.letterAvatar}>{props.user.name.substring(0, 1)}</Avatar>
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+            getContentAnchorEl={null}
+          >
+            <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
+            <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
+          </Menu>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 }

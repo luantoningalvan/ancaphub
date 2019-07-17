@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AuthDialog from '../auth/authDialog'
 import LoggedUserMenu from '../auth/loggedUserMenu'
 import SearchBox from '../components/search/searchBox'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -62,27 +63,29 @@ function Header(props) {
           <div style={{ flexGrow: '1' }}>
             <SearchBox />
           </div>
-
-          <div style={{ flexGrow: '1', display: 'flex', justifyContent: "flex-end" }}>
-            <div className={classes.sectionDesktop}>
-              {!props.logged ? (
-                <AuthDialog />
-              ) : (
-                <LoggedUserMenu />
-              )}
+          {!props.auth.loading && (
+            <div style={{ flexGrow: '1', display: 'flex', justifyContent: "flex-end" }}>
+              <div className={classes.sectionDesktop}>
+                {!props.auth.isAuthenticated ? (
+                  <AuthDialog />
+                ) : (
+                    <LoggedUserMenu />
+                  )}
+              </div>
+              <div className={classes.sectionMobile}>
+                {!props.auth.isAuthenticated ? (
+                  <AuthDialog />
+                ) : (
+                    <LoggedUserMenu />
+                  )}
+              </div>
             </div>
-            <div className={classes.sectionMobile}>
-              {!props.logged ? (
-                <AuthDialog />
-              ) : (
-                <LoggedUserMenu />
-              )}
-            </div>
-          </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({ auth: state.auth })
+export default connect(mapStateToProps)(Header)

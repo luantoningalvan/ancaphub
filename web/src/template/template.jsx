@@ -1,7 +1,6 @@
 import React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import {connect} from 'react-redux'
 import Header from './header'
 import Menu from './menu'
 import Main from './main'
@@ -24,9 +23,8 @@ const theme = createMuiTheme({
     },
 });
 
-function Template(props) {
+export default function Template(props) {
   const [open, setOpen] = React.useState(true);
-  const logged = props.auth.isAuthenticated
 
   function handleDrawerOpen() {
     (open) ? setOpen(false) : setOpen(true);
@@ -36,7 +34,7 @@ function Template(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header openDrawer={handleDrawerOpen} logged={logged}/>
+      <Header openDrawer={handleDrawerOpen}/>
       <Menu open={open} />
       <Main open={open}>
         {props.children}
@@ -44,6 +42,3 @@ function Template(props) {
     </ThemeProvider>
   )
 }
-
-const mapStateToProps = (state) => ({ auth: state.auth })
-export default connect(mapStateToProps)(Template)

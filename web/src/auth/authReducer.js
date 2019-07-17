@@ -3,7 +3,7 @@ import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
-  loading: false,
+  loading: true,
   user: null
 };
 
@@ -14,6 +14,7 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
+      window.location.reload()
       return {
         ...state,
         ...payload,
@@ -35,9 +36,9 @@ export default function (state = initialState, action) {
     case USER_LOADED:
       return {
         ...state,
+        user: payload,
         isAuthenticated: true,
-        loading: false,
-        user: payload
+        loading: false
       }
     default:
       return state;

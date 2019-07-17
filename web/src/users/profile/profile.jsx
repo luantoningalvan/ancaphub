@@ -23,9 +23,9 @@ function LoggedUserMenu(props) {
   const url = props.match.path
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
-  useEffect(() => props.getUser(id), []);
+  useEffect(() => props.getUser(id), [id]);
 
-  function showComponent(){
+  function showComponent() {
     switch (url) {
       case '/usuario/:id':
         return (<UserFeed />)
