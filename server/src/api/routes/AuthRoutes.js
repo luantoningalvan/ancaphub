@@ -8,7 +8,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth')
 
 // @route 	POST api/auth
-// @desc 	Loga um usuário no sistema
+// @desc 	  Obtém os dados do usuário logado
 // @access 	Public
 
 router.get('/', auth, async (req, res) => {
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route 	POST api/auth
-// @desc 	Loga um usuário no sistema
+// @desc 	  Loga um usuário no sistema
 // @access 	Public
 router.post("/", [
   check('email', "E-mail inválido.")
@@ -47,6 +47,7 @@ router.post("/", [
       return res.status(400).json({ errors: [{ msg: "E-mail ou senha não correspondem." }] });
     }
 
+    // Comapara a senha recebida com a senha do banco de dados
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {

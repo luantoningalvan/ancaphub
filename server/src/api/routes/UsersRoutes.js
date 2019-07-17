@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator');
 
 // @route 	GET api/users
-// @desc 	Retorna uma lista de todos os usuários
+// @desc 	  Retorna uma lista de todos os usuários
 // @access 	Public
 router.get("/", async (request, response) => {
   try {
@@ -19,7 +19,7 @@ router.get("/", async (request, response) => {
 });
 
 // @route 	GET api/users
-// @desc 	Retorna um usuário pelo seu id
+// @desc 	  Retorna um usuário pelo seu id
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
@@ -31,7 +31,7 @@ router.get("/:id", async (request, response) => {
 });
 
 // @route 	POST api/users
-// @desc 	Cadastra um novo usuário na base
+// @desc 	  Cadastra um novo usuário na base
 // @access 	Public
 router.post("/", [
   check('name', "O campo NOME é obrigatório")

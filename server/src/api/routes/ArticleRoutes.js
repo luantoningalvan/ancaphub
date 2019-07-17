@@ -4,10 +4,16 @@ const Article = require("../models/ArticleModel")
 const auth = require('../middleware/auth')
 
 // @route 	GET api/articles
-// @desc 	  Retorna uma lista de todos os artigos
+/* @desc 	  Retorna uma lista com todos os artigos
+            É possível fazer uma busca personalizada através de parâmetros na URL
+            - Pode-se aplicar um filtro a todos os campos através de filter Ex: ?filter=
+            - Para orderar de acordo com algum campo usa-se o sortBy Ex: ?sortBy=name
+            - Para definir se a ordem de exibição é ascendente ou descendente usa-se o orderBy Ex: ?orderBy=asc/desc
+            - Para fazer uma busca utilizam-se os atributos filter e filterOn em conjunto, 
+            sendo filter o termo a ser pesquisado e filterOn o(s) campo(s) a ser(em) pesquisado(s) 
+            Ex: ?filter=Propriedade&&filterOn=title*/
 // @access 	Public
 router.get('/', (req, res, next) => {
-  console.log
   const pageSize = req.query.pageSize ? req.query.pageSize : 10
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0
   const filter = req.query.filter || ''

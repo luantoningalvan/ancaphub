@@ -1,18 +1,18 @@
 const express = require('express')
 const router = express.Router();
-const validator = require('validator')
+const auth = require('../middleware/auth')
 const Book = require("../models/BookModel")
 
-/* 
-Retorna uma lista com todos os livros
-É possível fazer uma busca personalizada através de parâmetros na URL
-- Pode-se aplicar um filtro a todos os campos através de filter Ex: ?filter=
-- Para orderar de acordo com algum campo usa-se o sortBy Ex: ?sortBy=name
-- Para definir se a ordem de exibição é ascendente ou descendente usa-se o orderBy Ex: ?orderBy=asc/desc
-- Para fazer uma busca utilizam-se os atributos filter e filterOn em conjunto, 
-sendo filter o termo a ser pesquisado e filterOn o(s) campo(s) a ser(em) pesquisado(s) 
-Ex: ?filter=Propriedade&&filterOn=title
-*/
+// @route 	GET api/books
+/* @desc 	  Retorna uma lista com todos os livros
+            É possível fazer uma busca personalizada através de parâmetros na URL
+            - Pode-se aplicar um filtro a todos os campos através de filter Ex: ?filter=
+            - Para orderar de acordo com algum campo usa-se o sortBy Ex: ?sortBy=name
+            - Para definir se a ordem de exibição é ascendente ou descendente usa-se o orderBy Ex: ?orderBy=asc/desc
+            - Para fazer uma busca utilizam-se os atributos filter e filterOn em conjunto, 
+            sendo filter o termo a ser pesquisado e filterOn o(s) campo(s) a ser(em) pesquisado(s) 
+            Ex: ?filter=Propriedade&&filterOn=title*/
+// @access 	Public
 
 router.get('/', (req, res, next) => {
   const pageSize = req.query.pageSize ? req.query.pageSize : 10
@@ -62,7 +62,9 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// Retorna um livro de acordo com seu id
+// @route 	GET api/books
+// @desc 	  Retorna um livro de acordo com seu id
+// @access 	Public
 router.get("/:id", async (request, response) => {
   try {
     var result = await Book.findById(request.params.id).exec();
@@ -72,8 +74,10 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-// Cria um novo livro
-router.post("/", async (request, response) => {
+// @route 	POST api/books
+// @desc 		Cria um novo livro
+// @access 	Private
+router.post("/", auth, async (request, response) => {
   try {
     var book = new Book(request.body);
     var result = await book.save();
@@ -83,8 +87,10 @@ router.post("/", async (request, response) => {
   }
 });
 
-// Edita um livro através de seu id
-router.put("/:id", async (request, response) => {
+// @route 	PUT api/books/:id
+// @desc 		Edita um livro através de seu ID
+// @access 	Private
+router.put("/:id", auth, async (request, response) => {
   try {
     var book = await Book.findById(request.params.id).exec();
     book.set(request.body);
@@ -95,8 +101,10 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-// Deleta um livro através de seu id
-router.delete("/:id", async (request, response) => {
+// @route 	DELETE api/books/:id
+// @desc 		Deleta um livro através de seu id
+// @access 	Private
+router.delete("/:id", auth, async (request, response) => {
   try {
     var result = await Book.deleteOne({ _id: request.params.id }).exec();
     response.send(result);
