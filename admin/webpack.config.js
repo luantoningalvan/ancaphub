@@ -15,7 +15,13 @@ module.exports = {
     port:8080,
     contentBase: './public',
     historyApiFallback: true,
-    headers: { "Access-Control-Allow-Origin": "http://localhost:3000" }
+    headers: { "Access-Control-Allow-Origin": "http://localhost:3000" },
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:3000',
+        secure: false
+      }
+    },
   },
   resolve:{
     extensions: ['*', '.js', '.jsx'],

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import promise from 'redux-promise'
@@ -7,9 +7,8 @@ import thunk from 'redux-thunk'
 import reducers from './rootReducer'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import PrivateRoute from "./PrivateRoute";
-import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./auth/authActions";
+import { loadUser } from "./auth/authActions";
 import ReduxToastr from 'react-redux-toastr'
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
@@ -33,55 +32,43 @@ import EditArticle from './articles/articleFormPage'
 /// Auth
 import SignIn from './auth/signin'
 
-if (localStorage.jwtToken) {
-    // Set auth token header auth
-    const token = localStorage.jwtToken;
-    setAuthToken(token);
-    // Decode token and get user info and exp
-    const decoded = jwt_decode(token);
-    // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(decoded));
-    // Check for expired token
-    const currentTime = Date.now() / 1000; // to get in milliseconds
-    if (decoded.exp < currentTime) {
-        // Logout user
-        store.dispatch(logoutUser());
-        // Redirect to login
-        window.location.href = "./login";
-    }
+if (localStorage.token) {
+  setAuthToken(localStorage.token)
 }
 
-export default class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
+export default function App() {
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, []);
 
-                <ReduxToastr
-                    timeOut={4000}
-                    newestOnTop={true}
-                    position="top-right"
-                    transitionIn="fadeIn"
-                    transitionOut="fadeOut"
-                    progressBar
-                    closeOnToastrClick
-                />
+  return (
+    <Provider store={store}>
 
-                <Router>
-                    <Switch>
-                        <PrivateRoute exact path="/" component={Dashboard} />
-                        
-                        <PrivateRoute exact path="/books/" component={Books} />
-                        <PrivateRoute path="/books/add/" component={AddBook} />
-                        <PrivateRoute path="/books/edit/:id" component={EditBook}/>
+      <ReduxToastr
+        timeOut={4000}
+        newestOnTop={true}
+        position="top-right"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut"
+        progressBar
+        closeOnToastrClick
+      />
 
-                        <PrivateRoute exact path="/articles/" component={Articles} />
-                        <PrivateRoute path="/articles/add/" component={AddArticle} />
-                        <PrivateRoute path="/articles/edit/:id" component={EditArticle}/>
+      <Router>
+        <Switch>
+          <PrivateRoute exact path="/" component={Dashboard} />
 
-                        <Route path="/login" component={SignIn} />
-                    </Switch>
-                </Router>
-            </Provider>
-        )
-    }
+          <PrivateRoute exact path="/books/" component={Books} />
+          <PrivateRoute path="/books/add/" component={AddBook} />
+          <PrivateRoute path="/books/edit/:id" component={EditBook} />
+
+          <PrivateRoute exact path="/articles/" component={Articles} />
+          <PrivateRoute path="/articles/add/" component={AddArticle} />
+          <PrivateRoute path="/articles/edit/:id" component={EditArticle} />
+
+          <Route path="/login" component={SignIn} />
+        </Switch>
+      </Router>
+    </Provider>
+  )
 }

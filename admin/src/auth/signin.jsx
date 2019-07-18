@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +17,7 @@ import { bindActionCreators } from 'redux'
 import { Formik, Form } from 'formik'
 import TextField from '@material-ui/core/TextField';
 import * as Yup from 'yup';
-import { login } from './authActions'
+import { signIn } from './authActions'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -41,6 +42,12 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  errorMessage: {
+    padding: '10px',
+    borderRadius: '5px',
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white'
+  }
 }));
 
 
@@ -74,12 +81,18 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-
+        {(props.errors.errors != null) && (
+          props.errors.errors.msg.map((msg, index) => (
+            <Box mb={1} key={index}>
+              <p className={classes.errorMessage}>{msg.msg}</p>
+            </Box>
+          ))
+        )}
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={SigninSchema}
           onSubmit={(values, actions) => {
-            props.login(values)
+            props.signIn(values)
           }}
           render={props => {
             const { values, touched, errors, handleChange, handleBlur } = props;
@@ -147,11 +160,10 @@ function SignIn(props) {
   );
 }
 
-
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ signIn }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

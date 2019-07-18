@@ -1,27 +1,43 @@
-import {
-  SET_CURRENT_USER,
-  USER_LOADING
-} from "../types";
-const isEmpty = require("is-empty");
 const initialState = {
+  token: localStorage.getItem('token'),
   isAuthenticated: false,
-  user: {},
-  loading: false
+  loading: true,
+  user: null
 };
 
 export default function (state = initialState, action) {
-  switch (action.type) {
-    case SET_CURRENT_USER:
+  const { type, payload } = action
+
+  switch (type) {
+    case 'REGISTER_SUCCESS':
+    case 'LOGIN_SUCCESS':
+      localStorage.setItem('token', payload.token);
+      window.location.reload()
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
-      };
-    case USER_LOADING:
+        ...payload,
+        isAuthenticated: true,
+        loading: false
+      }
+    case 'REGISTER_FAIL':
+    case 'AUTH_ERROR':
+    case 'LOGIN_FAIL':
+    case 'LOGOUT':
+      localStorage.removeItem('token')
       return {
         ...state,
-        loading: true
-      };
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null
+      }
+    case 'USER_LOADED':
+      return {
+        ...state,
+        user: payload,
+        isAuthenticated: true,
+        loading: false
+      }
     default:
       return state;
   }

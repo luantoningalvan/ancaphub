@@ -37,7 +37,7 @@ router.post("/", [
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { email, password } = req.body
+  const { email, password, level } = req.body
 
   try {
     let user = await User.findOne({ email })
@@ -52,6 +52,10 @@ router.post("/", [
 
     if (!isMatch) {
       return res.status(400).json({ errors: [{ msg: "E-mail ou senha não correspondem." }] });
+    }
+
+    if (!user.role.includes(level)) {
+      return res.status(400).json({ errors: [{ msg: "Seu nível de acesso não é suficiente para acessar esta página." }] });
     }
 
     const payload = {
