@@ -47,15 +47,15 @@ export default function authDialog() {
                         textColor="primary"
                         variant="fullWidth"
                     >
-                        <Tab label="Entrar" />
                         <Tab label="Cadastro" />
+                        <Tab label="Entrar" />
                     </Tabs>
                     <SwipeableViews
                         index={value}
                         onChangeIndex={handleChangeIndex}
                     >
-                        <Login />
                         <Signup />
+                        <Login />
                     </SwipeableViews>
                 </DialogContent>
             </Dialog>

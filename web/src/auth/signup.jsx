@@ -2,6 +2,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import * as Yup from 'yup';
@@ -19,6 +20,12 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: "10px"
+  },
+  errorMessage: {
+    padding: '10px',
+    borderRadius: '5px',
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white'
   }
 }));
 
@@ -43,6 +50,14 @@ function SignUpForm(props) {
 
   return (
     <React.Fragment>
+      {(props.serverErrors.errors != null) && (
+        props.serverErrors.errors.msg.map((msg, index) => (
+          <Box mb={1} key={index}>
+            <p className={classes.errorMessage}>{msg.msg}</p>
+          </Box>
+        ))
+      )}
+
       <Formik
         initialValues={{ name: '', email: '', password: '', password2: '' }}
         validationSchema={SignupSchema}
@@ -154,7 +169,7 @@ function SignUpForm(props) {
   )
 }
 
-const mapStateToProps = state => ({ serverErrors: state.errors.errors })
+const mapStateToProps = state => ({ serverErrors: state.errors })
 const mapDispatchToProps = dispatch => bindActionCreators({ signUp }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)

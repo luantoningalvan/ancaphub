@@ -61,7 +61,7 @@ export const signIn = ({ email, password }) => async dispatch => {
     }
   };
 
-  const body = JSON.stringify({ email, password });
+  const body = JSON.stringify({ email, password, level: "user" });
 
   try {
     const res = await axios.post('/api/auth', body, config);

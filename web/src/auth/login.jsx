@@ -1,25 +1,32 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
 import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux'
-import * as Yup from 'yup';
-import { signIn } from './authActions'
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup';
+import { makeStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
+import { signIn } from './authActions'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
-    tab: {
-        width: '100%',
-        paddingTop: "10px",
-        paddingBottom: "10px",
-    },
-    button: {
-      marginTop: "10px"
-    }
+  tab: {
+    width: '100%',
+    paddingTop: "10px",
+    paddingBottom: "10px",
+  },
+  button: {
+    marginTop: "10px"
+  },
+  errorMessage: {
+    padding: '10px',
+    borderRadius: '5px',
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white'
+  }
 }));
 
 function SignInForm(props) {
@@ -31,8 +38,17 @@ function SignInForm(props) {
     password: Yup.string()
       .required('O campo senha é obrigatório!')
   });
-
+  console.log(props)
   return (
+    <React.Fragment>
+      {(props.serverErrors.errors != null) && (
+        props.serverErrors.errors.msg.map((msg, index) => (
+          <Box mb={1} key={index}>
+            <p className={classes.errorMessage}>{msg.msg}</p>
+          </Box>
+        ))
+      )}
+
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={SigninSchema}
@@ -95,22 +111,19 @@ function SignInForm(props) {
                     className={classes.button}
                   >
                     Entrar
-                  </Button>
+                    </Button>
                 </Grid>
               </Grid>
             </Form>
+
           )
         }}
       />
+    </React.Fragment>
   )
 }
 
-function mapStateToProps(state) {
-  return { login: state.auth }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ signIn }, dispatch)
-}
+const mapStateToProps = (state) => ({ login: state.auth, serverErrors: state.errors })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ signIn }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm)
