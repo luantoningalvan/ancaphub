@@ -7,10 +7,9 @@ const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth')
 
-// @route 	POST api/auth
+// @route 	GET api/auth
 // @desc 	  Obtém os dados do usuário logado
-// @access 	Public
-
+// @access 	Private
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');

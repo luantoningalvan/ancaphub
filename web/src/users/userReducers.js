@@ -4,7 +4,7 @@ const initialState = {
   allUsers: [],
   user: {},
   userLibrary: {},
-  loading: false
+  loading: true
 };
 
 export default function (state = initialState, action) {
@@ -12,12 +12,14 @@ export default function (state = initialState, action) {
     case GET_ALL_USERS_SUCCESS:
       return {
         ...state,
-        allUsers: action.payload
+        allUsers: action.payload,
+        loading: false
       }
     case GET_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        loading: false
       }
     default:
       return state;

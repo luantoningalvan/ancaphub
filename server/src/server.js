@@ -18,15 +18,17 @@ const books = require('./api/routes/BookRoutes')
 const articles = require('./api/routes/ArticleRoutes')
 const categories = require('./api/routes/CategoryRoutes')
 const users = require('./api/routes/UsersRoutes')
+const posts = require('./api/routes/PostsRoutes')
 const auth = require('./api/routes/AuthRoutes')
 
 server.use('/api/books/', books)
 server.use('/api/articles/', articles)
 server.use('/api/categories/', categories)
 server.use('/api/users/', users)
+server.use('/api/posts/', posts)
 server.use('/api/auth/', auth)
 
-server.listen(port, function() {
+server.listen(port, function () {
   console.log(`BACKEND está rodando na porta ${port}.`)
 })
 

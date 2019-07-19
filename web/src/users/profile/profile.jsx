@@ -26,15 +26,19 @@ function LoggedUserMenu(props) {
   useEffect(() => props.getUser(id), [id]);
 
   function showComponent() {
-    switch (url) {
-      case '/usuario/:id':
-        return (<UserFeed />)
-      case '/usuario/:id/seguidores':
-        return (<UserFollowers />)
-      case '/usuario/:id/biblioteca':
-        return (<UserLibrary authUser={props.authUser} />)
-      default:
-        console.log(props.match.path)
+    if (!props.user.loading) {
+      switch (url) {
+        case '/usuario/:id':
+          return (<UserFeed user={props.user.user} />)
+        case '/usuario/:id/seguidores':
+          return (<UserFollowers />)
+        case '/usuario/:id/biblioteca':
+          return (<UserLibrary authUser={props.authUser} />)
+        default:
+          console.log(props.match.path)
+      }
+    } else {
+      return <p>Carregando postagens...</p>
     }
   }
 
@@ -43,10 +47,12 @@ function LoggedUserMenu(props) {
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Paper>
-            <Box display="flex" alignItems="center" flexDirection="column" py={2} style={{ backgroundColor: "#f9a825" }}>
-              <Avatar src={loadImage('defaultProfilePicture.png')} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
-              <Typography variant="h6">{props.user.name}</Typography>
-            </Box>
+            {!props.user.isLoading && (
+              <Box display="flex" alignItems="center" flexDirection="column" py={2} style={{ backgroundColor: "#f9a825" }}>
+                <Avatar src={loadImage('defaultProfilePicture.png')} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
+                <Typography variant="h6">{props.user.user.name}</Typography>
+              </Box>
+            )}
 
             <MenuList>
               <MenuItem component={AdapterLink} to={`/usuario/${id}/`}>Feed</MenuItem>
@@ -63,7 +69,7 @@ function LoggedUserMenu(props) {
   );
 }
 
-const mapStateToProps = state => ({ authUser: state.auth.user, user: state.users.user })
+const mapStateToProps = state => ({ authUser: state.auth.user, user: state.users })
 const mapDispatchToProps = dispatch => bindActionCreators({ getUser }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggedUserMenu)
