@@ -24,9 +24,10 @@ const UserSchema = new Schema({
     required: true,
     default: ['user']
   },
-  library:  [ItemSchema] ,
+  library: [ItemSchema],
   watchLater: { ItemSchema },
   birthday: Date,
-}, {timestamps: true})
+  avatar: String
+}, { timestamps: true })
 
 module.exports = mongoose.model('User', UserSchema);

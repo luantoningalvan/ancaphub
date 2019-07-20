@@ -16,6 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { deletePost } from './postActions'
+import loadImage from '../../utils/loadImage'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -24,9 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ActivityCard(props) {
-  const classes = useStyles();
   const { _id, content, user, createdAt } = props.post
-
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -46,13 +45,15 @@ function ActivityCard(props) {
   }
 
   return (
-    <Box mt={2}>
+    <Box mb={2}>
       <Card>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              L
-            </Avatar>
+            user.avatar && user.avatar != "" ? (
+              <Avatar src={user.avatar} alt={user.name} />
+            ) : (
+                <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" />
+              )
           }
           action={
             <IconButton aria-label="Settings" onClick={handleClick}>

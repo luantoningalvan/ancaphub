@@ -8,7 +8,7 @@ const auth = require('../middleware/auth')
 // @access 	Public
 router.get('/:id', async (request, response) => {
   try {
-    const result = await Post.find({ user: request.params.id }).populate('user', 'name id avatar')
+    const result = await Post.find({ user: request.params.id }).populate('user', 'name id avatar').sort({ createdAt: "desc" })
     response.send(result)
   } catch (error) {
     response.status(500).send(error)

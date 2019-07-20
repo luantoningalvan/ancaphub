@@ -1,16 +1,25 @@
 import React, { useEffect } from 'react'
 import PostCard from './postCard'
+import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadUserPosts, deletePost } from './postActions'
+import isEmpty from 'is-empty'
 
 function ShowPosts(props) {
   useEffect(() => props.loadUserPosts(props.user._id), [props.user])
   return (
     <React.Fragment>
-      {props.posts != [] && props.posts.map(post => (
+      {!isEmpty(props.posts) ? props.posts.map(post => (
         <PostCard post={post} key={post._id} deleteAction={props.deletePost} />
-      ))}
+      )) : (
+          <Paper>
+            <Box p={2}>
+              Esse usuário não fez nenhuma postagem.
+            </Box>
+          </Paper>
+        )}
     </React.Fragment>
 
   )

@@ -33,6 +33,8 @@ export default function (state = initialState, action) {
         loading: false,
         user: null
       }
+    case LOGOUT:
+      window.location.reload()
     case USER_LOADED:
       return {
         ...state,

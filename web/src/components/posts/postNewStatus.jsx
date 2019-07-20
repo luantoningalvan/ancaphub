@@ -11,7 +11,7 @@ import { Formik, Form } from 'formik'
 function PostNewStatus(props) {
   return (
     <Paper>
-      <Box p={2}>
+      <Box p={2} mb={2}>
         <Formik
           initialValues={{ content: '' }}
           onSubmit={(values, actions) => {
