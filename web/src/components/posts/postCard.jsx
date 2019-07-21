@@ -1,9 +1,8 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card'
@@ -15,17 +14,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { deletePost } from './postActions'
+import { deletePost, updateLikes } from './postActions'
 import loadImage from '../../utils/loadImage'
 
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    backgroundColor: "#f9a825",
-  },
-}));
-
 function ActivityCard(props) {
-  const { _id, content, user, createdAt } = props.post
+  const { _id, content, user, likes = [], createdAt } = props.post
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -69,12 +62,10 @@ function ActivityCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
+          <Button aria-label="Curtir" onClick={() => props.updateLikes(_id)}>
+            <FavoriteIcon style={{ marginRight: '10px' }} />
+            {likes.length}
+          </Button>
         </CardActions>
       </Card>
 
@@ -90,6 +81,6 @@ function ActivityCard(props) {
     </Box>
   );
 }
-const mapDispatchToProps = (dispatch) => bindActionCreators({ deletePost }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ deletePost, updateLikes }, dispatch)
 
 export default connect(null, mapDispatchToProps)(ActivityCard)

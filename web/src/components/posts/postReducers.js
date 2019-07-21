@@ -1,4 +1,4 @@
-import { ADD_POST_SUCCESS, DELETE_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS } from '../../utils/types'
+import { ADD_POST_SUCCESS, UPDATE_LIKES_SUCCESS, UPDATE_LIKES_ERROR, DELETE_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS } from '../../utils/types'
 
 const initialState = {
   posts: [],
@@ -24,6 +24,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: state.posts.filter((value) => { return value._id != payload })
+      }
+    case UPDATE_LIKES_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload._id ? { ...post, likes: payload.likes } : post
+        )
       }
     default:
       return state;

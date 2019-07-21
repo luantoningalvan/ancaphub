@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS, DELETE_POST_SUCCESS, DELETE_POST_ERROR } from '../../utils/types'
+import { ADD_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS, UPDATE_LIKES_SUCCESS, UPDATE_LIKES_ERROR, DELETE_POST_SUCCESS, DELETE_POST_ERROR } from '../../utils/types'
 
 export function loadUserPosts(user) {
   return (dispatch) => {
@@ -33,6 +33,18 @@ export function deletePost(post) {
       })
       .catch(error => {
         dispatch({ type: DELETE_POST_ERROR })
+      })
+  }
+}
+
+export function updateLikes(post) {
+  return dispatch => {
+    axios.put(`/api/posts/${post}/like`)
+      .then(result => {
+        dispatch({ type: UPDATE_LIKES_SUCCESS, payload: result.data })
+      })
+      .catch(error => {
+        dispatch({ type: UPDATE_LIKES_ERROR })
       })
   }
 }

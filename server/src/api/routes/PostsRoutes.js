@@ -56,4 +56,29 @@ router.delete("/:id", auth, async (request, response) => {
   }
 });
 
+// @route 	PUT api/posts/:id/like
+// @desc 	  Curte ou descurte uma postagem
+// @access 	Private
+router.put("/:id/like", auth, async (request, response) => {
+  const { id } = request.params
+  try {
+    const post = await Post.findById(id)
+
+    if (post) {
+      if (post.likes.includes(request.user.id)) {
+        post.likes.pull(request.user.id)
+      } else {
+        post.likes.push(request.user.id)
+      }
+
+      var result = await post.save()
+      response.send(result);
+    } else {
+      return response.status(400).json({ errors: [{ msg: "Essa postagem não existe." }] });
+    }
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = router
