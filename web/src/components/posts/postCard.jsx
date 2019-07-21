@@ -18,6 +18,7 @@ import { deletePost, updateLikes } from './postActions'
 import loadImage from '../../utils/loadImage'
 
 function ActivityCard(props) {
+
   const { _id, content, user, likes = [], createdAt } = props.post
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -28,6 +29,8 @@ function ActivityCard(props) {
   function handleClose() {
     setAnchorEl(null);
   }
+
+  const isUserLoggedProfile = props.authUser.isAuthenticated && user._id == props.authUser.user._id
 
   function handleDelete() {
     const confirm = window.confirm("Você realmente deseja excluir a postagem?")
@@ -49,9 +52,12 @@ function ActivityCard(props) {
               )
           }
           action={
-            <IconButton aria-label="Settings" onClick={handleClick}>
-              <MoreVertIcon />
-            </IconButton>
+            isUserLoggedProfile && (
+              <IconButton aria-label="Settings" onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+            )
+
           }
           title={user.name}
           subheader={createdAt}
@@ -62,7 +68,7 @@ function ActivityCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button aria-label="Curtir" onClick={() => props.updateLikes(_id)}>
+          <Button aria-label="Curtir" color={likes.includes(props.authUser.user._id) ? "secondary" : "primary"} onClick={() => props.updateLikes(_id)}>
             <FavoriteIcon style={{ marginRight: '10px' }} />
             {likes.length}
           </Button>
@@ -81,6 +87,7 @@ function ActivityCard(props) {
     </Box>
   );
 }
+const mapStateToProps = (state) => ({ authUser: state.auth })
 const mapDispatchToProps = (dispatch) => bindActionCreators({ deletePost, updateLikes }, dispatch)
 
-export default connect(null, mapDispatchToProps)(ActivityCard)
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityCard)
