@@ -1,5 +1,13 @@
 import axios from "axios";
-import { GET_ALL_USERS_SUCCESS, GET_ALL_USERS_FAIL, GET_USER_SUCCESS, GET_USER_FAIL } from '../utils/types'
+import {
+  GET_ALL_USERS_SUCCESS,
+  GET_ALL_USERS_FAIL,
+  GET_USER_SUCCESS,
+  GET_USER_FAIL,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL
+} from '../utils/types'
+import { setErrors, clearErrors } from '../errors/errorActions'
 
 export const getAllUsers = () => dispatch => {
   axios.get(`/api/users`)
@@ -31,4 +39,33 @@ export const getUser = id => dispatch => {
         payload: err
       });
     });
+}
+
+export const updateUser = ({ name, bio, site, location, birthday, avatar }) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const body = JSON.stringify({ name, bio, site, location, birthday, avatar })
+
+  try {
+    const res = await axios.put(`/api/users/`, body, config)
+    dispatch(clearErrors())
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      dispatch(setErrors(errors))
+    }
+
+    dispatch({
+      type: UPDATE_USER_FAIL
+    });
+  }
 }

@@ -10,9 +10,17 @@ import EditProfile from './editProfile'
 import FolowIcon from '@material-ui/icons/PersonAdd'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MaterialLink from '@material-ui/core/Link';
+import LocationIcon from '@material-ui/icons/LocationOn'
+import SiteIcon from '@material-ui/icons/Link'
+import BirthDayIcon from '@material-ui/icons/Cake'
 
 export default function ProfileSidebar(props) {
-  const { name, avatar, _id } = props.user
+  const { name, bio, site, birthday, location, avatar, _id } = props.user
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
   return (
@@ -20,7 +28,7 @@ export default function ProfileSidebar(props) {
 
       <React.Fragment>
         <Box py={2} style={{ backgroundColor: "#f9a825" }}>
-          <Box display="flex" alignItems="center" flexDirection="column">
+          <Box display="flex" alignItems="center" flexDirection="column" px={2} textAlign="center">
             {
               avatar && avatar != "" ? (
                 <Avatar src={avatar} alt={name} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
@@ -29,6 +37,46 @@ export default function ProfileSidebar(props) {
                 )
             }
             <Typography variant="h6">{name}</Typography>
+            <Typography variant="body2">{bio}</Typography>
+          </Box>
+          <Box mt={1}>
+            <List dense>
+              {location && (
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: '34px' }}>
+                    <LocationIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={location}
+                  />
+                </ListItem>
+              )}
+
+              {site && (
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: '34px' }}>
+                    <SiteIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                  >
+                    <MaterialLink target="_blank" href={site}>{site}</MaterialLink>
+                  </ListItemText>
+                </ListItem>
+              )}
+
+              {birthday && (
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: '34px' }}>
+                    <BirthDayIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={birthday.substring(0, 10)}
+                  />
+                </ListItem>
+              )}
+
+            </List>
           </Box>
           <Box mt={1} px={2}>
             {props.isUserLoggedProfile ? (

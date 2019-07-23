@@ -8,7 +8,7 @@ import { loadUserPosts } from './postActions'
 import isEmpty from 'is-empty'
 
 function ShowPosts(props) {
-  useEffect(() => props.loadUserPosts(props.user._id), [props.user])
+  useEffect(() => props.loadUserPosts(props.user._id), [props.user._id])
   return (
     <React.Fragment>
       {!isEmpty(props.posts) ? props.posts.map(post => (

@@ -1,4 +1,9 @@
-import { GET_ALL_USERS_SUCCESS, GET_USER_SUCCESS, GET_USER_FAIL } from '../utils/types'
+import {
+  GET_ALL_USERS_SUCCESS,
+  GET_USER_SUCCESS,
+  GET_USER_FAIL,
+  UPDATE_USER_SUCCESS,
+} from '../utils/types'
 
 const initialState = {
   allUsers: [],
@@ -26,6 +31,12 @@ export default function (state = initialState, action) {
         ...state,
         user: null,
         loading: false
+      }
+    case UPDATE_USER_SUCCESS:
+      console.log("ssss")
+      return {
+        ...state,
+        user: action.payload
       }
     default:
       return state;

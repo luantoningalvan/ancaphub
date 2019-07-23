@@ -4,6 +4,7 @@ const User = require("../models/UserModel")
 const bcrypt = require("bcryptjs");
 const keys = require("../../config/keys")
 const jwt = require('jsonwebtoken')
+const auth = require('../middleware/auth')
 const { check, validationResult } = require('express-validator');
 
 // @route 	GET api/users
@@ -97,6 +98,31 @@ router.post("/", [
     )
   } catch (error) {
     res.status(500).send(`Erro no servidor: ${error}`)
+  }
+});
+
+// @route 	PUT api/users/
+// @desc 	  Atualiza o usuário logado
+// @access 	Private
+router.put("/", auth, [
+  check('name', "O campo NOME é obrigatório")
+    .not()
+    .isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const { name, bio, site, location, birthday, avatar } = req.body
+
+  try {
+    var result = await User.findByIdAndUpdate(req.user.id, { name, bio, site, location, birthday, avatar }, { new: true })
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(`Erro: ${error}`)
   }
 });
 

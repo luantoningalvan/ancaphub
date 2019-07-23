@@ -14,8 +14,11 @@ import Grid from '@material-ui/core/Grid'
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField'
 import { Formik, Form } from 'formik'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { updateUser } from '../userActions'
 
-const styles = theme => ({
+const DialogTitle = withStyles(theme => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
@@ -25,10 +28,8 @@ const styles = theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
-  },
-});
-
-const DialogTitle = withStyles(styles)(props => {
+  }
+}))(props => {
   const { children, classes, onClose } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root}>
@@ -70,7 +71,14 @@ function EditProfile(props) {
       .min(3, 'Nome muito curto!')
       .max(50, 'Nome muito longo!')
       .required('O campo nome é obrigatório!'),
+    bio: Yup.string()
+      .max(160, 'Sua bio deve ter máximo 160 caracteres.!'),
+    site: Yup.string()
+      .url('URL inválida!'),
+    birthday: Yup.date()
+      .max(new Date(), "Tu é viajante do tempo por acaso?")
   });
+
   return (
     <div>
       <Button variant="outlined" fullWidth onClick={handleClickOpen}>
@@ -85,19 +93,19 @@ function EditProfile(props) {
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Editar Perfil
         </DialogTitle>
+        <Formik
+          initialValues={{ name: props.data.name, bio: props.data.bio || "", location: props.data.location || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
+          validationSchema={ProfileSchema}
+          onSubmit={(values, actions) => {
+            props.updateUser(values)
+          }}
+          render={formProps => {
+            const { values, touched, errors, handleChange, handleBlur } = formProps;
 
-        <DialogContent dividers>
-          <Formik
-            initialValues={{ name: props.data.name }}
-            validationSchema={ProfileSchema}
-            onSubmit={(values, actions) => {
-              console.log('ta')
-            }}
-            render={formProps => {
-              const { values, touched, errors, handleChange, handleBlur } = formProps;
+            return (
+              <Form>
+                <DialogContent dividers>
 
-              return (
-                <Form>
                   <Grid container>
                     <Grid item xs={12}>
                       <TextField
@@ -115,21 +123,96 @@ function EditProfile(props) {
                         onBlur={handleBlur}
                         helperText={(errors.name && touched.name) && errors.name}
                       />
-                    </Grid></Grid>
-                </Form>
-              )
-            }
-            }
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Salvar
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        multiline
+                        rows="2"
+                        type="text"
+                        margin="normal"
+                        fullWidth
+                        id="bio"
+                        label="Bio"
+                        name="bio"
+                        value={values.bio}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={(errors.bio && touched.bio) && errors.bio}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        type="text"
+                        margin="normal"
+                        fullWidth
+                        id="location"
+                        label="Localização"
+                        name="location"
+                        autoComplete="location"
+                        value={values.location}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={(errors.location && touched.location) && errors.location}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        type="text"
+                        margin="normal"
+                        fullWidth
+                        id="site"
+                        label="Site"
+                        name="site"
+                        autoComplete="site"
+                        value={values.site}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={(errors.site && touched.site) && errors.site}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                      <TextField
+                        id="birthday"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        label="Data de Nascimento"
+                        type="date"
+                        name="birthday"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        autoComplete="birthday"
+                        defaultValue={values.birthday.substring(0, 10)}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={(errors.birthday && touched.birthday) && errors.birthday}
+                      />
+                    </Grid>
+                  </Grid>
+
+                </DialogContent>
+                <DialogActions>
+                  <Button type="submit" color="primary">
+                    Salvar
             </Button>
-        </DialogActions>
+                </DialogActions>
+              </Form>
+            )
+          }
+          }
+        />
       </Dialog>
     </div>
   );
 }
-
-export default EditProfile;
+const mapDispatchToProps = (dispatch) => bindActionCreators({ updateUser }, dispatch)
+export default connect(null, mapDispatchToProps)(EditProfile);

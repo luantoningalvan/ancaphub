@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { deletePost, updateLikes } from './postActions'
 import loadImage from '../../utils/loadImage'
+import moment from 'moment'
 
 function ActivityCard(props) {
 
@@ -68,10 +69,16 @@ function ActivityCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button aria-label="Curtir" color={likes.includes(props.authUser.user._id) ? "secondary" : "primary"} onClick={() => props.updateLikes(_id)}>
-            <FavoriteIcon style={{ marginRight: '10px' }} />
-            {likes.length}
-          </Button>
+          {props.authUser.isAuthenticated ? (
+            <Button aria-label="Curtir" color={likes.includes(props.authUser.user._id) ? "secondary" : "primary"} onClick={() => props.updateLikes(_id)}>
+              <FavoriteIcon style={{ marginRight: '10px' }} />
+              {likes.length}
+            </Button>
+          ) : (
+
+              <Typography variant="body2" style={{ paddingLeft: '8px' }}>{likes.length} Curtida(s)</Typography>
+            )}
+
         </CardActions>
       </Card>
 
