@@ -3,6 +3,8 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
   UPDATE_USER_SUCCESS,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAIL
 } from '../utils/types'
 
 const initialState = {
@@ -13,17 +15,18 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action
+  switch (type) {
     case GET_ALL_USERS_SUCCESS:
       return {
         ...state,
-        allUsers: action.payload,
+        allUsers: payload,
         loading: false
       }
     case GET_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: payload,
         loading: false
       }
     case GET_USER_FAIL:
@@ -33,10 +36,14 @@ export default function (state = initialState, action) {
         loading: false
       }
     case UPDATE_USER_SUCCESS:
-      console.log("ssss")
       return {
         ...state,
-        user: action.payload
+        user: payload
+      }
+    case FOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, followers: payload }
       }
     default:
       return state;

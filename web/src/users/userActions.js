@@ -5,7 +5,9 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAIL
+  UPDATE_USER_FAIL,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAIL
 } from '../utils/types'
 import { setErrors, clearErrors } from '../errors/errorActions'
 
@@ -66,6 +68,20 @@ export const updateUser = ({ name, bio, site, location, birthday, avatar }) => a
 
     dispatch({
       type: UPDATE_USER_FAIL
+    });
+  }
+}
+
+export const followUser = user => async dispatch => {
+  try {
+    const res = await axios.put(`/api/users/${user}/follow`)
+    dispatch({
+      type: FOLLOW_USER_SUCCESS,
+      payload: res.data.followers
+    })
+  } catch (error) {
+    dispatch({
+      type: FOLLOW_USER_FAIL
     });
   }
 }

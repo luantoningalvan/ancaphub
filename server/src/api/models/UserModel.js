@@ -26,6 +26,8 @@ const UserSchema = new Schema({
   },
   library: [ItemSchema],
   watchLater: { ItemSchema },
+  following: [],
+  followers: [],
   birthday: Date,
   avatar: String,
   site: String,

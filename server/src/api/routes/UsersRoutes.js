@@ -126,4 +126,29 @@ router.put("/", auth, [
   }
 });
 
+// @route 	PUT api/users/follow
+// @desc 	  Registra uma relação de seguir usuário
+// @access 	Private
+router.put("/:id/follow", auth, async (request, response) => {
+  const { id } = request.params
+  try {
+    const userFollowed = await User.findById(id)
+
+    if (userFollowed) {
+      if (userFollowed.followers.includes(request.user.id)) {
+        userFollowed.followers.pull(request.user.id)
+      } else {
+        userFollowed.followers.push(request.user.id)
+      }
+
+      var result = await userFollowed.save()
+      response.send(result);
+    } else {
+      return response.status(400).json({ errors: [{ msg: "Esse usuário não existe." }] });
+    }
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = router

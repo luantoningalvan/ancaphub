@@ -42,11 +42,9 @@ function LoggedUserMenu(props) {
   }
 
   function showProfile() {
-    const isUserLoggedProfile = () => (props.authUser.isAuthenticated && props.user.user._id == props.authUser.user._id)
-
     if (!props.user.isLoading && !props.authUser.loading) {
       return (
-        <ProfileSidebar user={props.user.user} isUserLoggedProfile={isUserLoggedProfile()} />
+        <ProfileSidebar user={props.user.user} auth={props.authUser} />
       )
     } else {
       return (

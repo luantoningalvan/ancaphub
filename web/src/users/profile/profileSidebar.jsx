@@ -5,9 +5,8 @@ import Paper from '@material-ui/core/Paper'
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
 import loadImage from '../../utils/loadImage'
-import Button from '@material-ui/core/Button';
 import EditProfile from './editProfile'
-import FolowIcon from '@material-ui/icons/PersonAdd'
+import FollowButton from './followButton'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List';
@@ -22,7 +21,7 @@ import BirthDayIcon from '@material-ui/icons/Cake'
 export default function ProfileSidebar(props) {
   const { name, bio, site, birthday, location, avatar, _id } = props.user
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
+  const isUserLoggedProfile = props.auth.isAuthenticated && props.user._id == props.auth.user._id
   return (
     <Paper>
 
@@ -79,13 +78,16 @@ export default function ProfileSidebar(props) {
             </List>
           </Box>
           <Box mt={1} px={2}>
-            {props.isUserLoggedProfile ? (
-              <EditProfile data={props.user} />
-            ) : (
-                <Button variant="outlined" fullWidth>
-                  <FolowIcon style={{ marginRight: '10px' }} /> Seguir
-                  </Button>
-              )}
+            {props.auth.isAuthenticated && (
+              <React.Fragment>
+                {isUserLoggedProfile ? (
+                  <EditProfile data={props.user} />
+                ) : (
+                    <FollowButton profile={props.user} />
+                  )}
+              </React.Fragment>
+            )}
+
           </Box>
         </Box>
 
