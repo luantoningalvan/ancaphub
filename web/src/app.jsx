@@ -14,15 +14,24 @@ import reducers from './rootReducer'
 import Home from './home/home'
 
 // # Livros
-import Books from './books/books'
+import Books from './books'
 import SingleBook from './books/singleBook'
 
 // # Podcasts
-import Podcasts from './podcasts/podcasts'
+import Podcasts from './podcasts'
 
 // # Artigos
-import Articles from './articles/articles'
+import Articles from './articles'
 import SingleArticle from './articles/singleArticle'
+
+// # Grupos
+import Groups from './groups'
+
+// # Eventos
+import Events from './events'
+
+// # Campanhas
+import Campaigns from './campaigns'
 
 // # Usuários
 import Profile from './users/profile/profile'
@@ -50,6 +59,12 @@ export default function App() {
           <Route path="/livros/:id" component={SingleBook} />
 
           <Route path="/podcasts" component={Podcasts} />
+
+          <Route path="/grupos" component={Groups} />
+
+          <Route path="/eventos" component={Events} />
+
+          <Route path="/campanhas" component={Campaigns} />
 
           <Route exact path="/artigos" component={Articles} />
           <Route path="/artigos/:id" component={SingleArticle} />
