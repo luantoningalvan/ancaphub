@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import loadImage from '../utils/loadImage'
 
 const AdapterLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,13 @@ function LoggedUserMenu(props) {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <Avatar className={classes.letterAvatar}>{props.user.name.substring(0, 1)}</Avatar>
+            {
+              props.user.avatar && props.user.avatar != "" ? (
+                <Avatar src={`http://localhost:3000/public/images/uploads/${props.user.avatar}`} alt={name} style={{ width: '40px', height: '40px' }} />
+              ) : (
+                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
+                )
+            }
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -53,7 +60,7 @@ function LoggedUserMenu(props) {
           >
             <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
             <Link component={AdapterLink} to={`/salvos`} underline="none"><MenuItem onClick={handleMenuClose}>Itens Salvos</MenuItem></Link>
-            <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
+            <Link component={AdapterLink} to={`/configuracoes`} underline="none"><MenuItem onClick={handleMenuClose}>Configurações</MenuItem></Link>
             <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
           </Menu>
         </React.Fragment>
