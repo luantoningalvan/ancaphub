@@ -30,7 +30,7 @@ export default function ProfileSidebar(props) {
           <Box display="flex" alignItems="center" flexDirection="column" px={2} textAlign="center">
             {
               avatar && avatar != "" ? (
-                <Avatar src={avatar} alt={name} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
+                <Avatar src={`http://localhost:3000/public/images/uploads/${avatar}`} alt={name} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
               ) : (
                   <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
                 )

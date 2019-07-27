@@ -9,14 +9,15 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import EditIcon from '@material-ui/icons/Edit'
-import Grid from '@material-ui/core/Grid'
+import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid';
 import * as Yup from 'yup';
-import TextField from '@material-ui/core/TextField'
-import { Formik, Form } from 'formik'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { updateUser } from '../userActions'
+import TextField from '@material-ui/core/TextField';
+import UpdateProfilePicture from './updateProfilePicture';
+import { Formik, Field, Form } from 'formik';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateUser } from '../userActions';
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -94,7 +95,7 @@ function EditProfile(props) {
           Editar Perfil
         </DialogTitle>
         <Formik
-          initialValues={{ name: props.data.name, bio: props.data.bio || "", location: props.data.location || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
+          initialValues={{ name: props.data.name, avatar: props.data.avatar || '', bio: props.data.bio || "", location: props.data.location || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
           validationSchema={ProfileSchema}
           onSubmit={(values, actions) => {
             props.updateUser(values)
@@ -105,8 +106,10 @@ function EditProfile(props) {
             return (
               <Form>
                 <DialogContent dividers>
-
                   <Grid container>
+                    <Grid item xs={12}>
+                      <Field name="avatar" uploadImage={props.uploadImage} component={UpdateProfilePicture} />
+                    </Grid>
                     <Grid item xs={12}>
                       <TextField
                         variant="outlined"

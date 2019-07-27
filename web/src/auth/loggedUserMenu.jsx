@@ -52,6 +52,8 @@ function LoggedUserMenu(props) {
             getContentAnchorEl={null}
           >
             <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
+            <Link component={AdapterLink} to={`/salvos`} underline="none"><MenuItem onClick={handleMenuClose}>Itens Salvos</MenuItem></Link>
+            <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
             <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
           </Menu>
         </React.Fragment>

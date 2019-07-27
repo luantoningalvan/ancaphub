@@ -47,7 +47,7 @@ function ActivityCard(props) {
         <CardHeader
           avatar={
             user.avatar && user.avatar != "" ? (
-              <Avatar src={user.avatar} alt={user.name} />
+              <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} alt={user.name} />
             ) : (
                 <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" />
               )
