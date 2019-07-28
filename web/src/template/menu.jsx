@@ -1,6 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ItemMenu from './ItemMenu'
 
@@ -12,40 +10,23 @@ import GroupIcon from '@material-ui/icons/Group'
 import EventIcon from '@material-ui/icons/Event'
 import CampaignIcon from '@material-ui/icons/Share'
 
-const useStyles = makeStyles(theme => ({
-  drawer: {
-    width: 240,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: 240,
-  },
-  toolbar: theme.mixins.toolbar,
-}));
+import { withRouter } from 'react-router'
 
+function Menu(props) {
 
-export default function Menu(props) {
-  const classes = useStyles();
+  const url = props.match.path
 
   return (
-    <Drawer
-      className={classes.drawer}
-      variant="persistent"
-      open={props.open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.toolbar} />
-      <List>
-        <ItemMenu icon={(<HomeIcon />)} label="Home" link="/" />
-        <ItemMenu icon={(<BookIcon />)} label="Livros" link="/livros" />
-        <ItemMenu icon={(<ArticleIcon />)} label="Artigos" link="/artigos" />
-        <ItemMenu icon={(<PodcastIcon />)} label="Podcasts" link="/podcasts" />
-        <ItemMenu icon={(<GroupIcon />)} label="Grupos" link="/grupos" />
-        <ItemMenu icon={(<EventIcon />)} label="Eventos" link="/eventos" />
-        <ItemMenu icon={(<CampaignIcon />)} label="Campanhas" link="/campanhas" />
-      </List>
-    </Drawer>
+    <List>
+      <ItemMenu selected={url == "/"} icon={(<HomeIcon />)} label="Home" link="/" />
+      <ItemMenu selected={url.includes("/livros")} icon={(<BookIcon />)} label="Livros" link="/livros" />
+      <ItemMenu selected={url.includes("/artigos")} icon={(<ArticleIcon />)} label="Artigos" link="/artigos" />
+      <ItemMenu selected={url.includes("/podcasts")} icon={(<PodcastIcon />)} label="Podcasts" link="/podcasts" />
+      <ItemMenu selected={url.includes("/grupos")} icon={(<GroupIcon />)} label="Grupos" link="/grupos" />
+      <ItemMenu selected={url.includes("/eventos")} icon={(<EventIcon />)} label="Eventos" link="/eventos" />
+      <ItemMenu selected={url.includes("/campanhas")} icon={(<CampaignIcon />)} label="Campanhas" link="/campanhas" />
+    </List>
   )
 }
+
+export default withRouter(Menu)

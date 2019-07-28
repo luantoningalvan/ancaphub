@@ -1,8 +1,9 @@
 import React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Header from './header'
-import Menu from './menu'
+//import Header from './header'
+//import Menu from './menu'
+import Sidebar from './sidebar'
 import Main from './main'
 
 /* CSS FILES */
@@ -14,28 +15,25 @@ import '../assets/js/script.js'
 
 const theme = createMuiTheme({
   palette: {
-      primary: {
-        main: '#131313',
-      },
-      secondary: {
-          main: '#f9a825',
-      },
+    primary: {
+      main: '#131313',
     },
+    secondary: {
+      main: '#f5ee03',
+    },
+  },
 });
 
 export default function Template(props) {
-  const [open, setOpen] = React.useState(true);
-
-  function handleDrawerOpen() {
-    (open) ? setOpen(false) : setOpen(true);
-  }
-
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header openDrawer={handleDrawerOpen}/>
+
+      <Sidebar />
+      {/*
+      <Header openDrawer={handleDrawerOpen} />
       <Menu open={open} />
+      */}
       <Main open={open}>
         {props.children}
       </Main>
