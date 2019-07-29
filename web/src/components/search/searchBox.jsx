@@ -12,9 +12,9 @@ import { fetchAllArticles } from '../../articles/articleActions'
 const useStyles = makeStyles(theme => ({
   search: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.black, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.black, 0.25),
     },
     width: '100%',
     display: 'flex',
@@ -22,12 +22,16 @@ const useStyles = makeStyles(theme => ({
   },
   locationSearchIcon: {
     paddingLeft: theme.spacing(1),
+    height: '24px',
+    color: "#757575"
   },
   searchIcon: {
     paddingRight: theme.spacing(1),
+    height: '24px',
+    color: "#757575"
   },
   inputRoot: {
-    color: 'inherit',
+    color: "#757575",
   },
   inputInput: {
     padding: theme.spacing(1),

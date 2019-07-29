@@ -1,8 +1,6 @@
 import React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-//import Header from './header'
-//import Menu from './menu'
 import Sidebar from './sidebar'
 import Main from './main'
 
@@ -14,6 +12,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import '../assets/js/script.js'
 
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat'
+    ]
+  },
   palette: {
     primary: {
       main: '#131313',
@@ -28,12 +31,7 @@ export default function Template(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       <Sidebar />
-      {/*
-      <Header openDrawer={handleDrawerOpen} />
-      <Menu open={open} />
-      */}
       <Main open={open}>
         {props.children}
       </Main>
