@@ -1,12 +1,26 @@
 const express = require('express')
 const router = express.Router();
 const Post = require("../models/PostModel")
+const User = require("../models/UserModel")
 const auth = require('../middleware/auth')
+
+// @route 	GET api/posts/:id
+// @desc 	  Obtém o feed de um usuário
+// @access 	Public
+router.get('/feed', auth, async (request, response) => {
+  try {
+    const following = await User.findById(request.user.id)
+    const result = await Post.find({ user: following.following }).populate('user', 'name id avatar').sort({ createdAt: "desc" })
+    response.send(result)
+  } catch (error) {
+    response.status(500).send(error)
+  }
+})
 
 // @route 	GET api/posts/:id
 // @desc 	  Obtém as postagens feitas por um usuário
 // @access 	Public
-router.get('/:id', async (request, response) => {
+router.get('/user/:id', async (request, response) => {
   try {
     const result = await Post.find({ user: request.params.id }).populate('user', 'name id avatar').sort({ createdAt: "desc" })
     response.send(result)

@@ -1,9 +1,21 @@
 import axios from 'axios'
-import { ADD_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS, UPDATE_LIKES_SUCCESS, UPDATE_LIKES_ERROR, DELETE_POST_SUCCESS, DELETE_POST_ERROR } from '../../utils/types'
+import { ADD_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS, LOAD_USER_FEED_SUCCESS, UPDATE_LIKES_SUCCESS, UPDATE_LIKES_ERROR, DELETE_POST_SUCCESS, DELETE_POST_ERROR } from '../../utils/types'
+
+export function loadUserFeed() {
+  return (dispatch) => {
+    axios.get(`/api/posts/feed`)
+      .then(function (posts) {
+        dispatch({ type: LOAD_USER_FEED_SUCCESS, payload: posts.data });
+      })
+      .catch(function (error) {
+        console.error("Erro ao carregar postagens: ", error);
+      });
+  }
+}
 
 export function loadUserPosts(user) {
   return (dispatch) => {
-    axios.get(`/api/posts/${user}`)
+    axios.get(`/api/posts/user/${user}`)
       .then(function (posts) {
         dispatch({ type: LOAD_USER_POSTS_SUCCESS, payload: posts.data });
       })

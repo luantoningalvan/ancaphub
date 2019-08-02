@@ -133,14 +133,17 @@ router.put("/:id/follow", auth, async (request, response) => {
   const { id } = request.params
   try {
     const userFollowed = await User.findById(id)
-
+    const follower = await User.findById(request.user.id)
     if (userFollowed) {
       if (userFollowed.followers.includes(request.user.id)) {
         userFollowed.followers.pull(request.user.id)
+        follower.following.pull(id)
       } else {
         userFollowed.followers.push(request.user.id)
+        follower.following.push(id)
       }
 
+      await follower.save()
       var result = await userFollowed.save()
       response.send(result);
     } else {

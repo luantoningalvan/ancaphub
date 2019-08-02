@@ -1,4 +1,4 @@
-import { ADD_POST_SUCCESS, UPDATE_LIKES_SUCCESS, UPDATE_LIKES_ERROR, DELETE_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS } from '../../utils/types'
+import { ADD_POST_SUCCESS, UPDATE_LIKES_SUCCESS, LOAD_USER_FEED_SUCCESS, DELETE_POST_SUCCESS, LOAD_USER_POSTS_SUCCESS } from '../../utils/types'
 
 const initialState = {
   posts: [],
@@ -9,6 +9,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action
 
   switch (type) {
+    case LOAD_USER_FEED_SUCCESS:
     case LOAD_USER_POSTS_SUCCESS:
       return {
         ...state,

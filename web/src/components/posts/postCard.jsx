@@ -16,7 +16,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { deletePost, updateLikes } from './postActions'
 import loadImage from '../../utils/loadImage'
-import moment from 'moment'
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 function ActivityCard(props) {
 
@@ -46,11 +47,13 @@ function ActivityCard(props) {
       <Card>
         <CardHeader
           avatar={
-            user.avatar && user.avatar != "" ? (
-              <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} alt={user.name} />
-            ) : (
-                <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" />
-              )
+            <Link component={RouterLink} to={`/usuario/${user._id}`} underline='none' color="textPrimary">
+              {user.avatar && user.avatar != "" ? (
+                <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} alt={user.name} />
+              ) : (
+                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" />
+                )}
+            </Link>
           }
           action={
             isUserLoggedProfile && (
@@ -60,7 +63,13 @@ function ActivityCard(props) {
             )
 
           }
-          title={user.name}
+          title={(
+            <Link component={RouterLink} to={`/usuario/${user._id}`} underline='none' color="textPrimary">
+              {user.name}
+            </Link>
+          )
+
+          }
           subheader={createdAt}
         />
         <CardContent>
@@ -78,7 +87,6 @@ function ActivityCard(props) {
 
               <Typography variant="body2" style={{ paddingLeft: '8px' }}>{likes.length} Curtida(s)</Typography>
             )}
-
         </CardActions>
       </Card>
 
