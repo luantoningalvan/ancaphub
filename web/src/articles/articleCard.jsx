@@ -28,7 +28,7 @@ export default function ArticleCard(props) {
   return (
     <Grid item xs={3}>
       <Card>
-        <CardActionArea>
+        <CardActionArea component={AdapterLink} to={`/artigos/${_id}`}>
           <CardMedia
             className={classes.media}
             image={cover}
@@ -46,11 +46,6 @@ export default function ArticleCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary" component={AdapterLink} to={`/artigos/${_id}`}>
-            Ver Artigo
-          </Button>
-        </CardActions>
       </Card>
     </Grid>
   );

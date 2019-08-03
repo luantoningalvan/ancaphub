@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const Article = require("../models/ArticleModel")
+const Item = require("../models/CollectionItemModel")
 const auth = require('../middleware/auth')
 
 // @route 	GET api/articles
@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
   const category = req.query.category || ''
   const sortQuery = { [sortBy]: orderBy }
 
-  let filterQuery = {}
+  let filterQuery = { type: "article" }
 
   if (filter.length > 0) {
     const regx = new RegExp(filter, 'i')
@@ -37,12 +37,12 @@ router.get('/', (req, res, next) => {
 
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
-  Article.countDocuments(filterQuery)
+  Item.countDocuments(filterQuery)
     .then(articleCount => {
       if (currentPage * pageSize > articleCount) {
         return res.status(400).json([])
       }
-      Article.find(filterQuery)
+      Item.find(filterQuery)
         .limit(parseInt(pageSize))
         .skip(currentPage * pageSize)
         .sort(sortQuery)
@@ -66,7 +66,7 @@ router.get('/', (req, res, next) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await Article.findById(request.params.id).exec();
+    var result = await Item.findById(request.params.id).exec();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -77,9 +77,19 @@ router.get("/:id", async (request, response) => {
 // @desc 		Cria um novo artigo
 // @access 	Private
 router.post("/", auth, async (request, response) => {
+  const { title, author, content, cover, categories } = request.body
+
   try {
-    var article = new Article(request.body);
-    var result = await article.save();
+    const newArticle = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+      type: "article"
+    }
+    const article = new Item(newArticle);
+    const result = await article.save();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -90,9 +100,19 @@ router.post("/", auth, async (request, response) => {
 // @desc 		Edita um arquivo através de seu ID
 // @access 	Private
 router.put("/:id", auth, async (request, response) => {
+  const { title, author, content, cover, categories } = request.body
+
   try {
-    var article = await Article.findById(request.params.id).exec();
-    article.set(request.body);
+    var article = await Item.findById(request.params.id);
+    const updatedArticle = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+      type: "article"
+    }
+    article.set(updatedArticle);
     var result = await article.save();
     response.send(result);
   } catch (error) {
@@ -105,7 +125,7 @@ router.put("/:id", auth, async (request, response) => {
 // @access 	Private
 router.delete("/:id", auth, async (request, response) => {
   try {
-    var result = await Article.deleteOne({ _id: request.params.id }).exec();
+    var result = await Item.deleteOne({ _id: request.params.id }).exec();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

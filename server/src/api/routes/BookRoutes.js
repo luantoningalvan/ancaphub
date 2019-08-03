@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth')
-const Book = require("../models/BookModel")
+const Item = require("../models/CollectionItemModel")
 
 // @route 	GET api/books
 /* @desc 	  Retorna uma lista com todos os livros
@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
   const category = req.query.category || ''
   const sortQuery = { [sortBy]: orderBy }
 
-  let filterQuery = {}
+  let filterQuery = { type: "book" }
 
   if (filter.length > 0) {
     const regx = new RegExp(filter, 'i')
@@ -38,12 +38,12 @@ router.get('/', (req, res, next) => {
 
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
-  Book.countDocuments(filterQuery)
+  Item.countDocuments(filterQuery)
     .then(bookCount => {
       if (currentPage * pageSize > bookCount) {
         return res.status(400).json([])
       }
-      Book.find(filterQuery)
+      Item.find(filterQuery)
         .limit(parseInt(pageSize))
         .skip(currentPage * pageSize)
         .sort(sortQuery)
@@ -67,7 +67,7 @@ router.get('/', (req, res, next) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await Book.findById(request.params.id).exec();
+    var result = await Item.findById(request.params.id).exec();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -75,12 +75,25 @@ router.get("/:id", async (request, response) => {
 });
 
 // @route 	POST api/books
-// @desc 		Cria um novo livro
+// @desc 		Cria um novo item do tipo livro
 // @access 	Private
 router.post("/", auth, async (request, response) => {
+  const { title, author, content, cover, categories, downloadOptions } = request.body
+
   try {
-    var book = new Book(request.body);
-    var result = await book.save();
+    const newBook = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+      extraFields: {
+        downloadOptions
+      },
+      type: "book"
+    }
+    const book = new Item(newBook);
+    const result = await book.save();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -91,9 +104,22 @@ router.post("/", auth, async (request, response) => {
 // @desc 		Edita um livro através de seu ID
 // @access 	Private
 router.put("/:id", auth, async (request, response) => {
+  const { title, author, content, cover, categories, downloadOptions } = request.body
+
   try {
-    var book = await Book.findById(request.params.id).exec();
-    book.set(request.body);
+    var book = await Item.findById(request.params.id).exec();
+    const updatedBook = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+      extraFields: {
+        downloadOptions
+      },
+      type: "book"
+    }
+    book.set(updatedBook);
     var result = await book.save();
     response.send(result);
   } catch (error) {
@@ -106,7 +132,7 @@ router.put("/:id", auth, async (request, response) => {
 // @access 	Private
 router.delete("/:id", auth, async (request, response) => {
   try {
-    var result = await Book.deleteOne({ _id: request.params.id }).exec();
+    var result = await Item.deleteOne({ _id: request.params.id }).exec();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

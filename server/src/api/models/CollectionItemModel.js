@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-  category: { type: mongoose.Schema.Types.ObjectId },
-  name: String
+    category: { type: mongoose.Schema.Types.ObjectId },
+    name: String
 })
 
-const BookSchema = new Schema({
+const ItemSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -17,8 +17,10 @@ const BookSchema = new Schema({
     },
     content: String,
     cover: String,
+    type: String,
+    extraFields: Object,
     categories: [CategorySchema],
     userWhoAddedToTheLibrary: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
-module.exports = mongoose.model('Article', BookSchema);
+module.exports = mongoose.model('Item', ItemSchema);
