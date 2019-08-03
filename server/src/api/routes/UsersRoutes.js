@@ -24,7 +24,19 @@ router.get("/", async (request, response) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await User.findById(request.params.id).exec();
+    var result = await User.findById(request.params.id, "_id name avatar bio birthday location site");
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+// @route 	GET api/users/:id/followers
+// @desc 	  Retorna os seguidores de um usuário pelo seu id
+// @access 	Public
+router.get("/:id/followers", async (request, response) => {
+  try {
+    var result = await User.findById(request.params.id, "followers").populate("followers", "name avatar _id");
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -143,9 +155,9 @@ router.put("/:id/follow", auth, async (request, response) => {
         follower.following.push(id)
       }
 
-      await follower.save()
-      var result = await userFollowed.save()
-      response.send(result);
+      await userFollowed.save()
+      var result = await follower.save()
+      response.send(result.following);
     } else {
       return response.status(400).json({ errors: [{ msg: "Esse usuário não existe." }] });
     }

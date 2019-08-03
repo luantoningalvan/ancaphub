@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadUserPosts } from "../../components/posts/postActions"
 
-function LoggedUserMenu(props) {
+function UserFeed(props) {
   useEffect(() => props.loadUserPosts(props.user._id), [props.user._id])
 
   return (
@@ -19,4 +19,4 @@ function LoggedUserMenu(props) {
 const mapStateToProps = (state) => ({ posts: state.posts.posts })
 const mapDispatchToProps = (dispatch) => bindActionCreators({ loadUserPosts }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoggedUserMenu)
+export default connect(mapStateToProps, mapDispatchToProps)(UserFeed)

@@ -26,9 +26,9 @@ function LoggedUserMenu(props) {
         case '/usuario/:id':
           return (<UserFeed user={props.user.user} isUserLoggedProfile={isUserLoggedProfile()} />)
         case '/usuario/:id/seguidores':
-          return (<UserFollowers />)
+          return (<UserFollowers user={props.user.user} />)
         case '/usuario/:id/biblioteca':
-          return (<UserLibrary authUser={props.authUser.user} />)
+          return (<UserLibrary />)
         default:
           console.log(props.match.path)
       }
