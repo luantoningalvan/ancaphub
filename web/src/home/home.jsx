@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { loadUserFeed } from "../components/posts/postActions"
 
 function Home(props) {
-  useEffect(() => props.loadUserFeed(), [props.posts])
+  useEffect(() => props.loadUserFeed(), [])
 
   return (
     <Template>
