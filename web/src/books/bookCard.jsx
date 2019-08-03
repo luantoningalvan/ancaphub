@@ -53,7 +53,7 @@ export default function BookCard(props) {
               {book.author}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {(book.content.length > 200) ? `${book.content.substring(0, 200)}..` : book.content}
+              {book.content ? ((book.content.length > 200) ? `${book.content.substring(0, 200)}..` : book.content) : "Nenhuma descrição disponível."}
             </Typography>
           </CardContent>
         </CardActionArea>

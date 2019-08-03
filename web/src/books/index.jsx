@@ -18,7 +18,7 @@ function BooksList(props) {
         <Typography variant="h4" component="h2">Livros</Typography>
       </Box>
 
-      <Filter 
+      <Filter
         fetchAction={props.fetchAllBooks}
         filters={books.filters}
         selectCategory={props.selectCategory}
@@ -29,7 +29,7 @@ function BooksList(props) {
       />
 
       <Grid container spacing={2}>
-        {!isEmpty(books.allBooks.books) ? books.allBooks.books.map((book, index) => (
+        {!isEmpty(books.allBooks.items) ? books.allBooks.items.map((book, index) => (
           <BookCard book={book} user={props.user} key={index} />
         )) :
           (

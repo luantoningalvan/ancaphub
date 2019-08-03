@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const User = require("../models/UserModel")
+const Item = require("../models/CollectionItemModel")
 const bcrypt = require("bcryptjs");
 const keys = require("../../config/keys")
 const jwt = require('jsonwebtoken')
@@ -138,7 +139,7 @@ router.put("/", auth, [
   }
 });
 
-// @route 	PUT api/users/follow
+// @route 	PUT api/users/:id/follow
 // @desc 	  Registra uma relação de seguir usuário
 // @access 	Private
 router.put("/:id/follow", auth, async (request, response) => {
@@ -160,6 +161,37 @@ router.put("/:id/follow", auth, async (request, response) => {
       response.send(result.following);
     } else {
       return response.status(400).json({ errors: [{ msg: "Esse usuário não existe." }] });
+    }
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+// @route 	PUT api/users/addItemToCollection
+// @desc 	  Registra uma relação de seguir usuário
+// @access 	Private
+router.put("/addItemToCollection", auth, async (request, response) => {
+  const { item: itemId } = request.body
+
+  console.log(itemId)
+  try {
+    const item = await Item.findById(itemId)
+    if (item) {
+      const user = await User.findById(request.user.id)
+
+      if (user.personalCollection.includes(itemId)) {
+        user.personalCollection.pull(itemId)
+        item.collectedBy.pull(request.user.id)
+      } else {
+        user.personalCollection.push(itemId)
+        item.collectedBy.push(request.user.id)
+      }
+
+      await user.save()
+      const result = await item.save()
+      response.send(result.collectedBy);
+    } else {
+      return res.status(400).json({ errors: [{ msg: "Este esse item não existe no acervo." }] });
     }
   } catch (error) {
     response.status(500).send(error);

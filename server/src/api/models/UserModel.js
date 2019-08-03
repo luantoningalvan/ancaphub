@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema({
-  books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
-  articles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }]
-})
-
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -24,8 +19,8 @@ const UserSchema = new Schema({
     required: true,
     default: ['user']
   },
-  library: [ItemSchema],
-  watchLater: { ItemSchema },
+  personalCollection: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+  watchLater: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   following: [],
   followers: [],
   birthday: Date,

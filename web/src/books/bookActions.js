@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { FETCH_ALL_BOOKS, FETCH_BOOK, SELECT_BOOKS_CATEGORY, SELECT_BOOKS_ORDER, SELECT_BOOKS_PAGE } from '../utils/types'
 
-const BASE_URL = 'http://localhost:3000/api/books'
+const BASE_URL = 'http://localhost:3000/api/items'
 
 // Obtém a lista de todos os livros
 export function fetchAllBooks(config) {
@@ -13,7 +13,7 @@ export function fetchAllBooks(config) {
   const category = config.category || ""
 
   return (dispatch) => {
-    axios.get(`/api/books?page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}${category && `&&category=${category}`}`)
+    axios.get(`${BASE_URL}?type=book&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}${category && `&&category=${category}`}`)
       .then((books) => {
         dispatch({ type: FETCH_ALL_BOOKS, payload: books.data });
       }).catch((error) => {
@@ -24,7 +24,7 @@ export function fetchAllBooks(config) {
 
 export function fetchBook(id) {
   return (dispatch) => {
-    axios.get(`/api/books/${id}`)
+    axios.get(`${BASE_URL}/${id}`)
       .then((book) => {
         dispatch({ type: FETCH_BOOK, payload: book.data });
       }).catch((error) => {

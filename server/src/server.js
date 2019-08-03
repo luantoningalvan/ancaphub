@@ -15,16 +15,14 @@ server.use(cors(corsOptions))
 
 
 // Rotas
-const books = require('./api/routes/BookRoutes')
-const articles = require('./api/routes/ArticleRoutes')
+const items = require('./api/routes/ItemRoutes')
 const categories = require('./api/routes/CategoryRoutes')
 const users = require('./api/routes/UsersRoutes')
 const posts = require('./api/routes/PostsRoutes')
 const upload = require('./api/routes/UploadRoutes')
 const auth = require('./api/routes/AuthRoutes')
 
-server.use('/api/books/', books)
-server.use('/api/articles/', articles)
+server.use('/api/items/', items)
 server.use('/api/categories/', categories)
 server.use('/api/users/', users)
 server.use('/api/posts/', posts)

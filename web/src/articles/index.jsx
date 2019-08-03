@@ -18,7 +18,7 @@ function ArticlesList(props) {
         <Typography variant="h4" component="h2">Artigos</Typography>
       </Box>
 
-      <Filter 
+      <Filter
         fetchAction={props.fetchAllArticles}
         filters={articles.filters}
         selectCategory={props.selectCategory}
@@ -29,7 +29,7 @@ function ArticlesList(props) {
       />
 
       <Grid container spacing={2}>
-        {!isEmpty(articles.allArticles.articles) ? articles.allArticles.articles.map((article, index) => (
+        {!isEmpty(articles.allArticles.items) ? articles.allArticles.items.map((article, index) => (
           <ArticleCard article={article} user={props.user} key={index} />
         )) :
           (

@@ -20,7 +20,7 @@ const ItemSchema = new Schema({
     type: String,
     extraFields: Object,
     categories: [CategorySchema],
-    userWhoAddedToTheLibrary: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('Item', ItemSchema);
