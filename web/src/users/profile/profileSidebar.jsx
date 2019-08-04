@@ -95,7 +95,7 @@ export default function ProfileSidebar(props) {
         <MenuList>
           <MenuItem component={AdapterLink} to={`/usuario/${_id}/`}>Feed</MenuItem>
           <MenuItem component={AdapterLink} to={`/usuario/${_id}/seguidores`}>Seguidores</MenuItem>
-          <MenuItem component={AdapterLink} to={`/usuario/${_id}/biblioteca`}>Biblioteca</MenuItem>
+          <MenuItem component={AdapterLink} to={`/usuario/${_id}/colecao`}>Coleção</MenuItem>
         </MenuList>
       </React.Fragment>
 

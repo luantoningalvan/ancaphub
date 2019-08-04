@@ -30,7 +30,9 @@ function ArticlesList(props) {
 
       <Grid container spacing={2}>
         {!isEmpty(articles.allArticles.items) ? articles.allArticles.items.map((article, index) => (
-          <ArticleCard article={article} user={props.user} key={index} />
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+            <ArticleCard article={article} user={props.user} key={index} />
+          </Grid>
         )) :
           (
             <p>Nenhum artigo disponível.</p>

@@ -78,7 +78,7 @@ export default function App() {
 
           <Route exact path="/usuario/:id" component={Profile} />
           <Route exact path="/usuario/:id/seguidores" component={Profile} />
-          <Route exact path="/usuario/:id/biblioteca" component={Profile} />
+          <Route exact path="/usuario/:id/colecao" component={Profile} />
         </Switch>
       </Router>
     </Provider>

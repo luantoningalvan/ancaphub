@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import AddToLibrary from '../components/addItemToLibrary'
+import AddToCollection from '../components/addItemToCollection'
 import striptags from 'striptags';
 import { Link } from 'react-router-dom';
 
@@ -24,32 +24,30 @@ export default function ArticleCard(props) {
   const classes = useStyles();
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
-  const { _id, title, author, cover, content, userWhoAddedToTheLibrary } = props.article;
+  const { _id, title, author, cover, content } = props.article;
   return (
-    <Grid item xs={3}>
-      <Card>
-        <CardActionArea component={AdapterLink} to={`/artigos/${_id}`}>
-          <CardMedia
-            className={classes.media}
-            image={cover}
-            title={`Capa do artigo ${title}`}
-          />
-          <CardContent>
-            <Typography variant="h5" component="h2" noWrap>
-              {title}
-            </Typography>
-            <Typography className={classes.pos} variant="subtitle1" gutterBottom>
-              {author}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {(content.length > 200) ? `${striptags(content.substring(0, 200))}..` : striptags(content)}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <AddToLibrary item={_id} />
-        </CardActions>
-      </Card>
-    </Grid>
+    <Card>
+      <CardActionArea component={AdapterLink} to={`/artigos/${_id}`}>
+        <CardMedia
+          className={classes.media}
+          image={cover}
+          title={`Capa do artigo ${title}`}
+        />
+        <CardContent>
+          <Typography variant="h5" component="h2" noWrap>
+            {title}
+          </Typography>
+          <Typography className={classes.pos} variant="subtitle1" gutterBottom>
+            {author}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {(content.length > 200) ? `${striptags(content.substring(0, 200))}..` : striptags(content)}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <AddToCollection item={_id} />
+      </CardActions>
+    </Card>
   );
 }

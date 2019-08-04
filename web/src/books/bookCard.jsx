@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
-import AddToLibrary from '../components/addItemToLibrary'
+import AddToCollection from '../components/addItemToCollection'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -38,54 +38,54 @@ export default function BookCard(props) {
   const { book } = props;
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card>
-        <CardActionArea component={AdapterLink} to={`/livros/${book._id}`}>
-          <CardMedia
-            className={classes.media}
-            image={book.cover}
-            title={`Capa do livro ${book.title}`}
-          />
-          <CardContent>
-            <Typography variant="h5" component="h2" noWrap>
-              {book.title}
-            </Typography>
-            <Typography className={classes.pos} variant="subtitle1" gutterBottom>
-              {book.author}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {book.content ? ((book.content.length > 200) ? `${book.content.substring(0, 200)}..` : book.content) : "Nenhuma descrição disponível."}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <IconButton size="small" color="primary" onClick={handleClick}>
-            <DownloadIcon />
-          </IconButton>
-          <AddToLibrary item={book._id} />
-          <Menu
-            id={`menubook-${book._id}`}
-            getContentAnchorEl={null}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'center',
-              horizontal: 'center',
-            }}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {book.extraFields.downloadOptions.map(download => (
-              <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
-            ))}
 
-          </Menu>
-        </CardActions>
-      </Card>
-    </Grid>
+    <Card>
+      <CardActionArea component={AdapterLink} to={`/livros/${book._id}`}>
+        <CardMedia
+          className={classes.media}
+          image={book.cover}
+          title={`Capa do livro ${book.title}`}
+        />
+        <CardContent>
+          <Typography variant="h5" component="h2" noWrap>
+            {book.title}
+          </Typography>
+          <Typography className={classes.pos} variant="subtitle1" gutterBottom>
+            {book.author}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {book.content ? ((book.content.length > 200) ? `${book.content.substring(0, 200)}..` : book.content) : "Nenhuma descrição disponível."}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <IconButton size="small" color="primary" onClick={handleClick}>
+          <DownloadIcon />
+        </IconButton>
+        <AddToCollection item={book._id} />
+        <Menu
+          id={`menubook-${book._id}`}
+          getContentAnchorEl={null}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'center',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'center',
+            horizontal: 'center',
+          }}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {book.extraFields.downloadOptions.map(download => (
+            <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
+          ))}
+
+        </Menu>
+      </CardActions>
+    </Card>
+
   )
 }

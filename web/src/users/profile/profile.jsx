@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { getUser } from '../userActions'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UserFeed from './userFeed'
-import UserLibrary from './userLibrary'
+import UserCollection from './userCollection'
 import UserFollowers from './userFollowers'
 import ProfileSidebar from './profileSidebar'
 import { Typography } from '@material-ui/core';
@@ -27,8 +27,8 @@ function LoggedUserMenu(props) {
           return (<UserFeed user={props.user.user} isUserLoggedProfile={isUserLoggedProfile()} />)
         case '/usuario/:id/seguidores':
           return (<UserFollowers user={props.user.user} />)
-        case '/usuario/:id/biblioteca':
-          return (<UserLibrary />)
+        case '/usuario/:id/colecao':
+          return (<UserCollection user={props.user.user} />)
         default:
           console.log(props.match.path)
       }

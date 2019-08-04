@@ -9,8 +9,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT,
-  ADD_ITEM_TO_LIBRARY_SUCCESS,
-  ADD_ITEM_TO_LIBRARY_FAIL
+  ADD_ITEM_TO_COLLECTION_SUCCESS,
+  ADD_ITEM_TO_COLLECTION_FAIL
 } from '../utils/types'
 
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
@@ -100,16 +100,16 @@ export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
 
-export const addItemToLibrary = item => async dispatch => {
+export const addItemToCollection = item => async dispatch => {
   try {
     const res = await axios.put('/api/users/addItemToCollection', { item })
     dispatch({
-      type: ADD_ITEM_TO_LIBRARY_SUCCESS,
+      type: ADD_ITEM_TO_COLLECTION_SUCCESS,
       payload: res.data
     });
   } catch (error) {
     dispatch({
-      type: ADD_ITEM_TO_LIBRARY_FAIL
+      type: ADD_ITEM_TO_COLLECTION_FAIL
     });
   }
 }
