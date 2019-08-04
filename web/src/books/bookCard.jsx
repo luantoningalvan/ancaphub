@@ -11,7 +11,11 @@ import Grid from '@material-ui/core/Grid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
+import LibraryAddIcon from '@material-ui/icons/LibraryAdd'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { addItemToLibrary } from '../auth/authActions'
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -22,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BookCard(props) {
+function BookCard(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
@@ -44,11 +48,7 @@ export default function BookCard(props) {
             className={classes.media}
             image={book.cover}
             title={`Capa do livro ${book.title}`}
-          >
-            <IconButton>
-              <DownloadIcon />
-            </IconButton>
-          </CardMedia>
+          />
           <CardContent>
             <Typography variant="h5" component="h2" noWrap>
               {book.title}
@@ -65,6 +65,12 @@ export default function BookCard(props) {
           <IconButton size="small" color="primary" onClick={handleClick}>
             <DownloadIcon />
           </IconButton>
+          {props.auth.isAuthenticated && (
+            <IconButton size="small" color={props.auth.user.personalCollection.includes(book._id) ? "secondary" : "primary"} onClick={() => props.addItemToLibrary(book._id)}>
+              <LibraryAddIcon />
+            </IconButton>
+          )}
+
           <Menu
             id={`menubook-${book._id}`}
             getContentAnchorEl={null}
@@ -91,3 +97,8 @@ export default function BookCard(props) {
     </Grid>
   )
 }
+
+const mapStateToProps = state => ({ auth: state.auth })
+const mapDispatchToProps = dispatch => bindActionCreators({ addItemToLibrary }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookCard)

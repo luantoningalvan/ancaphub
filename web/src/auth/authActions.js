@@ -1,7 +1,17 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT, CLEAR_PROFILE } from '../utils/types'
 import { setErrors, clearErrors } from '../errors/errorActions'
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGOUT,
+  ADD_ITEM_TO_LIBRARY_SUCCESS,
+  ADD_ITEM_TO_LIBRARY_FAIL
+} from '../utils/types'
 
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
   const config = {
@@ -89,3 +99,17 @@ export const signIn = ({ email, password }) => async dispatch => {
 export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
+
+export const addItemToLibrary = item => async dispatch => {
+  try {
+    const res = await axios.put('/api/users/addItemToCollection', { item })
+    dispatch({
+      type: ADD_ITEM_TO_LIBRARY_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_ITEM_TO_LIBRARY_FAIL
+    });
+  }
+}

@@ -11,6 +11,9 @@ export const LOGIN_FAIL = "LOGIN_FAIL"
 export const AUTH_ERROR = "AUTH_ERROR"
 export const USER_LOADED = "USER_LOADED"
 export const LOGOUT = "LOGOUT"
+export const ADD_ITEM_TO_LIBRARY_SUCCESS = "ADD_ITEM_TO_LIBRARY_SUCCESS"
+export const ADD_ITEM_TO_LIBRARY_FAIL = "ADD_ITEM_TO_LIBRARY_FAIL"
+
 
 // Books
 export const FETCH_ALL_BOOKS = "FETCH_ALL_BOOKS"

@@ -22,7 +22,7 @@ const theme = createMuiTheme({
       main: '#131313',
     },
     secondary: {
-      main: '#f5ee03',
+      main: '#f9d525',
     },
   },
 });

@@ -187,9 +187,9 @@ router.put("/addItemToCollection", auth, async (request, response) => {
         item.collectedBy.push(request.user.id)
       }
 
-      await user.save()
-      const result = await item.save()
-      response.send(result.collectedBy);
+      await item.save()
+      const result = await user.save()
+      response.send(result.personalCollection);
     } else {
       return res.status(400).json({ errors: [{ msg: "Este esse item não existe no acervo." }] });
     }
