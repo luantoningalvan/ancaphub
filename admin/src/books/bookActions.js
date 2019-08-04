@@ -14,6 +14,7 @@ export function fetchAllBooks(page = 2, pageSize = 2, order = "desc", filter = "
   }
 }
 
+// Obtém os dados de um livro
 export function fetchBook(id) {
   return (dispatch) => {
     axios.get(`${BASE_URL}/${id}`)
@@ -25,6 +26,7 @@ export function fetchBook(id) {
   }
 }
 
+// Prepara o estado da aplicação para gerar um formulário de adição de livro
 export function prepareToCreateNewBook() {
   return { type: "NEW_BOOK" }
 }
@@ -32,36 +34,30 @@ export function prepareToCreateNewBook() {
 // Cria um novo livro
 export function createBook(data) {
   return (dispatch) => {
-    if (data.title != "" || data.description != "") {
-      axios.post(BASE_URL, { ...data, type: "book" })
-        .then(function (data) {
-          toastr.success('Sucesso', 'Livro Adicionado com Sucesso.')
-          dispatch({ type: "BOOK_ADDED", payload: true });
-        })
-        .catch(function (error) {
-          console.error("Erro ao adicionar livro: ", error);
-        });
-    } else {
-      console.error("Um ou mais campos não foram preenchidos");
-    }
+    axios.post(BASE_URL, { ...data, type: "book" })
+      .then(function (data) {
+        toastr.success('Sucesso', 'Livro Adicionado com Sucesso.')
+        dispatch({ type: "BOOK_ADDED", payload: true });
+      })
+      .catch(function (error) {
+        console.error("Erro ao adicionar livro: ", error);
+      });
   }
 }
 
+// Edita um livro através do seu id
 export function updateBook(data) {
   return (dispatch) => {
-    if (data.title != "" || data.description != "") {
-      axios.put(`${BASE_URL}/${data._id}`, data)
-        .then(function (book) {
-          toastr.success('Sucesso', 'Livro Atualizado com Sucesso.')
-          dispatch({ type: "BOOK_UPDATED", payload: true });
-          dispatch(fetchBook(book.data._id));
-        })
-        .catch(function (error) {
-          console.error("Erro ao atualizar livro: ", error);
-        });
-    } else {
-      console.error("Um ou mais campos não foram preenchidos");
-    }
+    axios.put(`${BASE_URL}/${data._id}`, { ...data, type: "book" })
+      .then(function (book) {
+        toastr.success('Sucesso', 'Livro Atualizado com Sucesso.')
+        dispatch({ type: "BOOK_UPDATED", payload: true });
+        dispatch(fetchBook(book.data._id));
+      })
+      .catch(function (error) {
+        console.error("Erro ao atualizar livro: ", error);
+      });
+
   }
 }
 
@@ -71,7 +67,7 @@ export function deleteBook(id) {
     axios.delete(`${BASE_URL}/${id}`)
       .then(function (docRef) {
         toastr.success('Sucesso', 'Livro Removido com Sucesso.')
-        dispatch({ type: "BOOK_DELETED", payload: true });
+        dispatch({ type: "BOOK_DELETED", payload: id });
       })
       .catch(function (error) {
         console.error("Erro ao deletar livro: ", error);

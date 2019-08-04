@@ -1,13 +1,15 @@
 const INITIAL_STATE = { allBooks: [], book: {} }
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+  const { type, payload } = action
+
+  switch (type) {
     case "FETCH_ALL_BOOKS":
-      return { ...state, allBooks: action.payload }
+      return { ...state, allBooks: payload }
     case "NEW_BOOK":
       return { ...state, book: {} }
     case "FETCH_BOOK":
-      return { ...state, book: action.payload }
+      return { ...state, book: payload }
     case "BOOK_DELETED":
       return {
         ...state,

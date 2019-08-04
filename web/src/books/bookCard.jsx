@@ -44,7 +44,11 @@ export default function BookCard(props) {
             className={classes.media}
             image={book.cover}
             title={`Capa do livro ${book.title}`}
-          />
+          >
+            <IconButton>
+              <DownloadIcon />
+            </IconButton>
+          </CardMedia>
           <CardContent>
             <Typography variant="h5" component="h2" noWrap>
               {book.title}

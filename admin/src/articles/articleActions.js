@@ -53,7 +53,7 @@ export function createArticle(data) {
 export function updateArticle(data) {
   return (dispatch) => {
     if (data.title != "" || data.description != "") {
-      axios.put(`${BASE_URL}/${data._id}`, data)
+      axios.put(`${BASE_URL}/${data._id}`, { ...data, type: "article" })
         .then(function (article) {
           toastr.success('Sucesso', 'Artigo Atualizado com Sucesso.')
           dispatch({ type: "ARTICLE_UPDATED", payload: true });
@@ -72,11 +72,11 @@ export function updateArticle(data) {
 export function deleteArticle(id) {
   return (dispatch) => {
     axios.delete(`${BASE_URL}/${id}`)
-      .then(function (docRef) {
+      .then(() => {
         toastr.success('Sucesso', 'Artigo Removido com Sucesso.')
-        dispatch({ type: "ARTICLE_DELETED", payload: true });
+        dispatch({ type: "ARTICLE_DELETED", payload: id });
       })
-      .catch(function (error) {
+      .catch(error => {
         console.error("Erro ao deletar artigo: ", error);
       });
   }

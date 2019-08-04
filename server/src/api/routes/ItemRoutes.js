@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 const Item = require("../models/CollectionItemModel")
 
 // @route 	GET api/items/
-/* @desc 	  Retorna uma lista com todos os livros
+/* @desc 	  Retorna uma lista com todos os items
             É possível fazer uma busca personalizada através de parâmetros na URL
             - Pode-se aplicar um filtro a todos os campos através de filter Ex: ?filter=
             - Para orderar de acordo com algum campo usa-se o sortBy Ex: ?sortBy=name
@@ -40,8 +40,6 @@ router.get('/', (req, res, next) => {
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   if (type != '') { filterQuery = { ...filterQuery, type: type } }
-
-  console.log(filterQuery)
 
   Item.countDocuments(filterQuery)
     .then(itemCount => {
@@ -118,35 +116,46 @@ router.post("/", auth, async (request, response) => {
   }
 });
 
-// @route 	PUT api/books/:id
-// @desc 		Edita um livro através de seu ID
+// @route 	PUT api/items/:id
+// @desc 		Edita um item através de seu ID
 // @access 	Private
 router.put("/:id", auth, async (request, response) => {
-  const { title, author, content, cover, categories, downloadOptions } = request.body
+  const { title, author, content, cover, categories, type } = request.body
 
   try {
-    var book = await Item.findById(request.params.id).exec();
-    const updatedBook = {
-      title,
-      author,
-      content,
-      cover,
-      categories,
-      extraFields: {
-        downloadOptions
-      },
-      type: "book"
+    let updatedItem = {}
+
+    if (type == 'book') {
+      updatedItem = {
+        title,
+        author,
+        content,
+        cover,
+        categories,
+        extraFields: {
+          downloadOptions: request.body.downloadOptions
+        },
+      }
+    } else if (type == 'article') {
+      updatedItem = {
+        title,
+        author,
+        content,
+        cover,
+        categories,
+      }
     }
-    book.set(updatedBook);
-    var result = await book.save();
+    console.log(updatedItem)
+
+    const result = await Item.findByIdAndUpdate(request.params.id, updatedItem);
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
   }
 });
 
-// @route 	DELETE api/books/:id
-// @desc 		Deleta um livro através de seu id
+// @route 	DELETE api/items/:id
+// @desc 		Deleta um item através de seu id
 // @access 	Private
 router.delete("/:id", auth, async (request, response) => {
   try {
