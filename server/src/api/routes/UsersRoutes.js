@@ -44,6 +44,18 @@ router.get("/:id/followers", async (request, response) => {
   }
 });
 
+// @route 	GET api/users/:id/followers
+// @desc 	  Retorna a coleção particular de um usuário pelo seu id
+// @access 	Public
+router.get("/:id/collection", async (request, response) => {
+  try {
+    var result = await User.findById(request.params.id, "personalCollection").populate("personalCollection");
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // @route 	POST api/users
 // @desc 	  Cadastra um novo usuário na base
 // @access 	Public
@@ -168,7 +180,7 @@ router.put("/:id/follow", auth, async (request, response) => {
 });
 
 // @route 	PUT api/users/addItemToCollection
-// @desc 	  Registra uma relação de seguir usuário
+// @desc 	  Adiciona um item a coleção pessoal do usuaŕio logado
 // @access 	Private
 router.put("/addItemToCollection", auth, async (request, response) => {
   const { item: itemId } = request.body

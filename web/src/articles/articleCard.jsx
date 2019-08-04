@@ -6,8 +6,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import AddToLibrary from '../components/addItemToLibrary'
 import striptags from 'striptags';
 import { Link } from 'react-router-dom';
 
@@ -46,6 +46,9 @@ export default function ArticleCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
+        <CardActions>
+          <AddToLibrary item={_id} />
+        </CardActions>
       </Card>
     </Grid>
   );
