@@ -47,7 +47,7 @@ function Books(props) {
       props.deleteItem(item._id)
     }
   }
-  useEffect(() => props.fetchAllItems(clientCurrentPage, clientPageSize), []);
+  useEffect(() => props.fetchAllItems(clientCurrentPage, clientPageSize), [clientCurrentPage]);
 
   return (
     <Template>
