@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Formik, Field, FieldArray, getIn, Form } from 'formik'
-import { createBook, updateBook } from './bookActions'
+import { createItem, updateItem } from '../collectionActions'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
@@ -24,8 +24,8 @@ import Box from '@material-ui/core/Box';
 import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import Link from '@material-ui/core/Link';
-import ChooseCategory from '../components/categories/chooseCategory'
-import ImageUpload from '../components/imageUpload/imageUpload'
+import ChooseCategory from '../../components/categories/chooseCategory'
+import ImageUpload from '../../components/imageUpload/imageUpload'
 
 function BookForm(props) {
   // Validação frontend do formulário
@@ -66,14 +66,12 @@ function BookForm(props) {
       enableReinitialize
       onSubmit={(values, actions) => {
         if (values._id == null) {
-          props.createBook(values);
+          props.createItem(values, 'book');
           actions.resetForm(initialFormValues)
         } else {
-          return props.updateBook(values);
+          return props.updateItem(values, 'book');
         }
       }}
-
-
 
       render={(formikProps) => {
         const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
@@ -241,5 +239,5 @@ function BookForm(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ createBook, updateBook }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ createItem, updateItem }, dispatch)
 export default connect(null, mapDispatchToProps)(BookForm)

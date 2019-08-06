@@ -19,15 +19,16 @@ const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devT
 /// Dashboard
 import Dashboard from './dashboard/dashboard'
 
-/// Books
-import Books from './books/books'
-import AddBook from './books/bookFormPage'
-import EditBook from './books/bookFormPage'
+/// Collection
+import Collection from './collection'
+import BookForm from './collection/books/bookFormPage'
+import ArticleForm from './collection/articles/articleFormPage'
 
-/// Articles
-import Articles from './articles/articles'
-import AddArticle from './articles/articleFormPage'
-import EditArticle from './articles/articleFormPage'
+/// Settings
+import Settings from './settings'
+
+/// Users
+import Users from './users'
 
 /// Auth
 import SignIn from './auth/signin'
@@ -58,13 +59,15 @@ export default function App() {
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
 
-          <PrivateRoute exact path="/books/" component={Books} />
-          <PrivateRoute path="/books/add/" component={AddBook} />
-          <PrivateRoute path="/books/edit/:id" component={EditBook} />
+          <PrivateRoute exact path="/collection" component={Collection} />
+          <PrivateRoute path="/collection/book/add/" component={BookForm} />
+          <PrivateRoute path="/collection/book/edit/:id" component={BookForm} />
+          <PrivateRoute path="/collection/article/add/" component={ArticleForm} />
+          <PrivateRoute path="/collection/article/edit/:id" component={ArticleForm} />
 
-          <PrivateRoute exact path="/articles/" component={Articles} />
-          <PrivateRoute path="/articles/add/" component={AddArticle} />
-          <PrivateRoute path="/articles/edit/:id" component={EditArticle} />
+          <PrivateRoute exact path="/settings" component={Settings} />
+
+          <PrivateRoute exact path="/users" component={Users} />
 
           <Route path="/login" component={SignIn} />
         </Switch>
