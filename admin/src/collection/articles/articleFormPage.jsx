@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import Template from '../../template/template'
+import ArticleForm from './articleForm'
+import isEmpty from 'is-empty'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { prepareToCreateNewItem, fetchItem } from '../collectionActions'
-import Container from '@material-ui/core/Container'
-import Template from '../../template/template'
-import Hero from '../../template/hero'
-import Box from '@material-ui/core/Box';
-import ArticleForm from './articleForm'
-import isEmpty from 'is-empty'
 
 function ArticleFormPage(props) {
   const { id } = props.match.params;
@@ -24,16 +21,10 @@ function ArticleFormPage(props) {
 
   return (
     <Template>
-      <Hero title={isNew ? "Adicionar Artigo" : `Editar ${props.article.title}`} />
-
-      <Box mt={3}>
-        <Container>
-          <ArticleForm
-            isNew={isNew}
-            articleData={props.article}
-          />
-        </Container>
-      </Box>
+      <ArticleForm
+        isNew={isNew}
+        articleData={props.article}
+      />
     </Template>
   )
 }

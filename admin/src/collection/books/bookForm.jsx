@@ -1,10 +1,4 @@
-/*
-    Esta página está em construção e algumas coisas são temporárias
-    O campo de capa e de links de download do livro será substituído futuramente por campos de upload
-*/
-
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Formik, Field, FieldArray, getIn, Form } from 'formik'
@@ -23,9 +17,12 @@ import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
+import CancelIcon from '@material-ui/icons/Cancel';
 import Link from '@material-ui/core/Link';
 import ChooseCategory from '../../components/categories/chooseCategory'
 import ImageUpload from '../../components/imageUpload/imageUpload'
+import Container from '@material-ui/core/Container'
+import Hero from '../../template/hero'
 
 function BookForm(props) {
   // Validação frontend do formulário
@@ -60,6 +57,7 @@ function BookForm(props) {
   }
 
   return (
+
     <Formik
       initialValues={initialFormValues}
       validationSchema={BookSchema}
@@ -77,165 +75,171 @@ function BookForm(props) {
         const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
         return (
           <Form encType="multipart/form-data" autoComplete="off">
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={9}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      autoFocus
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Título"
-                      name="title"
-                      value={values.title}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      helperText={(errors.title && touched.title) && errors.title}
-                    />
-                  </Grid>
+            <Hero title={isNew ? "Adicionar Livro" : `Editar ${props.bookData.title}`}>
+              <IconButton style={{marginRight:'10px'}}>
+                <CancelIcon />
+              </IconButton>
 
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Autor(es)"
-                      name="author"
-                      value={values.author}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      helperText={(errors.author && touched.author) && errors.author}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <TextField
-                      multiline
-                      variant="outlined"
-                      fullWidth
-                      label="Descrição"
-                      name="content"
-                      value={values.content}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      helperText={(errors.content && touched.content) && errors.content}
-                    />
-                  </Grid>
-
-
-                  <Grid item xs={12}>
-                    <Paper>
-                      <Box p={2}>
-                        <Box mb={2}>
-                          <Typography variant="h6">
-                            Opções de Download
-                                                    </Typography>
-                        </Box>
-
-                        <FieldArray
-                          name="downloadOptions"
-                          render={arrayHelpers => (
-                            <Grid container spacing={2}>
-                              <Grid item xs={12}>
-                                {values.downloadOptions != null && values.downloadOptions.map((download, index) => (
-                                  <div key={index}>
-                                    <Grid container spacing={2}>
-                                      <Grid item xs={5}>
-                                        <FormControl fullWidth>
-                                          <InputLabel htmlFor="age-simple">Formato</InputLabel>
-                                          <Select
-                                            value={values.downloadOptions[index].type || ""}
-                                            onChange={(event) => { setFieldValue(`downloadOptions.${index}.type`, event.target.value) }}
-                                            inputProps={{ name: `downloadOptions.${index}.type` }}
-                                          >
-                                            <MenuItem value={"pdf"}>PDF</MenuItem>
-                                            <MenuItem value={"mobi"}>MOBI</MenuItem>
-                                            <MenuItem value={"epub"}>EPUB</MenuItem>
-                                          </Select>
-                                          <FormHelperText>{(getIn(errors, `downloadOptions.${index}.type`) && getIn(touched, `downloadOptions.${index}.type`)) ? getIn(errors, `downloadOptions.${index}.type`) : ""}</FormHelperText>
-                                        </FormControl>
-                                      </Grid>
-
-                                      <Grid item xs={5}>
-                                        <TextField
-                                          variant="outlined"
-                                          required
-                                          fullWidth
-                                          label="Link do Download"
-                                          name={`downloadOptions.${index}.file`}
-                                          onChange={handleChange}
-                                          onBlur={handleBlur}
-                                          margin="dense"
-                                          value={values.downloadOptions[index].file}
-                                          helperText={(getIn(errors, `downloadOptions.${index}.file`) && getIn(touched, `downloadOptions.${index}.file`)) && getIn(errors, `downloadOptions.${index}.file`)}
-                                        />
-                                      </Grid>
-
-                                      <Grid item xs={2}>
-                                        <IconButton
-                                          onClick={() => arrayHelpers.remove(index)}
-                                          color="primary"
-                                          aria-label="Remover Opção de Download"
-                                        >
-                                          <RemoveIcon />
-                                        </IconButton>
-                                      </Grid>
-                                    </Grid>
-                                  </div>
-                                ))}
-                              </Grid>
-                              <Grid item xs={12}>
-                                <Typography>
-
-                                  <Link href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
-                                    + Adicionar
-                                                                    </Link>
-
-                                </Typography>
-                                {typeof errors.downloadOptions === 'string' ? <p>{errors.downloadOptions}</p> : null}
-                              </Grid>
-                            </Grid>
-                          )}
+              <Button variant="contained" color="primary" type="submit">
+                {(isNew) ? "Adicionar" : "Atualizar"}
+              </Button>
+            </Hero>
+            <Box mt={3}>
+              <Container>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={9}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          autoFocus
+                          variant="outlined"
+                          required
+                          fullWidth
+                          label="Título"
+                          name="title"
+                          value={values.title}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          helperText={(errors.title && touched.title) && errors.title}
                         />
-                      </Box>
-                    </Paper>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          label="Autor(es)"
+                          name="author"
+                          value={values.author}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          helperText={(errors.author && touched.author) && errors.author}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <TextField
+                          multiline
+                          variant="outlined"
+                          fullWidth
+                          label="Descrição"
+                          name="content"
+                          value={values.content}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          helperText={(errors.content && touched.content) && errors.content}
+                        />
+                      </Grid>
+
+
+                      <Grid item xs={12}>
+                        <Paper>
+                          <Box p={2}>
+                            <Box mb={2}>
+                              <Typography variant="h6">
+                                Opções de Download
+                              </Typography>
+                            </Box>
+
+                            <FieldArray
+                              name="downloadOptions"
+                              render={arrayHelpers => (
+                                <Grid container spacing={2}>
+                                  <Grid item xs={12}>
+                                    {values.downloadOptions != null && values.downloadOptions.map((download, index) => (
+                                      <div key={index}>
+                                        <Grid container spacing={2}>
+                                          <Grid item xs={5}>
+                                            <FormControl fullWidth>
+                                              <InputLabel htmlFor="age-simple">Formato</InputLabel>
+                                              <Select
+                                                value={values.downloadOptions[index].type || ""}
+                                                onChange={(event) => { setFieldValue(`downloadOptions.${index}.type`, event.target.value) }}
+                                                inputProps={{ name: `downloadOptions.${index}.type` }}
+                                              >
+                                                <MenuItem value={"pdf"}>PDF</MenuItem>
+                                                <MenuItem value={"mobi"}>MOBI</MenuItem>
+                                                <MenuItem value={"epub"}>EPUB</MenuItem>
+                                              </Select>
+                                              <FormHelperText>{(getIn(errors, `downloadOptions.${index}.type`) && getIn(touched, `downloadOptions.${index}.type`)) ? getIn(errors, `downloadOptions.${index}.type`) : ""}</FormHelperText>
+                                            </FormControl>
+                                          </Grid>
+
+                                          <Grid item xs={5}>
+                                            <TextField
+                                              variant="outlined"
+                                              required
+                                              fullWidth
+                                              label="Link do Download"
+                                              name={`downloadOptions.${index}.file`}
+                                              onChange={handleChange}
+                                              onBlur={handleBlur}
+                                              margin="dense"
+                                              value={values.downloadOptions[index].file}
+                                              helperText={(getIn(errors, `downloadOptions.${index}.file`) && getIn(touched, `downloadOptions.${index}.file`)) && getIn(errors, `downloadOptions.${index}.file`)}
+                                            />
+                                          </Grid>
+
+                                          <Grid item xs={2}>
+                                            <IconButton
+                                              onClick={() => arrayHelpers.remove(index)}
+                                              color="primary"
+                                              aria-label="Remover Opção de Download"
+                                            >
+                                              <RemoveIcon />
+                                            </IconButton>
+                                          </Grid>
+                                        </Grid>
+                                      </div>
+                                    ))}
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <Typography>
+                                      <Link href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
+                                        + Adicionar
+                                      </Link>
+                                    </Typography>
+                                    {typeof errors.downloadOptions === 'string' ? <p>{errors.downloadOptions}</p> : null}
+                                  </Grid>
+                                </Grid>
+                              )}
+                            />
+                          </Box>
+                        </Paper>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item xs={12} sm={3}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Typography variant="h6" component="h2">
+                          Capa do Livro
+                                          </Typography>
+
+                        <Field component={ImageUpload} name="cover" />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Typography variant="h6" component="h2">
+                          Categorias
+                                          </Typography>
+
+                        <Box my={2}>
+                          <Field component={ChooseCategory} name="categories" />
+                        </Box>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={3}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Button variant="contained" color="primary" fullWidth type="submit">
-                      {(isNew) ? "Adicionar" : "Atualizar"}
-                    </Button>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="h6" component="h2">
-                      Capa do Livro
-                                        </Typography>
-
-                    <Field component={ImageUpload} name="cover" />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="h6" component="h2">
-                      Categorias
-                                        </Typography>
-
-                    <Box my={2}>
-                      <Field component={ChooseCategory} name="categories" />
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+              </Container>
+            </Box>
           </Form>
         )
       }}
     />
+
   )
 }
 
