@@ -2,20 +2,14 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import loadImage from '../utils/loadImage'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logoutUser } from '../auth/authActions'
@@ -32,10 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
   },
   search: {
     position: 'relative',
@@ -92,21 +82,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 function Header(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   function handleProfileMenuOpen(event) {
     setAnchorEl(event.currentTarget);
-  }
-
-  function handleMobileMenuClose() {
-    setMobileMoreAnchorEl(null);
   }
 
   function handleMenuClose() {
@@ -114,119 +96,51 @@ function Header(props) {
     handleMobileMenuClose();
   }
 
-  function handleMobileMenuOpen(event) {
-    setMobileMoreAnchorEl(event.currentTarget);
-  }
-
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      getContentAnchorEl={null}
-    >
-      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-      <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
-    </Menu>
-  );
-
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      getContentAnchorEl={null}
-      keepMounted
-      transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={0} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Mensagens</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={0} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificações</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton color="inherit">
-          <Avatar className={classes.letterAvatar}>{props.user.name.substring(0,1)}</Avatar>
-        </IconButton>
-        <p>Perfil</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Abrir/Fechar Barra Lateral"
-            onClick={props.handleDrawer}
-            edge="start"
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="Abrir/Fechar Barra Lateral"
+          onClick={props.handleDrawer}
+          edge="start"
+          className={classes.menuButton}
+        >
+          <MenuIcon />
+        </IconButton>
 
-          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            AncapHub
-          </Typography>
+        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+          AncapHub
+        </Typography>
 
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Buscar..."
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-          />
-        </div>
-        <div className={classes.grow} />
-        <div className={classes.sectionDesktop}>
-          <IconButton color="inherit">
-            <Badge badgeContent={0} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <Badge badgeContent={0} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            edge="end"
-            aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <Avatar className={classes.letterAvatar}>{props.user.name.substring(0,1)}</Avatar>
-          </IconButton>
-        </div>
-        <div className={classes.sectionMobile}>
-          <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
-            <MoreIcon />
-          </IconButton>
-        </div>
+        <IconButton
+          edge="end"
+          aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          {
+              props.user.avatar && props.user.avatar != "" ? (
+                <Avatar src={`http://localhost:3000/public/images/uploads/${props.user.avatar}`} alt={name} style={{ width: '40px', height: '40px' }} />
+              ) : (
+                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
+                )
+            }
+        </IconButton>
       </Toolbar>
-      {renderMenu}
-      {renderMobileMenu}
+
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+        getContentAnchorEl={null}
+      >
+        <MenuItem onClick={props.logoutUser}>Sair</MenuItem>
+      </Menu>
     </AppBar>
   )
 }
