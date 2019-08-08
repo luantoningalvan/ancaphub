@@ -18,7 +18,8 @@ import Box from '@material-ui/core/Box';
 import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import CancelIcon from '@material-ui/icons/Cancel';
-import Link from '@material-ui/core/Link';
+import MuiLink from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import ChooseCategory from '../../components/categories/chooseCategory'
 import ImageUpload from '../../components/imageUpload/imageUpload'
 import Container from '@material-ui/core/Container'
@@ -76,9 +77,11 @@ function BookForm(props) {
         return (
           <Form encType="multipart/form-data" autoComplete="off">
             <Hero title={isNew ? "Adicionar Livro" : `Editar ${props.bookData.title}`}>
-              <IconButton style={{marginRight:'10px'}}>
-                <CancelIcon />
-              </IconButton>
+              <Link to={`/collection`} >
+                <IconButton style={{ marginRight: '10px' }}>
+                  <CancelIcon />
+                </IconButton>
+              </Link>
 
               <Button variant="contained" color="primary" type="submit">
                 {(isNew) ? "Adicionar" : "Atualizar"}
@@ -196,9 +199,9 @@ function BookForm(props) {
                                   </Grid>
                                   <Grid item xs={12}>
                                     <Typography>
-                                      <Link href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
+                                      <MuiLink href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
                                         + Adicionar
-                                      </Link>
+                                      </MuiLink>
                                     </Typography>
                                     {typeof errors.downloadOptions === 'string' ? <p>{errors.downloadOptions}</p> : null}
                                   </Grid>

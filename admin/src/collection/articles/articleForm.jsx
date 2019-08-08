@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import * as Yup from 'yup';
 import ChooseCategory from '../../components/categories/chooseCategory'
@@ -18,15 +19,7 @@ import Container from '@material-ui/core/Container'
 import Hero from '../../template/hero'
 import IconButton from '@material-ui/core/IconButton'
 
-const useStyles = makeStyles(theme => ({
-  imagePreview: {
-    overflow: "hidden",
-  }
-}))
-
 function ArticleForm(props) {
-  const classes = useStyles()
-
   // Validação frontend do formulário
   const ArticleSchema = Yup.object().shape({
     title: Yup.string()
@@ -59,11 +52,12 @@ function ArticleForm(props) {
         const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
         return (
           <Form encType="multipart/form-data" autoComplete="off">
-            <Hero title={isNew ? "Adicionar Artigo" : `Editar ${props.bookData.title}`}>
-              <IconButton style={{ marginRight: '10px' }}>
-                <CancelIcon />
-              </IconButton>
-
+            <Hero title={isNew ? "Adicionar Artigo" : `Editar ${props.articleData.title}`}>
+              <Link to={`/collection`} >
+                <IconButton style={{ marginRight: '10px' }}>
+                  <CancelIcon />
+                </IconButton>
+              </Link>
               <Button variant="contained" color="primary" type="submit">
                 {(isNew) ? "Adicionar" : "Atualizar"}
               </Button>
