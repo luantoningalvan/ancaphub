@@ -3,9 +3,9 @@ import { toastr } from 'react-redux-toastr'
 const BASE_URL = 'http://localhost:3000/api/items'
 
 // Obtém a lista de todos os itens
-export function fetchAllItems(page = 1, { type, category }) {
+export function fetchAllItems(page = 1, { type, category }, status = 'published') {
   return (dispatch) => {
-    axios.get(`${BASE_URL}?page=${page}${category && `&&category=${category}`}${type && `&&type=${type}`}`)
+    axios.get(`${BASE_URL}?page=${page}&&status=${status}${category && `&&category=${category}`}${type && `&&type=${type}`}`)
       .then((items) => {
         dispatch({ type: "FETCH_ALL_ITEMS", payload: items.data });
       }).catch((error) => {

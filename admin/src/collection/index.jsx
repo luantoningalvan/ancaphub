@@ -17,7 +17,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import BookIcon from '@material-ui/icons/Book'
 import ArticleIcon from '@material-ui/icons/Description'
@@ -40,10 +41,11 @@ function Books(props) {
   const [clientCurrentPage, setCurrentPage] = useState(1)
   const [anchorEl, setAnchorEl] = useState(null);
   const [filter, setFilter] = useState({ type: "", category: "" });
+  const [status, changeStatus] = useState("published")
   const [search, handleSearch] = useState("")
 
   useEffect(() => props.fetchAllCategories(), []);
-  useEffect(() => props.fetchAllItems(clientCurrentPage, filter), [clientCurrentPage, filter]);
+  useEffect(() => props.fetchAllItems(clientCurrentPage, filter, status), [clientCurrentPage, filter, status]);
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -72,12 +74,12 @@ function Books(props) {
   return (
     <Template>
       <Hero title="Coleção">
-        <Button variant="outlined" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <Button variant="outlined" color="primary" aria-controls="add-item-options" aria-haspopup="true" onClick={handleClick}>
           <AddIcon style={{ marginRight: '5px' }} />
           Item
         </Button>
         <Menu
-          id="simple-menu"
+          id="add-item-options"
           anchorEl={anchorEl}
           getContentAnchorEl={null}
           keepMounted
@@ -144,9 +146,9 @@ function Books(props) {
                 </Grid>
                 <Grid item xs={3}>
                   <FormControl>
-                    <InputLabel htmlFor="adornment-password">Buscar</InputLabel>
+                    <InputLabel htmlFor="search-item">Buscar</InputLabel>
                     <Input
-                      id="adornment-password"
+                      id="search-item"
                       value={search}
                       onChange={e => handleSearch(e.target.value)}
                       endAdornment={
@@ -164,9 +166,15 @@ function Books(props) {
 
         <Box my={3}>
           <Paper>
+            <Tabs value={status} onChange={(e, value) => changeStatus(value)}>
+              <Tab label="Publicados" value="published" />
+              <Tab label="Rascunhos" value="draft" />
+              <Tab label="Pendentes" value="pending" />
+              <Tab label="Lixeira" value="deleted" />
+            </Tabs>
             {items && !isEmpty(items) ? (
-              <React.Fragment>
-                <Table>
+              <Box mt={1}>
+                <Table size="small">
                   <TableHead>
                     <TableRow>
                       <TableCell align="left">Tipo</TableCell>
@@ -219,7 +227,7 @@ function Books(props) {
                   onChangePage={(e, page) => setCurrentPage(page + 1)}
                   labelDisplayedRows={({ from, to, count }) => (`${from}-${to} de ${count}`)}
                 />
-              </React.Fragment>
+              </Box>
             ) : (
                 <Box p={2}>
                   <Typography variant="body2">Nenhum item encontrado.</Typography>

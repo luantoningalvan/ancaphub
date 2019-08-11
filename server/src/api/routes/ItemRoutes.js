@@ -24,6 +24,7 @@ router.get('/', (req, res, next) => {
   const category = req.query.category || ''
   const sortQuery = { [sortBy]: orderBy }
   const type = req.query.type || ''
+  const status = req.query.status || 'published'
 
   let filterQuery = {}
 
@@ -40,6 +41,8 @@ router.get('/', (req, res, next) => {
   if (category != '') { filterQuery = { ...filterQuery, 'categories.category': category } }
 
   if (type != '') { filterQuery = { ...filterQuery, type: type } }
+
+  filterQuery = { ...filterQuery, status }
 
   Item.countDocuments(filterQuery)
     .then(itemCount => {
