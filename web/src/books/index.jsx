@@ -6,16 +6,25 @@ import { connect } from 'react-redux'
 import { fetchAllBooks, selectCategory, selectOrder, selectPage } from './bookActions'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
 import BookCard from './bookCard'
 import isEmpty from 'is-empty'
+import { Link } from 'react-router-dom'
 import Filter from '../components/filter/filter'
 
 function BooksList(props) {
   const { books } = props
   return (
     <Template>
-      <Box mb={3}>
+      <Box mb={3} display="flex" justifyContent="space-between">
         <Typography variant="h4" component="h2">Livros</Typography>
+        <Link to={`livros/contribuir`}>
+          <Button variant="contained" color="primary">
+            <AddIcon style={{ marginRight: '10px' }} />
+            Contribuir
+          </Button>
+        </Link>
       </Box>
 
       <Filter

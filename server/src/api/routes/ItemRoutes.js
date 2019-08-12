@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth')
 const Item = require("../models/CollectionItemModel")
+const User = require('../models/UserModel')
 
 // @route 	GET api/items/
 /* @desc 	  Retorna uma lista com todos os items
@@ -85,28 +86,30 @@ router.get("/:id", async (request, response) => {
 // @access 	Private
 router.post("/", auth, async (request, response) => {
   const { title, author, content, cover, categories, type } = request.body
+  const user = await User.findById(request.user.id)
+
   try {
-    let newItem = {}
+    let newItem = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+      status: user.role.includes('admin') ? 'published' : 'pending',
+      user: user._id
+    }
 
     if (type == 'book') {
       newItem = {
-        title,
-        author,
-        content,
-        cover,
-        categories,
+        ...newItem,
         extraFields: {
           downloadOptions: request.body.downloadOptions
         },
-        type: "book"
+        type: "book",
       }
     } else if (type == 'article') {
       newItem = {
-        title,
-        author,
-        content,
-        cover,
-        categories,
+        ...newItem,
         type: "article"
       }
     }

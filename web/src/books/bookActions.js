@@ -1,5 +1,12 @@
 import axios from 'axios'
-import { FETCH_ALL_BOOKS, FETCH_BOOK, SELECT_BOOKS_CATEGORY, SELECT_BOOKS_ORDER, SELECT_BOOKS_PAGE } from '../utils/types'
+import {
+  FETCH_ALL_BOOKS,
+  FETCH_BOOK,
+  SELECT_BOOKS_CATEGORY,
+  SELECT_BOOKS_ORDER,
+  SELECT_BOOKS_PAGE,
+  ADD_BOOK_SUCCESS
+} from '../utils/types'
 
 const BASE_URL = 'http://localhost:3000/api/items'
 
@@ -36,3 +43,14 @@ export function fetchBook(id) {
 export function selectCategory(category) { return { type: SELECT_BOOKS_CATEGORY, payload: category } }
 export function selectOrder(order) { return { type: SELECT_BOOKS_ORDER, payload: order } }
 export function selectPage(page) { return { type: SELECT_BOOKS_PAGE, payload: page } }
+
+export function addBook(data) {
+  return (dispatch) => {
+    axios.post(`${BASE_URL}`, { ...data, type: "book" })
+      .then((book) => {
+        dispatch({ type: ADD_BOOK_SUCCESS, payload: book.data });
+      }).catch((error) => {
+        console.error("Erro ao adicionar livro: ", error);
+      })
+  }
+}

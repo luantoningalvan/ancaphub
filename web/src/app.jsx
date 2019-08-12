@@ -16,6 +16,7 @@ import Home from './home/home'
 // # Livros
 import Books from './books'
 import SingleBook from './books/singleBook'
+import AddBook from './books/addBook'
 
 // # Podcasts
 import Podcasts from './podcasts'
@@ -60,7 +61,12 @@ export default function App() {
           <Route exact path="/" component={Home} />
 
           <Route exact path="/livros" component={Books} />
-          <Route path="/livros/:id" component={SingleBook} />
+          <Route exact path="/livros/contribuir" component={AddBook} />
+          <Route path="/livros/livro/:id" component={SingleBook} />
+
+          <Route exact path="/artigos" component={Articles} />
+          <Route exact path="/artigos/contribuir" component={Articles} />
+          <Route path="/artigos/artigo/:id" component={SingleArticle} />
 
           <Route path="/podcasts" component={Podcasts} />
 
@@ -69,9 +75,6 @@ export default function App() {
           <Route path="/eventos" component={Events} />
 
           <Route path="/campanhas" component={Campaigns} />
-
-          <Route exact path="/artigos" component={Articles} />
-          <Route path="/artigos/:id" component={SingleArticle} />
 
           <Route path="/salvos" component={SavedItems} />
           <Route path="/configuracoes" component={AccountSetting} />

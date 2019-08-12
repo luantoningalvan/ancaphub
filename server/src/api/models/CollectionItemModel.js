@@ -20,10 +20,11 @@ const ItemSchema = new Schema({
   type: String,
   status: {
     type: String,
-    default: "PENDING",
+    default: "pending",
     lowercase: true,
     enum: ['published', 'draft', 'pending', 'deleted']
   },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   extraFields: Object,
   categories: [CategorySchema],
   collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
