@@ -88,7 +88,7 @@ function SnackMessage(props) {
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'right',
           }}
           open={true}
           onClose={() => props.clearAlerts()}

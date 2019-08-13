@@ -19,12 +19,10 @@ function BooksList(props) {
     <Template>
       <Box mb={3} display="flex" justifyContent="space-between">
         <Typography variant="h4" component="h2">Livros</Typography>
-        <Link to={`livros/contribuir`}>
-          <Button variant="contained" color="primary">
-            <AddIcon style={{ marginRight: '10px' }} />
-            Contribuir
+        <Button component={Link} to={`livros/contribuir`} variant="contained" color="primary">
+          <AddIcon style={{ marginRight: '10px' }} />
+          Contribuir
           </Button>
-        </Link>
       </Box>
 
       <Filter

@@ -1,10 +1,6 @@
 import React from 'react'
 import Template from '../template/template'
 import Typography from '@material-ui/core/Typography';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { addBook } from './bookActions'
-import { Formik, Field, FieldArray, getIn, Form } from 'formik'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
@@ -16,9 +12,16 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
-import * as Yup from 'yup';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import MuiLink from '@material-ui/core/Link';
+import ChooseCategory from '../components/categories/chooseCategory'
+import ImageUpload from '../components/imageUpload'
+import * as Yup from 'yup';
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { addBook } from './bookActions'
+import { Formik, Field, FieldArray, getIn, Form } from 'formik'
 
 function AddBook(props) {
   // Validação frontend do formulário
@@ -74,7 +77,6 @@ function AddBook(props) {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        autoFocus
                         variant="outlined"
                         required
                         fullWidth
@@ -195,7 +197,7 @@ function AddBook(props) {
                       <Button variant="contained" color="primary" type="submit">
                         Adicionar
                       </Button>
-                      <Button color="inherit" style={{ marginLeft: "10px" }}>
+                      <Button component={Link} to="/livros" color="inherit" style={{ marginLeft: "10px" }}>
                         Cancelar
                       </Button>
                     </Grid>
@@ -204,6 +206,24 @@ function AddBook(props) {
 
                 <Grid item xs={12} sm={3}>
                   <Grid container spacing={2}>
+
+                    <Grid item xs={12}>
+                      <Typography variant="h6" component="h2">
+                        Capa do Artigo
+                        </Typography>
+
+                      <Field component={ImageUpload} name="cover" />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant="h6" component="h2">
+                        Categorias
+                        </Typography>
+
+                      <Box my={2}>
+                        <Field component={ChooseCategory} name="categories" />
+                      </Box>
+                    </Grid>
 
                   </Grid>
                 </Grid>
