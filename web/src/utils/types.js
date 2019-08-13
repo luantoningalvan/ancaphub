@@ -54,5 +54,6 @@ export const DELETE_POST_ERROR = "DELETE_POST_ERROR"
 export const LOAD_USER_FEED_SUCCESS = "LOAD_USER_FEED_SUCCESS"
 
 // Errors
-export const SET_ERRORS = "SET_ERRORS"
-export const CLEAR_ERRORS = "CLEAR_ERRORS"
+export const SET_ALERTS = "SET_ALERTS"
+export const CLEAR_ALERTS = "CLEAR_ALERTS"
+export const SHOW_SNACK = "SHOW_SNACK"

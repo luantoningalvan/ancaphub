@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { showSnack } from '../alerts/alertActions'
 import {
   FETCH_ALL_BOOKS,
   FETCH_BOOK,
@@ -49,6 +50,7 @@ export function addBook(data) {
     axios.post(`${BASE_URL}`, { ...data, type: "book" })
       .then((book) => {
         dispatch({ type: ADD_BOOK_SUCCESS, payload: book.data });
+        dispatch(showSnack("Livro Adicionado com Sucesso"));
       }).catch((error) => {
         console.error("Erro ao adicionar livro: ", error);
       })

@@ -13,7 +13,7 @@ import {
   GET_USER_COLLECTION_SUCCESS,
   GET_USER_COLLECTION_FAIL
 } from '../utils/types'
-import { setErrors, clearErrors } from '../errors/errorActions'
+import { setAlerts, clearAlerts } from '../alerts/alertActions'
 
 export const getAllUsers = () => dispatch => {
   axios.get(`/api/users`)
@@ -90,7 +90,7 @@ export const updateUser = ({ name, bio, site, location, birthday, avatar }) => a
 
   try {
     const res = await axios.put(`/api/users/`, body, config)
-    dispatch(clearErrors())
+    dispatch(clearAlerts())
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: res.data
@@ -99,7 +99,7 @@ export const updateUser = ({ name, bio, site, location, birthday, avatar }) => a
     const errors = err.response.data.errors
 
     if (errors) {
-      dispatch(setErrors(errors))
+      dispatch(setAlerts(errors))
     }
 
     dispatch({

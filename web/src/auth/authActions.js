@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-import { setErrors, clearErrors } from '../errors/errorActions'
+import { setAlerts, clearAlerts } from '../alerts/alertActions'
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -24,7 +24,7 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
 
   try {
     const res = await axios.post('/api/users', body, config)
-    dispatch(clearErrors())
+    dispatch(clearAlerts())
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
@@ -33,7 +33,7 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
     const errors = err.response.data.errors
 
     if (errors) {
-      dispatch(setErrors(errors))
+      dispatch(setAlerts(errors))
     }
 
     dispatch({
@@ -86,7 +86,7 @@ export const signIn = ({ email, password }) => async dispatch => {
     const errors = err.response.data.errors
 
     if (errors) {
-      dispatch(setErrors(errors))
+      dispatch(setAlerts(errors))
     }
 
     dispatch({

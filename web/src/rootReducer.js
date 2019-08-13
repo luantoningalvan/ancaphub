@@ -1,5 +1,5 @@
 import bookReducers from './books/bookReducers'
-import errorReducers from './errors/errorReducers'
+import alertReducers from './alerts/alertReducers'
 import articleReducers from './articles/articleReducers'
 import authReducer from './auth/authReducer'
 import userReducers from './users/userReducers'
@@ -8,7 +8,7 @@ import categoriesReducer from './components/categories/categoriesReducer'
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
-    errors: errorReducers,
+    alerts: alertReducers,
     auth: authReducer,
     users: userReducers,
     books: bookReducers,

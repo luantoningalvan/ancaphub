@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Sidebar from './sidebar'
 import Main from './main'
+import SnackMessage from '../components/snackMessage'
 
 /* CSS FILES */
 import '../assets/css/common.css'
@@ -31,6 +32,7 @@ export default function Template(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SnackMessage />
       <Sidebar />
       <Main open={open}>
         {props.children}
