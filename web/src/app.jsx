@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PrivateRoute from './PrivateRoute'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { loadUser } from "./auth/authActions";
 import setAuthToken from "./utils/setAuthToken";
@@ -8,6 +9,7 @@ import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 import reducers from './rootReducer'
+import UnavailablePage from './unavailablePage'
 
 // Telas
 // # Página Inicial
@@ -61,11 +63,11 @@ export default function App() {
           <Route exact path="/" component={Home} />
 
           <Route exact path="/livros" component={Books} />
-          <Route exact path="/livros/contribuir" component={AddBook} />
+          <PrivateRoute path="/livros/contribuir" component={AddBook} />
           <Route path="/livros/livro/:id" component={SingleBook} />
 
           <Route exact path="/artigos" component={Articles} />
-          <Route exact path="/artigos/contribuir" component={Articles} />
+          <PrivateRoute path="/artigos/contribuir" component={Articles} />
           <Route path="/artigos/artigo/:id" component={SingleArticle} />
 
           <Route path="/podcasts" component={Podcasts} />
@@ -82,6 +84,7 @@ export default function App() {
           <Route exact path="/usuario/:id" component={Profile} />
           <Route exact path="/usuario/:id/seguidores" component={Profile} />
           <Route exact path="/usuario/:id/colecao" component={Profile} />
+          <Route path="*" component={UnavailablePage} />
         </Switch>
       </Router>
     </Provider>
