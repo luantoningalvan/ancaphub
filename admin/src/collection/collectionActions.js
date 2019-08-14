@@ -57,7 +57,6 @@ export function updateItem(data, type) {
       .catch(function (error) {
         console.error("Erro ao atualizar item: ", error);
       });
-
   }
 }
 
@@ -71,6 +70,20 @@ export function deleteItem(id) {
       })
       .catch(function (error) {
         console.error("Erro ao deletar item: ", error);
+      });
+  }
+}
+
+// Remove um item pelo seu id
+export function approveItem(id) {
+  return (dispatch) => {
+    axios.put(`${BASE_URL}/${id}/approve`)
+      .then(function (res) {
+        toastr.success('Sucesso', 'Item Aprovado com Sucesso.')
+        dispatch({ type: "ITEM_APPROVED", payload: res.data._id });
+      })
+      .catch(function (error) {
+        console.error("Erro ao aprovar item: ", error);
       });
   }
 }

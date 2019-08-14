@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 const Item = require("../models/CollectionItemModel")
 const User = require('../models/UserModel')
 
@@ -159,6 +160,15 @@ router.put("/:id", auth, async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+router.put("/:id/approve", auth, admin, async (request, response) => {
+  try {
+    var result = await Item.findByIdAndUpdate(request.params.id, { status: 'published' })
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+})
 
 // @route 	DELETE api/items/:id
 // @desc 		Deleta um item através de seu id

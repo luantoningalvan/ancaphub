@@ -11,6 +11,7 @@ export default (state = INITIAL_STATE, action) => {
     case "FETCH_ITEM":
       return { ...state, item: payload }
     case "ITEM_DELETED":
+    case "ITEM_APPROVED":
       return {
         ...state,
         allItems: { ...state.allItems, items: state.allItems.items.filter((value) => { return value._id != payload }) }

@@ -25,6 +25,8 @@ import ArticleIcon from '@material-ui/icons/Description'
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check'
+import ClearIcon from '@material-ui/icons/Clear'
 import SearchIcon from '@material-ui/icons/Search'
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -33,7 +35,7 @@ import isEmpty from 'is-empty'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchAllItems, deleteItem } from './collectionActions'
+import { fetchAllItems, deleteItem, approveItem } from './collectionActions'
 import { fetchAllCategories } from '../components/categories/categoriesAction'
 
 function Books(props) {
@@ -198,15 +200,28 @@ function Books(props) {
                         <TableCell align="left">{item.title}</TableCell>
                         <TableCell align="left">{item.author}</TableCell>
                         <TableCell align="right">
-                          <Link to={`/collection/${item.type}/edit/${item._id}`} >
-                            <IconButton aria-label="Editar">
-                              <EditIcon />
+                          {item.status == 'published' && (
+                            <Link to={`/collection/${item.type}/edit/${item._id}`} >
+                              <IconButton aria-label="Editar">
+                                <EditIcon />
+                              </IconButton>
+                            </Link>
+                          )}
+                          {item.status == 'published' && (
+                            <IconButton aria-label="Delete" onClick={() => confirmDeletion(item)}>
+                              <DeleteIcon />
                             </IconButton>
-                          </Link>
-
-                          <IconButton aria-label="Delete" onClick={() => confirmDeletion(item)}>
-                            <DeleteIcon />
-                          </IconButton>
+                          )}
+                          {item.status == 'pending' && (
+                            <>
+                              <IconButton aria-label="Aprovar" onClick={() => props.approveItem(item._id)}>
+                                <CheckIcon />
+                              </IconButton>
+                              <IconButton aria-label="Rejeitar" onClick={() => confirmDeletion(item)}>
+                                <ClearIcon />
+                              </IconButton>
+                            </>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -241,5 +256,5 @@ function Books(props) {
 }
 
 const mapStateToProps = (state) => ({ items: state.collection.allItems, categories: state.categories })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllItems, deleteItem, fetchAllCategories }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllItems, deleteItem, approveItem, fetchAllCategories }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Books)
