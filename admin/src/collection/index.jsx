@@ -22,6 +22,7 @@ import Tab from '@material-ui/core/Tab';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import BookIcon from '@material-ui/icons/Book'
 import ArticleIcon from '@material-ui/icons/Description'
+import VideoIcon from '@material-ui/icons/PlayArrow'
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit';
@@ -98,7 +99,7 @@ function Books(props) {
         >
           <MenuItem component={Link} to="/collection/book/add">Livro</MenuItem>
           <MenuItem component={Link} to="/collection/article/add">Artigo</MenuItem>
-          <MenuItem onClick={handleClose}>Vídeo</MenuItem>
+          <MenuItem component={Link} to="/collection/video/add">Vídeo</MenuItem>
           <MenuItem onClick={handleClose}>Podcast</MenuItem>
         </Menu>
       </Hero>
@@ -195,6 +196,9 @@ function Books(props) {
                           )}
                           {item.type == "article" && (
                             <ArticleIcon />
+                          )}
+                          {item.type == "video" && (
+                            <VideoIcon />
                           )}
                         </TableCell>
                         <TableCell align="left">{item.title}</TableCell>

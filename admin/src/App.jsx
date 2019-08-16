@@ -23,6 +23,7 @@ import Dashboard from './dashboard/dashboard'
 import Collection from './collection'
 import BookForm from './collection/books/bookFormPage'
 import ArticleForm from './collection/articles/articleFormPage'
+import VideoForm from './collection/videos/videoFormPage'
 
 /// Settings
 import Settings from './settings'
@@ -64,6 +65,8 @@ export default function App() {
           <PrivateRoute path="/collection/book/edit/:id" component={BookForm} />
           <PrivateRoute path="/collection/article/add/" component={ArticleForm} />
           <PrivateRoute path="/collection/article/edit/:id" component={ArticleForm} />
+          <PrivateRoute path="/collection/video/add/" component={VideoForm} />
+          <PrivateRoute path="/collection/video/edit/:id" component={VideoForm} />
 
           <PrivateRoute exact path="/settings" component={Settings} />
 

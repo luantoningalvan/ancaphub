@@ -109,7 +109,8 @@ router.post("/", auth, async (request, response) => {
       cover,
       categories,
       status: user.role.includes('admin') ? 'published' : 'pending',
-      user: user._id
+      user: user._id,
+      type
     }
 
     if (type == 'book') {
@@ -118,12 +119,6 @@ router.post("/", auth, async (request, response) => {
         extraFields: {
           downloadOptions: request.body.downloadOptions
         },
-        type: "book",
-      }
-    } else if (type == 'article') {
-      newItem = {
-        ...newItem,
-        type: "article"
       }
     }
 
