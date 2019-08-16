@@ -42,6 +42,7 @@ import Profile from './users/profile/profile'
 // # Usuário autenticado
 import AccountSetting from './auth/accountSettings'
 import SavedItems from './auth/savedItems'
+import ContributionsPanel from './auth/contributionsPanel'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
@@ -78,8 +79,9 @@ export default function App() {
 
           <Route path="/campanhas" component={Campaigns} />
 
-          <Route path="/salvos" component={SavedItems} />
-          <Route path="/configuracoes" component={AccountSetting} />
+          <PrivateRoute path="/salvos" component={SavedItems} />
+          <PrivateRoute path="/configuracoes" component={AccountSetting} />
+          <PrivateRoute path="/painel-de-contribuicoes" component={ContributionsPanel} />
 
           <Route exact path="/usuario/:id" component={Profile} />
           <Route exact path="/usuario/:id/seguidores" component={Profile} />

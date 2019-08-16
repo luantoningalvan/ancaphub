@@ -7,7 +7,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   FOLLOW_USER_SUCCESS,
-  ADD_ITEM_TO_COLLECTION_SUCCESS
+  ADD_ITEM_TO_COLLECTION_SUCCESS,
+  GET_CONTRIBUTIONS_SUCCESS
 } from '../utils/types'
 
 const initialState = {
@@ -61,6 +62,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: { ...state.user, personalCollection: payload }
+      }
+    case GET_CONTRIBUTIONS_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, contributions: payload }
       }
     default:
       return state;

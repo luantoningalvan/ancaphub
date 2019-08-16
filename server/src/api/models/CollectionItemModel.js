@@ -22,7 +22,7 @@ const ItemSchema = new Schema({
     type: String,
     default: "pending",
     lowercase: true,
-    enum: ['published', 'draft', 'pending', 'deleted']
+    enum: ['published', 'pending', 'waiting', 'rejected', 'draft']
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   extraFields: Object,

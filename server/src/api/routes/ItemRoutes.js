@@ -82,6 +82,18 @@ router.get("/:id", async (request, response) => {
   }
 });
 
+// @route 	GET api/items/auth/contributions
+// @desc 	  Retorna um item de acordo com seu id
+// @access 	Public
+router.get("/auth/contributions", auth, async (request, response) => {
+  try {
+    var result = await Item.find({ user: request.user.id })
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // @route 	POST api/items
 // @desc 		Cria um novo item
 // @access 	Private

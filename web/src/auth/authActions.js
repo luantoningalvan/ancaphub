@@ -10,7 +10,9 @@ import {
   REGISTER_FAIL,
   LOGOUT,
   ADD_ITEM_TO_COLLECTION_SUCCESS,
-  ADD_ITEM_TO_COLLECTION_FAIL
+  ADD_ITEM_TO_COLLECTION_FAIL,
+  GET_CONTRIBUTIONS_SUCCESS,
+  GET_CONTRIBUTIONS_FAIL
 } from '../utils/types'
 
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
@@ -111,5 +113,22 @@ export const addItemToCollection = item => async dispatch => {
     dispatch({
       type: ADD_ITEM_TO_COLLECTION_FAIL
     });
+  }
+}
+
+export function getContributions() {
+  return dispatch => {
+    axios.get('/api/items/auth/contributions')
+      .then(res => {
+        dispatch({
+          type: GET_CONTRIBUTIONS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: GET_CONTRIBUTIONS_FAIL
+        });
+      })
   }
 }
