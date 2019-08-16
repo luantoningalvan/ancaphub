@@ -4,10 +4,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationSearchIcon from '@material-ui/icons/LocationSearching';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { fetchAllBooks } from '../../books/bookActions'
-import { fetchAllArticles } from '../../articles/articleActions'
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -38,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SearchBox(props) {
+export default function SearchBox(props) {
   const classes = useStyles();
 
   const search = (text) => {
@@ -57,7 +53,6 @@ function SearchBox(props) {
           input: classes.inputInput,
         }}
         inputProps={{ 'aria-label': 'Buscar' }}
-        onChange={(t) => search(t.target.value)}
       />
       <div className={classes.searchIcon}>
         <SearchIcon />
@@ -65,7 +60,3 @@ function SearchBox(props) {
     </div>
   )
 }
-
-const mapStateToProps = (state) => ({ books: state.books, articles: state.articles })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks, fetchAllArticles }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBox)

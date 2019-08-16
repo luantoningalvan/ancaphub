@@ -13,31 +13,31 @@ import UnavailablePage from './unavailablePage'
 
 // Telas
 // # Página Inicial
-import Home from './home/home'
+import Home from './pages/home'
 
 // # Livros
-import Books from './books'
-import SingleBook from './books/singleBook'
-import AddBook from './books/addBook'
+import Books from './pages/books'
+import SingleBook from './pages/books/singleBook'
+import AddBook from './pages/books/addBook'
 
 // # Podcasts
-import Podcasts from './podcasts'
+import Podcasts from './pages/podcasts'
 
 // # Artigos
-import Articles from './articles'
-import SingleArticle from './articles/singleArticle'
+import Articles from './pages/articles'
+import SingleArticle from './pages/articles/singleArticle'
 
 // # Grupos
-import Groups from './groups'
+import Groups from './pages/groups'
 
 // # Eventos
-import Events from './events'
+import Events from './pages/events'
 
 // # Campanhas
-import Campaigns from './campaigns'
+import Campaigns from './pages/campaigns'
 
 // # Usuários
-import Profile from './users/profile/profile'
+import Profile from './pages/users/profile/profile'
 
 // # Usuário autenticado
 import AccountSetting from './auth/accountSettings'
