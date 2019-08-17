@@ -16,14 +16,17 @@ const useStyles = makeStyles(theme => ({
   },
   notSelected: {
     color: "#757575"
-  }
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 export default props => {
   const classes = useStyles();
   return (
     <Link component={RouterLink} to={props.link} underline='none' color="textPrimary">
-      <ListItem button>
+      <ListItem button className={(props.nested) ? classes.nested : null}>
         <ListItemIcon
           classes={{
             root: clsx(classes.icon, {
