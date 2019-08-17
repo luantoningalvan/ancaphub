@@ -47,6 +47,7 @@ export function createItem(data, type) {
 
 // Edita um item através do seu id
 export function updateItem(data, type) {
+  console.log(data)
   return (dispatch) => {
     axios.put(`${BASE_URL}/${data._id}`, { ...data, type: type })
       .then(function (item) {

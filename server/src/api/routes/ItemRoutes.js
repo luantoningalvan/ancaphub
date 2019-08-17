@@ -122,6 +122,15 @@ router.post("/", auth, async (request, response) => {
       }
     }
 
+    if (type == 'video') {
+      newItem = {
+        ...newItem,
+        extraFields: {
+          videoUrl: request.body.videoUrl
+        },
+      }
+    }
+
     const item = new Item(newItem);
     const result = await item.save();
     response.send(result);
@@ -137,29 +146,31 @@ router.put("/:id", auth, async (request, response) => {
   const { title, author, content, cover, categories, type } = request.body
 
   try {
-    let updatedItem = {}
+    let updatedItem = {
+      title,
+      author,
+      content,
+      cover,
+      categories,
+    }
 
     if (type == 'book') {
       updatedItem = {
-        title,
-        author,
-        content,
-        cover,
-        categories,
+        ...updatedItem,
         extraFields: {
           downloadOptions: request.body.downloadOptions
         },
       }
-    } else if (type == 'article') {
+    }
+
+    if (type == 'video') {
       updatedItem = {
-        title,
-        author,
-        content,
-        cover,
-        categories,
+        ...updatedItem,
+        extraFields: {
+          videoUrl: request.body.videoUrl
+        },
       }
     }
-    console.log(updatedItem)
 
     const result = await Item.findByIdAndUpdate(request.params.id, updatedItem);
     response.send(result);

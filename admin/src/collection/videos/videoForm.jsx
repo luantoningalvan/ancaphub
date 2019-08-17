@@ -23,17 +23,24 @@ function VideoForm(props) {
   const VideoSchema = Yup.object().shape({
     title: Yup.string()
       .required('O campo título é obrigatório!'),
-    content: Yup.string()
+    videoUrl: Yup.string()
       .required('O campo vídeo é obrigatório!'),
 
   })
 
   const isNew = props.isNew
-  const initialFormValues = { title: '', author: '', content: '', cover: '', categories: [] }
-
+  const initialFormValues = {
+    title: props.videoData.title || '',
+    author: props.videoData.author || '',
+    content: props.videoData.content || '',
+    cover: props.videoData.cover || '',
+    videoUrl: props.videoData.extraFields ? props.videoData.extraFields.videoUrl : '',
+    categories: props.videoData.categories || [],
+    _id: props.videoData._id || null
+  }
   return (
     <Formik
-      initialValues={isNew ? initialFormValues : props.videoData}
+      initialValues={initialFormValues}
       validationSchema={VideoSchema}
       enableReinitialize
       onSubmit={(values, actions) => {
@@ -91,13 +98,13 @@ function VideoForm(props) {
                           helperText={(errors.author && touched.author) && errors.author}
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <TextField
+                          multiline
+                          rows={4}
                           variant="outlined"
-                          required
                           fullWidth
-                          label="Url do vídeo"
+                          label="Descrição"
                           name="content"
                           value={values.content}
                           onChange={handleChange}
@@ -105,10 +112,23 @@ function VideoForm(props) {
                           helperText={(errors.content && touched.content) && errors.content}
                         />
                       </Grid>
-                      {values.content != "" && (
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          label="Url do vídeo"
+                          name="videoUrl"
+                          value={values.videoUrl}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          helperText={(errors.videoUrl && touched.videoUrl) && errors.videoUrl}
+                        />
+                      </Grid>
+                      {values.videoUrl != "" && (
                         <Grid item xs={12}>
                           <ReactPlayer
-                            url={values.content}
+                            url={values.videoUrl}
                           />
                         </Grid>
                       )}
