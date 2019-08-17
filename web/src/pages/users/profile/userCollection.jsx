@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import BookCard from '../../books/bookCard'
 import ArticleCard from '../../articles/articleCard'
+import VideoCard from '../../videos/videoCard'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,6 +29,10 @@ function UserCollection(props) {
 
             {item.type == "article" && (
               <ArticleCard article={item} />
+            )}
+
+            {item.type == "video" && (
+              <VideoCard video={item} />
             )}
           </Grid>
         )) : (

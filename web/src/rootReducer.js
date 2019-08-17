@@ -1,6 +1,7 @@
 import alertReducers from './alerts/alertReducers'
 import bookReducers from './pages/books/bookReducers'
 import articleReducers from './pages/articles/articleReducers'
+import videoReducers from './pages/videos/videoReducers'
 import authReducer from './auth/authReducer'
 import userReducers from './pages/users/userReducers'
 import postReducers from './components/posts/postReducers'
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     users: userReducers,
     books: bookReducers,
+    videos: videoReducers,
     articles: articleReducers,
     categories: categoriesReducer,
     posts: postReducers

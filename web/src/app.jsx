@@ -20,12 +20,18 @@ import Books from './pages/books'
 import SingleBook from './pages/books/singleBook'
 import AddBook from './pages/books/addBook'
 
-// # Podcasts
-import Podcasts from './pages/podcasts'
-
 // # Artigos
 import Articles from './pages/articles'
 import SingleArticle from './pages/articles/singleArticle'
+import AddArticle from './pages/books/addBook'
+
+// # Vídeos
+import Videos from './pages/videos'
+import SingleVideo from './pages/videos/singleVideo'
+import AddVideo from './pages/videos/addVideo'
+
+// # Podcasts
+import Podcasts from './pages/podcasts'
 
 // # Grupos
 import Groups from './pages/groups'
@@ -68,8 +74,12 @@ export default function App() {
           <Route path="/livros/livro/:id" component={SingleBook} />
 
           <Route exact path="/artigos" component={Articles} />
-          <PrivateRoute path="/artigos/contribuir" component={Articles} />
+          <PrivateRoute path="/artigos/contribuir" component={AddArticle} />
           <Route path="/artigos/artigo/:id" component={SingleArticle} />
+
+          <Route exact path="/videos" component={Videos} />
+          <PrivateRoute path="/videos/contribuir" component={AddVideo} />
+          <Route path="/videos/video/:id" component={SingleVideo} />
 
           <Route path="/podcasts" component={Podcasts} />
 
