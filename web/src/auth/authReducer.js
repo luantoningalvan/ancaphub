@@ -8,14 +8,17 @@ import {
   LOGOUT,
   FOLLOW_USER_SUCCESS,
   ADD_ITEM_TO_COLLECTION_SUCCESS,
-  GET_CONTRIBUTIONS_SUCCESS
+  SAVE_ITEM_SUCCESS,
+  GET_CONTRIBUTIONS_SUCCESS,
+  GET_SAVED_SUCCESS
 } from '../utils/types'
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   loading: true,
-  user: null
+  user: null,
+  saved: null
 };
 
 export default function (state = initialState, action) {
@@ -63,10 +66,20 @@ export default function (state = initialState, action) {
         ...state,
         user: { ...state.user, personalCollection: payload }
       }
+    case SAVE_ITEM_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, saved: payload }
+      }
     case GET_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
         user: { ...state.user, contributions: payload }
+      }
+    case GET_SAVED_SUCCESS:
+      return {
+        ...state,
+        saved: payload.saved
       }
     default:
       return state;

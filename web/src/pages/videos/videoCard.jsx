@@ -6,19 +6,19 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import DownloadIcon from '@material-ui/icons/CloudDownload'
 import AddToCollection from '../../components/addItemToCollection'
+import SaveItem from '../../components/saveItem'
+import VideoIcon from '@material-ui/icons/PlayArrow'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   media: {
     height: 200,
   },
-  rightIcon: {
-    marginLeft: theme.spacing(1),
+  type: {
+    margin: theme.spacing(1),
+    borderRadius: '5px',
+    color: 'white'
   },
 }));
 
@@ -34,7 +34,9 @@ export default function VideoCard(props) {
           className={classes.media}
           image={video.cover}
           title={`Capa do vídeo ${video.title}`}
-        />
+        >
+          <VideoIcon className={classes.type} />
+        </CardMedia>
         <CardContent>
           <Typography variant="h5" component="h2" noWrap>
             {video.title}
@@ -42,12 +44,10 @@ export default function VideoCard(props) {
           <Typography className={classes.pos} variant="subtitle1" gutterBottom>
             {video.author}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {video.content ? ((video.content.length > 200) ? `${video.content.substring(0, 200)}..` : video.content) : "Nenhuma descrição disponível."}
-          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
+        <SaveItem item={video._id} />
         <AddToCollection item={video._id} />
       </CardActions>
     </Card>

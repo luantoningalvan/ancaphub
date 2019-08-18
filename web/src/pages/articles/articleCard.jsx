@@ -7,15 +7,18 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import AddToCollection from '../../components/addItemToCollection'
-import striptags from 'striptags';
+import SaveItem from '../../components/saveItem'
+import ArticleIcon from '@material-ui/icons/Description';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   media: {
     height: 200,
   },
-  rightIcon: {
-    marginLeft: theme.spacing(1),
+  type: {
+    margin: theme.spacing(1),
+    borderRadius: '5px',
+    color: 'white'
   },
 }));
 
@@ -31,7 +34,9 @@ export default function ArticleCard(props) {
           className={classes.media}
           image={cover}
           title={`Capa do artigo ${title}`}
-        />
+        >
+          <ArticleIcon className={classes.type} />
+        </CardMedia>
         <CardContent>
           <Typography variant="h5" component="h2" noWrap>
             {title}
@@ -39,12 +44,10 @@ export default function ArticleCard(props) {
           <Typography className={classes.pos} variant="subtitle1" gutterBottom>
             {author}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {(content.length > 200) ? `${striptags(content.substring(0, 200))}..` : striptags(content)}
-          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
+        <SaveItem item={_id} />
         <AddToCollection item={_id} />
       </CardActions>
     </Card>

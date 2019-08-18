@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     default: ['user']
   },
   personalCollection: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
-  watchLater: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+  saved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   following: [],
   followers: [],
   birthday: Date,

@@ -11,14 +11,18 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import AddToCollection from '../../components/addItemToCollection'
+import SaveItem from '../../components/saveItem'
+import BookIcon from '@material-ui/icons/Book';
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   media: {
     height: 200,
   },
-  rightIcon: {
-    marginLeft: theme.spacing(1),
+  type: {
+    margin: theme.spacing(1),
+    borderRadius: '5px',
+    color: 'white'
   },
 }));
 
@@ -44,45 +48,47 @@ export default function BookCard(props) {
           className={classes.media}
           image={book.cover}
           title={`Capa do livro ${book.title}`}
-        />
+        >
+          <BookIcon className={classes.type} />
+        </CardMedia>
         <CardContent>
           <Typography variant="h5" component="h2" noWrap>
             {book.title}
           </Typography>
-          <Typography className={classes.pos} variant="subtitle1" gutterBottom>
+          <Typography variant="subtitle1" gutterBottom>
             {book.author}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {book.content ? ((book.content.length > 200) ? `${book.content.substring(0, 200)}..` : book.content) : "Nenhuma descrição disponível."}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <AddToCollection item={book._id} />
+          <Menu
+            id={`menubook-${book._id}`}
+            getContentAnchorEl={null}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {book.extraFields.downloadOptions.map(download => (
+              <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
+            ))}
+
+          </Menu>
+          <SaveItem item={book._id} />
+        </div>
         <IconButton size="small" color="primary" onClick={handleClick}>
           <DownloadIcon />
         </IconButton>
-        <AddToCollection item={book._id} />
-        <Menu
-          id={`menubook-${book._id}`}
-          getContentAnchorEl={null}
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'center',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'center',
-            horizontal: 'center',
-          }}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {book.extraFields.downloadOptions.map(download => (
-            <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
-          ))}
-
-        </Menu>
       </CardActions>
     </Card>
 

@@ -94,6 +94,15 @@ router.get("/auth/contributions", auth, async (request, response) => {
   }
 });
 
+router.get("/auth/saved", auth, async (request, response) => {
+  try {
+    var result = await User.findById(request.user.id, "saved").populate("saved");
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // @route 	POST api/items
 // @desc 		Cria um novo item
 // @access 	Private

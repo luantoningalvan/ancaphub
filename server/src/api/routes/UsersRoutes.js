@@ -210,4 +210,33 @@ router.put("/addItemToCollection", auth, async (request, response) => {
   }
 });
 
+// @route 	PUT api/users/addItemToCollection
+// @desc 	  Adiciona um item a coleção pessoal do usuaŕio logado
+// @access 	Private
+router.put("/saveItem", auth, async (request, response) => {
+  const { item: itemId } = request.body
+
+  console.log(itemId)
+  try {
+    const item = await Item.findById(itemId)
+    if (item) {
+      const user = await User.findById(request.user.id)
+
+      if (user.saved.includes(itemId)) {
+        user.saved.pull(itemId)
+      } else {
+        user.saved.push(itemId)
+      }
+
+      await item.save()
+      const result = await user.save()
+      response.send(result.saved);
+    } else {
+      return res.status(400).json({ errors: [{ msg: "Este esse item não existe no acervo." }] });
+    }
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = router
