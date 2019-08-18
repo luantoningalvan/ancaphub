@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { showSnack } from '../../alerts/alertActions'
 import {
   FETCH_ALL_ARTICLES,
   FETCH_ARTICLE,
   SELECT_ARTICLES_CATEGORY,
   SELECT_ARTICLES_ORDER,
-  SELECT_ARTICLES_PAGE
+  SELECT_ARTICLES_PAGE,
+  ADD_ARTICLE_SUCCESS
 } from '../../utils/types'
 const BASE_URL = 'http://localhost:3000/api/items';
 
@@ -36,6 +38,18 @@ export function fetchArticle(id) {
         console.error('Erro ao obter dados do livro: ', error);
       });
   };
+}
+
+export function addArticle(data) {
+  return (dispatch) => {
+    axios.post(`${BASE_URL}`, { ...data, type: "article" })
+      .then((article) => {
+        dispatch({ type: ADD_ARTICLE_SUCCESS, payload: article.data });
+        dispatch(showSnack("Artigo Adicionado com Sucesso"));
+      }).catch((error) => {
+        console.error("Erro ao adicionar livro: ", error);
+      })
+  }
 }
 
 export function selectCategory(category) { return { type: SELECT_ARTICLES_CATEGORY, payload: category }; }

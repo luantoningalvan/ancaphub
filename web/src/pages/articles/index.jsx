@@ -1,21 +1,28 @@
 import React from 'react'
 import Template from '../../template/template'
 import Typography from '@material-ui/core/Typography';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { fetchAllArticles, selectCategory, selectOrder, selectPage } from './articleActions'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
 import ArticleCard from './articleCard'
 import isEmpty from 'is-empty'
 import Filter from '../../components/filter/filter'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { fetchAllArticles, selectCategory, selectOrder, selectPage } from './articleActions'
+import { Link } from 'react-router-dom'
 
 function ArticlesList(props) {
   const { articles } = props
   return (
     <Template>
-      <Box mb={3}>
+      <Box mb={3} display="flex" justifyContent="space-between">
         <Typography variant="h4" component="h2">Artigos</Typography>
+        <Button component={Link} to={`artigos/contribuir`} variant="contained" color="primary">
+          <AddIcon style={{ marginRight: '10px' }} />
+          Contribuir
+          </Button>
       </Box>
 
       <Filter

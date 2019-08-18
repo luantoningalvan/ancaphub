@@ -22,16 +22,16 @@ function UserFollowers(props) {
         <Typography variant="h5" component="h2">Seguidores</Typography>
       </Box>
 
-      <Grid container>
+      <Grid container spacing={2}>
         {props.followers && !isEmpty(props.followers) ? props.followers.map(user => (
           <Grid item xs={3} key={`follower-${user._id}`}>
             <MaterialLink underline="none" component={AdapterLink} to={`/usuario/${user._id}`}>
               <Paper>
                 <Box display="flex" flexDirection="column" alignItems="center" py={2}>
-                  {user.avatar != '' ? (
+                  {user.avatar ? (
                     <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} style={{ width: '70%', height: 'auto', marginBottom: "10px" }} />
                   ) : (
-                      <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
+                      <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '70%', height: 'auto', marginBottom: "10px" }} />
                     )}
                   <Typography variant="subtitle2">
                     {user.name}

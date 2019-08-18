@@ -23,7 +23,7 @@ import AddBook from './pages/books/addBook'
 // # Artigos
 import Articles from './pages/articles'
 import SingleArticle from './pages/articles/singleArticle'
-import AddArticle from './pages/books/addBook'
+import AddArticle from './pages/articles/addArticle'
 
 // # Vídeos
 import Videos from './pages/videos'
