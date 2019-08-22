@@ -25,11 +25,11 @@ export function loadUserPosts(user) {
   }
 }
 
-export function createPost({ content }, user) {
+export function createPost({ content }) {
   return (dispatch) => {
     axios.post(`/api/posts`, { content })
       .then(function (result) {
-        dispatch({ type: ADD_POST_SUCCESS, payload: { ...result.data, user } });
+        dispatch({ type: ADD_POST_SUCCESS, payload: result.data });
       })
       .catch(function (error) {
         console.error("Erro ao adicionar postagem: ", error);

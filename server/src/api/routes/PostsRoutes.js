@@ -40,6 +40,7 @@ router.post("/", auth, async (request, response) => {
       user: request.user.id
     });
     var result = await post.save();
+    result = await result.populate('user', 'name id avatar').execPopulate()
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

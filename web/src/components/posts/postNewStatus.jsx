@@ -16,7 +16,7 @@ function PostNewStatus(props) {
           initialValues={{ content: '' }}
           onSubmit={(values, actions) => {
             actions.resetForm({ content: '' })
-            props.createPost(values, props.user)
+            props.createPost(values)
           }}
           render={props => {
             const { values, touched, errors, handleChange, handleBlur } = props;
