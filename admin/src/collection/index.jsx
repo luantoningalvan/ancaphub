@@ -32,12 +32,62 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import isEmpty from 'is-empty'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchAllItems, deleteItem, approveItem } from './collectionActions'
 import { fetchAllCategories } from '../components/categories/categoriesAction'
+
+
+
+function AlertDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
+
+  return (
+    <div>
+
+      <IconButton aria-label="Rejeitar" onClick={handleClickOpen}>
+        <ClearIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous location data to
+            Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
 
 function Books(props) {
   const { items, total } = props.items
@@ -72,7 +122,6 @@ function Books(props) {
       props.deleteItem(item._id)
     }
   }
-
 
   return (
     <Template>
@@ -221,9 +270,7 @@ function Books(props) {
                               <IconButton aria-label="Aprovar" onClick={() => props.approveItem(item._id)}>
                                 <CheckIcon />
                               </IconButton>
-                              <IconButton aria-label="Rejeitar" onClick={() => confirmDeletion(item)}>
-                                <ClearIcon />
-                              </IconButton>
+                              <AlertDialog />
                             </>
                           )}
                         </TableCell>
