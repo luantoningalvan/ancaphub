@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
@@ -55,7 +56,7 @@ export default function BookCard(props) {
           <Typography variant="h5" component="h2" noWrap>
             {book.title}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant="subtitle1">
             {book.author}
           </Typography>
         </CardContent>
@@ -85,6 +86,9 @@ export default function BookCard(props) {
 
           </Menu>
           <SaveItem item={book._id} />
+          <Button size="small" color="primary">
+            Avaliar
+        </Button>
         </div>
         <IconButton size="small" color="primary" onClick={handleClick}>
           <DownloadIcon />
