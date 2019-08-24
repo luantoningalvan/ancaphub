@@ -1,7 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { Link, Redirect } from 'react-router-dom'
 import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search';
 import LocationSearchIcon from '@material-ui/icons/LocationSearching';
 
@@ -17,8 +19,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   locationSearchIcon: {
-    paddingLeft: theme.spacing(1),
-    height: '24px',
+    marginLeft: theme.spacing(0.5),
     color: "#757575"
   },
   searchIcon: {
@@ -43,9 +44,9 @@ export default function SearchBox(props) {
 
   return (
     <div className={classes.search}>
-      <div className={classes.locationSearchIcon}>
+      <IconButton component={Link} to="/find-people" className={classes.locationSearchIcon} size="small">
         <LocationSearchIcon />
-      </div>
+      </IconButton>
       <InputBase
         placeholder="Buscar…"
         classes={{

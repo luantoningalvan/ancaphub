@@ -45,6 +45,10 @@ import Campaigns from './pages/campaigns'
 // # Usuários
 import Profile from './pages/users/profile/profile'
 
+// # Busca
+import SearchResults from './components/search/searchResults'
+import FindPeople from './components/search/findPeople'
+
 // # Usuário autenticado
 import AccountSetting from './auth/accountSettings'
 import SavedItems from './auth/savedItems'
@@ -88,7 +92,8 @@ export default function App() {
           <Route path="/eventos" component={Events} />
 
           <Route path="/campanhas" component={Campaigns} />
-
+          <Route path="/search" component={SearchResults} />
+          <Route path="/find-people" component={FindPeople} />
           <PrivateRoute path="/salvos" component={SavedItems} />
           <PrivateRoute path="/configuracoes" component={AccountSetting} />
           <PrivateRoute path="/painel-de-contribuicoes" component={ContributionsPanel} />
