@@ -7,6 +7,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addItemToCollection } from '../auth/authActions'
@@ -23,13 +28,8 @@ function AddItemToCollection(props) {
     setOpen(false);
   }
 
-  function addAndPost(item) {
-    props.addItemToCollection(item)
-    handleClose()
-  }
-
   function add(item) {
-    props.addItemToCollection(item)
+    props.addItemToCollection(item, post)
     handleClose()
   }
 
@@ -51,13 +51,23 @@ function AddItemToCollection(props) {
           <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Adicionar item à coleção</DialogTitle>
             <DialogContent>
-              <DialogContentText>Deseja mesmo adicionar este item à sua coleção?</DialogContentText>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={post}
+                    onChange={(e) => setPost(e.target.checked)}
+                    value="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Criar Publicação"
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancelar
               </Button>
-              <Button onClick={() => addAndPost(props.item)} color="primary">
+              <Button onClick={() => add(props.item)} color="primary">
                 Adicionar
               </Button>
             </DialogActions>

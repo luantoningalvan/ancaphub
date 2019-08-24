@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const User = require("../models/UserModel")
+const Post = require("../models/PostModel")
 const Item = require("../models/CollectionItemModel")
 const bcrypt = require("bcryptjs");
 const keys = require("../../config/keys")
@@ -183,7 +184,7 @@ router.put("/:id/follow", auth, async (request, response) => {
 // @desc 	  Adiciona um item a coleção pessoal do usuaŕio logado
 // @access 	Private
 router.put("/addItemToCollection", auth, async (request, response) => {
-  const { item: itemId } = request.body
+  const { item: itemId, post } = request.body
 
   console.log(itemId)
   try {
@@ -200,6 +201,22 @@ router.put("/addItemToCollection", auth, async (request, response) => {
       }
 
       await item.save()
+
+      if (post) {
+        const newPost = new Post({
+          type: "collection_item",
+          user: request.user.id,
+          extraFields: {
+            _id: item._id,
+            title: item.title,
+            cover: item.cover,
+            description: item.content
+          }
+        })
+
+        await newPost.save()
+      }
+
       const result = await user.save()
       response.send(result.personalCollection);
     } else {

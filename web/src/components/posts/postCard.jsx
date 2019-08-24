@@ -8,6 +8,8 @@ import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
 import Box from '@material-ui/core/Box'
 import Menu from '@material-ui/core/Menu';
@@ -21,8 +23,12 @@ import Link from '@material-ui/core/Link';
 
 function ActivityCard(props) {
 
-  const { _id, content, user, likes = [], createdAt } = props.post
+  const { _id, content, type, extraFields, user, likes = [], createdAt } = props.post
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const activities = {
+    "status": null,
+    "collection_item": "adicionou um item à sua coleção particular",
+  }
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -65,7 +71,7 @@ function ActivityCard(props) {
           }
           title={(
             <Link component={RouterLink} to={`/usuario/${user._id}`} underline='none' color="textPrimary">
-              {user.name}
+              {user.name} <span style={{ fontSize: '13px', color: "#aaa" }}>{activities[type]}</span>
             </Link>
           )
 
@@ -73,9 +79,31 @@ function ActivityCard(props) {
           subheader={createdAt}
         />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {content}
-          </Typography>
+          {type == "status" && (
+            <Typography variant="body2" color="textSecondary" component="p">
+              {content}
+            </Typography>
+          )}
+
+          {type == "collection_item" && (
+            <Card>
+              <CardActionArea component={RouterLink} to={`/livros/livro/${extraFields._id}`}>
+                <CardMedia
+                  component="img"
+                  height="240"
+                  image={extraFields.cover}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {extraFields.title}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    {`${extraFields.description.substring(0, 240)}...`}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          )}
         </CardContent>
         <CardActions disableSpacing>
           {props.authUser.isAuthenticated ? (

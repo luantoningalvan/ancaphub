@@ -106,9 +106,9 @@ export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
 
-export const addItemToCollection = item => async dispatch => {
+export const addItemToCollection = (item, post) => async dispatch => {
   try {
-    const res = await axios.put('/api/users/addItemToCollection', { item })
+    const res = await axios.put('/api/users/addItemToCollection', { item, post })
     dispatch({
       type: ADD_ITEM_TO_COLLECTION_SUCCESS,
       payload: res.data
