@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import RateItem from '../../components/rateItem';
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
@@ -56,7 +56,7 @@ export default function BookCard(props) {
           <Typography variant="h5" component="h2" noWrap>
             {book.title}
           </Typography>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" >
             {book.author}
           </Typography>
         </CardContent>
@@ -64,35 +64,33 @@ export default function BookCard(props) {
       <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <AddToCollection item={book._id} />
-          <Menu
-            id={`menubook-${book._id}`}
-            getContentAnchorEl={null}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'center',
-              horizontal: 'center',
-            }}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {book.extraFields.downloadOptions.map(download => (
-              <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
-            ))}
-
-          </Menu>
           <SaveItem item={book._id} />
-          <Button size="small" color="primary">
-            Avaliar
-        </Button>
+          <RateItem item={book._id} />
         </div>
         <IconButton size="small" color="primary" onClick={handleClick}>
           <DownloadIcon />
         </IconButton>
+        <Menu
+          id={`menubook-${book._id}`}
+          getContentAnchorEl={null}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'center',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'center',
+            horizontal: 'center',
+          }}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {book.extraFields.downloadOptions.map(download => (
+            <MenuItem component="a" key={`${book._id} ${download.type}`} href={download.file} target="_blank">{download.type.toUpperCase()}</MenuItem>
+          ))}
+
+        </Menu>
       </CardActions>
     </Card>
 

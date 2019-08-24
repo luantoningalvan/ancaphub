@@ -6,6 +6,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import RateItem from '../../components/rateItem';
 import AddToCollection from '../../components/addItemToCollection'
 import SaveItem from '../../components/saveItem'
 import VideoIcon from '@material-ui/icons/PlayArrow'
@@ -41,14 +42,15 @@ export default function VideoCard(props) {
           <Typography variant="h5" component="h2" noWrap>
             {video.title}
           </Typography>
-          <Typography className={classes.pos} variant="subtitle1" gutterBottom>
+          <Typography className={classes.pos} variant="subtitle1">
             {video.author}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <SaveItem item={video._id} />
         <AddToCollection item={video._id} />
+        <SaveItem item={video._id} />
+        <RateItem item={video._id} />
       </CardActions>
     </Card>
 
