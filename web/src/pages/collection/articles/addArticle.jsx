@@ -1,18 +1,18 @@
 import React from 'react'
-import Template from '../../template/template'
+import Template from '../../../template/template'
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
-import ChooseCategory from '../../components/categories/chooseCategory'
-import RichTextEditor from '../../components/editor/RichTextEditor'
-import ImageUpload from '../../components/imageUpload'
+import ChooseCategory from '../../../components/categories/chooseCategory'
+import RichTextEditor from '../../../components/editor/RichTextEditor'
+import ImageUpload from '../../../components/imageUpload'
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addArticle } from './articleActions'
+import { addItem } from '../itemActions'
 import { Formik, Field, Form } from 'formik'
 
 function AddArticle(props) {
@@ -45,7 +45,7 @@ function AddArticle(props) {
         validationSchema={ArticleSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addArticle(values);
+          props.addItem(values);
           actions.resetForm(initialFormValues)
         }}
 
@@ -131,6 +131,6 @@ function AddArticle(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addArticle }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ addItem }, dispatch)
 
 export default connect(null, mapDispatchToProps)(AddArticle)

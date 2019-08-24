@@ -1,5 +1,5 @@
 import React from 'react';
-import Template from '../../template/template';
+import Template from '../../../template/template';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 

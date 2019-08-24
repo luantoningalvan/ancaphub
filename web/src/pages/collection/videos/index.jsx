@@ -1,9 +1,7 @@
 import React from 'react'
-import Template from '../../template/template'
+import Template from '../../../template/template'
 import Typography from '@material-ui/core/Typography';
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchAllVideos, selectCategory, selectOrder, selectPage } from './videoActions'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -11,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import VideoCard from './videoCard'
 import isEmpty from 'is-empty'
 import { Link } from 'react-router-dom'
-import Filter from '../../components/filter/filter'
+import Filter from '../filter'
 
 function VideosList(props) {
   const { videos } = props
@@ -26,17 +24,11 @@ function VideosList(props) {
       </Box>
 
       <Filter
-        fetchAction={props.fetchAllVideos}
-        filters={videos.filters}
-        selectCategory={props.selectCategory}
-        selectOrder={props.selectOrder}
-        selectPage={props.selectPage}
-        totalItens={videos.allVideos.total}
-        pageSize={videos.allVideos.pageSize}
+        type="video"
       />
 
       <Grid container spacing={2}>
-        {!isEmpty(videos.allVideos.items) ? videos.allVideos.items.map((video, index) => (
+        {!isEmpty(videos.allItems.items) ? videos.allItems.items.map((video, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <VideoCard video={video} user={props.user} key={index} />
           </Grid>
@@ -50,7 +42,5 @@ function VideosList(props) {
   )
 }
 
-const mapStateToProps = (state) => ({ videos: state.videos, user: state.auth.user })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllVideos, selectCategory, selectOrder, selectPage }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(VideosList)
+const mapStateToProps = (state) => ({ videos: state.items, user: state.auth.user })
+export default connect(mapStateToProps)(VideosList)

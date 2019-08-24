@@ -7,12 +7,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import RateItem from '../../components/rateItem';
+import RateItem from '../../../components/rateItem';
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
-import AddToCollection from '../../components/addItemToCollection'
-import SaveItem from '../../components/saveItem'
+import AddToCollection from '../../../components/addItemToCollection'
+import SaveItem from '../../../components/saveItem'
 import BookIcon from '@material-ui/icons/Book';
 import { Link } from 'react-router-dom'
 

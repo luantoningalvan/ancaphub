@@ -16,22 +16,22 @@ import UnavailablePage from './unavailablePage'
 import Home from './pages/home'
 
 // # Livros
-import Books from './pages/books'
-import SingleBook from './pages/books/singleBook'
-import AddBook from './pages/books/addBook'
+import Books from './pages/collection/books'
+import SingleBook from './pages/collection/books/singleBook'
+import AddBook from './pages/collection/books/addBook'
 
 // # Artigos
-import Articles from './pages/articles'
-import SingleArticle from './pages/articles/singleArticle'
-import AddArticle from './pages/articles/addArticle'
+import Articles from './pages/collection/articles'
+import SingleArticle from './pages/collection/articles/singleArticle'
+import AddArticle from './pages/collection/articles/addArticle'
 
 // # Vídeos
-import Videos from './pages/videos'
-import SingleVideo from './pages/videos/singleVideo'
-import AddVideo from './pages/videos/addVideo'
+import Videos from './pages/collection/videos'
+import SingleVideo from './pages/collection/videos/singleVideo'
+import AddVideo from './pages/collection/videos/addVideo'
 
 // # Podcasts
-import Podcasts from './pages/podcasts'
+import Podcasts from './pages/collection/podcasts'
 
 // # Grupos
 import Groups from './pages/groups'

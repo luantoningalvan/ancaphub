@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import Template from '../../template/template'
+import Template from '../../../template/template'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchBook } from './bookActions'
+import { fetchItem } from '../itemActions'
 import { Typography, Box, Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,18 +10,18 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import IconButton from '@material-ui/core/IconButton';
-import Categories from '../../components/categories/showElementCategories'
+import Categories from '../../../components/categories/showElementCategories'
 import isEmpty from 'is-empty'
 
 function SingleBook(props) {
   const { id } = props.match.params;
-  useEffect(() => props.fetchBook(id), []);
+  useEffect(() => props.fetchItem(id), []);
 
-  const { _id, title, author, categories, content, cover, extraFields } = props.book.book;
+  const { _id, title, author, categories, content, cover, extraFields } = props.book.item;
 
   return (
     <Template>
-      {!props.book.loading && !isEmpty(props.book.book) && (
+      {!isEmpty(props.book.item) && props.book.item.type == "book" && (
         <>
           <Box mb={2}>
             <Typography variant="h4" component="h2" gutterBottom>{title} - {author}</Typography>
@@ -66,7 +66,7 @@ function SingleBook(props) {
 }
 
 
-const mapStateToProps = (state) => ({ book: state.books })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchBook }, dispatch)
+const mapStateToProps = (state) => ({ book: state.items })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchItem }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleBook)

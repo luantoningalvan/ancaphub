@@ -4,9 +4,9 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
-import BookCard from '../pages/books/bookCard'
-import ArticleCard from '../pages/articles/articleCard'
-import VideoCard from '../pages/videos/videoCard'
+import BookCard from '../pages/collection/books/bookCard'
+import ArticleCard from '../pages/collection/articles/articleCard'
+import VideoCard from '../pages/collection/videos/videoCard'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'

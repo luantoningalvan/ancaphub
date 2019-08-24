@@ -1,9 +1,8 @@
 import React from 'react'
-import Template from '../../template/template'
+import Template from '../../../template/template'
 import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchAllBooks, selectCategory, selectOrder, selectPage } from './bookActions'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -11,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add'
 import BookCard from './bookCard'
 import isEmpty from 'is-empty'
 import { Link } from 'react-router-dom'
-import Filter from '../../components/filter/filter'
+import Filter from '../filter'
 
 function BooksList(props) {
   const { books } = props
@@ -26,17 +25,11 @@ function BooksList(props) {
       </Box>
 
       <Filter
-        fetchAction={props.fetchAllBooks}
-        filters={books.filters}
-        selectCategory={props.selectCategory}
-        selectOrder={props.selectOrder}
-        selectPage={props.selectPage}
-        totalItens={books.allBooks.total}
-        pageSize={books.allBooks.pageSize}
+        type="book"
       />
 
       <Grid container spacing={2}>
-        {!isEmpty(books.allBooks.items) ? books.allBooks.items.map((book, index) => (
+        {!isEmpty(books.allItems.items) && books.allItems.type == "book" ? books.allItems.items.map((book, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <BookCard book={book} user={props.user} key={index} />
           </Grid>
@@ -50,7 +43,5 @@ function BooksList(props) {
   )
 }
 
-const mapStateToProps = (state) => ({ books: state.books, user: state.auth.user })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllBooks, selectCategory, selectOrder, selectPage }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(BooksList)
+const mapStateToProps = (state) => ({ books: state.items, user: state.auth.user })
+export default connect(mapStateToProps)(BooksList)

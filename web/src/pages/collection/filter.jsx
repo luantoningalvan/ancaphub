@@ -14,7 +14,8 @@ import Grid from '@material-ui/core/Grid'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchAllCategories } from '../categories/categoriesAction'
+import { fetchAllCategories } from '../../components/categories/categoriesAction'
+import { fetchAllItems, selectCategory, selectOrder, selectPage } from './itemActions'
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -31,13 +32,16 @@ const useStyles = makeStyles(theme => ({
 
 function Filter(props) {
   const classes = useStyles();
-  const { category, order, page } = props.filters
-  useEffect(() => props.fetchAction({ category, order, page }), [category, order, page])
-  useEffect(() => props.fetchAllCategories(), [])
+  const { fetchAllItems, fetchAllCategories, selectPage, selectCategory, selectOrder, categories, items, type } = props
+  const { category, order, page } = items.filters
 
+  useEffect(() => fetchAllItems({ type, category, order, page }), [category, order, page])
+  useEffect(() => fetchAllCategories(), [])
 
-  const checkHowManyItensAreAlreadyLoaded = () => {
-    return page <= parseInt(props.totalItens / props.pageSize) ? page * props.pageSize : props.totalItens
+  const { pageSize, total } = items.allItems
+
+  const checkHowManyItemsAreAlreadyLoaded = () => {
+    return page <= parseInt(total / pageSize) ? page * pageSize : total
   }
 
   const beforePageButton = () => {
@@ -48,7 +52,7 @@ function Filter(props) {
         component="span"
         size="small"
         disabled={page == 1}
-        onClick={() => props.selectPage(page - 1)}
+        onClick={() => selectPage(page - 1)}
       >
         <BeforeIcon />
       </IconButton>
@@ -62,8 +66,8 @@ function Filter(props) {
         aria-label="Próxima"
         component="span"
         size="small"
-        disabled={checkHowManyItensAreAlreadyLoaded() == props.totalItens}
-        onClick={() => props.selectPage(page + 1)}
+        disabled={checkHowManyItemsAreAlreadyLoaded() == total}
+        onClick={() => selectPage(page + 1)}
       >
         <NextIcon />
       </IconButton>
@@ -79,12 +83,12 @@ function Filter(props) {
               <InputLabel htmlFor="age-simple">Filtrar por categoria</InputLabel>
               <Select
                 value={category}
-                onChange={(e) => props.selectCategory(e.target.value)}
+                onChange={(e) => selectCategory(e.target.value)}
               >
                 <MenuItem value="">
                   Todas
             					</MenuItem>
-                {!isEmpty(props.categories) && props.categories.allCategories.map(category => (
+                {!isEmpty(categories) && categories.allCategories.map(category => (
                   <MenuItem value={category._id} key={category._id}>{category.name}</MenuItem>
                 ))}
               </Select>
@@ -96,7 +100,7 @@ function Filter(props) {
               <InputLabel>Ordem</InputLabel>
               <Select
                 value={order}
-                onChange={(e) => props.selectOrder(e.target.value)}
+                onChange={(e) => selectOrder(e.target.value)}
               >
                 <MenuItem value="asc">Crescente</MenuItem>
                 <MenuItem value="desc">Decrescente</MenuItem>
@@ -106,7 +110,7 @@ function Filter(props) {
 
 
           <Grid item xs={3}>
-            <span style={{ marginRight: '10px' }}>{`Total de itens: ${checkHowManyItensAreAlreadyLoaded()} - ${props.totalItens}`}</span>
+            <span style={{ marginRight: '10px' }}>{`Total de itens: ${checkHowManyItemsAreAlreadyLoaded()} - ${total}`}</span>
             {beforePageButton()}
             {nextPageButton()}
           </Grid>
@@ -116,6 +120,6 @@ function Filter(props) {
     </Box>
   )
 }
-const mapStateToProps = (state) => ({ categories: state.categories })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllCategories }, dispatch)
+const mapStateToProps = (state) => ({ categories: state.categories, items: state.items })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllCategories, fetchAllItems, selectCategory, selectOrder, selectPage }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Filter)

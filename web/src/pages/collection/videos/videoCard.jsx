@@ -6,9 +6,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import RateItem from '../../components/rateItem';
-import AddToCollection from '../../components/addItemToCollection'
-import SaveItem from '../../components/saveItem'
+import RateItem from '../../../components/rateItem';
+import AddToCollection from '../../../components/addItemToCollection'
+import SaveItem from '../../../components/saveItem'
 import VideoIcon from '@material-ui/icons/PlayArrow'
 import { Link } from 'react-router-dom'
 

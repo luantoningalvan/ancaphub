@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react'
-import Template from '../../template/template'
-import Categories from '../../components/categories/showElementCategories'
+import Template from '../../../template/template'
+import Categories from '../../../components/categories/showElementCategories'
 import ReactPlayer from 'react-player'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchVideo } from './videoActions'
+import { fetchItem } from '../itemActions'
 import { Typography, Box, Grid } from '@material-ui/core';
 
 function SingleVideo(props) {
   const { id } = props.match.params;
-  useEffect(() => props.fetchVideo(id), []);
+  useEffect(() => props.fetchItem(id), []);
 
-  const { title, author, categories, content, extraFields } = props.video.video;
+  const { title, author, categories, content, extraFields } = props.video.item;
 
   return (
     <Template>
-      {!props.video.loading && !isEmpty(props.video.video) && (
+      {!isEmpty(props.video.item) && props.video.item.type == "video" && (
         <>
           <Box mb={2}>
             <Typography variant="h4" component="h2">{title}</Typography>
@@ -31,7 +31,7 @@ function SingleVideo(props) {
                 url={extraFields.videoUrl}
               />
               <Box mt={2}>
-                <Typography variant="body" component="p">{content}</Typography>
+                <Typography variant="body1" component="p">{content}</Typography>
               </Box>
             </Grid>
           </Grid>
@@ -43,7 +43,7 @@ function SingleVideo(props) {
 }
 
 
-const mapStateToProps = (state) => ({ video: state.videos })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchVideo }, dispatch)
+const mapStateToProps = (state) => ({ video: state.items })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchItem }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleVideo)

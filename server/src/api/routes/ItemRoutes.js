@@ -58,6 +58,7 @@ router.get('/', (req, res, next) => {
         .then(items => {
           return res.status(200).json({
             items,
+            type,
             page: req.query.page || 1,
             total: itemCount,
             pageSize: pageSize

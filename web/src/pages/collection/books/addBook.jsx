@@ -1,5 +1,5 @@
 import React from 'react'
-import Template from '../../template/template'
+import Template from '../../../template/template'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,13 +14,13 @@ import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import MuiLink from '@material-ui/core/Link';
-import ChooseCategory from '../../components/categories/chooseCategory'
-import ImageUpload from '../../components/imageUpload'
+import ChooseCategory from '../../../components/categories/chooseCategory'
+import ImageUpload from '../../../components/imageUpload'
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBook } from './bookActions'
+import { addItem } from '../itemActions'
 import { Formik, Field, FieldArray, getIn, Form } from 'formik'
 
 function AddBook(props) {
@@ -64,7 +64,7 @@ function AddBook(props) {
         validationSchema={BookSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addBook(values);
+          props.addItem(values);
           actions.resetForm(initialFormValues)
         }}
 
@@ -236,6 +236,6 @@ function AddBook(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addBook }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ addItem }, dispatch)
 
 export default connect(null, mapDispatchToProps)(AddBook)
