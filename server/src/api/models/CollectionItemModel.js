@@ -27,7 +27,10 @@ const ItemSchema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   extraFields: Object,
   categories: [CategorySchema],
-  collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  rateCount: { type: Number, default: 0 },
+  rateValue: { type: Number, default: 0 },
+  rateAverage: { type: Number, default: 0 },
 })
 
 module.exports = mongoose.model('Item', ItemSchema);

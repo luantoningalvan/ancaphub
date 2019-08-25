@@ -16,6 +16,7 @@ server.use(cors(corsOptions))
 
 // Rotas
 const items = require('./api/routes/ItemRoutes')
+const rates = require('./api/routes/RateRoutes')
 const categories = require('./api/routes/CategoryRoutes')
 const users = require('./api/routes/UsersRoutes')
 const posts = require('./api/routes/PostsRoutes')
@@ -23,6 +24,7 @@ const upload = require('./api/routes/UploadRoutes')
 const auth = require('./api/routes/AuthRoutes')
 
 server.use('/api/items/', items)
+server.use('/api/rates/', rates)
 server.use('/api/categories/', categories)
 server.use('/api/users/', users)
 server.use('/api/posts/', posts)

@@ -3,6 +3,7 @@ import { showSnack } from '../../alerts/alertActions'
 import {
   FETCH_ALL_ITEMS,
   FETCH_ITEM,
+  FETCH_RATES,
   SELECT_ITEMS_CATEGORY,
   ADD_ITEM_SUCCESS,
   SELECT_ITEMS_ORDER,
@@ -14,7 +15,8 @@ import {
   GET_CONTRIBUTIONS_SUCCESS,
   GET_CONTRIBUTIONS_FAIL,
   GET_SAVED_SUCCESS,
-  GET_SAVED_FAIL
+  GET_SAVED_FAIL,
+  ADD_RATE_SUCCESS
 } from '../../utils/types'
 const BASE_URL = 'http://localhost:3000/api/items';
 
@@ -33,7 +35,7 @@ export function fetchAllItems(config) {
       .then((items) => {
         dispatch({ type: FETCH_ALL_ITEMS, payload: items.data });
       }).catch((error) => {
-        console.error('Erro ao obter a lista de livros: ', error);
+        console.error('Erro ao obter a lista de itens: ', error);
       });
   };
 }
@@ -44,11 +46,34 @@ export function fetchItem(id) {
       .then((item) => {
         dispatch({ type: FETCH_ITEM, payload: item.data });
       }).catch((error) => {
-        console.error('Erro ao obter dados do livro: ', error);
+        console.error('Erro ao obter dados do item: ', error);
       });
   };
 }
 
+export function fetchRates(item) {
+  return (dispatch) => {
+    axios.get(`/api/rates/${item}`)
+      .then((rates) => {
+        dispatch({ type: FETCH_RATES, payload: rates.data });
+      }).catch((error) => {
+        console.error('Erro ao obter avaliações do item: ', error);
+      });
+  };
+}
+
+export function addRate({ item, value, comment }) {
+  return (dispatch) => {
+    axios.post(`/api/rates`, { item, value, comment })
+      .then((rate) => {
+        console.log("teste")
+        dispatch({ type: ADD_RATE_SUCCESS, payload: rate.data });
+        dispatch(showSnack("Avaliação adicionado com sucesso"));
+      }).catch((error) => {
+        console.error('Erro ao avaliar item: ', error);
+      });
+  };
+}
 export function addItem(data, type) {
   return (dispatch) => {
     axios.post(`${BASE_URL}`, { ...data, type })
@@ -56,7 +81,7 @@ export function addItem(data, type) {
         dispatch({ type: ADD_ITEM_SUCCESS, payload: item.data });
         dispatch(showSnack("Artigo Adicionado com Sucesso"));
       }).catch((error) => {
-        console.error("Erro ao adicionar livro: ", error);
+        console.error("Erro ao adicionar item: ", error);
       })
   }
 }
