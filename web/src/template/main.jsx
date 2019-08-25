@@ -1,17 +1,18 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: 0,
+  },
+  padding: {
+    padding: theme.spacing(3),
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 export default function Main(props) {
   const classes = useStyles();
 
@@ -29,6 +31,7 @@ export default function Main(props) {
     <main
       className={clsx(classes.content, {
         [classes.contentShift]: props.open,
+        [classes.padding]: !props.noPadding,
       })}
     >
       {props.children}

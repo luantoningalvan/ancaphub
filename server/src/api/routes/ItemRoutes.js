@@ -76,7 +76,7 @@ router.get('/', (req, res, next) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await Item.findById(request.params.id).exec();
+    var result = await Item.findById(request.params.id).populate('user', 'name avatar _id');
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

@@ -5,32 +5,34 @@ import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'is-empty'
 
 const useStyles = makeStyles(theme => ({
-    chip: {
-      marginLeft: theme.spacing(0.5),
-    },
+  chip: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 function Categories(props) {
-    const classes = useStyles()
+  const classes = useStyles()
 
-    return (
-      <>
-      { !isEmpty(props.categories) ? (
+  return (
+    <>
+      {!isEmpty(props.categories) ? (
         <Box mb={2}>
-          <span>Categorias:</span>
-          { props.categories.map(cat => (
+          <span style={{ color: 'white' }}>Categorias:</span>
+          {props.categories.map(cat => (
             <Chip
               key={cat._id}
               label={cat.name}
               className={classes.chip}
+              variant="outlined"
+              color="secondary"
             />
-          )) }
+          ))}
         </Box>
       ) : (
-        <p>Não categorizado.</p>
-      )}
-      </>
-    )
+          <p style={{ color: 'white', marginBottom: '10px' }}>Não categorizado.</p>
+        )}
+    </>
+  )
 }
 
 export default Categories

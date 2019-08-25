@@ -34,7 +34,7 @@ export default function Template(props) {
       <CssBaseline />
       <SnackMessage />
       <Sidebar />
-      <Main open={open}>
+      <Main open={open} {...props} >
         {props.children}
       </Main>
     </ThemeProvider>

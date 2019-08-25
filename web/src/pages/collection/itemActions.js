@@ -20,8 +20,6 @@ export function fetchAllItems(config) {
   const filterOn = config.filterOn || '';
   const category = config.category || '';
 
-  console.log(type)
-
   return (dispatch) => {
     axios.get(`${BASE_URL}?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}${category && `&&category=${category}`}`)
       .then((items) => {

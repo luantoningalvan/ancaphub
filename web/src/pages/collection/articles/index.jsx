@@ -29,8 +29,8 @@ function ArticlesList(props) {
 
       <Grid container spacing={2}>
         {!isEmpty(articles.allItems.items) ? articles.allItems.items.map((article, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <ArticleCard article={article} user={props.user} key={index} />
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
+            <ArticleCard article={article} user={props.user} />
           </Grid>
         )) :
           (
