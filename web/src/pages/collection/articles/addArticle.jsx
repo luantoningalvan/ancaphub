@@ -45,7 +45,7 @@ function AddArticle(props) {
         validationSchema={ArticleSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values);
+          props.addItem(values, "article");
           actions.resetForm(initialFormValues)
         }}
 

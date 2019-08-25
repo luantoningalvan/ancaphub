@@ -64,7 +64,7 @@ function AddBook(props) {
         validationSchema={BookSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values);
+          props.addItem(values, "book");
           actions.resetForm(initialFormValues)
         }}
 

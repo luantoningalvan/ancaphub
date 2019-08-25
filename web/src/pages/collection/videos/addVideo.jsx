@@ -44,7 +44,7 @@ function AddVideo(props) {
         validationSchema={VideoSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values);
+          props.addItem(values, "video");
           actions.resetForm(initialFormValues)
         }}
 
