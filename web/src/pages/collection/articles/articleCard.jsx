@@ -5,7 +5,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import RateItem from '../../../components/rateItem';
 import AddToCollection from '../../../components/addItemToCollection'
 import SaveItem from '../../../components/saveItem'
 import ArticleIcon from '@material-ui/icons/Description';
@@ -50,7 +49,6 @@ export default function ArticleCard(props) {
       <CardActions>
         <AddToCollection item={_id} />
         <SaveItem item={_id} />
-        <RateItem item={_id} />
       </CardActions>
     </Card>
   );

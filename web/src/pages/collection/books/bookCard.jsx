@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import RateItem from '../../../components/rateItem';
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
@@ -65,7 +64,6 @@ export default function BookCard(props) {
         <div>
           <AddToCollection item={book._id} />
           <SaveItem item={book._id} />
-          <RateItem item={book._id} />
         </div>
         <IconButton size="small" color="primary" onClick={handleClick}>
           <DownloadIcon />
