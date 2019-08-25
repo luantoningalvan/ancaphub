@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import IconButton from '@material-ui/core/IconButton';
 import Categories from '../../../components/categories/showElementCategories'
+import Ratings from '../../../components/ratings'
 import isEmpty from 'is-empty'
 import loadImage from '../../../utils/loadImage'
 import { bindActionCreators } from 'redux'
@@ -37,7 +38,7 @@ function SingleBook(props) {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       width: "100%",
-      height: "200px",
+      height: "230px",
     },
     bannelOverlay: {
       width: '100%',
@@ -47,6 +48,10 @@ function SingleBook(props) {
     },
     title: {
       fontWeight: 'bold',
+      color: 'white'
+    },
+    author: {
+      fontWeight: 'light',
       color: 'white'
     }
   }));
@@ -102,11 +107,15 @@ function SingleBook(props) {
               <Grid item xs={9}>
                 <Box mb={2}>
                   <Categories categories={categories} />
-                  <Typography variant="h4" component="h2" className={classes.title}>{title} - {author}</Typography>
+                  <Typography variant="h4" component="h2" className={classes.title}>{title}</Typography>
+                  <Typography variant="h6" component="h3" className={classes.author}>{author}</Typography>
                 </Box>
                 <Typography variant="body1" style={{ paddingTop: '16px' }}>
                   {content}
                 </Typography>
+                <Box my={2}>
+                  <Ratings item={props.book.item} />
+                </Box>
               </Grid>
             </Grid>
           </Container>
