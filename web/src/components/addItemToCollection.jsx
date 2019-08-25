@@ -14,7 +14,7 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addItemToCollection } from '../auth/authActions'
+import { addItemToCollection } from '../pages/collection/itemActions'
 
 function AddItemToCollection(props) {
   const [open, setOpen] = React.useState(false);

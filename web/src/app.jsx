@@ -50,9 +50,9 @@ import SearchResults from './components/search/searchResults'
 import FindPeople from './components/search/findPeople'
 
 // # Usuário autenticado
-import AccountSetting from './auth/accountSettings'
-import SavedItems from './auth/savedItems'
-import ContributionsPanel from './auth/contributionsPanel'
+import AccountSetting from './pages/accountSettings'
+import SavedItems from './pages/savedItems'
+import ContributionsPanel from './pages/contributionsPanel'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)

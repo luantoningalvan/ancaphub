@@ -6,7 +6,15 @@ import {
   SELECT_ITEMS_CATEGORY,
   ADD_ITEM_SUCCESS,
   SELECT_ITEMS_ORDER,
-  SELECT_ITEMS_PAGE
+  SELECT_ITEMS_PAGE,
+  ADD_ITEM_TO_COLLECTION_SUCCESS,
+  ADD_ITEM_TO_COLLECTION_FAIL,
+  SAVE_ITEM_SUCCESS,
+  SAVE_ITEM_FAIL,
+  GET_CONTRIBUTIONS_SUCCESS,
+  GET_CONTRIBUTIONS_FAIL,
+  GET_SAVED_SUCCESS,
+  GET_SAVED_FAIL
 } from '../../utils/types'
 const BASE_URL = 'http://localhost:3000/api/items';
 
@@ -56,3 +64,64 @@ export function addItem(data, type) {
 export function selectCategory(category) { return { type: SELECT_ITEMS_CATEGORY, payload: category }; }
 export function selectOrder(order) { return { type: SELECT_ITEMS_ORDER, payload: order }; }
 export function selectPage(page) { return { type: SELECT_ITEMS_PAGE, payload: page }; }
+
+export const addItemToCollection = (item, post) => async dispatch => {
+  try {
+    const res = await axios.put('/api/users/addItemToCollection', { item, post })
+    dispatch({
+      type: ADD_ITEM_TO_COLLECTION_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_ITEM_TO_COLLECTION_FAIL
+    });
+  }
+}
+
+export const saveItem = item => async dispatch => {
+  try {
+    const res = await axios.put('/api/users/saveItem', { item })
+    dispatch({
+      type: SAVE_ITEM_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: SAVE_ITEM_FAIL
+    });
+  }
+}
+
+export function getContributions() {
+  return dispatch => {
+    axios.get('/api/items/auth/contributions')
+      .then(res => {
+        dispatch({
+          type: GET_CONTRIBUTIONS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: GET_CONTRIBUTIONS_FAIL
+        });
+      })
+  }
+}
+
+export const getSaved = id => dispatch => {
+  axios.get(`/api/items/auth/saved`)
+    .then(collection => {
+      dispatch({
+        type: GET_SAVED_SUCCESS,
+        payload: collection.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_SAVED_FAIL,
+        payload: err
+      });
+    });
+}

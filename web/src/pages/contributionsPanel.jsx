@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getContributions } from './authActions'
+import { getContributions } from './collection/itemActions'
 
 const useStyles = makeStyles(theme => ({
   pending: {

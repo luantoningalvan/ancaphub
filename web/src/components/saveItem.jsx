@@ -4,7 +4,7 @@ import SaveIcon from '@material-ui/icons/SaveAlt'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { saveItem } from '../auth/authActions'
+import { saveItem } from '../pages/collection/itemActions'
 
 function AddItemToCollection(props) {
   return (

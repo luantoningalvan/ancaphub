@@ -8,15 +8,7 @@ import {
   AUTH_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  LOGOUT,
-  ADD_ITEM_TO_COLLECTION_SUCCESS,
-  ADD_ITEM_TO_COLLECTION_FAIL,
-  SAVE_ITEM_SUCCESS,
-  SAVE_ITEM_FAIL,
-  GET_CONTRIBUTIONS_SUCCESS,
-  GET_CONTRIBUTIONS_FAIL,
-  GET_SAVED_SUCCESS,
-  GET_SAVED_FAIL
+  LOGOUT
 } from '../utils/types'
 
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
@@ -105,64 +97,3 @@ export const signIn = ({ email, password }) => async dispatch => {
 export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
-
-export const addItemToCollection = (item, post) => async dispatch => {
-  try {
-    const res = await axios.put('/api/users/addItemToCollection', { item, post })
-    dispatch({
-      type: ADD_ITEM_TO_COLLECTION_SUCCESS,
-      payload: res.data
-    });
-  } catch (error) {
-    dispatch({
-      type: ADD_ITEM_TO_COLLECTION_FAIL
-    });
-  }
-}
-
-export const saveItem = item => async dispatch => {
-  try {
-    const res = await axios.put('/api/users/saveItem', { item })
-    dispatch({
-      type: SAVE_ITEM_SUCCESS,
-      payload: res.data
-    });
-  } catch (error) {
-    dispatch({
-      type: SAVE_ITEM_FAIL
-    });
-  }
-}
-
-export function getContributions() {
-  return dispatch => {
-    axios.get('/api/items/auth/contributions')
-      .then(res => {
-        dispatch({
-          type: GET_CONTRIBUTIONS_SUCCESS,
-          payload: res.data
-        });
-      })
-      .catch(err => {
-        dispatch({
-          type: GET_CONTRIBUTIONS_FAIL
-        });
-      })
-  }
-}
-
-export const getSaved = id => dispatch => {
-  axios.get(`/api/items/auth/saved`)
-    .then(collection => {
-      dispatch({
-        type: GET_SAVED_SUCCESS,
-        payload: collection.data
-      });
-    })
-    .catch(err => {
-      dispatch({
-        type: GET_SAVED_FAIL,
-        payload: err
-      });
-    });
-}

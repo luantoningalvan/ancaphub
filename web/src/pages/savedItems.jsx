@@ -4,13 +4,13 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
-import BookCard from '../pages/collection/books/bookCard'
-import ArticleCard from '../pages/collection/articles/articleCard'
-import VideoCard from '../pages/collection/videos/videoCard'
+import BookCard from './collection/books/bookCard'
+import ArticleCard from './collection/articles/articleCard'
+import VideoCard from './collection/videos/videoCard'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getSaved } from './authActions'
+import { getSaved } from './collection/itemActions'
 
 const SavedItems = (props) => {
   useEffect(() => props.getSaved(), [])
