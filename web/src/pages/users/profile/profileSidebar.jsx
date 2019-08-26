@@ -1,10 +1,9 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
+import ProfilePicture from '../../../components/profilePicture'
 import Paper from '@material-ui/core/Paper'
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
-import loadImage from '../../../utils/loadImage'
 import EditProfile from './editProfile'
 import FollowButton from './followButton'
 import Box from '@material-ui/core/Box'
@@ -28,13 +27,7 @@ export default function ProfileSidebar(props) {
       <React.Fragment>
         <Box py={2} style={{ backgroundColor: "#f9a825" }}>
           <Box display="flex" alignItems="center" flexDirection="column" px={2} textAlign="center">
-            {
-              avatar && avatar != "" ? (
-                <Avatar src={`http://localhost:3000/public/images/uploads/${avatar}`} alt={name} style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
-              ) : (
-                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
-                )
-            }
+            <ProfilePicture avatar={avatar} width="120px" height="120px" />
             <Typography variant="h6">{name}</Typography>
             <Typography variant="body2">{bio}</Typography>
           </Box>

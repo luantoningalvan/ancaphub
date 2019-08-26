@@ -6,10 +6,9 @@ import { logoutUser } from './authActions'
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Avatar from '@material-ui/core/Avatar';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import loadImage from '../utils/loadImage'
+import ProfilePicture from '../components/profilePicture'
 
 const AdapterLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 const useStyles = makeStyles(theme => ({
@@ -41,13 +40,7 @@ function LoggedUserMenu(props) {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            {
-              props.user.avatar && props.user.avatar != "" ? (
-                <Avatar src={`http://localhost:3000/public/images/uploads/${props.user.avatar}`} alt={name} style={{ width: '40px', height: '40px' }} />
-              ) : (
-                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
-                )
-            }
+            <ProfilePicture avatar={props.user.avatar} width="40px" height="40px" />
           </IconButton>
           <Menu
             anchorEl={anchorEl}

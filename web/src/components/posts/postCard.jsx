@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -17,7 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { deletePost, updateLikes } from './postActions'
-import loadImage from '../../utils/loadImage'
+import ProfilePicture from '../profilePicture'
 import striptags from 'striptags';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -63,11 +62,7 @@ function ActivityCard(props) {
         <CardHeader
           avatar={
             <Link component={RouterLink} to={`/usuario/${user._id}`} underline='none' color="textPrimary">
-              {user.avatar && user.avatar != "" ? (
-                <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} alt={user.name} />
-              ) : (
-                  <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" />
-                )}
+              <ProfilePicture avatar={user.avatar} width="50px" height="50px" />
             </Link>
           }
           action={

@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid'
-import Avatar from '@material-ui/core/Avatar';
-import loadImage from '../../../utils/loadImage'
+import ProfilePicture from '../../../components/profilePicture'
 import axios from "axios";
 
 function ImageUpload({ field, form, ...props }) {
@@ -30,12 +29,7 @@ function ImageUpload({ field, form, ...props }) {
   return (
     <Grid container >
       <Grid item xs={3}>
-        {values.avatar != '' ? (
-          <Avatar src={`http://localhost:3000/public/images/uploads/${values.avatar}`} style={{ width: '100%', height: 'auto', marginBottom: "10px" }} />
-        ) : (
-            <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '120px', height: '120px', marginBottom: "10px" }} />
-          )}
-
+        <ProfilePicture avatar={values.avatar} width="120px" height="120px" />
       </Grid>
       <Grid item xs={9}>
         <input

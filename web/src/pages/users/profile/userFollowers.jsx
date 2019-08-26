@@ -3,9 +3,8 @@ import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import Avatar from '@material-ui/core/Avatar';
+import ProfilePicture from '../../../components/profilePicture'
 import MaterialLink from '@material-ui/core/Link';
-import loadImage from '../../../utils/loadImage'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,15 +27,10 @@ function UserFollowers(props) {
             <MaterialLink underline="none" component={AdapterLink} to={`/usuario/${user._id}`}>
               <Paper>
                 <Box display="flex" flexDirection="column" alignItems="center" py={2}>
-                  {user.avatar ? (
-                    <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} style={{ width: '70%', height: 'auto', marginBottom: "10px" }} />
-                  ) : (
-                      <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '70%', height: 'auto', marginBottom: "10px" }} />
-                    )}
+                  <ProfilePicture avatar={user.avatar} width="70%" height="auto" />
                   <Typography variant="subtitle2">
                     {user.name}
                   </Typography>
-
                 </Box>
               </Paper>
             </MaterialLink>

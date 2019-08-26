@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Template from '../../../template/template'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -15,13 +14,13 @@ import DownloadIcon from '@material-ui/icons/CloudDownload'
 import IconButton from '@material-ui/core/IconButton';
 import Categories from '../../../components/categories/showElementCategories'
 import Ratings from '../../../components/ratings'
+import Link from '@material-ui/core/Link';
+import ProfilePicture from '../../../components/profilePicture'
 import isEmpty from 'is-empty'
-import loadImage from '../../../utils/loadImage'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { fetchItem } from '../itemActions'
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 
 function SingleBook(props) {
   const { id } = props.match.params;
@@ -89,15 +88,7 @@ function SingleBook(props) {
                   <span>Enviado por</span>
                   <Link component={RouterLink} to={`/usuario/${user._id}`} underline='none' color="textPrimary">
                     <Box display='flex' alignItems='center' mt={1}>
-                      <div>
-                        {
-                          user.avatar && user.avatar != "" ? (
-                            <Avatar src={`http://localhost:3000/public/images/uploads/${user.avatar}`} alt={user.name} style={{ width: '40px', height: '40px' }} />
-                          ) : (
-                              <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
-                            )
-                        }
-                      </div>
+                      <ProfilePicture avatar={user.avatar} width="40px" height="40px" />
                       <span style={{ paddingLeft: '10px' }}>{user.name}</span>
                     </Box>
                   </Link>

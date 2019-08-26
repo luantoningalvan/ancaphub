@@ -11,10 +11,8 @@ import RateIcon from '@material-ui/icons/RateReview'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import Avatar from '@material-ui/core/Avatar';
+import ProfilePicture from '../components/profilePicture';
 import isEmpty from 'is-empty'
-import loadImage from '../utils/loadImage'
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchRates, addRate } from '../pages/collection/itemActions'
@@ -55,14 +53,7 @@ function Ratings(props) {
                   <Box p={1.5}>
                     <Grid container spacing={2}>
                       <Grid item>
-                        {
-                          rate.user.avatar && rate.user.avatar != "" ? (
-                            <Avatar src={`http://localhost:3000/public/images/uploads/${rate.user.avatar}`} alt={rate.user.name} style={{ width: '40px', height: '40px' }} />
-                          ) : (
-                              <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
-                            )
-                        }
-
+                        <ProfilePicture avatar={rate.user.avatar} width="40px" height="40px" />
                       </Grid>
                       <Grid item>
                         <Typography gutterBottom variant="subtitle2" style={{ fontWeight: 'bold' }}>{rate.user.name}</Typography>
@@ -96,14 +87,7 @@ function Ratings(props) {
                   <Box p={1.5}>
                     <Grid container spacing={2}>
                       <Grid item>
-                        {
-                          rate.user.avatar && rate.user.avatar != "" ? (
-                            <Avatar src={`http://localhost:3000/public/images/uploads/${rate.user.avatar}`} alt={rate.user.name} style={{ width: '40px', height: '40px' }} />
-                          ) : (
-                              <Avatar src={loadImage('defaultProfilePicture.png')} alt="Foto de perfil genérica" style={{ width: '40px', height: '40px' }} />
-                            )
-                        }
-
+                        <ProfilePicture avatar={rate.user.avatar} />
                       </Grid>
                       <Grid item>
                         <Typography gutterBottom variant="subtitle2" style={{ fontWeight: 'bold' }}>{rate.user.name}</Typography>
