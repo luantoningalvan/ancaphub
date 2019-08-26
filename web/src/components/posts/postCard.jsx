@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { deletePost, updateLikes } from './postActions'
 import loadImage from '../../utils/loadImage'
+import striptags from 'striptags';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
@@ -25,9 +26,17 @@ function ActivityCard(props) {
 
   const { _id, content, type, extraFields, user, likes = [], createdAt } = props.post
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const activities = {
     "status": null,
     "collection_item": "adicionou um item à sua coleção particular",
+  }
+
+  const types = {
+    "book": "livro",
+    "article": "artigo",
+    "video": "video",
+    "podcast": "podcas"
   }
 
   function handleClick(event) {
@@ -87,7 +96,7 @@ function ActivityCard(props) {
 
           {type == "collection_item" && (
             <Card>
-              <CardActionArea component={RouterLink} to={`/livros/livro/${extraFields._id}`}>
+              <CardActionArea component={RouterLink} to={`/${types[extraFields.type]}s/${types[extraFields.type]}/${extraFields._id}`}>
                 <CardMedia
                   component="img"
                   height="240"
@@ -98,7 +107,7 @@ function ActivityCard(props) {
                     {extraFields.title}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    {`${extraFields.description.substring(0, 240)}...`}
+                    {`${striptags(extraFields.description.substring(0, 240))}...`}
                   </Typography>
                 </CardContent>
               </CardActionArea>

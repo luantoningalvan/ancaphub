@@ -210,6 +210,7 @@ router.put("/addItemToCollection", auth, async (request, response) => {
             _id: item._id,
             title: item.title,
             cover: item.cover,
+            type: item.type,
             description: item.content
           }
         })

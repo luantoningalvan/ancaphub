@@ -5,7 +5,7 @@ const PostSchema = new Schema({
   content: String,
   type: {
     type: String,
-    default: "pending",
+    default: "status",
     lowercase: true,
     enum: ['status', 'collection_item']
   },
