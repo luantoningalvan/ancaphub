@@ -14,7 +14,7 @@ const { check, validationResult } = require('express-validator');
 // @access 	Public
 router.get("/", async (request, response) => {
   try {
-    var result = await User.find().exec();
+    var result = await User.find();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -26,7 +26,18 @@ router.get("/", async (request, response) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await User.findById(request.params.id, "_id name avatar bio birthday location site");
+    const user = await User.findById(request.params.id, "_id name avatar bio birthday location site following followers");
+    const result = {
+      _id: user._id,
+      name: user.name,
+      avatar: user.avatar,
+      bio: user.bio,
+      birthday: user.birthday,
+      location: user.location,
+      site: user.site,
+      followersCount: user.followers.length,
+      followingCount: user.following.length
+    }
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -39,6 +50,18 @@ router.get("/:id", async (request, response) => {
 router.get("/:id/followers", async (request, response) => {
   try {
     var result = await User.findById(request.params.id, "followers").populate("followers", "name avatar _id");
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+// @route 	GET api/users/:id/following
+// @desc 	  Retorna os usuário seguidos por um usuário
+// @access 	Public
+router.get("/:id/following", async (request, response) => {
+  try {
+    var result = await User.findById(request.params.id, "following").populate("following", "name avatar _id");
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

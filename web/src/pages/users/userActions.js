@@ -11,7 +11,9 @@ import {
   GET_USER_FOLLOWERS_SUCCESS,
   GET_USER_FOLLOWERS_FAIL,
   GET_USER_COLLECTION_SUCCESS,
-  GET_USER_COLLECTION_FAIL
+  GET_USER_COLLECTION_FAIL,
+  GET_USER_FOLLOWING_SUCCESS,
+  GET_USER_FOLLOWING_FAIL
 } from '../../utils/types'
 import { setAlerts, clearAlerts } from '../../alerts/alertActions'
 
@@ -58,6 +60,22 @@ export const getUserFollowers = id => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_USER_FOLLOWERS_FAIL,
+        payload: err
+      });
+    });
+}
+
+export const getUserFollowing = id => dispatch => {
+  axios.get(`/api/users/${id}/following`)
+    .then(user => {
+      dispatch({
+        type: GET_USER_FOLLOWING_SUCCESS,
+        payload: user.data.following
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_USER_FOLLOWING_FAIL,
         payload: err
       });
     });

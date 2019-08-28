@@ -99,8 +99,10 @@ export default function App() {
           <PrivateRoute path="/painel-de-contribuicoes" component={ContributionsPanel} />
 
           <Route exact path="/usuario/:id" component={Profile} />
-          <Route exact path="/usuario/:id/seguidores" component={Profile} />
-          <Route exact path="/usuario/:id/colecao" component={Profile} />
+          <Route exact path="/usuario/:id/followers" component={Profile} />
+          <Route exact path="/usuario/:id/following" component={Profile} />
+          <Route exact path="/usuario/:id/collection" component={Profile} />
+          <Route exact path="/usuario/:id/contributions" component={Profile} />
           <Route path="*" component={UnavailablePage} />
         </Switch>
       </Router>
