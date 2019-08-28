@@ -26,50 +26,52 @@ export default function ProfileSidebar(props) {
 
       <React.Fragment>
         <Box py={2} style={{ backgroundColor: "#f9a825" }}>
-          <Box display="flex" alignItems="center" flexDirection="column" px={2} textAlign="center">
-            <ProfilePicture avatar={avatar} width="120px" height="120px" />
+          <Box display="flex" alignItems="center" flexDirection="column" textAlign="center">
+            <ProfilePicture avatar={avatar} width="120px" height="120px" style={{ marginBottom: '10px' }} />
             <Typography variant="h6">{name}</Typography>
             <Typography variant="body2">{bio}</Typography>
           </Box>
-          <Box mt={1}>
-            <List dense>
-              {location && (
-                <ListItem>
-                  <ListItemIcon style={{ minWidth: '34px' }}>
-                    <LocationIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={location}
-                  />
-                </ListItem>
-              )}
+          {(location || site || birthday) && (
+            <Box mt={1}>
+              <List dense>
+                {location && (
+                  <ListItem>
+                    <ListItemIcon style={{ minWidth: '34px' }}>
+                      <LocationIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={location}
+                    />
+                  </ListItem>
+                )}
 
-              {site && (
-                <ListItem>
-                  <ListItemIcon style={{ minWidth: '34px' }}>
-                    <SiteIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    disableTypography
-                  >
-                    <MaterialLink target="_blank" href={site}>{site}</MaterialLink>
-                  </ListItemText>
-                </ListItem>
-              )}
+                {site && (
+                  <ListItem>
+                    <ListItemIcon style={{ minWidth: '34px' }}>
+                      <SiteIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                    >
+                      <MaterialLink target="_blank" href={site}>{site}</MaterialLink>
+                    </ListItemText>
+                  </ListItem>
+                )}
 
-              {birthday && (
-                <ListItem>
-                  <ListItemIcon style={{ minWidth: '34px' }}>
-                    <BirthDayIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={birthday.substring(0, 10)}
-                  />
-                </ListItem>
-              )}
+                {birthday && (
+                  <ListItem>
+                    <ListItemIcon style={{ minWidth: '34px' }}>
+                      <BirthDayIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={birthday.substring(0, 10)}
+                    />
+                  </ListItem>
+                )}
 
-            </List>
-          </Box>
+              </List>
+            </Box>
+          )}
           <Box mt={1} px={2}>
             {props.auth.isAuthenticated && (
               <React.Fragment>
