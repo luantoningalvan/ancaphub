@@ -33,7 +33,7 @@ function Profile(props) {
 
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
   const { _id, name, bio, site, birthday, location, avatar, followersCount, followingCount } = props.user.user || {}
-  const isUserLoggedProfile = props.auth.isAuthenticated && props.user.user._id && props.user.user._id == props.auth.user._id
+  const isUserLoggedProfile = props.auth.isAuthenticated && props.user.user && props.user.user._id == props.auth.user._id
 
   function showComponent() {
     if (!props.user.isLoading && !props.auth.loading) {

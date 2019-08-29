@@ -5,7 +5,8 @@ import {
   UPDATE_USER_SUCCESS,
   GET_USER_FOLLOWERS_SUCCESS,
   GET_USER_COLLECTION_SUCCESS,
-  GET_USER_FOLLOWING_SUCCESS
+  GET_USER_FOLLOWING_SUCCESS,
+  GET_USER_CONTRIBUTIONS_SUCCESS
 } from '../../utils/types'
 
 const initialState = {
@@ -54,6 +55,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: { ...state.user, personalCollection: payload.personalCollection }
+      }
+    case GET_USER_CONTRIBUTIONS_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, contributions: payload }
       }
     default:
       return state;

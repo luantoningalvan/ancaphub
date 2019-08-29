@@ -8,10 +8,10 @@ import VideoCard from '../../collection/videos/videoCard'
 import isEmpty from 'is-empty'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-//import { getUserContributions } from "../userActions"
+import { getUserContributions } from "../userActions"
 
 function UserContributions(props) {
-  //useEffect(() => props.getUserContributions(props.user._id), [props.user._id])
+  useEffect(() => props.getUserContributions(props.user._id), [props.user._id])
 
   return (
     <Grid container spacing={2}>
@@ -44,6 +44,6 @@ function UserContributions(props) {
 }
 
 const mapStateToProps = (state) => ({ contributions: state.users.user.contributions })
-//const mapDispatchToProps = (dispatch) => bindActionCreators({ getUserContributions }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getUserContributions }, dispatch)
 
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(UserContributions)
+export default connect(mapStateToProps, mapDispatchToProps)(UserContributions)

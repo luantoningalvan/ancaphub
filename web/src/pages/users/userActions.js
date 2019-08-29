@@ -13,7 +13,9 @@ import {
   GET_USER_COLLECTION_SUCCESS,
   GET_USER_COLLECTION_FAIL,
   GET_USER_FOLLOWING_SUCCESS,
-  GET_USER_FOLLOWING_FAIL
+  GET_USER_FOLLOWING_FAIL,
+  GET_USER_CONTRIBUTIONS_SUCCESS,
+  GET_USER_CONTRIBUTIONS_FAIL
 } from '../../utils/types'
 import { setAlerts, clearAlerts } from '../../alerts/alertActions'
 
@@ -92,6 +94,22 @@ export const getUserCollection = id => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_USER_COLLECTION_FAIL,
+        payload: err
+      });
+    });
+}
+
+export const getUserContributions = id => dispatch => {
+  axios.get(`/api/users/${id}/contributions`)
+    .then(contributions => {
+      dispatch({
+        type: GET_USER_CONTRIBUTIONS_SUCCESS,
+        payload: contributions.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_USER_CONTRIBUTIONS_FAIL,
         payload: err
       });
     });

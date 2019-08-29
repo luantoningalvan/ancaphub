@@ -68,12 +68,24 @@ router.get("/:id/following", async (request, response) => {
   }
 });
 
-// @route 	GET api/users/:id/followers
+// @route 	GET api/users/:id/collection
 // @desc 	  Retorna a coleção particular de um usuário pelo seu id
 // @access 	Public
 router.get("/:id/collection", async (request, response) => {
   try {
     var result = await User.findById(request.params.id, "personalCollection").populate("personalCollection");
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+// @route 	GET api/users/:id/contributions
+// @desc 	  Retorna as contriuiçõesde um usuário pelo seu id
+// @access 	Public
+router.get("/:id/contributions", async (request, response) => {
+  try {
+    var result = await Item.find({ user: request.params.id, status: 'published' });
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
