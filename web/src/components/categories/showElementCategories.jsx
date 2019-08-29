@@ -14,6 +14,7 @@ function Categories(props) {
               label={cat.name}
               variant="outlined"
               color="secondary"
+              style={{ marginRight: '8px' }}
             />
           ))}
         </Box>
