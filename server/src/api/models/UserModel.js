@@ -27,7 +27,8 @@ const UserSchema = new Schema({
   avatar: String,
   site: String,
   bio: String,
-  location: String
+  currentCity: String,
+  lastLocation: Object
 }, { timestamps: true })
 
 module.exports = mongoose.model('User', UserSchema);

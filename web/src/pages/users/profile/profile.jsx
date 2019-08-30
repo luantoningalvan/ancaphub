@@ -32,7 +32,7 @@ function Profile(props) {
   useEffect(() => props.getUser(props.match.params.id), [props.match.params.id]);
 
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-  const { _id, name, bio, site, birthday, location, avatar, followersCount, followingCount } = props.user.user || {}
+  const { _id, name, bio, site, birthday, currentCity, avatar, followersCount, followingCount } = props.user.user || {}
   const isUserLoggedProfile = props.auth.isAuthenticated && props.user.user && props.user.user._id == props.auth.user._id
 
   function showComponent() {
@@ -91,16 +91,16 @@ function Profile(props) {
                   </div>
                 </Box>
               </Box>
-              {(location || site || birthday) && (
+              {(currentCity || site || birthday) && (
                 <Box mt={2}>
                   <List disablePadding>
-                    {location && (
+                    {currentCity && (
                       <ListItem>
                         <ListItemIcon style={{ minWidth: '34px' }}>
                           <LocationIcon />
                         </ListItemIcon>
                         <ListItemText
-                          primary={location}
+                          primary={currentCity}
                         />
                       </ListItem>
                     )}
@@ -134,7 +134,7 @@ function Profile(props) {
                 {props.auth.isAuthenticated && (
                   <React.Fragment>
                     {isUserLoggedProfile ? (
-                      <EditProfile data={props.user} />
+                      <EditProfile data={props.user.user} />
                     ) : (
                         <FollowButton profile={props.user.user} />
                       )}

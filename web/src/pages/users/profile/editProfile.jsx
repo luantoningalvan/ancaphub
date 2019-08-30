@@ -95,7 +95,7 @@ function EditProfile(props) {
           Editar Perfil
         </DialogTitle>
         <Formik
-          initialValues={{ name: props.data.name, avatar: props.data.avatar || '', bio: props.data.bio || "", location: props.data.location || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
+          initialValues={{ name: props.data.name, avatar: props.data.avatar || '', bio: props.data.bio || "", currentCity: props.data.currentCity || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
           validationSchema={ProfileSchema}
           onSubmit={(values, actions) => {
             props.updateUser(values)
@@ -152,14 +152,14 @@ function EditProfile(props) {
                         type="text"
                         margin="normal"
                         fullWidth
-                        id="location"
-                        label="Localização"
-                        name="location"
-                        autoComplete="location"
-                        value={values.location}
+                        id="currentCity"
+                        label="Cidade Atual"
+                        name="currentCity"
+                        autoComplete="currentCity"
+                        value={values.currentCity}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.location && touched.location) && errors.location}
+                        helperText={(errors.currentCity && touched.currentCity) && errors.currentCity}
                       />
                     </Grid>
 

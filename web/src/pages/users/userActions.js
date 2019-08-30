@@ -115,14 +115,14 @@ export const getUserContributions = id => dispatch => {
     });
 }
 
-export const updateUser = ({ name, bio, site, location, birthday, avatar }) => async dispatch => {
+export const updateUser = ({ name, bio, site, currentCity, birthday, avatar }) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
 
-  const body = JSON.stringify({ name, bio, site, location, birthday, avatar })
+  const body = JSON.stringify({ name, bio, site, currentCity, birthday, avatar })
 
   try {
     const res = await axios.put(`/api/users/`, body, config)

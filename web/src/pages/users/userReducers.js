@@ -39,7 +39,7 @@ export default function (state = initialState, action) {
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        user: payload
+        user: { ...state.user, ...payload }
       }
     case GET_USER_FOLLOWERS_SUCCESS:
       return {

@@ -26,14 +26,14 @@ router.get("/", async (request, response) => {
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    const user = await User.findById(request.params.id, "_id name avatar bio birthday location site following followers");
+    const user = await User.findById(request.params.id, "_id name avatar bio birthday currentCity site following followers");
     const result = {
       _id: user._id,
       name: user.name,
       avatar: user.avatar,
       bio: user.bio,
       birthday: user.birthday,
-      location: user.location,
+      currentCity: user.currentCity,
       site: user.site,
       followersCount: user.followers.length,
       followingCount: user.following.length
@@ -176,10 +176,10 @@ router.put("/", auth, [
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { name, bio, site, location, birthday, avatar } = req.body
+  const { name, bio, site, currentCity, birthday, avatar } = req.body
 
   try {
-    var result = await User.findByIdAndUpdate(req.user.id, { name, bio, site, location, birthday, avatar }, { new: true })
+    var result = await User.findByIdAndUpdate(req.user.id, { name, bio, site, currentCity, birthday, avatar }, { new: true })
     res.send(result);
   } catch (error) {
     res.status(500).send(error);
