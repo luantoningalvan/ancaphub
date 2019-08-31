@@ -5,11 +5,12 @@ import Typography from '@material-ui/core/Typography'
 import ProfilePicture from '../../components/profilePicture'
 import MaterialLink from '@material-ui/core/Link';
 import FollowButton from './profile/followButton'
+import PinIcon from '@material-ui/icons/Room'
 import { Link } from 'react-router-dom'
 
 export default function UserCard(props) {
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-  console.log(props.user)
+
   return (
     <Paper>
       <Box p={2}>
@@ -19,6 +20,13 @@ export default function UserCard(props) {
             <Typography variant="subtitle1">
               {props.user.name}
             </Typography>
+
+            {props.user.distance && (
+              <Box display="flex" alignItems="center" style={{ color: '#e4c21e' }}>
+                <PinIcon />
+                <span>{props.user.distance}km</span>
+              </Box>
+            )}
           </Box>
         </MaterialLink>
         <FollowButton profile={props.user} />

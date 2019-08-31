@@ -10,7 +10,8 @@ import {
   ADD_ITEM_TO_COLLECTION_SUCCESS,
   SAVE_ITEM_SUCCESS,
   GET_CONTRIBUTIONS_SUCCESS,
-  GET_SAVED_SUCCESS
+  GET_SAVED_SUCCESS,
+  UPDATE_USER_SUCCESS
 } from '../utils/types'
 
 const initialState = {
@@ -55,6 +56,11 @@ export default function (state = initialState, action) {
         user: payload,
         isAuthenticated: true,
         loading: false
+      }
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, ...payload }
       }
     case FOLLOW_USER_SUCCESS:
       return {

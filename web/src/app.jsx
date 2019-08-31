@@ -93,7 +93,7 @@ export default function App() {
 
           <Route path="/campanhas" component={Campaigns} />
           <Route path="/search" component={SearchResults} />
-          <Route path="/find-people" component={FindPeople} />
+          <PrivateRoute path="/find-people" component={FindPeople} />
           <PrivateRoute path="/salvos" component={SavedItems} />
           <PrivateRoute path="/configuracoes" component={AccountSetting} />
           <PrivateRoute path="/painel-de-contribuicoes" component={ContributionsPanel} />

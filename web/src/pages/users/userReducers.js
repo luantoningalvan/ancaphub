@@ -6,7 +6,8 @@ import {
   GET_USER_FOLLOWERS_SUCCESS,
   GET_USER_COLLECTION_SUCCESS,
   GET_USER_FOLLOWING_SUCCESS,
-  GET_USER_CONTRIBUTIONS_SUCCESS
+  GET_USER_CONTRIBUTIONS_SUCCESS,
+  SEARCH_NEARBY_USERS
 } from '../../utils/types'
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action
   switch (type) {
+    case SEARCH_NEARBY_USERS:
     case GET_ALL_USERS_SUCCESS:
       return {
         ...state,

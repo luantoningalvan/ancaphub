@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const keys = require("../../config/keys")
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
+const haversine = require('haversine')
 const { check, validationResult } = require('express-validator');
 
 // @route 	GET api/users
@@ -20,6 +21,36 @@ router.get("/", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+router.get("/search/searchNearbyUsers", auth, async (req, res) => {
+  try {
+    const authUser = await User.findById(req.user.id)
+    const allUsers = await User.find({ geoLocation: true, _id: { $ne: authUser._id } })
+    const lastLocation = authUser.lastLocation
+    const radius = req.query.radius
+
+    let nearbyUsers = []
+
+    for (let index = 0; index < allUsers.length; index++) {
+      const distance = haversine(allUsers[index].lastLocation, lastLocation)
+
+      if (distance <= radius) {
+        const { _id, avatar, name } = allUsers[index]
+        nearbyUsers.push({
+          _id,
+          avatar,
+          name,
+          distance: parseFloat(distance).toFixed(2)
+        })
+      }
+
+    }
+
+    res.send(nearbyUsers)
+  } catch (error) {
+    res.status(500).send(error);
+  }
+})
 
 // @route 	GET api/users
 // @desc 	  Retorna um usuário pelo seu id
@@ -181,6 +212,19 @@ router.put("/", auth, [
   try {
     var result = await User.findByIdAndUpdate(req.user.id, { name, bio, site, currentCity, birthday, avatar }, { new: true })
     res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(`Erro: ${error}`)
+  }
+});
+
+// @route 	PUT api/users/setLastLocation
+// @desc 	  Registra a última localização do usuário
+// @access 	Private
+router.put('/setLastLocation', auth, async (req, res) => {
+  try {
+    var result = await User.findByIdAndUpdate(req.user.id, { lastLocation: { ...req.body }, geoLocation: true }, { new: true })
+    res.send({ lastLocation: result.lastLocation, geoLocation: result.geoLocation });
   } catch (error) {
     res.status(500).send(error);
     console.log(`Erro: ${error}`)
