@@ -5,8 +5,6 @@ import { loadUser } from "./auth/authActions";
 import setAuthToken from "./utils/setAuthToken";
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import promise from 'redux-promise'
-import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 import reducers from './rootReducer'
 import UnavailablePage from './unavailablePage'
@@ -55,7 +53,7 @@ import SavedItems from './pages/savedItems'
 import ContributionsPanel from './pages/contributionsPanel'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
+const store = applyMiddleware(thunk)(createStore)(reducers, devTools)
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
