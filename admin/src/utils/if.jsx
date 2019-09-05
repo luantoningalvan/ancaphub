@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 export default props => {
-    if (props.cond) {
-        return (
-            props.children
-        )
-    } else {
-        return null
-    }
-}
+  if (props.cond) {
+    return props.children;
+  } else {
+    return null;
+  }
+};

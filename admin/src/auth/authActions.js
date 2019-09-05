@@ -1,6 +1,6 @@
-import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
-import { setErrors, clearErrors } from '../errors/errorActions'
+import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
+import { setErrors, clearErrors } from '../errors/errorActions';
 
 // Login User
 export const signIn = ({ email, password }) => async dispatch => {
@@ -10,7 +10,7 @@ export const signIn = ({ email, password }) => async dispatch => {
     }
   };
 
-  const body = JSON.stringify({ email, password, level: "admin" });
+  const body = JSON.stringify({ email, password, level: 'admin' });
 
   try {
     const res = await axios.post('/api/auth', body, config);
@@ -19,13 +19,13 @@ export const signIn = ({ email, password }) => async dispatch => {
       type: 'LOGIN_SUCCESS',
       payload: res.data
     });
-    dispatch(clearErrors())
+    dispatch(clearErrors());
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.errors;
 
     if (errors) {
-      dispatch(setErrors(errors))
+      dispatch(setErrors(errors));
     }
 
     dispatch({
@@ -37,7 +37,7 @@ export const signIn = ({ email, password }) => async dispatch => {
 // Carrega usuário
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
-    setAuthToken(localStorage.token)
+    setAuthToken(localStorage.token);
   }
 
   try {
@@ -52,7 +52,7 @@ export const loadUser = () => async dispatch => {
       type: 'AUTH_ERROR'
     });
   }
-}
+};
 
 // Logout / Clear Profile
 export const logoutUser = () => dispatch => {

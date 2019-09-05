@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Template from '../template/template'
-import Hero from '../template/hero'
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -20,15 +18,15 @@ import Input from '@material-ui/core/Input';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import BookIcon from '@material-ui/icons/Book'
-import ArticleIcon from '@material-ui/icons/Description'
-import VideoIcon from '@material-ui/icons/PlayArrow'
+import BookIcon from '@material-ui/icons/Book';
+import ArticleIcon from '@material-ui/icons/Description';
+import VideoIcon from '@material-ui/icons/PlayArrow';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
-import CheckIcon from '@material-ui/icons/Check'
-import ClearIcon from '@material-ui/icons/Clear'
-import SearchIcon from '@material-ui/icons/Search'
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import SearchIcon from '@material-ui/icons/Search';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -37,14 +35,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import isEmpty from 'is-empty'
+import Template from '../../template/template';
+import Hero from '../../template/hero';
+import isEmpty from 'is-empty';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { fetchAllItems, deleteItem, approveItem } from './collectionActions'
-import { fetchAllCategories } from '../components/categories/categoriesAction'
-
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchAllItems, deleteItem, approveItem } from './collectionActions';
+import { fetchAllCategories } from '../../components/categories/categoriesAction';
 
 function AlertDialog() {
   const [open, setOpen] = React.useState(false);
@@ -59,7 +57,6 @@ function AlertDialog() {
 
   return (
     <div>
-
       <IconButton aria-label="Rejeitar" onClick={handleClickOpen}>
         <ClearIcon />
       </IconButton>
@@ -67,13 +64,14 @@ function AlertDialog() {
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -90,15 +88,19 @@ function AlertDialog() {
 }
 
 function Books(props) {
-  const { items, total } = props.items
-  const [clientCurrentPage, setCurrentPage] = useState(1)
+  const { items, total } = props.items;
+  const [clientCurrentPage, setCurrentPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [filter, setFilter] = useState({ type: "", category: "" });
-  const [status, changeStatus] = useState("published")
-  const [search, handleSearch] = useState("")
+  const [filter, setFilter] = useState({ type: '', category: '' });
+  const [status, changeStatus] = useState('published');
+  const [search, handleSearch] = useState('');
 
   useEffect(() => props.fetchAllCategories(), []);
-  useEffect(() => props.fetchAllItems(clientCurrentPage, filter, status), [clientCurrentPage, filter, status]);
+  useEffect(() => props.fetchAllItems(clientCurrentPage, filter, status), [
+    clientCurrentPage,
+    filter,
+    status
+  ]);
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -111,22 +113,29 @@ function Books(props) {
   function handleChange(event) {
     setFilter(oldValues => ({
       ...oldValues,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     }));
   }
 
   function confirmDeletion(item) {
-    const confirm = window.confirm(`Você realmente deseja excluir "${item.title}"?`)
+    const confirm = window.confirm(
+      `Você realmente deseja excluir "${item.title}"?`
+    );
 
     if (confirm) {
-      props.deleteItem(item._id)
+      props.deleteItem(item._id);
     }
   }
 
   return (
     <Template>
       <Hero title="Coleção">
-        <Button variant="outlined" color="primary" aria-controls="add-item-options" aria-haspopup="true" onClick={handleClick}>
+        <Button
+          variant="outlined"
+          color="primary"
+          aria-controls="add-item-options"
+          aria-haspopup="true"
+          onClick={handleClick}>
           <AddIcon style={{ marginRight: '5px' }} />
           Item
         </Button>
@@ -139,16 +148,21 @@ function Books(props) {
           onClose={handleClose}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'right',
+            horizontal: 'right'
           }}
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <MenuItem component={Link} to="/collection/book/add">Livro</MenuItem>
-          <MenuItem component={Link} to="/collection/article/add">Artigo</MenuItem>
-          <MenuItem component={Link} to="/collection/video/add">Vídeo</MenuItem>
+            horizontal: 'right'
+          }}>
+          <MenuItem component={Link} to="/collection/book/add">
+            Livro
+          </MenuItem>
+          <MenuItem component={Link} to="/collection/article/add">
+            Artigo
+          </MenuItem>
+          <MenuItem component={Link} to="/collection/video/add">
+            Vídeo
+          </MenuItem>
           <MenuItem onClick={handleClose}>Podcast</MenuItem>
         </Menu>
       </Hero>
@@ -164,9 +178,8 @@ function Books(props) {
                       value={filter.type}
                       onChange={handleChange}
                       inputProps={{
-                        name: 'type',
-                      }}
-                    >
+                        name: 'type'
+                      }}>
                       <MenuItem value="">Tudo</MenuItem>
                       <MenuItem value="article">Artigo</MenuItem>
                       <MenuItem value="book">Livro</MenuItem>
@@ -176,26 +189,28 @@ function Books(props) {
                   </FormControl>
                 </Grid>
                 <Grid item xs={3}>
-
                   <FormControl style={{ width: '100%' }}>
                     <InputLabel>Categoria</InputLabel>
                     <Select
                       value={filter.category}
                       onChange={handleChange}
                       inputProps={{
-                        name: 'category',
-                      }}
-                    >
-                      <MenuItem value="" key="no-category">Todos</MenuItem>
+                        name: 'category'
+                      }}>
+                      <MenuItem value="" key="no-category">
+                        Todos
+                      </MenuItem>
                       {props.categories.allCategories.map(category => (
-                        <MenuItem value={category._id} key={`category-${category._id}`}>{category.name}</MenuItem>
+                        <MenuItem
+                          value={category._id}
+                          key={`category-${category._id}`}>
+                          {category.name}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
-
                 </Grid>
-                <Grid item xs={3}>
-                </Grid>
+                <Grid item xs={3}></Grid>
                 <Grid item xs={3}>
                   <FormControl>
                     <InputLabel htmlFor="search-item">Buscar</InputLabel>
@@ -240,34 +255,33 @@ function Books(props) {
                     {items.map(item => (
                       <TableRow key={item._id}>
                         <TableCell align="left">
-                          {item.type == "book" && (
-                            <BookIcon />
-                          )}
-                          {item.type == "article" && (
-                            <ArticleIcon />
-                          )}
-                          {item.type == "video" && (
-                            <VideoIcon />
-                          )}
+                          {item.type == 'book' && <BookIcon />}
+                          {item.type == 'article' && <ArticleIcon />}
+                          {item.type == 'video' && <VideoIcon />}
                         </TableCell>
                         <TableCell align="left">{item.title}</TableCell>
                         <TableCell align="left">{item.author}</TableCell>
                         <TableCell align="right">
                           {item.status == 'published' && (
-                            <Link to={`/collection/${item.type}/edit/${item._id}`} >
+                            <Link
+                              to={`/collection/${item.type}/edit/${item._id}`}>
                               <IconButton aria-label="Editar">
                                 <EditIcon />
                               </IconButton>
                             </Link>
                           )}
                           {item.status == 'published' && (
-                            <IconButton aria-label="Delete" onClick={() => confirmDeletion(item)}>
+                            <IconButton
+                              aria-label="Delete"
+                              onClick={() => confirmDeletion(item)}>
                               <DeleteIcon />
                             </IconButton>
                           )}
                           {item.status == 'pending' && (
                             <>
-                              <IconButton aria-label="Aprovar" onClick={() => props.approveItem(item._id)}>
+                              <IconButton
+                                aria-label="Aprovar"
+                                onClick={() => props.approveItem(item._id)}>
                                 <CheckIcon />
                               </IconButton>
                               <AlertDialog />
@@ -285,27 +299,39 @@ function Books(props) {
                   rowsPerPage={20}
                   page={clientCurrentPage - 1}
                   backIconButtonProps={{
-                    'aria-label': 'Previous Page',
+                    'aria-label': 'Previous Page'
                   }}
                   nextIconButtonProps={{
-                    'aria-label': 'Next Page',
+                    'aria-label': 'Next Page'
                   }}
                   onChangePage={(e, page) => setCurrentPage(page + 1)}
-                  labelDisplayedRows={({ from, to, count }) => (`${from}-${to} de ${count}`)}
+                  labelDisplayedRows={({ from, to, count }) =>
+                    `${from}-${to} de ${count}`
+                  }
                 />
               </Box>
             ) : (
-                <Box p={2}>
-                  <Typography variant="body2">Nenhum item encontrado.</Typography>
-                </Box>
-              )}
+              <Box p={2}>
+                <Typography variant="body2">Nenhum item encontrado.</Typography>
+              </Box>
+            )}
           </Paper>
         </Box>
       </Container>
     </Template>
-  )
+  );
 }
 
-const mapStateToProps = (state) => ({ items: state.collection.allItems, categories: state.categories })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchAllItems, deleteItem, approveItem, fetchAllCategories }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(Books)
+const mapStateToProps = state => ({
+  items: state.collection.allItems,
+  categories: state.categories
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { fetchAllItems, deleteItem, approveItem, fetchAllCategories },
+    dispatch
+  );
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Books);

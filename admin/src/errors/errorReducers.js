@@ -1,9 +1,9 @@
 const initialState = {
   errors: null
-}
+};
 
-export default function (state = initialState, action) {
-  const { type, payload } = action
+export default function(state = initialState, action) {
+  const { type, payload } = action;
 
   switch (type) {
     case 'SET_ERRORS':

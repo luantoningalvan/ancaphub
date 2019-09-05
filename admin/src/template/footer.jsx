@@ -1,10 +1,10 @@
-import React from 'react'
-import Container from '../layout/container'
+import React from 'react';
+import Container from '../layout/container';
 
 export default props => (
-    <footer>
-        <Container>
-            <p>Rodape</p>
-        </Container>
-    </footer>
-)
+  <footer>
+    <Container>
+      <p>Rodape</p>
+    </Container>
+  </footer>
+);

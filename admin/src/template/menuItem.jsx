@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -10,7 +10,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles(theme => ({
   icon: {
     minWidth: '40px'
-  },
+  }
 }));
 
 export default props => {
@@ -19,24 +19,17 @@ export default props => {
     <Link
       component={RouterLink}
       to={props.link}
-      underline='none'
-      color="textPrimary"
-    >
-      <ListItem
-        button
-        selected={props.selected}
-      >
+      underline="none"
+      color="textPrimary">
+      <ListItem button selected={props.selected}>
         <ListItemIcon
           classes={{
             root: clsx(classes.icon)
-          }}
-        >
+          }}>
           {props.icon}
         </ListItemIcon>
-        <ListItemText
-          primary={props.label}
-        />
+        <ListItemText primary={props.label} />
       </ListItem>
     </Link>
-  )
-}
+  );
+};

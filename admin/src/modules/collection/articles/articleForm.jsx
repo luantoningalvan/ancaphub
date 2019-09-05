@@ -1,38 +1,39 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Formik, Field, Form } from 'formik'
-import { createItem, updateItem } from '../collectionActions'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Container from '@material-ui/core/Container';
+import ChooseCategory from '../../../components/categories/chooseCategory';
+import RichTextEditor from '../../../components/editor/RichTextEditor';
+import ImageUpload from '../../../components/imageUpload/imageUpload';
+import Hero from '../../../template/hero';
 import * as Yup from 'yup';
-import ChooseCategory from '../../components/categories/chooseCategory'
-import RichTextEditor from '../../components/editor/RichTextEditor'
-import ImageUpload from '../../components/imageUpload/imageUpload'
-import Container from '@material-ui/core/Container'
-import Hero from '../../template/hero'
-import IconButton from '@material-ui/core/IconButton'
+import { Link } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { createItem, updateItem } from '../collectionActions';
 
 function ArticleForm(props) {
   // Validação frontend do formulário
   const ArticleSchema = Yup.object().shape({
-    title: Yup.string()
-      .required('O campo título é obrigatório!'),
-    author: Yup.string()
-      .required('O campo autor é obrigatório!'),
-    content: Yup.string()
-      .required('O campo conteúdo é obrigatório!'),
+    title: Yup.string().required('O campo título é obrigatório!'),
+    author: Yup.string().required('O campo autor é obrigatório!'),
+    content: Yup.string().required('O campo conteúdo é obrigatório!')
+  });
 
-  })
-
-  const isNew = props.isNew
-  const initialFormValues = { title: '', author: '', content: '', cover: '', categories: [] }
+  const isNew = props.isNew;
+  const initialFormValues = {
+    title: '',
+    author: '',
+    content: '',
+    cover: '',
+    categories: []
+  };
 
   return (
     <Formik
@@ -42,24 +43,33 @@ function ArticleForm(props) {
       onSubmit={(values, actions) => {
         if (!values._id) {
           props.createItem(values, 'article');
-          actions.resetForm(initialFormValues)
+          actions.resetForm(initialFormValues);
         } else {
           return props.updateItem(values, 'article');
         }
       }}
-
-      render={(formikProps) => {
-        const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
+      render={formikProps => {
+        const {
+          values,
+          touched,
+          errors,
+          handleChange,
+          handleBlur,
+          setFieldValue
+        } = formikProps;
         return (
           <Form encType="multipart/form-data" autoComplete="off">
-            <Hero title={isNew ? "Adicionar Artigo" : `Editar ${props.articleData.title}`}>
-              <Link to={`/collection`} >
+            <Hero
+              title={
+                isNew ? 'Adicionar Artigo' : `Editar ${props.articleData.title}`
+              }>
+              <Link to={`/collection`}>
                 <IconButton style={{ marginRight: '10px' }}>
                   <CancelIcon />
                 </IconButton>
               </Link>
               <Button variant="contained" color="primary" type="submit">
-                {(isNew) ? "Adicionar" : "Atualizar"}
+                {isNew ? 'Adicionar' : 'Atualizar'}
               </Button>
             </Hero>
             <Box mt={3}>
@@ -78,7 +88,9 @@ function ArticleForm(props) {
                           value={values.title}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          helperText={(errors.title && touched.title) && errors.title}
+                          helperText={
+                            errors.title && touched.title && errors.title
+                          }
                         />
                       </Grid>
 
@@ -92,7 +104,9 @@ function ArticleForm(props) {
                           value={values.author}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          helperText={(errors.author && touched.author) && errors.author}
+                          helperText={
+                            errors.author && touched.author && errors.author
+                          }
                         />
                       </Grid>
 
@@ -127,12 +141,15 @@ function ArticleForm(props) {
               </Container>
             </Box>
           </Form>
-
-        )
+        );
       }}
     />
-  )
+  );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ createItem, updateItem }, dispatch)
-export default connect(null, mapDispatchToProps)(ArticleForm)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ createItem, updateItem }, dispatch);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ArticleForm);
