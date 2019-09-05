@@ -47,7 +47,7 @@ const PrettoSlider = withStyles({
 
 
 function FindPeople(props) {
-  const [radius, setRadius] = useState(100)
+  const [radius, setRadius] = useState(50)
 
   useEffect(() => {
     if (props.auth.user.geoLocation) {
