@@ -1,6 +1,6 @@
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = true
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const devMode = true;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -15,13 +15,13 @@ module.exports = {
     port: 8081,
     contentBase: './public',
     historyApiFallback: true,
-    headers: { "Access-Control-Allow-Origin": "http://localhost:3000" },
+    headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000' },
     proxy: {
       '/api/*': {
         target: 'http://localhost:3000',
         secure: false
       }
-    },
+    }
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
@@ -31,8 +31,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "style.css",
-    }),
+      filename: 'style.css'
+    })
   ],
   module: {
     rules: [
@@ -45,9 +45,9 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
           },
-          "css-loader"
+          'css-loader'
         ]
       },
       {
@@ -56,4 +56,4 @@ module.exports = {
       }
     ]
   }
-}
+};

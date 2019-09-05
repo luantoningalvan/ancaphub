@@ -1,59 +1,62 @@
-import React from 'react'
-import Template from '../../../template/template'
+import React from 'react';
+import Template from '../../../template/template';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button'
-import ChooseCategory from '../../../components/categories/chooseCategory'
-import RichTextEditor from '../../../components/editor/RichTextEditor'
-import ImageUpload from '../../../components/imageUpload'
+import Button from '@material-ui/core/Button';
+import ChooseCategory from '../../../components/categories/chooseCategory';
+import RichTextEditor from '../../../components/editor/RichTextEditor';
+import ImageUpload from '../../../components/imageUpload';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { addItem } from '../itemActions'
-import { Formik, Field, Form } from 'formik'
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addItem } from '../itemActions';
+import { Formik, Field, Form } from 'formik';
 
 function AddArticle(props) {
   // Validação frontend do formulário
   const ArticleSchema = Yup.object().shape({
-    title: Yup.string()
-      .required('O campo título é obrigatório!'),
-    author: Yup.string()
-      .required('O campo autor é obrigatório!'),
-    content: Yup.string()
-      .required('O campo conteúdo é obrigatório!'),
-
-  })
+    title: Yup.string().required('O campo título é obrigatório!'),
+    author: Yup.string().required('O campo autor é obrigatório!'),
+    content: Yup.string().required('O campo conteúdo é obrigatório!')
+  });
 
   const initialFormValues = {
     title: '',
     author: '',
     content: '',
     cover: '',
-    categories: [],
-  }
+    categories: []
+  };
 
   return (
     <Template>
       <Box mb={3}>
-        <Typography variant="h4" component="h2">Adicionar Artigo</Typography>
+        <Typography variant="h4" component="h2">
+          Adicionar Artigo
+        </Typography>
       </Box>
       <Formik
         initialValues={initialFormValues}
         validationSchema={ArticleSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values, "article");
-          actions.resetForm(initialFormValues)
+          props.addItem(values, 'article');
+          actions.resetForm(initialFormValues);
         }}
-
-        render={(formikProps) => {
-          const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
+        render={formikProps => {
+          const {
+            values,
+            touched,
+            errors,
+            handleChange,
+            handleBlur,
+            setFieldValue
+          } = formikProps;
           return (
             <Form encType="multipart/form-data" autoComplete="off">
-
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={9}>
                   <Grid container spacing={2}>
@@ -68,7 +71,9 @@ function AddArticle(props) {
                         value={values.title}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.title && touched.title) && errors.title}
+                        helperText={
+                          errors.title && touched.title && errors.title
+                        }
                       />
                     </Grid>
 
@@ -82,7 +87,9 @@ function AddArticle(props) {
                         value={values.author}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.author && touched.author) && errors.author}
+                        helperText={
+                          errors.author && touched.author && errors.author
+                        }
                       />
                     </Grid>
 
@@ -93,7 +100,11 @@ function AddArticle(props) {
                       <Button variant="contained" color="primary" type="submit">
                         Adicionar
                       </Button>
-                      <Button component={Link} to="/livros" color="inherit" style={{ marginLeft: "10px" }}>
+                      <Button
+                        component={Link}
+                        to="/livros"
+                        color="inherit"
+                        style={{ marginLeft: '10px' }}>
                         Cancelar
                       </Button>
                     </Grid>
@@ -105,7 +116,7 @@ function AddArticle(props) {
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Capa do Artigo
-                        </Typography>
+                      </Typography>
 
                       <Field component={ImageUpload} name="cover" />
                     </Grid>
@@ -113,7 +124,7 @@ function AddArticle(props) {
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Categorias
-                        </Typography>
+                      </Typography>
 
                       <Box my={2}>
                         <Field component={ChooseCategory} name="categories" />
@@ -123,14 +134,17 @@ function AddArticle(props) {
                 </Grid>
               </Grid>
             </Form>
-
-          )
+          );
         }}
       />
     </Template>
-  )
+  );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addItem }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addItem }, dispatch);
 
-export default connect(null, mapDispatchToProps)(AddArticle)
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddArticle);

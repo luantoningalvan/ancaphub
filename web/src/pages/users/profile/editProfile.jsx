@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -22,13 +21,13 @@ import { updateUser } from '../userActions';
 const DialogTitle = withStyles(theme => ({
   root: {
     margin: 0,
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   closeButton: {
     position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[500]
   }
 }))(props => {
   const { children, classes, onClose } = props;
@@ -36,7 +35,10 @@ const DialogTitle = withStyles(theme => ({
     <MuiDialogTitle disableTypography className={classes.root}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
+        <IconButton
+          aria-label="Close"
+          className={classes.closeButton}
+          onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -46,15 +48,15 @@ const DialogTitle = withStyles(theme => ({
 
 const DialogContent = withStyles(theme => ({
   root: {
-    padding: theme.spacing(2),
-  },
+    padding: theme.spacing(2)
+  }
 }))(MuiDialogContent);
 
 const DialogActions = withStyles(theme => ({
   root: {
     margin: 0,
-    padding: theme.spacing(1),
-  },
+    padding: theme.spacing(1)
+  }
 }))(MuiDialogActions);
 
 function EditProfile(props) {
@@ -72,12 +74,9 @@ function EditProfile(props) {
       .min(3, 'Nome muito curto!')
       .max(50, 'Nome muito longo!')
       .required('O campo nome é obrigatório!'),
-    bio: Yup.string()
-      .max(160, 'Sua bio deve ter máximo 160 caracteres.!'),
-    site: Yup.string()
-      .url('URL inválida!'),
-    birthday: Yup.date()
-      .max(new Date(), "Tu é viajante do tempo por acaso?")
+    bio: Yup.string().max(160, 'Sua bio deve ter máximo 160 caracteres.!'),
+    site: Yup.string().url('URL inválida!'),
+    birthday: Yup.date().max(new Date(), 'Tu é viajante do tempo por acaso?')
   });
 
   return (
@@ -89,26 +88,42 @@ function EditProfile(props) {
       <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+        open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Editar Perfil
         </DialogTitle>
         <Formik
-          initialValues={{ name: props.data.name, avatar: props.data.avatar || '', bio: props.data.bio || "", currentCity: props.data.currentCity || "", site: props.data.site || "", birthday: props.data.birthday || "" }}
+          initialValues={{
+            name: props.data.name,
+            avatar: props.data.avatar || '',
+            bio: props.data.bio || '',
+            currentCity: props.data.currentCity || '',
+            site: props.data.site || '',
+            birthday: props.data.birthday || ''
+          }}
           validationSchema={ProfileSchema}
           onSubmit={(values, actions) => {
-            props.updateUser(values)
+            props.updateUser(values);
           }}
           render={formProps => {
-            const { values, touched, errors, handleChange, handleBlur } = formProps;
+            const {
+              values,
+              touched,
+              errors,
+              handleChange,
+              handleBlur
+            } = formProps;
 
             return (
               <Form>
                 <DialogContent dividers>
                   <Grid container>
                     <Grid item xs={12}>
-                      <Field name="avatar" uploadImage={props.uploadImage} component={UpdateProfilePicture} />
+                      <Field
+                        name="avatar"
+                        uploadImage={props.uploadImage}
+                        component={UpdateProfilePicture}
+                      />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -124,7 +139,7 @@ function EditProfile(props) {
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.name && touched.name) && errors.name}
+                        helperText={errors.name && touched.name && errors.name}
                       />
                     </Grid>
 
@@ -142,7 +157,7 @@ function EditProfile(props) {
                         value={values.bio}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.bio && touched.bio) && errors.bio}
+                        helperText={errors.bio && touched.bio && errors.bio}
                       />
                     </Grid>
 
@@ -159,7 +174,11 @@ function EditProfile(props) {
                         value={values.currentCity}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.currentCity && touched.currentCity) && errors.currentCity}
+                        helperText={
+                          errors.currentCity &&
+                          touched.currentCity &&
+                          errors.currentCity
+                        }
                       />
                     </Grid>
 
@@ -176,12 +195,11 @@ function EditProfile(props) {
                         value={values.site}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.site && touched.site) && errors.site}
+                        helperText={errors.site && touched.site && errors.site}
                       />
                     </Grid>
 
                     <Grid item xs={12}>
-
                       <TextField
                         id="birthday"
                         variant="outlined"
@@ -191,31 +209,35 @@ function EditProfile(props) {
                         type="date"
                         name="birthday"
                         InputLabelProps={{
-                          shrink: true,
+                          shrink: true
                         }}
                         autoComplete="birthday"
                         defaultValue={values.birthday.substring(0, 10)}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.birthday && touched.birthday) && errors.birthday}
+                        helperText={
+                          errors.birthday && touched.birthday && errors.birthday
+                        }
                       />
                     </Grid>
                   </Grid>
-
                 </DialogContent>
                 <DialogActions>
                   <Button type="submit" color="primary">
                     Salvar
-            </Button>
+                  </Button>
                 </DialogActions>
               </Form>
-            )
-          }
-          }
+            );
+          }}
         />
       </Dialog>
     </div>
   );
 }
-const mapDispatchToProps = (dispatch) => bindActionCreators({ updateUser }, dispatch)
-export default connect(null, mapDispatchToProps)(EditProfile);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ updateUser }, dispatch);
+export default connect(
+  null,
+  mapDispatchToProps
+)(EditProfile);

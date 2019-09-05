@@ -1,6 +1,6 @@
-import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
-import { setAlerts, clearAlerts } from '../alerts/alertActions'
+import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
+import { setAlerts, clearAlerts } from '../alerts/alertActions';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -9,42 +9,46 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT
-} from '../utils/types'
+} from '../utils/types';
 
-export const signUp = ({ name, email, password, password2 }) => async dispatch => {
+export const signUp = ({
+  name,
+  email,
+  password,
+  password2
+}) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
-  }
+  };
 
-  const body = JSON.stringify({ name, email, password, password2 })
+  const body = JSON.stringify({ name, email, password, password2 });
 
   try {
-    const res = await axios.post('/api/users', body, config)
-    dispatch(clearAlerts())
+    const res = await axios.post('/api/users', body, config);
+    dispatch(clearAlerts());
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
-    })
+    });
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.errors;
 
     if (errors) {
-      dispatch(setAlerts(errors))
+      dispatch(setAlerts(errors));
     }
 
     dispatch({
       type: REGISTER_FAIL
     });
-
   }
 };
 
 // Carrega usuário
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {
-    setAuthToken(localStorage.token)
+    setAuthToken(localStorage.token);
   }
 
   try {
@@ -59,7 +63,7 @@ export const loadUser = () => async dispatch => {
       type: AUTH_ERROR
     });
   }
-}
+};
 
 // Login User
 export const signIn = ({ email, password }) => async dispatch => {
@@ -69,7 +73,7 @@ export const signIn = ({ email, password }) => async dispatch => {
     }
   };
 
-  const body = JSON.stringify({ email, password, level: "user" });
+  const body = JSON.stringify({ email, password, level: 'user' });
 
   try {
     const res = await axios.post('/api/auth', body, config);
@@ -81,10 +85,10 @@ export const signIn = ({ email, password }) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.errors;
 
     if (errors) {
-      dispatch(setAlerts(errors))
+      dispatch(setAlerts(errors));
     }
 
     dispatch({

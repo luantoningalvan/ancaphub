@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import Chip from '@material-ui/core/Chip'
-import Box from '@material-ui/core/Box'
-import isEmpty from 'is-empty'
+import React, { useEffect } from 'react';
+import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
+import isEmpty from 'is-empty';
 
 function Categories(props) {
   return (
@@ -19,10 +19,12 @@ function Categories(props) {
           ))}
         </Box>
       ) : (
-          <p style={{ color: 'white', marginBottom: '10px' }}>Não categorizado.</p>
-        )}
+        <p style={{ color: 'white', marginBottom: '10px' }}>
+          Não categorizado.
+        </p>
+      )}
     </>
-  )
+  );
 }
 
-export default Categories
+export default Categories;

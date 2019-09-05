@@ -1,13 +1,13 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container'
-import Template from '../../../template/template'
-import Categories from '../../../components/categories/showElementCategories'
-import ReactPlayer from 'react-player'
-import isEmpty from 'is-empty'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { fetchItem } from '../itemActions'
+import Container from '@material-ui/core/Container';
+import Template from '../../../template/template';
+import Categories from '../../../components/categories/showElementCategories';
+import ReactPlayer from 'react-player';
+import isEmpty from 'is-empty';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { fetchItem } from '../itemActions';
 import { Typography, Box, Grid } from '@material-ui/core';
 
 function SingleVideo(props) {
@@ -19,7 +19,7 @@ function SingleVideo(props) {
   const useStyles = makeStyles(theme => ({
     banner: {
       background: `#111111`,
-      width: "100%",
+      width: '100%',
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4)
     },
@@ -41,7 +41,7 @@ function SingleVideo(props) {
 
   return (
     <Template noPadding>
-      {!isEmpty(props.video.item) && props.video.item.type == "video" && (
+      {!isEmpty(props.video.item) && props.video.item.type == 'video' && (
         <Fragment>
           <Box className={classes.banner}>
             <Container>
@@ -51,25 +51,39 @@ function SingleVideo(props) {
               />
               <Box mt={4}>
                 <Categories categories={categories} />
-                <Typography variant="h4" component="h2" className={classes.title}>{title}</Typography>
-                <Typography variant="subtitle1" component="p" className={classes.author}>Participantes: {author}</Typography>
+                <Typography
+                  variant="h4"
+                  component="h2"
+                  className={classes.title}>
+                  {title}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  component="p"
+                  className={classes.author}>
+                  Participantes: {author}
+                </Typography>
               </Box>
             </Container>
           </Box>
           <Container>
             <Box my={2}>
-              <Typography variant="body1" component="p">{content}</Typography>
+              <Typography variant="body1" component="p">
+                {content}
+              </Typography>
             </Box>
           </Container>
         </Fragment>
       )}
     </Template>
-
-  )
+  );
 }
 
+const mapStateToProps = state => ({ video: state.items });
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchItem }, dispatch);
 
-const mapStateToProps = (state) => ({ video: state.items })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchItem }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(SingleVideo)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleVideo);

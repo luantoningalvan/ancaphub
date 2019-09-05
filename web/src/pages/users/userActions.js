@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   GET_ALL_USERS_SUCCESS,
   GET_ALL_USERS_FAIL,
@@ -16,11 +16,12 @@ import {
   GET_USER_FOLLOWING_FAIL,
   GET_USER_CONTRIBUTIONS_SUCCESS,
   GET_USER_CONTRIBUTIONS_FAIL
-} from '../../utils/types'
-import { setAlerts, clearAlerts } from '../../alerts/alertActions'
+} from '../../utils/types';
+import { setAlerts, clearAlerts } from '../../alerts/alertActions';
 
 export const getAllUsers = () => dispatch => {
-  axios.get(`/api/users`)
+  axios
+    .get(`/api/users`)
     .then(users => {
       dispatch({
         type: GET_ALL_USERS_SUCCESS,
@@ -33,10 +34,11 @@ export const getAllUsers = () => dispatch => {
         payload: err
       });
     });
-}
+};
 
 export const getUser = id => dispatch => {
-  axios.get(`/api/users/${id}`)
+  axios
+    .get(`/api/users/${id}`)
     .then(user => {
       dispatch({
         type: GET_USER_SUCCESS,
@@ -49,10 +51,11 @@ export const getUser = id => dispatch => {
         payload: err
       });
     });
-}
+};
 
 export const getUserFollowers = id => dispatch => {
-  axios.get(`/api/users/${id}/followers`)
+  axios
+    .get(`/api/users/${id}/followers`)
     .then(user => {
       dispatch({
         type: GET_USER_FOLLOWERS_SUCCESS,
@@ -65,10 +68,11 @@ export const getUserFollowers = id => dispatch => {
         payload: err
       });
     });
-}
+};
 
 export const getUserFollowing = id => dispatch => {
-  axios.get(`/api/users/${id}/following`)
+  axios
+    .get(`/api/users/${id}/following`)
     .then(user => {
       dispatch({
         type: GET_USER_FOLLOWING_SUCCESS,
@@ -81,10 +85,11 @@ export const getUserFollowing = id => dispatch => {
         payload: err
       });
     });
-}
+};
 
 export const getUserCollection = id => dispatch => {
-  axios.get(`/api/users/${id}/collection`)
+  axios
+    .get(`/api/users/${id}/collection`)
     .then(collection => {
       dispatch({
         type: GET_USER_COLLECTION_SUCCESS,
@@ -97,10 +102,11 @@ export const getUserCollection = id => dispatch => {
         payload: err
       });
     });
-}
+};
 
 export const getUserContributions = id => dispatch => {
-  axios.get(`/api/users/${id}/contributions`)
+  axios
+    .get(`/api/users/${id}/contributions`)
     .then(contributions => {
       dispatch({
         type: GET_USER_CONTRIBUTIONS_SUCCESS,
@@ -113,47 +119,61 @@ export const getUserContributions = id => dispatch => {
         payload: err
       });
     });
-}
+};
 
-export const updateUser = ({ name, bio, site, currentCity, birthday, avatar }) => async dispatch => {
+export const updateUser = ({
+  name,
+  bio,
+  site,
+  currentCity,
+  birthday,
+  avatar
+}) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
-  }
+  };
 
-  const body = JSON.stringify({ name, bio, site, currentCity, birthday, avatar })
+  const body = JSON.stringify({
+    name,
+    bio,
+    site,
+    currentCity,
+    birthday,
+    avatar
+  });
 
   try {
-    const res = await axios.put(`/api/users/`, body, config)
-    dispatch(clearAlerts())
+    const res = await axios.put(`/api/users/`, body, config);
+    dispatch(clearAlerts());
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: res.data
     });
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.errors;
 
     if (errors) {
-      dispatch(setAlerts(errors))
+      dispatch(setAlerts(errors));
     }
 
     dispatch({
       type: UPDATE_USER_FAIL
     });
   }
-}
+};
 
 export const followUser = user => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${user}/follow`)
+    const res = await axios.put(`/api/users/${user}/follow`);
     dispatch({
       type: FOLLOW_USER_SUCCESS,
       payload: res.data
-    })
+    });
   } catch (error) {
     dispatch({
       type: FOLLOW_USER_FAIL
     });
   }
-}
+};

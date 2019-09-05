@@ -1,16 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { logoutUser } from './authActions'
+import { logoutUser } from './authActions';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import ProfilePicture from '../components/profilePicture'
+import ProfilePicture from '../components/profilePicture';
 
-const AdapterLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
+const AdapterLink = React.forwardRef((props, ref) => (
+  <RouterLink innerRef={ref} {...props} />
+));
 const useStyles = makeStyles(theme => ({
   letterAvatar: {
     backgroundColor: theme.palette.secondary.main
@@ -23,11 +25,11 @@ function LoggedUserMenu(props) {
   const isMenuOpen = Boolean(anchorEl);
 
   function handleProfileMenuOpen(event) {
-    setAnchorEl(event.currentTarget)
+    setAnchorEl(event.currentTarget);
   }
 
   function handleMenuClose() {
-    setAnchorEl(null)
+    setAnchorEl(null);
   }
 
   return (
@@ -38,9 +40,12 @@ function LoggedUserMenu(props) {
             edge="end"
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <ProfilePicture avatar={props.user.avatar} width="40px" height="40px" />
+            color="inherit">
+            <ProfilePicture
+              avatar={props.user.avatar}
+              width="40px"
+              height="40px"
+            />
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -49,12 +54,28 @@ function LoggedUserMenu(props) {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMenuOpen}
             onClose={handleMenuClose}
-            getContentAnchorEl={null}
-          >
-            <Link component={AdapterLink} to={`/usuario/${props.user._id}`} underline="none"><MenuItem onClick={handleMenuClose}>Perfil</MenuItem></Link>
-            <Link component={AdapterLink} to={`/painel-de-contribuicoes`} underline="none"><MenuItem onClick={handleMenuClose}>Contribuições</MenuItem></Link>
-            <Link component={AdapterLink} to={`/salvos`} underline="none"><MenuItem onClick={handleMenuClose}>Salvos</MenuItem></Link>
-            <Link component={AdapterLink} to={`/configuracoes`} underline="none"><MenuItem onClick={handleMenuClose}>Configurações</MenuItem></Link>
+            getContentAnchorEl={null}>
+            <Link
+              component={AdapterLink}
+              to={`/usuario/${props.user._id}`}
+              underline="none">
+              <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+            </Link>
+            <Link
+              component={AdapterLink}
+              to={`/painel-de-contribuicoes`}
+              underline="none">
+              <MenuItem onClick={handleMenuClose}>Contribuições</MenuItem>
+            </Link>
+            <Link component={AdapterLink} to={`/salvos`} underline="none">
+              <MenuItem onClick={handleMenuClose}>Salvos</MenuItem>
+            </Link>
+            <Link
+              component={AdapterLink}
+              to={`/configuracoes`}
+              underline="none">
+              <MenuItem onClick={handleMenuClose}>Configurações</MenuItem>
+            </Link>
             <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
           </Menu>
         </React.Fragment>
@@ -63,7 +84,11 @@ function LoggedUserMenu(props) {
   );
 }
 
-const mapStateToProps = state => ({ user: state.auth.user })
-const mapDispatchToProps = dispatch => bindActionCreators({ logoutUser }, dispatch)
+const mapStateToProps = state => ({ user: state.auth.user });
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ logoutUser }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoggedUserMenu)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoggedUserMenu);

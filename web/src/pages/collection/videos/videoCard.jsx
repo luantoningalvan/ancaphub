@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -6,25 +6,27 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import AddToCollection from '../../../components/addItemToCollection'
-import SaveItem from '../../../components/saveItem'
-import VideoIcon from '@material-ui/icons/PlayArrow'
-import { Link } from 'react-router-dom'
+import AddToCollection from '../../../components/addItemToCollection';
+import SaveItem from '../../../components/saveItem';
+import VideoIcon from '@material-ui/icons/PlayArrow';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   media: {
-    height: 200,
+    height: 200
   },
   type: {
     margin: theme.spacing(1),
     borderRadius: '5px',
     color: 'white'
-  },
+  }
 }));
 
 export default function VideoCard(props) {
   const classes = useStyles();
-  const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+  const AdapterLink = React.forwardRef((props, ref) => (
+    <Link innerRef={ref} {...props} />
+  ));
   const { video } = props;
 
   return (
@@ -33,8 +35,7 @@ export default function VideoCard(props) {
         <CardMedia
           className={classes.media}
           image={video.cover}
-          title={`Capa do vídeo ${video.title}`}
-        >
+          title={`Capa do vídeo ${video.title}`}>
           <VideoIcon className={classes.type} />
         </CardMedia>
         <CardContent>
@@ -51,6 +52,5 @@ export default function VideoCard(props) {
         <SaveItem item={video._id} />
       </CardActions>
     </Card>
-
-  )
+  );
 }

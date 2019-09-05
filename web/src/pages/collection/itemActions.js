@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showSnack } from '../../alerts/alertActions'
+import { showSnack } from '../../alerts/alertActions';
 import {
   FETCH_ALL_ITEMS,
   FETCH_ITEM,
@@ -17,12 +17,12 @@ import {
   GET_SAVED_SUCCESS,
   GET_SAVED_FAIL,
   ADD_RATE_SUCCESS
-} from '../../utils/types'
+} from '../../utils/types';
 const BASE_URL = 'http://localhost:3000/api/items';
 
 // Obtém a lista de todos os artigos
 export function fetchAllItems(config) {
-  const type = config.type || "";
+  const type = config.type || '';
   const page = config.page || 1;
   const pageSize = config.pageSize || 12;
   const order = config.order || 'asc';
@@ -30,69 +30,92 @@ export function fetchAllItems(config) {
   const filterOn = config.filterOn || '';
   const category = config.category || '';
 
-  return (dispatch) => {
-    axios.get(`${BASE_URL}?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter && `&&filter=${filter}&&filterOn=${filterOn}`}${category && `&&category=${category}`}`)
-      .then((items) => {
+  return dispatch => {
+    axios
+      .get(
+        `${BASE_URL}?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter &&
+          `&&filter=${filter}&&filterOn=${filterOn}`}${category &&
+          `&&category=${category}`}`
+      )
+      .then(items => {
         dispatch({ type: FETCH_ALL_ITEMS, payload: items.data });
-      }).catch((error) => {
+      })
+      .catch(error => {
         console.error('Erro ao obter a lista de itens: ', error);
       });
   };
 }
 
 export function fetchItem(id) {
-  return (dispatch) => {
-    axios.get(`${BASE_URL}/${id}`)
-      .then((item) => {
+  return dispatch => {
+    axios
+      .get(`${BASE_URL}/${id}`)
+      .then(item => {
         dispatch({ type: FETCH_ITEM, payload: item.data });
-      }).catch((error) => {
+      })
+      .catch(error => {
         console.error('Erro ao obter dados do item: ', error);
       });
   };
 }
 
 export function fetchRates(item) {
-  return (dispatch) => {
-    axios.get(`/api/rates/${item}`)
-      .then((rates) => {
+  return dispatch => {
+    axios
+      .get(`/api/rates/${item}`)
+      .then(rates => {
         dispatch({ type: FETCH_RATES, payload: rates.data });
-      }).catch((error) => {
+      })
+      .catch(error => {
         console.error('Erro ao obter avaliações do item: ', error);
       });
   };
 }
 
 export function addRate({ item, value, comment }) {
-  return (dispatch) => {
-    axios.post(`/api/rates`, { item, value, comment })
-      .then((rate) => {
-        console.log("teste")
+  return dispatch => {
+    axios
+      .post(`/api/rates`, { item, value, comment })
+      .then(rate => {
+        console.log('teste');
         dispatch({ type: ADD_RATE_SUCCESS, payload: rate.data });
-        dispatch(showSnack("Avaliação adicionado com sucesso"));
-      }).catch((error) => {
+        dispatch(showSnack('Avaliação adicionado com sucesso'));
+      })
+      .catch(error => {
         console.error('Erro ao avaliar item: ', error);
       });
   };
 }
 export function addItem(data, type) {
-  return (dispatch) => {
-    axios.post(`${BASE_URL}`, { ...data, type })
-      .then((item) => {
+  return dispatch => {
+    axios
+      .post(`${BASE_URL}`, { ...data, type })
+      .then(item => {
         dispatch({ type: ADD_ITEM_SUCCESS, payload: item.data });
-        dispatch(showSnack("Artigo Adicionado com Sucesso"));
-      }).catch((error) => {
-        console.error("Erro ao adicionar item: ", error);
+        dispatch(showSnack('Artigo Adicionado com Sucesso'));
       })
-  }
+      .catch(error => {
+        console.error('Erro ao adicionar item: ', error);
+      });
+  };
 }
 
-export function selectCategory(category) { return { type: SELECT_ITEMS_CATEGORY, payload: category }; }
-export function selectOrder(order) { return { type: SELECT_ITEMS_ORDER, payload: order }; }
-export function selectPage(page) { return { type: SELECT_ITEMS_PAGE, payload: page }; }
+export function selectCategory(category) {
+  return { type: SELECT_ITEMS_CATEGORY, payload: category };
+}
+export function selectOrder(order) {
+  return { type: SELECT_ITEMS_ORDER, payload: order };
+}
+export function selectPage(page) {
+  return { type: SELECT_ITEMS_PAGE, payload: page };
+}
 
 export const addItemToCollection = (item, post) => async dispatch => {
   try {
-    const res = await axios.put('/api/users/addItemToCollection', { item, post })
+    const res = await axios.put('/api/users/addItemToCollection', {
+      item,
+      post
+    });
     dispatch({
       type: ADD_ITEM_TO_COLLECTION_SUCCESS,
       payload: res.data
@@ -102,11 +125,11 @@ export const addItemToCollection = (item, post) => async dispatch => {
       type: ADD_ITEM_TO_COLLECTION_FAIL
     });
   }
-}
+};
 
 export const saveItem = item => async dispatch => {
   try {
-    const res = await axios.put('/api/users/saveItem', { item })
+    const res = await axios.put('/api/users/saveItem', { item });
     dispatch({
       type: SAVE_ITEM_SUCCESS,
       payload: res.data
@@ -116,11 +139,12 @@ export const saveItem = item => async dispatch => {
       type: SAVE_ITEM_FAIL
     });
   }
-}
+};
 
 export function getContributions() {
   return dispatch => {
-    axios.get('/api/items/auth/contributions')
+    axios
+      .get('/api/items/auth/contributions')
       .then(res => {
         dispatch({
           type: GET_CONTRIBUTIONS_SUCCESS,
@@ -131,12 +155,13 @@ export function getContributions() {
         dispatch({
           type: GET_CONTRIBUTIONS_FAIL
         });
-      })
-  }
+      });
+  };
 }
 
 export const getSaved = id => dispatch => {
-  axios.get(`/api/items/auth/saved`)
+  axios
+    .get(`/api/items/auth/saved`)
     .then(collection => {
       dispatch({
         type: GET_SAVED_SUCCESS,
@@ -149,4 +174,4 @@ export const getSaved = id => dispatch => {
         payload: err
       });
     });
-}
+};

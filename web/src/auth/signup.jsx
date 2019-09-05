@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
@@ -7,19 +7,19 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import * as Yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
-import { Formik, Form } from 'formik'
-import { connect } from 'react-redux'
+import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signUp } from './authActions'
+import { signUp } from './authActions';
 
 const useStyles = makeStyles(theme => ({
   tab: {
     width: '100%',
-    paddingTop: "10px",
-    paddingBottom: "10px",
+    paddingTop: '10px',
+    paddingBottom: '10px'
   },
   button: {
-    marginTop: "10px"
+    marginTop: '10px'
   },
   errorMessage: {
     padding: '10px',
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignUpForm(props) {
-  const classes = useStyles()
+  const classes = useStyles();
   // Validação frontend do formulário
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -50,19 +50,18 @@ function SignUpForm(props) {
 
   return (
     <React.Fragment>
-      {(props.serverErrors.alerts != null) && (
+      {props.serverErrors.alerts != null &&
         props.serverErrors.alerts.msg.map((msg, index) => (
           <Box mb={1} key={index}>
             <p className={classes.errorMessage}>{msg.msg}</p>
           </Box>
-        ))
-      )}
+        ))}
 
       <Formik
         initialValues={{ name: '', email: '', password: '', password2: '' }}
         validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
-          props.signUp(values)
+          props.signUp(values);
         }}
         render={props => {
           const { values, touched, errors, handleChange, handleBlur } = props;
@@ -85,7 +84,7 @@ function SignUpForm(props) {
                     value={values.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.name && touched.name) && errors.name}
+                    helperText={errors.name && touched.name && errors.name}
                   />
                 </Grid>
 
@@ -104,7 +103,7 @@ function SignUpForm(props) {
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.email && touched.email) && errors.email}
+                    helperText={errors.email && touched.email && errors.email}
                   />
                 </Grid>
 
@@ -122,7 +121,9 @@ function SignUpForm(props) {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.password && touched.password) && errors.password}
+                    helperText={
+                      errors.password && touched.password && errors.password
+                    }
                   />
                 </Grid>
 
@@ -140,12 +141,16 @@ function SignUpForm(props) {
                     value={values.password2}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.password2 && touched.password2) && errors.password2}
+                    helperText={
+                      errors.password2 && touched.password2 && errors.password2
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                    control={
+                      <Checkbox value="allowExtraEmails" color="primary" />
+                    }
                     label="Eu quero receber notificações em meu e-mail."
                   />
                 </Grid>
@@ -155,21 +160,23 @@ function SignUpForm(props) {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    className={classes.button}
-                  >
+                    className={classes.button}>
                     Cadastrar
-                    </Button>
+                  </Button>
                 </Grid>
               </Grid>
             </Form>
-          )
+          );
         }}
       />
     </React.Fragment>
-  )
+  );
 }
 
-const mapStateToProps = state => ({ serverErrors: state.alerts })
-const mapDispatchToProps = dispatch => bindActionCreators({ signUp }, dispatch)
+const mapStateToProps = state => ({ serverErrors: state.alerts });
+const mapDispatchToProps = dispatch => bindActionCreators({ signUp }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUpForm);

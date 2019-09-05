@@ -1,28 +1,26 @@
-import React from 'react'
-import Template from '../../../template/template'
+import React from 'react';
+import Template from '../../../template/template';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button'
-import ReactPlayer from 'react-player'
-import ChooseCategory from '../../../components/categories/chooseCategory'
-import ImageUpload from '../../../components/imageUpload'
+import Button from '@material-ui/core/Button';
+import ReactPlayer from 'react-player';
+import ChooseCategory from '../../../components/categories/chooseCategory';
+import ImageUpload from '../../../components/imageUpload';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { addItem } from '../itemActions'
-import { Formik, Field, Form } from 'formik'
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addItem } from '../itemActions';
+import { Formik, Field, Form } from 'formik';
 
 function AddVideo(props) {
   // Validação frontend do formulário
   const VideoSchema = Yup.object().shape({
-    title: Yup.string()
-      .required('O campo título é obrigatório!'),
-    videoUrl: Yup.string()
-      .required('O campo vídeo é obrigatório!'),
-  })
+    title: Yup.string().required('O campo título é obrigatório!'),
+    videoUrl: Yup.string().required('O campo vídeo é obrigatório!')
+  });
 
   const initialFormValues = {
     title: '',
@@ -30,13 +28,15 @@ function AddVideo(props) {
     content: '',
     cover: '',
     videoUrl: '',
-    categories: [],
-  }
+    categories: []
+  };
 
   return (
     <Template>
       <Box mb={3}>
-        <Typography variant="h4" component="h2">Adicionar Vídeo</Typography>
+        <Typography variant="h4" component="h2">
+          Adicionar Vídeo
+        </Typography>
       </Box>
 
       <Formik
@@ -44,12 +44,17 @@ function AddVideo(props) {
         validationSchema={VideoSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values, "video");
-          actions.resetForm(initialFormValues)
+          props.addItem(values, 'video');
+          actions.resetForm(initialFormValues);
         }}
-
-        render={(formikProps) => {
-          const { values, touched, errors, handleChange, handleBlur } = formikProps;
+        render={formikProps => {
+          const {
+            values,
+            touched,
+            errors,
+            handleChange,
+            handleBlur
+          } = formikProps;
           return (
             <Form encType="multipart/form-data" autoComplete="off">
               <Grid container spacing={3}>
@@ -66,7 +71,9 @@ function AddVideo(props) {
                         value={values.title}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.title && touched.title) && errors.title}
+                        helperText={
+                          errors.title && touched.title && errors.title
+                        }
                       />
                     </Grid>
 
@@ -79,7 +86,9 @@ function AddVideo(props) {
                         value={values.author}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.author && touched.author) && errors.author}
+                        helperText={
+                          errors.author && touched.author && errors.author
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -93,7 +102,9 @@ function AddVideo(props) {
                         value={values.content}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.content && touched.content) && errors.content}
+                        helperText={
+                          errors.content && touched.content && errors.content
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -106,15 +117,15 @@ function AddVideo(props) {
                         value={values.videoUrl}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.videoUrl && touched.videoUrl) && errors.videoUrl}
+                        helperText={
+                          errors.videoUrl && touched.videoUrl && errors.videoUrl
+                        }
                       />
                     </Grid>
 
-                    {values.videoUrl != "" && (
+                    {values.videoUrl != '' && (
                       <Grid item xs={12}>
-                        <ReactPlayer
-                          url={values.videoUrl}
-                        />
+                        <ReactPlayer url={values.videoUrl} />
                       </Grid>
                     )}
 
@@ -122,7 +133,11 @@ function AddVideo(props) {
                       <Button variant="contained" color="primary" type="submit">
                         Adicionar
                       </Button>
-                      <Button component={Link} to="/videos" color="inherit" style={{ marginLeft: "10px" }}>
+                      <Button
+                        component={Link}
+                        to="/videos"
+                        color="inherit"
+                        style={{ marginLeft: '10px' }}>
                         Cancelar
                       </Button>
                     </Grid>
@@ -134,7 +149,7 @@ function AddVideo(props) {
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Capa do Video
-                        </Typography>
+                      </Typography>
 
                       <Field component={ImageUpload} name="cover" />
                     </Grid>
@@ -142,7 +157,7 @@ function AddVideo(props) {
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Categorias
-                        </Typography>
+                      </Typography>
 
                       <Box my={2}>
                         <Field component={ChooseCategory} name="categories" />
@@ -152,13 +167,17 @@ function AddVideo(props) {
                 </Grid>
               </Grid>
             </Form>
-          )
+          );
         }}
       />
     </Template>
-  )
+  );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addItem }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addItem }, dispatch);
 
-export default connect(null, mapDispatchToProps)(AddVideo)
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddVideo);

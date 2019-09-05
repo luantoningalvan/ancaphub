@@ -1,28 +1,39 @@
-import React from 'react'
-import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import ProfilePicture from '../../components/profilePicture'
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ProfilePicture from '../../components/profilePicture';
 import MaterialLink from '@material-ui/core/Link';
-import FollowButton from './profile/followButton'
-import PinIcon from '@material-ui/icons/Room'
-import { Link } from 'react-router-dom'
+import FollowButton from './profile/followButton';
+import PinIcon from '@material-ui/icons/Room';
+import { Link } from 'react-router-dom';
 
 export default function UserCard(props) {
-  const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+  const AdapterLink = React.forwardRef((props, ref) => (
+    <Link innerRef={ref} {...props} />
+  ));
 
   return (
     <Paper>
       <Box p={2}>
-        <MaterialLink underline="none" component={AdapterLink} to={`/usuario/${props.user._id}`}>
+        <MaterialLink
+          underline="none"
+          component={AdapterLink}
+          to={`/usuario/${props.user._id}`}>
           <Box display="flex" flexDirection="column" alignItems="center" mb={1}>
-            <ProfilePicture avatar={props.user.avatar} width="70%" height="auto" style={{ marginBottom: '8px' }} />
-            <Typography variant="subtitle1">
-              {props.user.name}
-            </Typography>
+            <ProfilePicture
+              avatar={props.user.avatar}
+              width="70%"
+              height="auto"
+              style={{ marginBottom: '8px' }}
+            />
+            <Typography variant="subtitle1">{props.user.name}</Typography>
 
             {props.user.distance && (
-              <Box display="flex" alignItems="center" style={{ color: '#e4c21e' }}>
+              <Box
+                display="flex"
+                alignItems="center"
+                style={{ color: '#e4c21e' }}>
                 <PinIcon />
                 <span>{props.user.distance}km</span>
               </Box>

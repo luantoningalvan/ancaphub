@@ -1,31 +1,29 @@
-import React from 'react'
+import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Sidebar from './sidebar'
-import Main from './main'
-import SnackMessage from '../components/snackMessage'
+import Sidebar from './sidebar';
+import Main from './main';
+import SnackMessage from '../components/snackMessage';
 
 /* CSS FILES */
-import '../assets/css/common.css'
+import '../assets/css/common.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 /* JS FILES */
-import '../assets/js/script.js'
+import '../assets/js/script.js';
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: [
-      'Montserrat'
-    ]
+    fontFamily: ['Montserrat']
   },
   palette: {
     primary: {
-      main: '#131313',
+      main: '#131313'
     },
     secondary: {
-      main: '#f9d525',
-    },
-  },
+      main: '#f9d525'
+    }
+  }
 });
 
 export default function Template(props) {
@@ -34,9 +32,9 @@ export default function Template(props) {
       <CssBaseline />
       <SnackMessage />
       <Sidebar />
-      <Main open={open} {...props} >
+      <Main open={open} {...props}>
         {props.children}
       </Main>
     </ThemeProvider>
-  )
+  );
 }

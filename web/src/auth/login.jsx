@@ -1,25 +1,25 @@
-import React from 'react'
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Formik, Form } from 'formik'
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
-import { signIn } from './authActions'
-import { connect } from 'react-redux'
+import { signIn } from './authActions';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   tab: {
     width: '100%',
-    paddingTop: "10px",
-    paddingBottom: "10px",
+    paddingTop: '10px',
+    paddingBottom: '10px'
   },
   button: {
-    marginTop: "10px"
+    marginTop: '10px'
   },
   errorMessage: {
     padding: '10px',
@@ -30,30 +30,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignInForm(props) {
-  const classes = useStyles()
+  const classes = useStyles();
   const SigninSchema = Yup.object().shape({
     email: Yup.string()
       .email('E-mail inválido')
       .required('O campo e-mail é obrigatório!'),
-    password: Yup.string()
-      .required('O campo senha é obrigatório!')
+    password: Yup.string().required('O campo senha é obrigatório!')
   });
-  console.log(props)
+  console.log(props);
   return (
     <React.Fragment>
-      {(props.serverErrors.alerts != null) && (
+      {props.serverErrors.alerts != null &&
         props.serverErrors.alerts.msg.map((msg, index) => (
           <Box mb={1} key={index}>
             <p className={classes.errorMessage}>{msg.msg}</p>
           </Box>
-        ))
-      )}
+        ))}
 
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={SigninSchema}
         onSubmit={(values, actions) => {
-          props.signIn(values)
+          props.signIn(values);
         }}
         render={props => {
           const { values, touched, errors, handleChange, handleBlur } = props;
@@ -76,7 +74,7 @@ function SignInForm(props) {
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.email && touched.email) && errors.email}
+                    helperText={errors.email && touched.email && errors.email}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -93,7 +91,9 @@ function SignInForm(props) {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={(errors.password && touched.password) && errors.password}
+                    helperText={
+                      errors.password && touched.password && errors.password
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -108,22 +108,26 @@ function SignInForm(props) {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    className={classes.button}
-                  >
+                    className={classes.button}>
                     Entrar
-                    </Button>
+                  </Button>
                 </Grid>
               </Grid>
             </Form>
-
-          )
+          );
         }}
       />
     </React.Fragment>
-  )
+  );
 }
 
-const mapStateToProps = (state) => ({ login: state.auth, serverErrors: state.alerts })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ signIn }, dispatch)
+const mapStateToProps = state => ({
+  login: state.auth,
+  serverErrors: state.alerts
+});
+const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignInForm);

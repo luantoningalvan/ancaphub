@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,22 +8,21 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
-    marginLeft: 0,
+    marginLeft: 0
   },
   padding: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
-    marginLeft: 240,
-  },
+    marginLeft: 240
+  }
 }));
-
 
 export default function Main(props) {
   const classes = useStyles();
@@ -32,10 +31,9 @@ export default function Main(props) {
     <main
       className={clsx(classes.content, {
         [classes.contentShift]: props.open,
-        [classes.padding]: !props.noPadding,
-      })}
-    >
+        [classes.padding]: !props.noPadding
+      })}>
       {props.children}
     </main>
-  )
+  );
 }

@@ -1,68 +1,68 @@
-import React, { useEffect } from 'react'
-import PrivateRoute from './PrivateRoute'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { loadUser } from "./auth/authActions";
-import setAuthToken from "./utils/setAuthToken";
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import reducers from './rootReducer'
-import UnavailablePage from './unavailablePage'
+import React, { useEffect } from 'react';
+import PrivateRoute from './PrivateRoute';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { loadUser } from './auth/authActions';
+import setAuthToken from './utils/setAuthToken';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducers from './rootReducer';
+import UnavailablePage from './unavailablePage';
 
 // Telas
 // # Página Inicial
-import Home from './pages/home'
+import Home from './pages/home';
 
 // # Livros
-import Books from './pages/collection/books'
-import SingleBook from './pages/collection/books/singleBook'
-import AddBook from './pages/collection/books/addBook'
+import Books from './pages/collection/books';
+import SingleBook from './pages/collection/books/singleBook';
+import AddBook from './pages/collection/books/addBook';
 
 // # Artigos
-import Articles from './pages/collection/articles'
-import SingleArticle from './pages/collection/articles/singleArticle'
-import AddArticle from './pages/collection/articles/addArticle'
+import Articles from './pages/collection/articles';
+import SingleArticle from './pages/collection/articles/singleArticle';
+import AddArticle from './pages/collection/articles/addArticle';
 
 // # Vídeos
-import Videos from './pages/collection/videos'
-import SingleVideo from './pages/collection/videos/singleVideo'
-import AddVideo from './pages/collection/videos/addVideo'
+import Videos from './pages/collection/videos';
+import SingleVideo from './pages/collection/videos/singleVideo';
+import AddVideo from './pages/collection/videos/addVideo';
 
 // # Podcasts
-import Podcasts from './pages/collection/podcasts'
+import Podcasts from './pages/collection/podcasts';
 
 // # Grupos
-import Groups from './pages/groups'
+import Groups from './pages/groups';
 
 // # Eventos
-import Events from './pages/events'
+import Events from './pages/events';
 
 // # Campanhas
-import Campaigns from './pages/campaigns'
+import Campaigns from './pages/campaigns';
 
 // # Usuários
-import Profile from './pages/users/profile/profile'
+import Profile from './pages/users/profile/profile';
 
 // # Busca
-import SearchResults from './components/search/searchResults'
-import FindPeople from './components/search/findPeople'
+import SearchResults from './components/search/searchResults';
+import FindPeople from './components/search/findPeople';
 
 // # Usuário autenticado
-import AccountSetting from './pages/accountSettings'
-import SavedItems from './pages/savedItems'
-import ContributionsPanel from './pages/contributionsPanel'
+import AccountSetting from './pages/accountSettings';
+import SavedItems from './pages/savedItems';
+import ContributionsPanel from './pages/contributionsPanel';
 
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-const store = applyMiddleware(thunk)(createStore)(reducers, devTools)
+const devTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const store = applyMiddleware(thunk)(createStore)(reducers, devTools);
 
 if (localStorage.token) {
-  setAuthToken(localStorage.token)
+  setAuthToken(localStorage.token);
 }
 
 export default function App() {
-
   useEffect(() => {
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
   }, []);
 
   return (
@@ -94,7 +94,10 @@ export default function App() {
           <PrivateRoute path="/find-people" component={FindPeople} />
           <PrivateRoute path="/salvos" component={SavedItems} />
           <PrivateRoute path="/configuracoes" component={AccountSetting} />
-          <PrivateRoute path="/painel-de-contribuicoes" component={ContributionsPanel} />
+          <PrivateRoute
+            path="/painel-de-contribuicoes"
+            component={ContributionsPanel}
+          />
 
           <Route exact path="/usuario/:id" component={Profile} />
           <Route exact path="/usuario/:id/followers" component={Profile} />
@@ -105,5 +108,5 @@ export default function App() {
         </Switch>
       </Router>
     </Provider>
-  )
+  );
 }

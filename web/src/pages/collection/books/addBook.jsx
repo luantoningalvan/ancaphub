@@ -1,10 +1,10 @@
-import React from 'react'
-import Template from '../../../template/template'
+import React from 'react';
+import Template from '../../../template/template';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,35 +14,30 @@ import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import MuiLink from '@material-ui/core/Link';
-import ChooseCategory from '../../../components/categories/chooseCategory'
-import ImageUpload from '../../../components/imageUpload'
+import ChooseCategory from '../../../components/categories/chooseCategory';
+import ImageUpload from '../../../components/imageUpload';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { addItem } from '../itemActions'
-import { Formik, Field, FieldArray, getIn, Form } from 'formik'
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addItem } from '../itemActions';
+import { Formik, Field, FieldArray, getIn, Form } from 'formik';
 
 function AddBook(props) {
   // Validação frontend do formulário
   const BookSchema = Yup.object().shape({
-    title: Yup.string()
-      .required('O campo título é obrigatório!'),
-    author: Yup.string()
-      .required('O campo autor é obrigatório!'),
+    title: Yup.string().required('O campo título é obrigatório!'),
+    author: Yup.string().required('O campo autor é obrigatório!'),
     downloadOptions: Yup.array()
       .of(
         Yup.object().shape({
-          type: Yup.string()
-            .required("O campo tipo é obrigatório!"),
-          file: Yup.string()
-            .required("O campo arquivo é obrigatório!")
+          type: Yup.string().required('O campo tipo é obrigatório!'),
+          file: Yup.string().required('O campo arquivo é obrigatório!')
         })
       )
       .ensure()
       .required('É necessário pelo menos uma opção de download!')
-
-  })
+  });
 
   const initialFormValues = {
     title: '',
@@ -50,13 +45,15 @@ function AddBook(props) {
     content: '',
     cover: '',
     downloadOptions: null,
-    categories: [],
-  }
+    categories: []
+  };
 
   return (
     <Template>
       <Box mb={3}>
-        <Typography variant="h4" component="h2">Adicionar Livro</Typography>
+        <Typography variant="h4" component="h2">
+          Adicionar Livro
+        </Typography>
       </Box>
 
       <Formik
@@ -64,12 +61,18 @@ function AddBook(props) {
         validationSchema={BookSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
-          props.addItem(values, "book");
-          actions.resetForm(initialFormValues)
+          props.addItem(values, 'book');
+          actions.resetForm(initialFormValues);
         }}
-
-        render={(formikProps) => {
-          const { values, touched, errors, handleChange, handleBlur, setFieldValue } = formikProps;
+        render={formikProps => {
+          const {
+            values,
+            touched,
+            errors,
+            handleChange,
+            handleBlur,
+            setFieldValue
+          } = formikProps;
           return (
             <Form>
               <Grid container spacing={3}>
@@ -85,7 +88,9 @@ function AddBook(props) {
                         value={values.title}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.title && touched.title) && errors.title}
+                        helperText={
+                          errors.title && touched.title && errors.title
+                        }
                       />
                     </Grid>
 
@@ -99,7 +104,9 @@ function AddBook(props) {
                         value={values.author}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.author && touched.author) && errors.author}
+                        helperText={
+                          errors.author && touched.author && errors.author
+                        }
                       />
                     </Grid>
 
@@ -113,10 +120,11 @@ function AddBook(props) {
                         value={values.content}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={(errors.content && touched.content) && errors.content}
+                        helperText={
+                          errors.content && touched.content && errors.content
+                        }
                       />
                     </Grid>
-
 
                     <Grid item xs={12}>
                       <Paper>
@@ -124,7 +132,7 @@ function AddBook(props) {
                           <Box mb={2}>
                             <Typography variant="h6">
                               Opções de Download
-                              </Typography>
+                            </Typography>
                           </Box>
 
                           <FieldArray
@@ -132,60 +140,122 @@ function AddBook(props) {
                             render={arrayHelpers => (
                               <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                  {values.downloadOptions != null && values.downloadOptions.map((download, index) => (
-                                    <div key={index}>
-                                      <Grid container spacing={2}>
-                                        <Grid item xs={5}>
-                                          <FormControl fullWidth>
-                                            <InputLabel htmlFor="age-simple">Formato</InputLabel>
-                                            <Select
-                                              value={values.downloadOptions[index].type || ""}
-                                              onChange={(event) => { setFieldValue(`downloadOptions.${index}.type`, event.target.value) }}
-                                              inputProps={{ name: `downloadOptions.${index}.type` }}
-                                            >
-                                              <MenuItem value={"pdf"}>PDF</MenuItem>
-                                              <MenuItem value={"mobi"}>MOBI</MenuItem>
-                                              <MenuItem value={"epub"}>EPUB</MenuItem>
-                                            </Select>
-                                            <FormHelperText>{(getIn(errors, `downloadOptions.${index}.type`) && getIn(touched, `downloadOptions.${index}.type`)) ? getIn(errors, `downloadOptions.${index}.type`) : ""}</FormHelperText>
-                                          </FormControl>
-                                        </Grid>
+                                  {values.downloadOptions != null &&
+                                    values.downloadOptions.map(
+                                      (download, index) => (
+                                        <div key={index}>
+                                          <Grid container spacing={2}>
+                                            <Grid item xs={5}>
+                                              <FormControl fullWidth>
+                                                <InputLabel htmlFor="age-simple">
+                                                  Formato
+                                                </InputLabel>
+                                                <Select
+                                                  value={
+                                                    values.downloadOptions[
+                                                      index
+                                                    ].type || ''
+                                                  }
+                                                  onChange={event => {
+                                                    setFieldValue(
+                                                      `downloadOptions.${index}.type`,
+                                                      event.target.value
+                                                    );
+                                                  }}
+                                                  inputProps={{
+                                                    name: `downloadOptions.${index}.type`
+                                                  }}>
+                                                  <MenuItem value={'pdf'}>
+                                                    PDF
+                                                  </MenuItem>
+                                                  <MenuItem value={'mobi'}>
+                                                    MOBI
+                                                  </MenuItem>
+                                                  <MenuItem value={'epub'}>
+                                                    EPUB
+                                                  </MenuItem>
+                                                </Select>
+                                                <FormHelperText>
+                                                  {getIn(
+                                                    errors,
+                                                    `downloadOptions.${index}.type`
+                                                  ) &&
+                                                  getIn(
+                                                    touched,
+                                                    `downloadOptions.${index}.type`
+                                                  )
+                                                    ? getIn(
+                                                        errors,
+                                                        `downloadOptions.${index}.type`
+                                                      )
+                                                    : ''}
+                                                </FormHelperText>
+                                              </FormControl>
+                                            </Grid>
 
-                                        <Grid item xs={5}>
-                                          <TextField
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="Link do Download"
-                                            name={`downloadOptions.${index}.file`}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            margin="dense"
-                                            value={values.downloadOptions[index].file}
-                                            helperText={(getIn(errors, `downloadOptions.${index}.file`) && getIn(touched, `downloadOptions.${index}.file`)) && getIn(errors, `downloadOptions.${index}.file`)}
-                                          />
-                                        </Grid>
+                                            <Grid item xs={5}>
+                                              <TextField
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Link do Download"
+                                                name={`downloadOptions.${index}.file`}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                margin="dense"
+                                                value={
+                                                  values.downloadOptions[index]
+                                                    .file
+                                                }
+                                                helperText={
+                                                  getIn(
+                                                    errors,
+                                                    `downloadOptions.${index}.file`
+                                                  ) &&
+                                                  getIn(
+                                                    touched,
+                                                    `downloadOptions.${index}.file`
+                                                  ) &&
+                                                  getIn(
+                                                    errors,
+                                                    `downloadOptions.${index}.file`
+                                                  )
+                                                }
+                                              />
+                                            </Grid>
 
-                                        <Grid item xs={2}>
-                                          <IconButton
-                                            onClick={() => arrayHelpers.remove(index)}
-                                            color="primary"
-                                            aria-label="Remover Opção de Download"
-                                          >
-                                            <RemoveIcon />
-                                          </IconButton>
-                                        </Grid>
-                                      </Grid>
-                                    </div>
-                                  ))}
+                                            <Grid item xs={2}>
+                                              <IconButton
+                                                onClick={() =>
+                                                  arrayHelpers.remove(index)
+                                                }
+                                                color="primary"
+                                                aria-label="Remover Opção de Download">
+                                                <RemoveIcon />
+                                              </IconButton>
+                                            </Grid>
+                                          </Grid>
+                                        </div>
+                                      )
+                                    )}
                                 </Grid>
                                 <Grid item xs={12}>
                                   <Typography>
-                                    <MuiLink href='javascript:;' onClick={() => arrayHelpers.push({ type: 'pdf', file: '' })}>
+                                    <MuiLink
+                                      href="javascript:;"
+                                      onClick={() =>
+                                        arrayHelpers.push({
+                                          type: 'pdf',
+                                          file: ''
+                                        })
+                                      }>
                                       + Adicionar
-                                      </MuiLink>
+                                    </MuiLink>
                                   </Typography>
-                                  {typeof errors.downloadOptions === 'string' ? <p>{errors.downloadOptions}</p> : null}
+                                  {typeof errors.downloadOptions ===
+                                  'string' ? (
+                                    <p>{errors.downloadOptions}</p>
+                                  ) : null}
                                 </Grid>
                               </Grid>
                             )}
@@ -197,7 +267,11 @@ function AddBook(props) {
                       <Button variant="contained" color="primary" type="submit">
                         Adicionar
                       </Button>
-                      <Button component={Link} to="/livros" color="inherit" style={{ marginLeft: "10px" }}>
+                      <Button
+                        component={Link}
+                        to="/livros"
+                        color="inherit"
+                        style={{ marginLeft: '10px' }}>
                         Cancelar
                       </Button>
                     </Grid>
@@ -206,11 +280,10 @@ function AddBook(props) {
 
                 <Grid item xs={12} sm={3}>
                   <Grid container spacing={2}>
-
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Capa do Artigo
-                        </Typography>
+                      </Typography>
 
                       <Field component={ImageUpload} name="cover" />
                     </Grid>
@@ -218,24 +291,27 @@ function AddBook(props) {
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
                         Categorias
-                        </Typography>
+                      </Typography>
 
                       <Box my={2}>
                         <Field component={ChooseCategory} name="categories" />
                       </Box>
                     </Grid>
-
                   </Grid>
                 </Grid>
               </Grid>
             </Form>
-          )
+          );
         }}
       />
     </Template>
-  )
+  );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addItem }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addItem }, dispatch);
 
-export default connect(null, mapDispatchToProps)(AddBook)
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddBook);

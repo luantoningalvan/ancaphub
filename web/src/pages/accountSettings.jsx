@@ -6,8 +6,12 @@ import Typography from '@material-ui/core/Typography';
 export default props => (
   <Template>
     <Box mb={3}>
-      <Typography variant="h4" component="h2">Configurações da Conta</Typography>
-      <Typography variant="body2" component="p">Esta página está em construção.</Typography>
+      <Typography variant="h4" component="h2">
+        Configurações da Conta
+      </Typography>
+      <Typography variant="body2" component="p">
+        Esta página está em construção.
+      </Typography>
     </Box>
   </Template>
-)
+);

@@ -1,17 +1,12 @@
-import {
-  SET_ALERTS,
-  CLEAR_ALERTS,
-  SHOW_SNACK
-} from '../utils/types'
-
+import { SET_ALERTS, CLEAR_ALERTS, SHOW_SNACK } from '../utils/types';
 
 const initialState = {
   alerts: null,
   snackAlerts: null
-}
+};
 
-export default function (state = initialState, action) {
-  const { type, payload } = action
+export default function(state = initialState, action) {
+  const { type, payload } = action;
 
   switch (type) {
     case SET_ALERTS:

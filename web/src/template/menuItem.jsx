@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,27 +12,31 @@ const useStyles = makeStyles(theme => ({
     minWidth: '40px'
   },
   selected: {
-    color: "#eeeb22"
+    color: '#eeeb22'
   },
   notSelected: {
-    color: "#757575"
+    color: '#757575'
   },
   nested: {
-    paddingLeft: theme.spacing(4),
-  },
+    paddingLeft: theme.spacing(4)
+  }
 }));
 
 export default props => {
   const classes = useStyles();
   return (
-    <Link component={RouterLink} to={props.link} underline='none' color="textPrimary">
-      <ListItem button className={(props.nested) ? classes.nested : null}>
+    <Link
+      component={RouterLink}
+      to={props.link}
+      underline="none"
+      color="textPrimary">
+      <ListItem button className={props.nested ? classes.nested : null}>
         <ListItemIcon
           classes={{
             root: clsx(classes.icon, {
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
-            }),
+              [classes.notSelected]: !props.selected
+            })
           }}>
           {props.icon}
         </ListItemIcon>
@@ -41,10 +45,11 @@ export default props => {
           classes={{
             root: clsx({
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
-            }),
-          }} />
+              [classes.notSelected]: !props.selected
+            })
+          }}
+        />
       </ListItem>
     </Link>
-  )
-}
+  );
+};

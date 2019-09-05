@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -15,15 +15,15 @@ export default props => {
       minWidth: '40px'
     },
     selected: {
-      color: "#eeeb22"
+      color: '#eeeb22'
     },
     notSelected: {
-      color: "#757575"
+      color: '#757575'
     }
   }));
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(true);
 
   function handleClick() {
     setOpen(!open);
@@ -32,8 +32,8 @@ export default props => {
   const children = React.Children.map(props.children, (child, index) => {
     return React.cloneElement(child, {
       nested: true
-    })
-  })
+    });
+  });
 
   return (
     <div>
@@ -42,8 +42,8 @@ export default props => {
           classes={{
             root: clsx(classes.icon, {
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
-            }),
+              [classes.notSelected]: !props.selected
+            })
           }}>
           {props.icon}
         </ListItemIcon>
@@ -52,23 +52,25 @@ export default props => {
           classes={{
             root: clsx({
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
-            }),
-          }} />
-        {open ?
+              [classes.notSelected]: !props.selected
+            })
+          }}
+        />
+        {open ? (
           <ExpandLess
             className={clsx(classes.icon, {
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
+              [classes.notSelected]: !props.selected
             })}
-          /> :
+          />
+        ) : (
           <ExpandMore
             className={clsx(classes.icon, {
               [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected,
+              [classes.notSelected]: !props.selected
             })}
           />
-        }
+        )}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -77,5 +79,5 @@ export default props => {
         </List>
       </Collapse>
     </div>
-  )
-}
+  );
+};

@@ -4,10 +4,11 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 export default props => (
-    <Template>
-        <Box mb={3}>
-            <Typography variant="h4" component="h2">Resultados para </Typography>
-
-        </Box>
-    </Template>
-)
+  <Template>
+    <Box mb={3}>
+      <Typography variant="h4" component="h2">
+        Resultados para{' '}
+      </Typography>
+    </Box>
+  </Template>
+);

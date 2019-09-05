@@ -9,10 +9,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import isEmpty from 'is-empty'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { getContributions } from './collection/itemActions'
+import isEmpty from 'is-empty';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getContributions } from './collection/itemActions';
 
 const useStyles = makeStyles(theme => ({
   pending: {
@@ -32,22 +32,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContributionsPanel = (props) => {
-  useEffect(() => props.getContributions(), [])
+const ContributionsPanel = props => {
+  useEffect(() => props.getContributions(), []);
 
   const classes = useStyles();
   const statusText = {
-    "pending": "Em análise",
-    "published": "Publicado",
-    "waiting": "Aguardando Alterações",
-    "rejected": "Rejeitado",
-    "draft": "Rascunho"
-  }
+    pending: 'Em análise',
+    published: 'Publicado',
+    waiting: 'Aguardando Alterações',
+    rejected: 'Rejeitado',
+    draft: 'Rascunho'
+  };
 
   return (
     <Template>
       <Box mb={3}>
-        <Typography variant="h4" component="h2">Painel de contribuições</Typography>
+        <Typography variant="h4" component="h2">
+          Painel de contribuições
+        </Typography>
       </Box>
 
       <Paper>
@@ -60,7 +62,6 @@ const ContributionsPanel = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-
               {props.contributions.map(contribution => (
                 <TableRow key={contribution._id}>
                   <TableCell component="th" scope="row">
@@ -68,7 +69,9 @@ const ContributionsPanel = (props) => {
                   </TableCell>
 
                   <TableCell component="th" scope="row" align="right">
-                    <span className={classes[contribution.status]}>{statusText[contribution.status]}</span>
+                    <span className={classes[contribution.status]}>
+                      {statusText[contribution.status]}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -76,12 +79,17 @@ const ContributionsPanel = (props) => {
           </Table>
         )}
       </Paper>
-
     </Template>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => ({ contributions: state.auth.user.contributions })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getContributions }, dispatch)
+const mapStateToProps = state => ({
+  contributions: state.auth.user.contributions
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getContributions }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContributionsPanel)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContributionsPanel);
