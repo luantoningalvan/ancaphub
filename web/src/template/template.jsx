@@ -4,13 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Sidebar from './sidebar';
 import Main from './main';
 import SnackMessage from '../components/snackMessage';
-
-/* CSS FILES */
-import '../assets/css/common.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-/* JS FILES */
-import '../assets/js/script.js';
 
 const theme = createMuiTheme({
   typography: {
