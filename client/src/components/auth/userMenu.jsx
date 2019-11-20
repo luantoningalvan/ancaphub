@@ -1,18 +1,27 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   IconButton,
   MenuItem,
   Menu,
-  Link,
   Dialog,
   DialogContent,
   Tabs,
   Tab,
   Avatar,
-  CircularProgress
+  CircularProgress,
+  Switch
 } from '@material-ui/core';
-import { Person as PersonIcon } from '@material-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles'
+import {
+  Person as PersonIcon,
+  Edit as ContributionsIcon,
+  Settings as SettingsIcon,
+  Bookmarks as SavedIcon,
+  ExitToApp as LogoutIcon,
+  BrightnessMedium as DarkModeIcon,
+
+} from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import ProfilePicture from '../profile/profilePicture';
 import Login from './login';
@@ -20,16 +29,18 @@ import Signup from './signup';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { logoutUser } from '../../actions/authActions';
+import { setDarkMode } from '../../actions/templateActions';
 
-const AdapterLink = React.forwardRef((props, ref) => (
-  <RouterLink innerRef={ref} {...props} />
-));
-
+const useStyles = makeStyles(theme => ({
+  menuIcon: {
+    margin: '5px 10px 5px 0px'
+  }
+}))
 
 function UserMenu(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
   const isMenuOpen = Boolean(anchorEl);
 
   function handleProfileMenuOpen(event) {
@@ -55,6 +66,8 @@ function UserMenu(props) {
   function handleChangeIndex(index) {
     setValue(index);
   }
+
+  const classes = useStyles()
 
   return (
     <Fragment>
@@ -89,31 +102,54 @@ function UserMenu(props) {
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                   open={isMenuOpen}
                   onClose={handleMenuClose}
-                  getContentAnchorEl={null}>
-                  <Link
-                    component={AdapterLink}
+                  getContentAnchorEl={null}
+                >
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    component={Link}
                     to={`/usuario/${props.auth.user._id}`}
-                    underline="none" color="textPrimary">
-                    <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-                  </Link>
-                  <Link
-                    component={AdapterLink}
-                    to={`/painel-de-contribuicoes`}
-                    underline="none" color="textPrimary">
-                    <MenuItem onClick={handleMenuClose}>Contribuições</MenuItem>
-                  </Link>
-                  <Link component={AdapterLink} to={`/salvos`} underline="none" color="textPrimary">
-                    <MenuItem onClick={handleMenuClose}>Salvos</MenuItem>
-                  </Link>
-                  <Link
-                    component={AdapterLink}
-                    to={`/configuracoes`}
-                    underline="none"
-                    color="textPrimary"
                   >
-                    <MenuItem onClick={handleMenuClose}>Configurações</MenuItem>
-                  </Link>
-                  <MenuItem onClick={() => props.logoutUser()}>Sair</MenuItem>
+                    <PersonIcon className={classes.menuIcon} />
+                    Perfil
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    component={Link}
+                    to={`/painel-de-contribuicoes`}
+                  >
+                    <ContributionsIcon className={classes.menuIcon} />
+                    Contribuições
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    component={Link}
+                    to={`/salvos`}
+                  >
+                    <SavedIcon className={classes.menuIcon} />
+                    Salvos
+                  </MenuItem>
+
+                  <MenuItem>
+                    <DarkModeIcon className={classes.menuIcon} />
+                    DarkMode
+                    <Switch
+                      checked={props.darkMode}
+                      onClick={() => props.setDarkMode()}
+                      edge="end"
+                    />
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    component={Link}
+                    to={`/configuracoes`}
+                  >
+                    <SettingsIcon className={classes.menuIcon} />
+                    Configurações
+                  </MenuItem>
+                  <MenuItem onClick={() => props.logoutUser()}>
+                    <LogoutIcon className={classes.menuIcon} />
+                    Sair
+                    </MenuItem>
                 </Menu>
               </Fragment>
             ) : (
@@ -155,9 +191,9 @@ function UserMenu(props) {
   );
 }
 
-const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = state => ({ auth: state.auth, darkMode: state.template.darkMode });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ logoutUser }, dispatch);
+  bindActionCreators({ logoutUser, setDarkMode }, dispatch);
 
 export default connect(
   mapStateToProps,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
 import { ThemeProvider } from '@material-ui/styles';
 import Sidebar from './sidebar';
 import Main from './main';
@@ -52,19 +53,9 @@ const themes = {
   }
 };
 
-export default function Template(props) {
-  const [theme, setTheme] = useState("light")
-
-  useEffect(() => {
-    const localTheme = localStorage.getItem('theme')
-
-    if (localTheme) {
-      setTheme(localTheme)
-    }
-  }, [])
-
+function Template(props) {
   return (
-    <ThemeProvider theme={createMuiTheme(themes[theme])}>
+    <ThemeProvider theme={createMuiTheme(themes[props.template.darkMode ? "dark" : "light"])}>
       <CssBaseline />
       <SnackMessage />
       <div style={{ display: 'flex', height: "100%" }}>
@@ -76,3 +67,5 @@ export default function Template(props) {
     </ThemeProvider>
   );
 }
+const mapStateToProps = state => ({ template: state.template })
+export default connect(mapStateToProps)(Template)

@@ -147,6 +147,7 @@ function ActivityCard(props) {
               <IconButton
                 aria-label="Curtir"
                 color="secondary"
+                size="small"
                 onClick={() => props.updateLikes(_id)}>
                 {!likes.includes(props.authUser.user._id) ? (
                   <NotFavoriteIcon />
@@ -156,8 +157,8 @@ function ActivityCard(props) {
 
               </IconButton>
               <Typography variant="body2" style={{ paddingLeft: '8px' }}>
-                {likes.length} curtida(s)
-            </Typography>
+                {likes.length}
+              </Typography>
             </>
           ) : (
               <Typography variant="body2" style={{ paddingLeft: '8px' }}>
