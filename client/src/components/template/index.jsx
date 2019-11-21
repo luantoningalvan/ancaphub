@@ -9,28 +9,29 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 const themes = {
   "light": {
+    shadows: ["none"],
     typography: {
-      fontFamily: ['Montserrat']
+      fontFamily: ['Ubuntu']
     },
     palette: {
       primary: {
-        main: '#131313',
+        main: '#fff',
         contrastText: '#333',
       },
       secondary: {
         main: '#fb0'
       },
       background: {
-        default: "#fafafa"
+        default: "#f4f4f4"
       },
       text: {
-        primary: "#333",
-      }
+        primary: "#000",
+      },
     }
   },
   "dark": {
     typography: {
-      fontFamily: ['Montserrat']
+      fontFamily: ['Ubuntu']
     },
     palette: {
       primary: {

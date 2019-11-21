@@ -14,9 +14,9 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles(theme => ({
   search: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.black, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.black, 0.25)
+    backgroundColor: fade(theme.palette.common.black, 0.10),
+    '&:focus': {
+      backgroundColor: 'transparent'
     },
     width: '100%',
     display: 'flex',
@@ -24,15 +24,15 @@ const useStyles = makeStyles(theme => ({
   },
   locationSearchIcon: {
     marginLeft: theme.spacing(0.5),
-    color: '#757575'
+    color: theme.palette.text.primary
   },
   searchIcon: {
     paddingRight: theme.spacing(1),
     height: '24px',
-    color: '#757575'
+    color: theme.palette.text.primary
   },
   inputRoot: {
-    color: '#757575'
+    color: theme.palette.text.primary
   },
   inputInput: {
     padding: theme.spacing(1)

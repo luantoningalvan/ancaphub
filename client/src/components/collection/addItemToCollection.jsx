@@ -66,17 +66,17 @@ function AddItemToCollection(props) {
                     checked={post}
                     onChange={e => setPost(e.target.checked)}
                     value="checkedB"
-                    color="primary"
+                    color="default"
                   />
                 }
                 label="Criar Publicação"
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={handleClose} color="default">
                 Cancelar
               </Button>
-              <Button onClick={() => add(props.item)} color="primary">
+              <Button onClick={() => add(props.item)} color="secondary" variant="outlined">
                 Adicionar
               </Button>
             </DialogActions>

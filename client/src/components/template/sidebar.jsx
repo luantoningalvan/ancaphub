@@ -18,7 +18,7 @@ import UserMenu from '../auth/userMenu';
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   title: {
-    color: 'white',
+    color: theme.palette.primary.contrastText,
     fontWeight: 'bold'
   },
   menuButton: {
@@ -55,7 +55,8 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   paper: {
-    background: theme.palette.primary.main
+    background: theme.palette.primary.main,
+    border: 'none'
   }
 }));
 

@@ -33,6 +33,7 @@ import Podcasts from './pages/collection/podcasts';
 
 // # Grupos
 import Groups from './pages/groups';
+import SingleGroup from './pages/groups/single';
 
 // # Eventos
 import Events from './pages/events';
@@ -81,7 +82,8 @@ export default function App() {
           <PrivateRoute path="/videos/contribuir" component={AddVideo} />
           <Route path="/videos/video/:id" component={SingleVideo} />
           <Route path="/podcasts" component={Podcasts} />
-          <Route path="/grupos" component={Groups} />
+          <Route exact path="/grupos" component={Groups} />
+          <Route path="/grupos/:id" component={SingleGroup} />
           <Route path="/eventos" component={Events} />
           <Route path="/campanhas" component={Campaigns} />
           <Route path="/search" component={SearchResults} />

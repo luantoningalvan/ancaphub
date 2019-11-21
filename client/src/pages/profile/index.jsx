@@ -18,6 +18,7 @@ import {
   Cake as BirthDayIcon
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Link } from 'react-router-dom';
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
@@ -37,9 +38,9 @@ import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   icon: {
-    color: theme.palette.primary.contrastText,
     minWidth: '34px'
-  }
+  },
+  infoIcon: { color: fade(theme.palette.common.black, 0.50) }
 }));
 
 function Profile(props) {
@@ -172,7 +173,7 @@ function Profile(props) {
                             {currentCity && (
                               <ListItem>
                                 <ListItemIcon classes={{ root: classes.icon }}>
-                                  <LocationIcon />
+                                  <LocationIcon className={classes.infoIcon} />
                                 </ListItemIcon>
                                 <ListItemText primary={currentCity} />
                               </ListItem>
@@ -181,7 +182,7 @@ function Profile(props) {
                             {site && (
                               <ListItem>
                                 <ListItemIcon classes={{ root: classes.icon }}>
-                                  <SiteIcon />
+                                  <SiteIcon className={classes.infoIcon} />
                                 </ListItemIcon>
                                 <ListItemText
                                   primary={
@@ -196,7 +197,7 @@ function Profile(props) {
                             {birthday && (
                               <ListItem>
                                 <ListItemIcon classes={{ root: classes.icon }}>
-                                  <BirthDayIcon />
+                                  <BirthDayIcon className={classes.infoIcon} />
                                 </ListItemIcon>
                                 <ListItemText primary={moment(birthday).locale('pt-br').format('L')} />
                               </ListItem>

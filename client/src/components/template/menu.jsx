@@ -2,16 +2,16 @@ import React from 'react';
 import { List, Badge } from '@material-ui/core';
 import MenuItem from './menuItem';
 import MenuTree from './menuTree';
-import HomeIcon from '@material-ui/icons/Home';
-import CollectionIcon from '@material-ui/icons/Folder';
-import BookIcon from '@material-ui/icons/Book';
-import ArticleIcon from '@material-ui/icons/Description';
-import VideoIcon from '@material-ui/icons/PlayArrow';
-import PodcastIcon from '@material-ui/icons/Mic';
-import GroupIcon from '@material-ui/icons/Group';
-import EventIcon from '@material-ui/icons/Event';
-import CampaignIcon from '@material-ui/icons/Share';
-import NotificationsIcon from '@material-ui/icons/Notifications'
+import HomeIcon from '@material-ui/icons/HomeOutlined';
+import CollectionIcon from '@material-ui/icons/FolderOutlined';
+import BookIcon from '@material-ui/icons/BookOutlined';
+import ArticleIcon from '@material-ui/icons/DescriptionOutlined';
+import VideoIcon from '@material-ui/icons/PlayArrowOutlined';
+import PodcastIcon from '@material-ui/icons/MicNone';
+import GroupIcon from '@material-ui/icons/GroupOutlined';
+import EventIcon from '@material-ui/icons/EventOutlined';
+import CampaignIcon from '@material-ui/icons/ShareOutlined';
+import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 

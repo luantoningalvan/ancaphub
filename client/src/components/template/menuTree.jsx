@@ -15,10 +15,10 @@ export default props => {
       minWidth: '40px'
     },
     selected: {
-      color: '#eeeb22'
+      color: theme.palette.secondary.main
     },
     notSelected: {
-      color: '#757575'
+      color: theme.palette.text.primary
     }
   }));
 
@@ -64,13 +64,13 @@ export default props => {
             })}
           />
         ) : (
-          <ExpandMore
-            className={clsx(classes.icon, {
-              [classes.selected]: props.selected,
-              [classes.notSelected]: !props.selected
-            })}
-          />
-        )}
+            <ExpandMore
+              className={clsx(classes.icon, {
+                [classes.selected]: props.selected,
+                [classes.notSelected]: !props.selected
+              })}
+            />
+          )}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
