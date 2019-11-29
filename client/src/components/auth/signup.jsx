@@ -71,11 +71,11 @@ function SignUpForm(props) {
 
           return (
             <Form className={classes.tab}>
-              <Grid container spacing={2}>
+              <Grid container spacing={1} >
                 <Grid item xs={12}>
                   <TextField
                   color="secondary"
-                    autoFocus
+                    
                     variant="outlined"
                     type="text"
                     margin="none"
@@ -95,7 +95,7 @@ function SignUpForm(props) {
                 <Grid item xs={12}>
                   <TextField
                   color="secondary"
-                    autoFocus
+                    
                     variant="outlined"
                     type="email"
                     margin="none"

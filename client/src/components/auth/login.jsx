@@ -65,7 +65,6 @@ function SignInForm(props) {
                 <Grid item xs={12}>
                   <TextField
                   color="secondary"
-                    autoFocus
                     variant="outlined"
                     type="email"
                     margin="normal"

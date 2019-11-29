@@ -1,14 +1,40 @@
 import React, { Fragment, useState } from 'react'
 import { Box, Grid, Typography, Paper, Tabs, Tab } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views';
 import Login from '../../components/auth/login';
 import Signup from '../../components/auth/signup';
 import Template from '../../components/template'
+import Title from '../../components/template/titleComponent'
+import {
+  FolderOutlined as CollectionIcon,
+  GroupOutlined as GroupIcon,
+  EventOutlined as EventIcon,
+  LocationSearching as LocationSearchIcon
+} from '@material-ui/icons';
+
+const useStyles = makeStyles({
+  features: {
+    margin: 0,
+    padding: 0
+  },
+  feature: {
+    listStyle: 'none',
+    fontSize: 21,
+    padding: '5px 0px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  featureIcon: {
+    marginRight: 10,
+  }
+})
 
 const Home = props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState(0);
-
+  const classes = useStyles()
+  console.log(value)
   function handleChange(event, newValue) {
     setValue(newValue);
   }
@@ -19,32 +45,38 @@ const Home = props => {
 
   return (
     <Template>
-    <Grid container>
-      <Grid item xs={12} md={6}>
-        <Box textAlign="center" my={3}>
-        <Typography variant="h4" gutterBottom>Bem vindo à versão de testes do AncapHub</Typography>
-        <Typography variant="body2">Faça um cadastro e aproveite!</Typography>
-        </Box>
+      <Title title="AncapHub - HUB de conteúdo Libertário" />
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <Box textAlign="left" pr={5} pt={5}>
+            <Typography variant="h3" gutterBottom style={{ fontWeight: 'bold' }}>Bem vindo à versão de testes do AncapHub!</Typography>
+            <ul className={classes.features}>
+              <li className={classes.feature}><CollectionIcon className={classes.featureIcon} /><span>Tenha à sua disposição milhares de materiais para estudo.</span></li>
+              <li className={classes.feature}><LocationSearchIcon className={classes.featureIcon} /><span>Conheça libertários que morem perto de você.</span></li>
+              <li className={classes.feature}><GroupIcon className={classes.featureIcon} /><span>Crie e participe de grupos de estudo.</span></li>
+              <li className={classes.feature}><EventIcon className={classes.featureIcon} /><span>Confira eventos libertários que irão rolar.</span></li>
+            </ul>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box p={3}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="secondary"
+              textColor="textSecondary"
+              variant="fullWidth">
+              <Tab label="Cadastro" id="signup-tab" aria-controls="full-width-tabpanel-signup" />
+              <Tab label="Entrar" id="signin-tab" aria-controls="full-width-tabpanel-signin" />
+            </Tabs>
+            <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+              <Signup id="full-width-tabpanel-signup" aria-labelledby="signup-tab" />
+              <Login id="full-width-tabpanel-signin" aria-labelledby="signin-tab" />
+            </SwipeableViews>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Box p={3}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="textSecondary"
-          variant="fullWidth">
-          <Tab label="Cadastro" />
-          <Tab label="Entrar" />
-        </Tabs>
-        <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-          <Signup />
-          <Login />
-        </SwipeableViews>
-        </Box>
-      </Grid>
-    </Grid>
-          </Template>
+    </Template>
   )
 }
 
