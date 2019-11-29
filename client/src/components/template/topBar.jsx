@@ -21,10 +21,12 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  logo: {
     flexGrow: 1,
+  },
+  title: {
     textDecoration: 'none',
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
 }));
 
@@ -35,8 +37,10 @@ const TopBar = props => {
     <div className={classes.root}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title} component={Link} to="/">
+          <Typography variant="h6" to="/" className={classes.logo}>
+            <Link className={classes.title}>
             ancaphub
+            </Link>
           </Typography>
           <IconButton color="inherit" className={classes.button} onClick={() => props.setDarkMode()}>
             <DarkModeIcon />
