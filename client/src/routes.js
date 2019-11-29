@@ -45,7 +45,10 @@ if(!props.auth.loading){
       <Route exact path="/videos" component={Videos} />
       <Route path="/videos/:id" component={SingleVideo} />
       <Route exact path="/groups" component={Groups} />
-      <Route path="/groups/:id" component={SingleGroup} />
+      <Route exact path="/groups/:id" component={SingleGroup} />
+      <Route path="/groups/:id/chat" component={SingleGroup} />
+      <Route path="/groups/:id/members" component={SingleGroup} />
+      <Route path="/groups/:id/files" component={SingleGroup} />
       <Route path="/events" component={Events} />
       <Route path="/campaigns" component={Campaigns} />
       <Route path="/search" component={SearchResults} />
