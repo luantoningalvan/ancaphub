@@ -17,6 +17,7 @@ import { signUp } from '../../actions/authActions';
 const useStyles = makeStyles(theme => ({
   tab: {
     width: '100%',
+    overflow: "hidden",
     paddingTop: '10px',
     paddingBottom: '10px'
   },
@@ -70,17 +71,18 @@ function SignUpForm(props) {
 
           return (
             <Form className={classes.tab}>
-              <Grid container>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
+                  color="secondary"
                     autoFocus
                     variant="outlined"
                     type="text"
-                    margin="normal"
+                    margin="none"
                     required
                     fullWidth
                     id="name"
-                    label="Nome Completo"
+                    label="Nome de Usuário"
                     name="name"
                     autoComplete="name"
                     value={values.name}
@@ -92,10 +94,11 @@ function SignUpForm(props) {
 
                 <Grid item xs={12}>
                   <TextField
+                  color="secondary"
                     autoFocus
                     variant="outlined"
                     type="email"
-                    margin="normal"
+                    margin="none"
                     required
                     fullWidth
                     id="email"
@@ -109,10 +112,11 @@ function SignUpForm(props) {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
+                  color="secondary"
                     variant="outlined"
-                    margin="normal"
+                    margin="none"
                     required
                     fullWidth
                     name="password"
@@ -129,10 +133,11 @@ function SignUpForm(props) {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
+                  color="secondary"
                     variant="outlined"
-                    margin="normal"
+                    margin="none"
                     required
                     fullWidth
                     name="password2"
@@ -151,7 +156,7 @@ function SignUpForm(props) {
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
+                      <Checkbox value="allowExtraEmails" color="secondary" />
                     }
                     label="Eu quero receber notificações em meu e-mail."
                   />
@@ -161,7 +166,7 @@ function SignUpForm(props) {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.button}>
                     Cadastrar
                   </Button>

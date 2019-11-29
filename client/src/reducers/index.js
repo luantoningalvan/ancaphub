@@ -5,6 +5,7 @@ import userReducers from './userReducers';
 import postReducers from './postReducers';
 import notificationReducers from './notificationReducers'
 import templateReducers from './templateReducers'
+import groupReducers from './groupReducers'
 import categoriesReducer from './categoriesReducer';
 import { combineReducers } from 'redux';
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   users: userReducers,
   items: itemReducers,
   categories: categoriesReducer,
+  groups: groupReducers,
   posts: postReducers,
   notifications: notificationReducers,
   template: templateReducers

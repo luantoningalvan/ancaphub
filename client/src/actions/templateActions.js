@@ -1,8 +1,8 @@
-import { SET_DARK_MODE } from '../utils/types';
+import types from './_types'
 
 // Retorna os erros
 export const setDarkMode = () => {
   return {
-    type: SET_DARK_MODE
+    type: types.SET_DARK_MODE
   };
 };

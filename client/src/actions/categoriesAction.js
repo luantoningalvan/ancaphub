@@ -1,9 +1,5 @@
 import axios from '../services/api';
-import {
-  FETCH_ALL_CATEGORIES,
-  CATEGORY_ADDED,
-  CATEGORIES_LOADING
-} from '../utils/types';
+import types from './_types'
 
 // Obtém a lista de todas as categorias
 export function fetchAllCategories() {
@@ -11,7 +7,7 @@ export function fetchAllCategories() {
     axios
       .get('/api/categories')
       .then(categories => {
-        dispatch({ type: FETCH_ALL_CATEGORIES, payload: categories.data });
+        dispatch({ type: types.ETCH_ALL_CATEGORIES, payload: categories.data });
       })
       .catch(error => {
         console.error('Erro ao obter a lista de categorias: ', error);
@@ -25,7 +21,7 @@ export const createCategory = data => {
     axios
       .post('/api/categories', data)
       .then(function(category) {
-        dispatch({ type: CATEGORY_ADDED, payload: category });
+        dispatch({ type: types.CATEGORY_ADDED, payload: category });
         dispatch(fetchAllCategories());
       })
       .catch(function(error) {
@@ -36,6 +32,6 @@ export const createCategory = data => {
 
 export function setCategoriesLoading() {
   return {
-    type: CATEGORIES_LOADING
+    type: types.CATEGORIES_LOADING
   };
 }

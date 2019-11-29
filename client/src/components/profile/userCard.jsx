@@ -38,7 +38,7 @@ export default function UserCard(props) {
         <MaterialLink
           underline="none"
           component={AdapterLink}
-          to={`/usuario/${props.user._id}`}>
+          to={`/${props.user._id}`}>
           <Box display="flex" flexDirection="column" alignItems="center" mb={1}>
             <ProfilePicture
               avatar={props.user.avatar}

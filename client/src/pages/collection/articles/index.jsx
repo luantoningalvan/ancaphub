@@ -28,7 +28,7 @@ function ArticlesList(props) {
         </Typography>
           <Button
             component={Link}
-            to={`artigos/contribuir`}
+            to="/contribute/article"
             variant="outlined"
             color="secondary">
             <AddIcon style={{ marginRight: '10px' }} />

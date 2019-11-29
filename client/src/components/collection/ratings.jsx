@@ -91,7 +91,7 @@ function Ratings(props) {
               <Box display="flex" justifyContent="center" mt={4}>
                 <Button
                   variant="outlined"
-                  color="primary"
+                  color="secondary"
                   onClick={handleClickOpen}>
                   <RateIcon style={{ marginRight: '10px' }} />
                   Avaliar
@@ -169,18 +169,19 @@ function Ratings(props) {
             id="name"
             label="Deixe um comentário"
             type="email"
+            color="secondary"
             fullWidth
             value={comment}
             onChange={e => setComment(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="default">
             Cancelar
           </Button>
           <Button
             onClick={() => handleAddRate()}
-            color="primary"
+            color="secondary"
             variant="contained">
             Avaliar
           </Button>

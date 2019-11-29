@@ -1,11 +1,11 @@
-import React from 'react';
-import { Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Avatar, CircularProgress, IconButton } from '@material-ui/core';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import axios from '../../services/api';
-import ProfilePicture from './profilePicture';
-
 
 function ImageUpload({ field, form }) {
   const { values, setFieldValue } = form;
+  const [loading, setLoading] = useState(false)
 
   const uploadAvatar = async avatar => {
     if (avatar) {
@@ -19,7 +19,9 @@ function ImageUpload({ field, form }) {
       formData.append('file', avatar);
 
       try {
+        setLoading(true)
         const res = await axios.post(`/api/upload`, formData, config);
+        setLoading(false)
         setFieldValue('avatar', res.data.url);
       } catch (error) {
         console.log(error);
@@ -28,19 +30,20 @@ function ImageUpload({ field, form }) {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={3}>
-        <ProfilePicture avatar={values.avatar} width="120px" height="120px" />
-      </Grid>
-      <Grid item xs={9}>
-        <input
-          type="file"
-          accept="image/jpeg, image/png"
-          onChange={event => uploadAvatar(event.target.files[0])}
-        />
-        <input type="hidden" name="avatar" value={values.avatar} />
-      </Grid>
-    </Grid>
+    <Box display="flex"  justifyContent="center"mb={2}>
+        <Avatar style={{ width: 120, height: 120, background: `url(${values.avatar})`, backgroundSize: '120px 120px' }}>
+          {loading ? (<CircularProgress />) : (
+            <>
+              <input accept="image/jpeg, image/png" onChange={event => uploadAvatar(event.target.files[0])} style={{ display: 'none' }} id="icon-button-file" type="file" />
+              <label htmlFor="icon-button-file">
+                <IconButton color="secondary" aria-label="upload picture" component="span">
+                  <PhotoCamera />
+                </IconButton>
+              </label>
+            </>
+          )}
+        </Avatar>
+    </Box>
   );
 }
 

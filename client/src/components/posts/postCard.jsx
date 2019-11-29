@@ -1,34 +1,55 @@
 import React from 'react';
+
+// Material-UI Components
 import {
   IconButton,
   Typography,
   Card,
   CardHeader,
   CardContent,
-  CardMedia,
-  CardActionArea,
   CardActions,
   Box,
   Menu,
   MenuItem,
   Link
 } from '@material-ui/core';
+
+// Material-UI Icons
 import {
   Favorite as FavoriteIcon,
   FavoriteBorder as NotFavoriteIcon,
   MoreVert as MoreVertIcon
 } from '@material-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
-import striptags from 'striptags';
-import ProfilePicture from '../profile/profilePicture';
+
+// Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { deletePost, updateLikes } from '../../actions/postActions';
+
+// Other
 import moment from 'moment-timezone/builds/moment-timezone-with-data';
+import { Link as RouterLink } from 'react-router-dom';
 import ptBr from 'moment/locale/pt-br'
+import isEmpty from 'is-empty'
+
+// Custom Components
+import ProfilePicture from '../profile/profilePicture';
+
+// Templates
+import Status from './templates/status'
+import ItemAddedToCollection from './templates/itemAddedToCollection'
+
+const templates = {
+  collection_item: () => ItemAddedToCollection,
+  status: () => Status
+}
+
+const activities = {
+  status: null,
+  collection_item: 'adicionou um item à sua coleção particular'
+};
 
 function ActivityCard(props) {
-
   const {
     _id,
     content,
@@ -38,32 +59,20 @@ function ActivityCard(props) {
     likes = [],
     createdAt
   } = props.post;
+  const isUserLoggedProfile = props.authUser.isAuthenticated && user._id === props.authUser.user._id;
+  const Template = !isEmpty(props.post) ? templates[type]() : <p>Ocorreu um Erro</p>
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const activities = {
-    status: null,
-    collection_item: 'adicionou um item à sua coleção particular'
-  };
-
-  const types = {
-    book: 'livro',
-    article: 'artigo',
-    video: 'video',
-    podcast: 'podcas'
-  };
-
-  function handleClick(event) {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClose() {
+  const handleClose = () => {
     setAnchorEl(null);
   }
 
-  const isUserLoggedProfile =
-    props.authUser.isAuthenticated && user._id === props.authUser.user._id;
-
-  function handleDelete() {
+  const handleDelete = () => {
     const confirm = window.confirm('Você realmente deseja excluir a postagem?');
 
     if (confirm) {
@@ -78,7 +87,7 @@ function ActivityCard(props) {
           avatar={
             <Link
               component={RouterLink}
-              to={`/usuario/${user._id}`}
+              to={`/${user._id}`}
               underline="none"
             >
               <ProfilePicture avatar={user.avatar} width="40px" height="40px" />
@@ -94,7 +103,7 @@ function ActivityCard(props) {
           title={
             <Link
               component={RouterLink}
-              to={`/usuario/${user._id}`}
+              to={`/${user._id}`}
               underline="none"
               color="secondary">
               <span style={{ fontWeight: 'bold' }}>{user.name + " "}</span>
@@ -106,40 +115,7 @@ function ActivityCard(props) {
           subheader={moment(createdAt).tz('America/Sao_Paulo').locale('pt-br', ptBr).startOf(createdAt).fromNow()}
         />
         <CardContent style={{ padding: '0px 16px' }}>
-          {type === 'status' && (
-            <Typography variant="body2" color="textSecondary" component="p">
-              {content}
-            </Typography>
-          )}
-
-          {type === 'collection_item' && (
-            <Card>
-              <CardActionArea
-                component={RouterLink}
-                to={`/${types[extraFields.type]}s/${types[extraFields.type]}/${
-                  extraFields._id
-                  }`}>
-                <CardMedia
-                  component="img"
-                  height="240"
-                  image={extraFields.cover}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {extraFields.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p">
-                    {`${striptags(
-                      extraFields.description.substring(0, 240)
-                    )}...`}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          )}
+          <Template post={props.post}/>
         </CardContent>
         <CardActions disableSpacing>
           {props.authUser.isAuthenticated ? (

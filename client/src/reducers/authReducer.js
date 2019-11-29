@@ -1,21 +1,6 @@
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  USER_LOADED,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-  FOLLOW_USER_SUCCESS,
-  UNFOLLOW_USER_SUCCESS,
-  ADD_ITEM_TO_COLLECTION_SUCCESS,
-  SAVE_ITEM_SUCCESS,
-  GET_CONTRIBUTIONS_SUCCESS,
-  GET_SAVED_SUCCESS,
-  UPDATE_USER_SUCCESS
-} from '../utils/types';
+import types from '../actions/_types'
 
-const initialState = {
+const INITIAL_STATE = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   loading: true,
@@ -23,12 +8,12 @@ const initialState = {
   saved: null
 };
 
-export default function (state = initialState, action) {
+export default function (state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case REGISTER_SUCCESS:
-    case LOGIN_SUCCESS:
+    case types.REGISTER_SUCCESS:
+    case types.LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
       window.location.reload();
       return {
@@ -37,10 +22,10 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false
       };
-    case REGISTER_FAIL:
-    case AUTH_ERROR:
-    case LOGIN_FAIL:
-    case LOGOUT:
+    case types.REGISTER_FAIL:
+    case types.AUTH_ERROR:
+    case types.LOGIN_FAIL:
+    case types.LOGOUT:
       localStorage.removeItem('token');
       return {
         ...state,
@@ -49,40 +34,40 @@ export default function (state = initialState, action) {
         loading: false,
         user: null
       };
-    case USER_LOADED:
+    case types.USER_LOADED:
       return {
         ...state,
         user: payload,
         isAuthenticated: true,
         loading: false
       };
-    case UPDATE_USER_SUCCESS:
+    case types.UPDATE_USER_SUCCESS:
       return {
         ...state,
         user: { ...state.user, ...payload }
       };
-    case UNFOLLOW_USER_SUCCESS:
-    case FOLLOW_USER_SUCCESS:
+    case types.UNFOLLOW_USER_SUCCESS:
+    case types.FOLLOW_USER_SUCCESS:
       return {
         ...state,
         user: { ...state.user, following: payload }
       };
-    case ADD_ITEM_TO_COLLECTION_SUCCESS:
+    case types.ADD_ITEM_TO_COLLECTION_SUCCESS:
       return {
         ...state,
         user: { ...state.user, personalCollection: payload }
       };
-    case SAVE_ITEM_SUCCESS:
+    case types.SAVE_ITEM_SUCCESS:
       return {
         ...state,
         user: { ...state.user, saved: payload }
       };
-    case GET_CONTRIBUTIONS_SUCCESS:
+    case types.GET_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
         user: { ...state.user, contributions: payload }
       };
-    case GET_SAVED_SUCCESS:
+    case types.GET_SAVED_SUCCESS:
       return {
         ...state,
         saved: payload.saved

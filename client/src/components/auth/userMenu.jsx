@@ -3,13 +3,9 @@ import {
   IconButton,
   MenuItem,
   Menu,
-  Dialog,
-  DialogContent,
-  Tabs,
-  Tab,
-  Avatar,
   CircularProgress,
-  Switch
+  Switch,
+  Avatar
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -19,13 +15,9 @@ import {
   Bookmarks as SavedIcon,
   ExitToApp as LogoutIcon,
   BrightnessMedium as DarkModeIcon,
-
 } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import SwipeableViews from 'react-swipeable-views';
 import ProfilePicture from '../profile/profilePicture';
-import Login from './login';
-import Signup from './signup';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { logoutUser } from '../../actions/authActions';
@@ -39,8 +31,6 @@ const useStyles = makeStyles(theme => ({
 
 function UserMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
   const isMenuOpen = Boolean(anchorEl);
 
   function handleProfileMenuOpen(event) {
@@ -49,22 +39,6 @@ function UserMenu(props) {
 
   function handleMenuClose() {
     setAnchorEl(null);
-  }
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
-
-  function handleChange(event, newValue) {
-    setValue(newValue);
-  }
-
-  function handleChangeIndex(index) {
-    setValue(index);
   }
 
   const classes = useStyles()
@@ -80,8 +54,6 @@ function UserMenu(props) {
           <CircularProgress color="secondary" />
         </Avatar>
       ) : (
-          <Fragment>
-            {props.auth.isAuthenticated ? (
               <Fragment>
                 <IconButton
                   edge="end"
@@ -107,7 +79,7 @@ function UserMenu(props) {
                   <MenuItem
                     onClick={handleMenuClose}
                     component={Link}
-                    to={`/usuario/${props.auth.user._id}`}
+                    to={`/${props.auth.user._id}`}
                   >
                     <PersonIcon className={classes.menuIcon} />
                     Perfil
@@ -115,7 +87,7 @@ function UserMenu(props) {
                   <MenuItem
                     onClick={handleMenuClose}
                     component={Link}
-                    to={`/painel-de-contribuicoes`}
+                    to={`/contributions`}
                   >
                     <ContributionsIcon className={classes.menuIcon} />
                     Contribuições
@@ -123,7 +95,7 @@ function UserMenu(props) {
                   <MenuItem
                     onClick={handleMenuClose}
                     component={Link}
-                    to={`/salvos`}
+                    to={`/saved`}
                   >
                     <SavedIcon className={classes.menuIcon} />
                     Salvos
@@ -141,7 +113,7 @@ function UserMenu(props) {
                   <MenuItem
                     onClick={handleMenuClose}
                     component={Link}
-                    to={`/configuracoes`}
+                    to={`/settings`}
                   >
                     <SettingsIcon className={classes.menuIcon} />
                     Configurações
@@ -152,40 +124,6 @@ function UserMenu(props) {
                     </MenuItem>
                 </Menu>
               </Fragment>
-            ) : (
-                <Fragment>
-                  <IconButton
-                    edge="end"
-                    aria-label="Entrar"
-                    color="inherit"
-                    onClick={handleClickOpen}>
-                    <Avatar>
-                      <PersonIcon size="medium" />
-                    </Avatar>
-                  </IconButton>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title">
-                    <DialogContent>
-                      <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="fullWidth">
-                        <Tab label="Cadastro" />
-                        <Tab label="Entrar" />
-                      </Tabs>
-                      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-                        <Signup />
-                        <Login />
-                      </SwipeableViews>
-                    </DialogContent>
-                  </Dialog>
-                </Fragment>
-              )}
-          </Fragment>
         )}
     </Fragment>
   );

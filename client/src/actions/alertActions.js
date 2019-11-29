@@ -1,16 +1,16 @@
-import { SET_ALERTS, CLEAR_ALERTS, SHOW_SNACK } from '../utils/types';
+import types from './_types'
 
 // Retorna os erros
 export const setAlerts = (msg, status, id = null) => {
   return {
-    type: SET_ALERTS,
+    type: types.SET_ALERTS,
     payload: { msg, status, id }
   };
 };
 
 export const showSnack = (msg, status = 'success') => {
   return {
-    type: SHOW_SNACK,
+    type: types.SHOW_SNACK,
     payload: { msg, status }
   };
 };
@@ -18,6 +18,6 @@ export const showSnack = (msg, status = 'success') => {
 // Limpa os erros
 export const clearAlerts = () => {
   return {
-    type: CLEAR_ALERTS
+    type: types.CLEAR_ALERTS
   };
 };

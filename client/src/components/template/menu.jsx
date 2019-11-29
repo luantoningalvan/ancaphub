@@ -7,7 +7,6 @@ import CollectionIcon from '@material-ui/icons/FolderOutlined';
 import BookIcon from '@material-ui/icons/BookOutlined';
 import ArticleIcon from '@material-ui/icons/DescriptionOutlined';
 import VideoIcon from '@material-ui/icons/PlayArrowOutlined';
-import PodcastIcon from '@material-ui/icons/MicNone';
 import GroupIcon from '@material-ui/icons/GroupOutlined';
 import EventIcon from '@material-ui/icons/EventOutlined';
 import CampaignIcon from '@material-ui/icons/ShareOutlined';
@@ -30,25 +29,25 @@ function Menu(props) {
         />
         {isAuthenticated && (
           <MenuItem
-            selected={url.includes('/notificacoes')}
+            selected={url.includes('/notifications')}
             icon={<Badge badgeContent={props.notReadCount} color="secondary"><NotificationsIcon /></Badge>}
             label="Notificações"
-            link="/notificacoes"
+            link="/notifications"
           />
         )}
 
         <MenuTree icon={<CollectionIcon />} label="Coleção">
           <MenuItem
-            selected={url.includes('/livros')}
+            selected={url.includes('/books')}
             icon={<BookIcon />}
             label="Livros"
-            link="/livros"
+            link="/books"
           />
           <MenuItem
-            selected={url.includes('/artigos')}
+            selected={url.includes('/articles')}
             icon={<ArticleIcon />}
             label="Artigos"
-            link="/artigos"
+            link="/articles"
           />
           <MenuItem
             selected={url.includes('/videos')}
@@ -56,36 +55,30 @@ function Menu(props) {
             label="Vídeos"
             link="/videos"
           />
-          <MenuItem
-            selected={url.includes('/podcasts')}
-            icon={<PodcastIcon />}
-            label="Podcasts"
-            link="/podcasts"
-          />
         </MenuTree>
 
         {isAuthenticated && (
           <MenuItem
-            selected={url.includes('/grupos')}
+            selected={url.includes('/groups')}
             icon={<GroupIcon />}
             label="Grupos"
-            link="/grupos"
+            link="/groups"
           />
         )}
         {isAuthenticated && (
           <MenuItem
-            selected={url.includes('/eventos')}
+            selected={url.includes('/events')}
             icon={<EventIcon />}
             label="Eventos"
-            link="/eventos"
+            link="/events"
           />
         )}
         {isAuthenticated && (
           <MenuItem
-            selected={url.includes('/campanhas')}
+            selected={url.includes('/campaigns')}
             icon={<CampaignIcon />}
             label="Campanhas"
-            link="/campanhas"
+            link="/campaigns"
           />
         )}
       </List>

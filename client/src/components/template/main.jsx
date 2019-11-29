@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 240px)',
+      float: 'right'
     },
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -17,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(8)
     },
+  },
+  contentWithoutSidebar: {
+    width: '100%',
   },
   padding: {
     padding: theme.spacing(3)
@@ -37,8 +41,10 @@ export default function Main(props) {
 
   return (
     <main
-      className={clsx(classes.content, {
-        [classes.padding]: !props.noPadding
+      className={clsx({
+        [classes.padding]: !props.noPadding,
+        [classes.content]: props.open,
+        [classes.contentWithoutSidebar]: !props.open,
       })}>
 
       {props.children}

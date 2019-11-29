@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Sidebar from './sidebar';
 import Main from './main';
+import TopBar from './topBar';
 import SnackMessage from '../alerts/snackMessage';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -16,7 +17,7 @@ const themes = {
     palette: {
       primary: {
         main: '#fff',
-        contrastText: '#333',
+        contrastText: '#000',
       },
       secondary: {
         main: '#fb0'
@@ -59,14 +60,13 @@ function Template(props) {
     <ThemeProvider theme={createMuiTheme(themes[props.template.darkMode ? "dark" : "light"])}>
       <CssBaseline />
       <SnackMessage />
-      <div style={{ display: 'flex', height: "100%" }}>
-        <Sidebar />
-        <Main open={true} {...props}>
+        {props.auth.isAuthenticated ? <Sidebar /> : <TopBar /> }
+        
+        <Main open={props.auth.isAuthenticated} {...props}>
           {props.children}
         </Main>
-      </div>
     </ThemeProvider>
   );
 }
-const mapStateToProps = state => ({ template: state.template })
+const mapStateToProps = state => ({ template: state.template, auth: state.auth })
 export default connect(mapStateToProps)(Template)

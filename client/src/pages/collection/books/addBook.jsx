@@ -161,7 +161,7 @@ function AddBook(props) {
                       </Button>
                   <Button
                     component={Link}
-                    to="/livros"
+                    to="/books"
                     color="inherit"
                     style={{ marginLeft: '10px' }}
                   >

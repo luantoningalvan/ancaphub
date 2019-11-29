@@ -34,7 +34,7 @@ export default function ArticleCard(props) {
   const { _id, title, author, cover } = props.article;
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/artigos/artigo/${_id}`}>
+      <CardActionArea component={AdapterLink} to={`/articles/${_id}`}>
         <CardMedia
           className={classes.media}
           image={cover ? cover.url : defaultThumbnail}

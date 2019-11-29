@@ -7,6 +7,7 @@ import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadingItems from '../../../components/loaders/loadingItems'
+import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
@@ -53,8 +54,8 @@ function SingleVideo(props) {
           <LoadingItems />
         </Box>
       ) : (
-          <>
-            {!isEmpty(props.video.item) && props.video.item.type === 'video' && (
+          <Fragment>
+            {!isEmpty(props.video.item) && props.video.item.type === 'video' ? (
               <Fragment>
                 <Title title={title} />
                 <Box className={classes.banner}>
@@ -92,13 +93,18 @@ function SingleVideo(props) {
                   </Box>
                 </Container>
               </Fragment>
+            ) : (
+              <Container>
+                <Box mt={2}>
+                  <UnavaliableContent />
+                </Box>
+              </Container>
             )}
-          </>
-        )}
-    </Template>
-  );
+        </Fragment>
+      )}
+  </Template>
+);
 }
-
 const mapStateToProps = state => ({ video: state.items });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchItem }, dispatch);

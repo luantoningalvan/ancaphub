@@ -130,7 +130,7 @@ function AddArticle(props) {
                       </Button>
                   <Button
                     component={Link}
-                    to="/livros"
+                    to="/articles"
                     color="inherit"
                     style={{ marginLeft: '10px' }}>
                     Cancelar

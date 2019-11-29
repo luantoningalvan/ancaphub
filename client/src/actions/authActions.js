@@ -1,16 +1,8 @@
 import axios from '../services/api';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlerts, clearAlerts } from './alertActions';
-import {
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  USER_LOADED,
-  AUTH_ERROR,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGOUT
-} from '../utils/types';
 import { fetchNotifications } from './notificationActions'
+import types from './_types'
 
 export const signUp = ({
   name,
@@ -30,7 +22,7 @@ export const signUp = ({
     const res = await axios.post('/api/users', body, config);
     dispatch(clearAlerts());
     dispatch({
-      type: REGISTER_SUCCESS,
+      type: types.REGISTER_SUCCESS,
       payload: res.data
     });
   } catch (err) {
@@ -41,7 +33,7 @@ export const signUp = ({
     }
 
     dispatch({
-      type: REGISTER_FAIL
+      type: types.REGISTER_FAIL
     });
   }
 };
@@ -56,13 +48,13 @@ export const loadUser = () => async dispatch => {
     const res = await axios.get('/api/auth');
 
     dispatch({
-      type: USER_LOADED,
+      type: types.USER_LOADED,
       payload: res.data
     });
     dispatch(fetchNotifications())
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR
+      type: types.AUTH_ERROR
     });
   }
 };
@@ -81,7 +73,7 @@ export const signIn = ({ email, password }) => async dispatch => {
     const res = await axios.post('/api/auth', body, config);
 
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: types.LOGIN_SUCCESS,
       payload: res.data
     });
 
@@ -94,12 +86,12 @@ export const signIn = ({ email, password }) => async dispatch => {
     }
 
     dispatch({
-      type: LOGIN_FAIL
+      type: types.LOGIN_FAIL
     });
   }
 };
 
 // Logout / Clear Profile
 export const logoutUser = () => dispatch => {
-  dispatch({ type: LOGOUT });
+  dispatch({ type: types.LOGOUT });
 };

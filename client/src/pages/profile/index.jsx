@@ -35,12 +35,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUser } from '../../actions/userActions';
 import moment from 'moment';
+import UnavaliableContent from '../../components/error/unavaliableContent'
 
 const useStyles = makeStyles(theme => ({
   icon: {
     minWidth: '34px'
   },
-  infoIcon: { color: fade(theme.palette.common.black, 0.50) }
+  infoIcon: { color: theme.palette.text.primary }
 }));
 
 function Profile(props) {
@@ -71,20 +72,20 @@ function Profile(props) {
   function showComponent() {
     if (!props.user.isLoading && !props.auth.loading) {
       switch (props.match.path) {
-        case '/usuario/:id':
+        case '/:id':
           return (
             <UserFeed
               user={props.user.user}
               isUserLoggedProfile={isUserLoggedProfile}
             />
           );
-        case '/usuario/:id/followers':
+        case '/:id/followers':
           return <UserFollowers user={props.user.user} />;
-        case '/usuario/:id/following':
+        case '/:id/following':
           return <UserFollowing user={props.user.user} />;
-        case '/usuario/:id/collection':
+        case '/:id/collection':
           return <UserCollection user={props.user.user} />;
-        case '/usuario/:id/contributions':
+        case '/:id/contributions':
           return <UserContributions user={props.user.user} />;
         default:
           console.log(props.match.path);
@@ -107,17 +108,7 @@ function Profile(props) {
       ) : (
           <>
             {props.user.user === null ? (
-              <>
-                <Title title="Perfil não encontrado" />
-                <Box
-                  justifyContent="center"
-                  alignItems="center"
-                  width={1}
-                  height="100%">
-                  <Typography variant="h4">Erro 404</Typography>
-                  <Typography variant="body2">Perfil Não Encontrado</Typography>
-                </Box>
-              </>
+              <UnavaliableContent />
             ) : (
                 <>
                   <Title title={name} />
@@ -147,7 +138,7 @@ function Profile(props) {
                             <MaterialLink
                               component={AdapterLink}
                               color="textPrimary"
-                              to={`/usuario/${_id}/following`}>
+                              to={`/${_id}/following`}>
                               <Typography variant="body2" style={{ fontWeight: 'bold' }}>
                                 {followingCount}
                               </Typography>
@@ -158,7 +149,7 @@ function Profile(props) {
                             <MaterialLink
                               component={AdapterLink}
                               color="textPrimary"
-                              to={`/usuario/${_id}/followers`}>
+                              to={`/${_id}/followers`}>
                               <Typography variant="body2" style={{ fontWeight: 'bold' }}>
                                 {followersCount}
                               </Typography>
@@ -225,21 +216,21 @@ function Profile(props) {
                         value={props.match.path}>
                         <Tab
                           component={AdapterLink}
-                          to={`/usuario/${_id}/`}
+                          to={`/${_id}/`}
                           label="Feed"
-                          value="/usuario/:id"
+                          value="/:id"
                         />
                         <Tab
                           component={AdapterLink}
-                          to={`/usuario/${_id}/collection`}
+                          to={`/${_id}/collection`}
                           label="Coleção"
-                          value="/usuario/:id/collection"
+                          value="/:id/collection"
                         />
                         <Tab
                           component={AdapterLink}
-                          to={`/usuario/${_id}/contributions`}
-                          label="Contribuições"
-                          value="/usuario/:id/contributions"
+                          to={`/${_id}/contributions`}
+                          label="Coribuições"
+                          value="/:id/contributions"
                         />
                       </Tabs>
 

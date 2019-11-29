@@ -1,24 +1,6 @@
 import axios from '../services/api';
 import { showSnack } from './alertActions';
-import {
-  ITEMS_LOADING,
-  FETCH_ALL_ITEMS,
-  FETCH_ITEM,
-  FETCH_RATES,
-  SELECT_ITEMS_CATEGORY,
-  ADD_ITEM_SUCCESS,
-  SELECT_ITEMS_ORDER,
-  SELECT_ITEMS_PAGE,
-  ADD_ITEM_TO_COLLECTION_SUCCESS,
-  ADD_ITEM_TO_COLLECTION_FAIL,
-  SAVE_ITEM_SUCCESS,
-  SAVE_ITEM_FAIL,
-  GET_CONTRIBUTIONS_SUCCESS,
-  GET_CONTRIBUTIONS_FAIL,
-  GET_SAVED_SUCCESS,
-  GET_SAVED_FAIL,
-  ADD_RATE_SUCCESS
-} from '../utils/types';
+import types from './_types'
 
 // Obtém a lista de todos os artigos
 export function fetchAllItems(config) {
@@ -31,7 +13,7 @@ export function fetchAllItems(config) {
   const category = config.category || '';
 
   return dispatch => {
-    dispatch({ type: ITEMS_LOADING });
+    dispatch({ type: types.ITEMS_LOADING });
     axios
       .get(
         `/api/items?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter &&
@@ -39,7 +21,7 @@ export function fetchAllItems(config) {
           `&&category=${category}` : ''}`
       )
       .then(items => {
-        dispatch({ type: FETCH_ALL_ITEMS, payload: items.data });
+        dispatch({ type: types.FETCH_ALL_ITEMS, payload: items.data });
       })
       .catch(error => {
         console.error('Erro ao obter a lista de itens: ', error);
@@ -49,14 +31,14 @@ export function fetchAllItems(config) {
 
 export function fetchItem(id) {
   return dispatch => {
-    dispatch({ type: ITEMS_LOADING });
+    dispatch({ type: types.ITEMS_LOADING });
     axios
       .get(`/api/items/${id}`)
       .then(item => {
-        dispatch({ type: FETCH_ITEM, payload: item.data });
+        dispatch({ type: types.FETCH_ITEM_SUCCESS, payload: item.data });
       })
       .catch(error => {
-        console.error('Erro ao obter dados do item: ', error);
+        dispatch({ type: types.FETCH_ITEM_FAILURE, payload: error });
       });
   };
 }
@@ -66,7 +48,7 @@ export function fetchRates(item) {
     axios
       .get(`/api/rates/${item}`)
       .then(rates => {
-        dispatch({ type: FETCH_RATES, payload: rates.data });
+        dispatch({ type: types.FETCH_RATES, payload: rates.data });
       })
       .catch(error => {
         console.error('Erro ao obter avaliações do item: ', error);
@@ -80,7 +62,7 @@ export function addRate({ item, value, comment }) {
       .post(`/api/rates`, { item, value, comment })
       .then(rate => {
         console.log('teste');
-        dispatch({ type: ADD_RATE_SUCCESS, payload: rate.data });
+        dispatch({ type: types.ADD_RATE_SUCCESS, payload: rate.data });
         dispatch(showSnack('Avaliação adicionado com sucesso'));
       })
       .catch(error => {
@@ -93,7 +75,7 @@ export function addItem(data, type) {
     axios
       .post(`/api/items`, { ...data, type })
       .then(item => {
-        dispatch({ type: ADD_ITEM_SUCCESS, payload: item.data });
+        dispatch({ type: types.ADD_ITEM_SUCCESS, payload: item.data });
         dispatch(showSnack('Artigo Adicionado com Sucesso'));
       })
       .catch(error => {
@@ -103,13 +85,13 @@ export function addItem(data, type) {
 }
 
 export function selectCategory(category) {
-  return { type: SELECT_ITEMS_CATEGORY, payload: category };
+  return { type: types.SELECT_ITEMS_CATEGORY, payload: category };
 }
 export function selectOrder(order) {
-  return { type: SELECT_ITEMS_ORDER, payload: order };
+  return { type: types.SELECT_ITEMS_ORDER, payload: order };
 }
 export function selectPage(page) {
-  return { type: SELECT_ITEMS_PAGE, payload: page };
+  return { type: types.SELECT_ITEMS_PAGE, payload: page };
 }
 
 export const addItemToCollection = (item, post) => async dispatch => {
@@ -119,12 +101,12 @@ export const addItemToCollection = (item, post) => async dispatch => {
       post
     });
     dispatch({
-      type: ADD_ITEM_TO_COLLECTION_SUCCESS,
+      type: types.ADD_ITEM_TO_COLLECTION_SUCCESS,
       payload: res.data
     });
   } catch (error) {
     dispatch({
-      type: ADD_ITEM_TO_COLLECTION_FAIL
+      type: types.ADD_ITEM_TO_COLLECTION_FAIL
     });
   }
 };
@@ -133,12 +115,12 @@ export const saveItem = item => async dispatch => {
   try {
     const res = await axios.put('/api/users/saveItem', { item });
     dispatch({
-      type: SAVE_ITEM_SUCCESS,
+      type: types.SAVE_ITEM_SUCCESS,
       payload: res.data
     });
   } catch (error) {
     dispatch({
-      type: SAVE_ITEM_FAIL
+      type: types.SAVE_ITEM_FAIL
     });
   }
 };
@@ -149,13 +131,13 @@ export function getContributions() {
       .get('/api/items/auth/contributions')
       .then(res => {
         dispatch({
-          type: GET_CONTRIBUTIONS_SUCCESS,
+          type: types.GET_CONTRIBUTIONS_SUCCESS,
           payload: res.data
         });
       })
       .catch(err => {
         dispatch({
-          type: GET_CONTRIBUTIONS_FAIL
+          type: types.GET_CONTRIBUTIONS_FAIL
         });
       });
   };
@@ -166,13 +148,13 @@ export const getSaved = id => dispatch => {
     .get(`/api/items/auth/saved`)
     .then(collection => {
       dispatch({
-        type: GET_SAVED_SUCCESS,
+        type: types.GET_SAVED_SUCCESS,
         payload: collection.data
       });
     })
     .catch(err => {
       dispatch({
-        type: GET_SAVED_FAIL,
+        type: types.GET_SAVED_FAIL,
         payload: err
       });
     });

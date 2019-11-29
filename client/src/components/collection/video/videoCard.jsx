@@ -34,7 +34,7 @@ export default function VideoCard(props) {
 
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/videos/video/${video._id}`}>
+      <CardActionArea component={AdapterLink} to={`/videos/${video._id}`}>
         <CardMedia
           className={classes.media}
           image={video.cover ? video.cover.url : defaultThumbnail}

@@ -73,7 +73,7 @@ export default function BookCard(props) {
 
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/livros/livro/${book._id}`}>
+      <CardActionArea component={AdapterLink} to={`/books/${book._id}`}>
         <CardMedia
           className={classes.media}
           image={book.cover ? book.cover.url : defaultThumbnail}

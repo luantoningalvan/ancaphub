@@ -17,6 +17,7 @@ import { signIn } from '../../actions/authActions';
 const useStyles = makeStyles(theme => ({
   tab: {
     width: '100%',
+    overflow: "hidden",
     paddingTop: '10px',
     paddingBottom: '10px'
   },
@@ -63,6 +64,7 @@ function SignInForm(props) {
               <Grid container>
                 <Grid item xs={12}>
                   <TextField
+                  color="secondary"
                     autoFocus
                     variant="outlined"
                     type="email"
@@ -81,6 +83,7 @@ function SignInForm(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                  color="secondary"
                     variant="outlined"
                     margin="normal"
                     required
@@ -109,7 +112,7 @@ function SignInForm(props) {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.button}>
                     Entrar
                   </Button>

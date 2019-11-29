@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Button,
   Dialog,
-  DialogTitle as MuiDialogTitle,
-  DialogContent as MuiDialogContent,
-  DialogActions as MuiDialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   IconButton,
   Typography,
   Grid,
@@ -22,48 +22,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateUser } from '../../actions/userActions';
 
-const DialogTitle = withStyles(theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2)
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500]
-  }
-}))(props => {
-  const { children, classes, onClose } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton
-          aria-label="Close"
-          className={classes.closeButton}
-          onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const DialogContent = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2)
-  }
-}))(MuiDialogContent);
-
-const DialogActions = withStyles(theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1)
-  }
-}))(MuiDialogActions);
-
 function EditProfile(props) {
+
   const [open, setOpen] = React.useState(false);
 
   function handleClickOpen() {
@@ -92,10 +52,8 @@ function EditProfile(props) {
       <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Editar Perfil
-        </DialogTitle>
+        open={open}
+      >
         <Formik
           initialValues={{
             name: props.data.name,
@@ -120,6 +78,23 @@ function EditProfile(props) {
 
             return (
               <Form>
+              <DialogTitle disableTypography style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+              
+              <IconButton
+                aria-label="Close"
+                color="secondary"
+                size="small"
+                onClick={handleClose}>
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" style={{marginLeft: 8}}>Editar Perfil</Typography>
+              </div>
+              <Button type="submit" color="secondary" variant="contained">
+                    Salvar
+                  </Button>
+            </DialogTitle>
+
                 <DialogContent dividers>
                   <Grid container>
                     <Grid item xs={12}>
@@ -144,6 +119,7 @@ function EditProfile(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={errors.name && touched.name && errors.name}
+                        color="secondary"
                       />
                     </Grid>
 
@@ -162,6 +138,7 @@ function EditProfile(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={errors.bio && touched.bio && errors.bio}
+                        color="secondary"
                       />
                     </Grid>
 
@@ -177,6 +154,7 @@ function EditProfile(props) {
                         autoComplete="currentCity"
                         value={values.currentCity}
                         onChange={handleChange}
+                        color="secondary"
                         onBlur={handleBlur}
                         helperText={
                           errors.currentCity &&
@@ -196,6 +174,7 @@ function EditProfile(props) {
                         label="Site"
                         name="site"
                         autoComplete="site"
+                        color="secondary"
                         value={values.site}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -210,6 +189,7 @@ function EditProfile(props) {
                         margin="normal"
                         fullWidth
                         label="Data de Nascimento"
+                        color="secondary"
                         type="date"
                         name="birthday"
                         InputLabelProps={{
@@ -226,11 +206,6 @@ function EditProfile(props) {
                     </Grid>
                   </Grid>
                 </DialogContent>
-                <DialogActions>
-                  <Button type="submit" color="primary">
-                    Salvar
-                  </Button>
-                </DialogActions>
               </Form>
             );
           }}

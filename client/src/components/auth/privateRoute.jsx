@@ -1,5 +1,5 @@
 import React from 'react';
-import UnavailablePage from '../../pages/error/unavailablePage';
+import UnavailablePage from '../../pages/unavaliable';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
       auth.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-          <UnavailablePage to="/login" />
+          <UnavailablePage />
         )
     }
   />

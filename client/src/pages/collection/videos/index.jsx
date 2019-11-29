@@ -28,7 +28,7 @@ function VideosList(props) {
         </Typography>
           <Button
             component={Link}
-            to={`videos/contribuir`}
+            to="/contribute/video"
             variant="outlined"
             color="secondary">
             <AddIcon style={{ marginRight: '10px' }} />

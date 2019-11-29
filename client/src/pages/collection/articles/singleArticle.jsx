@@ -13,10 +13,10 @@ import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadingItems from '../../../components/loaders/loadingItems'
+import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
-
 
 function SingleArticle(props) {
   const { id } = props.match.params;
@@ -52,9 +52,9 @@ function SingleArticle(props) {
         </Box>
       ) : (
           <Fragment>
-            <Title title={`${title} - ${author}`} />
-            {!isEmpty(props.article.item) && props.article.item.type === 'article' && (
+            {!isEmpty(props.article.item) && props.article.item.type === 'article' ? (
               <Fragment>
+                <Title title={`${title} - ${author}`} />
                 <div className={classes.banner}>
                   <Box
                     pt={8}
@@ -91,7 +91,13 @@ function SingleArticle(props) {
                   </Container>
                 </Box>
               </Fragment>
-            )}
+            ) : (
+                <Container>
+                  <Box mt={2}>
+                    <UnavaliableContent />
+                  </Box>
+                </Container>
+              )}
           </Fragment>
         )}
     </Template>

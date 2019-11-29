@@ -1,32 +1,28 @@
-import {
-  LOADING_NOTIFICATIONS,
-  GET_NOTIFICATIONS_SUCCESS,
-  READ_NOTIFICATIONS_SUCCESS
-} from '../utils/types';
+import types from '../actions/_types'
 
-const initialState = {
+const INITIAL_STATE = {
   notifications: [],
   notReadCount: 0,
   loading: true
 };
 
-export default function (state = initialState, action) {
+export default function (state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOADING_NOTIFICATIONS:
+    case types.LOADING_NOTIFICATIONS:
       return {
         ...state,
         loading: true
       }
-    case GET_NOTIFICATIONS_SUCCESS:
+    case types.GET_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
         notifications: payload.notifications,
         notReadCount: payload.notReadCount,
         loading: false
       }
-    case READ_NOTIFICATIONS_SUCCESS:
+    case types.READ_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
         notReadCount: 0

@@ -28,7 +28,7 @@ function BooksList(props) {
         </Typography>
           <Button
             component={Link}
-            to={`livros/contribuir`}
+            to="/contribute/book"
             variant="outlined"
             color="secondary">
             <AddIcon style={{ marginRight: '10px' }} />

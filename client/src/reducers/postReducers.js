@@ -1,48 +1,40 @@
-import {
-  ADD_POST_SUCCESS,
-  UPDATE_LIKES_SUCCESS,
-  LOAD_USER_FEED_SUCCESS,
-  DELETE_POST_SUCCESS,
-  LOAD_USER_POSTS_SUCCESS,
-  LOAD_PUBLIC_POSTS_SUCCESS,
-  LOADING_POSTS
-} from '../utils/types';
+import types from '../actions/_types'
 
-const initialState = {
+const INITIAL_STATE = {
   posts: [],
   loading: true
 };
 
-export default function (state = initialState, action) {
+export default function (state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOADING_POSTS:
+    case types.LOADING_POSTS:
       return {
         ...state,
         loading: true
       }
-    case LOAD_PUBLIC_POSTS_SUCCESS:
-    case LOAD_USER_FEED_SUCCESS:
-    case LOAD_USER_POSTS_SUCCESS:
+    case types.LOAD_PUBLIC_POSTS_SUCCESS:
+    case types.LOAD_USER_FEED_SUCCESS:
+    case types.LOAD_USER_POSTS_SUCCESS:
       return {
         ...state,
         posts: payload,
         loading: false
       };
-    case ADD_POST_SUCCESS:
+    case types.ADD_POST_SUCCESS:
       return {
         ...state,
         posts: [payload, ...state.posts]
       };
-    case DELETE_POST_SUCCESS:
+    case types.DELETE_POST_SUCCESS:
       return {
         ...state,
         posts: state.posts.filter(value => {
           return value._id !== payload;
         })
       };
-    case UPDATE_LIKES_SUCCESS:
+    case types.UPDATE_LIKES_SUCCESS:
       return {
         ...state,
         posts: state.posts.map(post =>

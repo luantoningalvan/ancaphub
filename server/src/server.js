@@ -22,6 +22,7 @@ const file = require('./api/routes/FileRoutes');
 const auth = require('./api/routes/AuthRoutes');
 const notification = require('./api/routes/NotificationRoutes');
 const events = require('./api/routes/EventRoutes');
+const groups = require('./api/routes/GroupRoutes');
 
 server.use('/api/items/', items);
 server.use('/api/rates/', rates);
@@ -30,8 +31,9 @@ server.use('/api/users/', users);
 server.use('/api/posts/', posts);
 server.use('/api/upload/', file);
 server.use('/api/auth/', auth);
-server.use('/api/notifications/', notification);
 server.use('/api/events/', events);
+server.use('/api/groups/', groups);
+server.use('/api/notifications/', notification);
 
 server.use('/public', express.static('public'));
 
