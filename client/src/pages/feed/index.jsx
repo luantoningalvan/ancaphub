@@ -16,9 +16,10 @@ import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import ShowPosts from '../../components/posts/showPosts';
 import LoadingItems from '../../components/loaders/loadingItems'
+import PostNewStatus from '../../components/posts/postNewStatus'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loadUserFeed, loadAllPublicPosts } from '../../actions/postActions';
+import { loadUserFeed } from '../../actions/postActions';
 import { fetchAllItems } from '../../actions/itemActions';
 
 function Feed(props) {
@@ -30,8 +31,6 @@ function Feed(props) {
     if (!props.auth.loading) {
       if (props.auth.isAuthenticated) {
         props.loadUserFeed();
-      } else {
-        props.loadAllPublicPosts()
       }
     }
   }, [props.auth.isAuthenticated, props.auth.loading]);
@@ -45,22 +44,14 @@ function Feed(props) {
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
-          {props.auth.loading || props.posts.loading ? (
+          {props.posts.loading ? (
             <LoadingItems />
           ) : (
-              <Fragment>
-                {props.auth.isAuthenticated ? (
-                  <ShowPosts posts={props.posts.posts} loading={props.posts.loading} />
-                ) : (
-                    <Box p={2}>
-                      <Typography variant="body1" gutterBottom>Exibindo postagens públicas. Faça login para ver seu feed personalizado.</Typography>
-                      <ShowPosts posts={props.posts.posts} loading={props.posts.loading} />
-                    </Box>
-                  )}
-              </Fragment>
+              <Box>
+                <PostNewStatus />
+                <ShowPosts posts={props.posts.posts} loading={props.posts.loading} />
+              </Box>
             )}
-
-
         </Grid>
 
         <Grid item sm={4}>
@@ -122,7 +113,7 @@ const mapStateToProps = state => ({
   items: state.items
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ loadUserFeed, loadAllPublicPosts, fetchAllItems }, dispatch);
+  bindActionCreators({ loadUserFeed, fetchAllItems }, dispatch);
 
 export default connect(
   mapStateToProps,

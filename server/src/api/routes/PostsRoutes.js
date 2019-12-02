@@ -27,7 +27,7 @@ router.get('/feed', auth, async (request, response) => {
 
   try {
     const following = await User.findById(request.user.id);
-    const result = await Post.find({ user: following.following })
+    const result = await Post.find({ user: [...following.following, request.user.id] })
       .populate('user', 'name id avatar')
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))
