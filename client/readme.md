@@ -1,0 +1,61 @@
+# Bem vindo ao client do AcapHub!
+Esta é a área acessada pelos usuários comuns do site, foi desenvolvida utilizando React + Redux.
+
+## Funções previstas
+- [ ] Cadastro e login
+  - [x] Login/cadastro com e-mail
+  - [ ] Login/cadastro com Facebook
+  - [ ] Login/cadastro com Twitter
+- [ ] Feed de Notícias
+  - [x] Formulário para publicação com as opções de texto, imagem, link e vídeo incorporado
+  - [x] Exibição das postagens dos usuários seguios em ordem cronológica
+  - [ ] Paginação com scroll infinito
+- [ ] Perfil
+  - [x] Exibição de perfil individual
+  - [x] Formulário de edição do perfil
+  - [x] Listagem de todas as contribuições do usuário  
+  - [x] Listagem da coleção particular do usuário  
+  - [x] Feed com todas as postagens e atividades do usuário
+- [ ] Notificações
+  - [x] Exibição das notificações relacionadas ao usuário
+  - [x] Botão para marcar todas notificações como lidas
+  - [ ] Marcação automática de todas notificações como lidas ao vê-las
+  - [ ] Notificações em tempo real
+- [ ] Coleção Colaborativa
+  - [x] Livros
+    - [x] Página de exibição de todos os livros com filtragem e paginação
+    - [x] Visualização individual de um livro
+    - [x] Formulário para envio de contribuição com livro
+    - [x] Avaliação do livro
+  - [x] Artigos
+    - [x] Página de exibição de todos os livros com filtragem e paginação
+    - [x] Visualização individual de um livro
+    - [x] Formulário para envio de contribuição com artigo
+  - [x] Vídeos 
+    - [x] Página de exibição de todos os livros com filtragem e paginação
+    - [x] Visualização individual de um livro
+    - [x] Formulário para envio de contribuição com vídeo
+  - [x] Botão para adicionar item à coleção
+  - [x] Botão para salvar item
+- [ ] Pesquisa
+    - [x] Pesquisa de usuários por localidade
+    - [] Pesquisa de conteúdos(itens da coleção, usuários, grupos, eventos e campanhas) por texto  
+- [ ] Grupos
+  - [ ] Página com a listagem de todos os grupos nos quais o usuário logado participe e de recomendações de grupos públicos. 
+  - [ ] Página individual de um grupo com a navegação entre as áreas de MURAL, CHAT, ARQUIVOS e MEMBROS
+    - [ ] Área de MURAL
+      - [ ] Listagem de todas as publicações no mural com paginação de scroll infinito
+      - [ ] Formulário para publicação com as opções de texto, imagem, link e vídeo incorporado
+    - [ ] Área de CHAT
+    - [ ] Área de ARQUIVOS
+    - [ ] Área de MEMBROS
+    - [ ] Eventos
+    - [ ] Campanhas
+- [x] Página listando os intens salvos
+- [x] Painel com todas suas contribuições e seus respectivos estados
+- [ ] Página com configurações da conta
+- [ ] Eventos - A definir
+- [ ] Campanhas - A definir
+- [ ] Layout
+    - [x] Responsividade
+    - [x] Modo escuro
