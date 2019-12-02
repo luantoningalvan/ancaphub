@@ -19,10 +19,24 @@ import Files from './files'
 import Members from './members'
 
 const useStyles = makeStyles(theme => ({
+  groupBox: {
+    display: 'block',
+    height: '100%',
+    width: 'calc(100% - 240px)',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   groupHeader: {
-    display: 'flex', 
-    justifyContent: "space-between", 
-    background: 'rgba(0,0,0,0.1)'
+    display: 'flex',
+    justifyContent: "space-between",
+    height:64,
+    width: 'calc(100% - 240px)',
+    position: 'fixed',
+    background: '#0240d4',
+    color:  'white'
+  },
+  tabContent: {
+    marginTop: 64
   }
 }))
 
@@ -33,7 +47,7 @@ export default props => {
     if (true) {
       switch (props.match.path) {
         case '/groups/:id':
-            return <Wall />;  
+          return <Wall />;
         case '/groups/:id/chat':
           return <Chat />;
         case '/groups/:id/files':
@@ -51,26 +65,24 @@ export default props => {
       );
     }
   }
-  
+
   return (
     <Template noPadding>
       <Title title="Grupo Individual" />
-
-      <Toolbar className={classes.groupHeader}>
-        <Typography variant="h6" component="h2">
-          Nome do Grupo
+        <Toolbar className={classes.groupHeader}>
+          <Typography variant="h6" component="h2">
+            Nome do Grupo
         </Typography>
-        <Tabs value={props.match.path}>
-          <Tab component={Link} to={`/groups/${'fodase'}/`} value="/groups/:id" label="Mural"></Tab>
-          <Tab component={Link} to={`/groups/${'fodase'}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
-          <Tab component={Link} to={`/groups/${'fodase'}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
-          <Tab component={Link} to={`/groups/${'fodase'}/members`} value="/groups/:id/members" label="Membros"></Tab>
-        </Tabs>
-      </Toolbar>
-
-      <Container>
-        {showComponent()}
-      </Container>
+          <Tabs value={props.match.path}>
+            <Tab component={Link} to={`/groups/${'fodase'}/`} value="/groups/:id" label="Mural"></Tab>
+            <Tab component={Link} to={`/groups/${'fodase'}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
+            <Tab component={Link} to={`/groups/${'fodase'}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
+            <Tab component={Link} to={`/groups/${'fodase'}/members`} value="/groups/:id/members" label="Membros"></Tab>
+          </Tabs>
+        </Toolbar>
+        <Box className={classes.tabContent}>
+          {showComponent()}
+        </Box>
     </Template>
   )
 };
