@@ -4,16 +4,24 @@ const Group = require('../models/GroupModel');
 const User = require('../models/UserModel');
 const auth = require('../middleware/auth');
 
-router.get("/public", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const result = await Group
-    .find()
+    .findById(req.params.id)
     .populate('cover')
   res.send(result)
 })
 
-router.get("/auth", auth, async (req, res) => {
+router.get("/list/public", async (req, res) => {
   const result = await Group
-    .find({ user: req.user.id })
+    .find({private: false})
+    .populate('cover')
+    .limit(16)
+  res.send(result)
+})
+
+router.get("/list/auth", auth, async (req, res) => {
+  const result = await Group
+    .find({ members: { $in: req.user.id} })
     .populate('cover')
   res.send(result)
 })

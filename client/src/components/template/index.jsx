@@ -10,7 +10,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 const themes = {
   "light": {
-    shadows: ["none"],
     typography: {
       fontFamily: ['Ubuntu']
     },

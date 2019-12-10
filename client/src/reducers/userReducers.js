@@ -3,7 +3,7 @@ import types from '../actions/_types'
 const INITIAL_STATE = {
   allUsers: [],
   user: null,
-  loading: true
+  loading: false
 };
 
 export default function (state = INITIAL_STATE, action) {

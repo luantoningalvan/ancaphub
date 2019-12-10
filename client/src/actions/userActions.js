@@ -2,10 +2,10 @@ import axios from '../services/api';
 import types from './_types'
 import { clearAlerts, setAlerts } from './alertActions'
 
-export const getAllUsers = () => dispatch => {
+export const getAllUsers = (filter) => dispatch => {
   dispatch({ type: types.LOADING_USERS })
   axios
-    .get(`/api/users`)
+    .get(`/api/users${filter ? `?filterOn=name&&filter=${filter}` : ''}`)
     .then(users => {
       dispatch({
         type: types.GET_ALL_USERS_SUCCESS,

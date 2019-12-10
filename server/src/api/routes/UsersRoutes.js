@@ -15,9 +15,27 @@ const { check, validationResult } = require('express-validator');
 // @route 	GET api/users
 // @desc 	  Retorna uma lista de todos os usuários
 // @access 	Public
-router.get('/', async (request, response) => {
+router.get('/', async (req, response) => {
+  const filter = req.query.filter || '';
+  const filterOn = req.query.filterOn || '';
+  let filterQuery = {};
+
+  if (filter.length > 0) {
+    const regx = new RegExp(filter, 'i');
+
+    if (filterOn.length > 0) {
+      filterQuery = { ...filterQuery, [filterOn]: regx };
+    } else {
+      filterQuery = { ...filterQuery, title: regx };
+    }
+  }
+
   try {
-    var result = await User.find().select('-email -password -geoLocation -__v -saved -personalCollection -role');
+    const result = await User
+      .find(filterQuery)
+      .select('-email -password -geoLocation -__v -saved -personalCollection -role')
+      .limit(20)
+      
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

@@ -1,15 +1,17 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Typography,
-  Container,
   Tabs,
   Tab,
   Toolbar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { fetchGroup } from '../../../actions/groupActions'
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Loader from '../../../components/loaders/loadingItems'
@@ -29,22 +31,26 @@ const useStyles = makeStyles(theme => ({
   groupHeader: {
     display: 'flex',
     justifyContent: "space-between",
-    height:64,
+    height: 64,
     width: 'calc(100% - 240px)',
     position: 'fixed',
     background: '#0240d4',
-    color:  'white'
+    color: 'white'
   },
   tabContent: {
     marginTop: 64
   }
 }))
 
-export default props => {
+const SingleGroup = props => {
   const classes = useStyles()
 
+  useEffect(() => {
+    props.fetchGroup(props.match.params.id)
+  }, [])
+
   function showComponent() {
-    if (true) {
+    if (!props.groups.loading) {
       switch (props.match.path) {
         case '/groups/:id':
           return <Wall />;
@@ -68,21 +74,33 @@ export default props => {
 
   return (
     <Template noPadding>
-      <Title title="Grupo Individual" />
-        <Toolbar className={classes.groupHeader}>
-          <Typography variant="h6" component="h2">
-            Nome do Grupo
-        </Typography>
-          <Tabs value={props.match.path}>
-            <Tab component={Link} to={`/groups/${'fodase'}/`} value="/groups/:id" label="Mural"></Tab>
-            <Tab component={Link} to={`/groups/${'fodase'}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
-            <Tab component={Link} to={`/groups/${'fodase'}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
-            <Tab component={Link} to={`/groups/${'fodase'}/members`} value="/groups/:id/members" label="Membros"></Tab>
-          </Tabs>
-        </Toolbar>
-        <Box className={classes.tabContent}>
-          {showComponent()}
-        </Box>
+      {props.groups.loading ? (
+        <Loader />
+      ) : (
+          <>
+            <Title title="Grupo Individual" />
+            <Toolbar className={classes.groupHeader}>
+              <Typography variant="h6" component="h2">
+                {props.groups.group.name}
+              </Typography>
+              <Tabs value={props.match.path}>
+                <Tab component={Link} to={`/groups/${props.groups.group._id}/`} value="/groups/:id" label="Mural"></Tab>
+                <Tab component={Link} to={`/groups/${props.groups.group._id}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
+                <Tab component={Link} to={`/groups/${props.groups.group._id}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
+                <Tab component={Link} to={`/groups/${props.groups.group._id}/members`} value="/groups/:id/members" label="Membros"></Tab>
+              </Tabs>
+            </Toolbar>
+            <Box className={classes.tabContent}>
+              {showComponent()}
+            </Box>
+          </>
+        )}
+
     </Template>
   )
 };
+
+const mapStateToProps = state => ({ groups: state.groups })
+const mapDisptachToProps = dispatch => bindActionCreators({ fetchGroup }, dispatch)
+
+export default connect(mapStateToProps, mapDisptachToProps)(SingleGroup)

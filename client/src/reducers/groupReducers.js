@@ -1,14 +1,43 @@
-const INITIAL_STATE = { allGroups: [], authGroups: [], group: null, isLoading: false };
+import types from '../actions/_types'
+const INITIAL_STATE = { allGroups: [], authGroups: [], group: {}, loading: false };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "FETCH_ALL_PUBLIC_GROUPS":
-      return { ...state, allGroups: action.payload, isLoading: false };
-    case "FETCH_ALL_AUTH_GROUPS":
-      return { ...state, authGroups: action.payload, isLoading: false };
-    case "GROUPS_IS_LOADING":
-      return { ...state, isLoading: true };
+    case types.GROUPS_IS_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
+    case types.FETCH_PUBLIC_GROUPS_SUCCESS:
+      return { 
+        ...state, 
+        allGroups: action.payload, 
+        loading: false 
+      };
+    case types.FETCH_AUTH_GROUPS_SUCCESS:
+      return { 
+        ...state, 
+        authGroups: action.payload, 
+        loading: false 
+      };
+    case types.FETCH_GROUP_SUCCESS:
+      return {
+        ...state,
+        group: action.payload,
+        loading: false
+      }  
+    case types.FETCH_PUBLIC_GROUPS_FAILURE:
+    case types.FETCH_AUTH_GROUPS_FAILURE:
+    case types.FETCH_GROUP_FAILURE:
+        return {
+          ...state,
+          loading: false
+        }
     default:
       return state
   }
 };
+
+
+
+
