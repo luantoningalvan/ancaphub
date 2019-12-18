@@ -8,25 +8,33 @@ import image from '../../../assets/images/1.jpg'
 const useStyles = makeStyles(theme => ({
   groupCover: {
     borderRadius: 10,
-    background: `url(${image})`,
+    background: "rgba(0,0,0,0.1)",
     height: 250,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: theme.spacing(2),
     width: '100%',
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
   }
 }))
 
 export default props => {
   const classes = useStyles()
   return (
-    <Container>
-      <Box className={classes.groupCover} my={2}></Box>
-      <Grid container justify="center">
-        <Grid item xs={8}>
-          <PostNewStatus />
-          <ShowPosts posts={{}} />
+    <Box mt={10}>
+      <Container>
+        <div className={classes.groupCover}>
+          <a href="#" style={{color: 'inherit', textDecoration: 'none'}}>Selecionar capa</a>
+        </div>
+        <Grid container justify="center">
+          <Grid item xs={8}>
+            <PostNewStatus />
+            <ShowPosts posts={{}} />
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Box>
   )
 }

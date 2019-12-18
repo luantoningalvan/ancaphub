@@ -39,3 +39,15 @@ export const fetchGroup = (id) => dispatch => {
       dispatch({ type: types.FETCH_GROUP_FAILURE })
     })
 };
+
+export const createGroup = data => dispatch => {
+  dispatch(loadingGroups())
+
+  axios.post(`/api/groups`, data)
+    .then(group => {
+      dispatch({ type: types.CREATE_GROUP_SUCCESS, payload: group.data })
+    })
+    .catch(err => {
+      dispatch({ type: types.CREATE_GROUP_FAILURE })
+    })
+};

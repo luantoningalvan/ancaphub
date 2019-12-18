@@ -20,6 +20,8 @@ export default (state = INITIAL_STATE, action) => {
         authGroups: action.payload, 
         loading: false 
       };
+    case types.CREATE_GROUP_SUCCESS: 
+      window.location.href = `${process.env.REACT_APP_BASE_URL}/groups/${action.payload._id}`
     case types.FETCH_GROUP_SUCCESS:
       return {
         ...state,
@@ -29,6 +31,7 @@ export default (state = INITIAL_STATE, action) => {
     case types.FETCH_PUBLIC_GROUPS_FAILURE:
     case types.FETCH_AUTH_GROUPS_FAILURE:
     case types.FETCH_GROUP_FAILURE:
+    case types.CREATE_GROUP_FAILURE:
         return {
           ...state,
           loading: false

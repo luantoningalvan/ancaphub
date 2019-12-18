@@ -34,8 +34,6 @@ const useStyles = makeStyles(theme => ({
     height: 64,
     width: 'calc(100% - 240px)',
     position: 'fixed',
-    background: '#0240d4',
-    color: 'white'
   },
   tabContent: {
     marginTop: 64

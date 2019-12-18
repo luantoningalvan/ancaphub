@@ -26,4 +26,25 @@ router.get("/list/auth", auth, async (req, res) => {
   res.send(result)
 })
 
+router.post("/", auth, async (req,res) => {
+  const { name, members, visibility } = req.body
+
+  const membersList = members.map(member => member._id)
+  const users = await User.find({ _id: membersList})
+  const userExists = users.length == members.length
+
+  if(!userExists) {
+    return res.status(400).json({ errors: [{ msg: "Um ou mais usuários enviados não existem." }] });
+  }
+
+  const group = new Group({
+    name,
+    private: visibility === 'private',
+    members: membersList
+  })
+
+  const result = await group.save()
+  res.send(result)
+});
+
 module.exports = router
