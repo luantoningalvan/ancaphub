@@ -213,6 +213,7 @@ router.put('/:id/approve', auth, admin, async (request, response) => {
       type: 'approved_item',
       data: {
         _id: result._id,
+        type: result.type,
         title: result.title
       }
     });

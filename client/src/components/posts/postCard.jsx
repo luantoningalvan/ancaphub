@@ -52,9 +52,7 @@ const activities = {
 function ActivityCard(props) {
   const {
     _id,
-    content,
     type,
-    extraFields,
     user,
     likes = [],
     createdAt

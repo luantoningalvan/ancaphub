@@ -4,20 +4,6 @@ const Post = require('../models/PostModel');
 const User = require('../models/UserModel');
 const auth = require('../middleware/auth');
 
-// @route 	GET api/posts/public
-// @desc 	  Obtém todas as postagens públicas da rede
-// @access 	Public
-router.get('/public', async (request, response) => {
-  try {
-    const result = await Post.find()
-      .populate('user', 'name id avatar')
-      .sort({ createdAt: 'desc' });
-    response.send(result);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
-
 // @route 	GET api/posts/feed
 // @desc 	  Obtém o feed de um usuário
 // @access 	Public
@@ -28,7 +14,7 @@ router.get('/feed', auth, async (request, response) => {
   try {
     const following = await User.findById(request.user.id);
     const result = await Post.find({ user: [...following.following, request.user.id] })
-      .populate('user', 'name id avatar')
+      .populate('user', 'username id avatar')
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
@@ -44,7 +30,7 @@ router.get('/feed', auth, async (request, response) => {
 router.get('/user/:id', async (request, response) => {
   try {
     const result = await Post.find({ user: request.params.id })
-      .populate('user', 'name id avatar')
+      .populate('user', 'username id avatar')
       .sort({ createdAt: 'desc' });
     response.send(result);
   } catch (error) {
@@ -63,7 +49,7 @@ router.post('/', auth, async (request, response) => {
       user: request.user.id
     });
     var result = await post.save();
-    result = await result.populate('user', 'name id avatar').execPopulate();
+    result = await result.populate('user', 'username id avatar').execPopulate();
     response.send(result);
   } catch (error) {
     response.status(500).send(error);

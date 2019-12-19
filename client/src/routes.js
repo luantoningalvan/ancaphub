@@ -25,7 +25,7 @@ import FindPeople from './pages/search/findPeople';
 import AccountSetting from './pages/account/accountSettings';
 import SavedItems from './pages/account/savedItems';
 import ContributionsPanel from './pages/account/contributionsPanel';
-import Notifications from './pages/account/notifications'
+import Notifications from './pages/notifications'
 import { connect } from 'react-redux'
 import Loading from './components/loaders/loadingItems'
 

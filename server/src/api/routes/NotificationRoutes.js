@@ -12,7 +12,7 @@ router.get('/', auth, async (request, response) => {
     receiver: request.user.id
   })
     .sort({ created_at: 'desc' })
-    .populate("sender", "name avatar _id");
+    .populate("sender", "username avatar _id");
   response.send({
     notifications,
     notReadCount: notifications.filter((n) => { return n.read_by.length == 0 || n.read_by.includes({ readerId: request.user.id }) }).length
