@@ -5,7 +5,7 @@ import { clearAlerts, setAlerts } from './alertActions'
 export const getAllUsers = (filter) => dispatch => {
   dispatch({ type: types.LOADING_USERS })
   axios
-    .get(`/api/users${filter ? `?filterOn=name&&filter=${filter}` : ''}`)
+    .get(`/api/users${filter ? `?filterOn=username&&filter=${filter}` : ''}`)
     .then(users => {
       dispatch({
         type: types.GET_ALL_USERS_SUCCESS,
@@ -73,7 +73,7 @@ export const getUserContributions = id => dispatch => {
 };
 
 export const updateUser = ({
-  name,
+  username,
   bio,
   site,
   currentCity,
@@ -87,7 +87,7 @@ export const updateUser = ({
   };
 
   const body = JSON.stringify({
-    name,
+    username,
     bio,
     site,
     currentCity,

@@ -36,9 +36,10 @@ function SignUpForm(props) {
   const classes = useStyles();
   // Validação frontend do formulário
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(3, 'Nome muito curto!')
-      .max(50, 'Nome muito longo!')
+    username: Yup.string()
+      .min(3, 'Nome de usuário muito curto!')
+      .max(30, 'Nome de usuário muito longo!')
+      .matches(/^[a-zA-Z0-9_]+$/, "É permitido apenas letras, números e _ ")
       .required('O campo nome é obrigatório!'),
     email: Yup.string()
       .email('E-mail inválido')
@@ -61,7 +62,7 @@ function SignUpForm(props) {
         ))}
 
       <Formik
-        initialValues={{ name: '', email: '', password: '', password2: '' }}
+        initialValues={{ username: '', email: '', password: '', password2: '' }}
         validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
           props.signUp(values);
@@ -81,14 +82,14 @@ function SignUpForm(props) {
                     margin="none"
                     required
                     fullWidth
-                    id="name"
+                    id="username"
                     label="Nome de Usuário"
-                    name="name"
-                    autoComplete="name"
-                    value={values.name}
+                    name="username"
+                    autoComplete="user"
+                    value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={errors.name && touched.name && errors.name}
+                    helperText={errors.username && touched.username && errors.username}
                   />
                 </Grid>
 

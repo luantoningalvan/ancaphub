@@ -55,7 +55,7 @@ function Profile(props) {
   ));
   const {
     _id,
-    name,
+    username,
     bio,
     site,
     birthday,
@@ -111,7 +111,7 @@ function Profile(props) {
               <UnavaliableContent />
             ) : (
                 <>
-                  <Title title={name} />
+                  <Title title={username} />
                   <Grid container spacing={4}>
                     <Grid item xs={12} sm={5} md={4} lg={3}>
                       <Box
@@ -126,7 +126,7 @@ function Profile(props) {
                           height="120px"
                         />
                         <Box my={2}>
-                          <Typography variant="h6" style={{ fontWeight: 'bold' }}>{name}</Typography>
+                          <Typography variant="h6" style={{ fontWeight: 'bold' }}>{username}</Typography>
                           <Typography variant="body2">{bio}</Typography>
                         </Box>
                         <Box display="flex">
@@ -229,7 +229,7 @@ function Profile(props) {
                         <Tab
                           component={AdapterLink}
                           to={`/${_id}/contributions`}
-                          label="Coribuições"
+                          label="Contribuições"
                           value="/:id/contributions"
                         />
                       </Tabs>

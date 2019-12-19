@@ -38,7 +38,7 @@ const TopBar = props => {
       <AppBar position="static" elevation={0}>
         <Toolbar>
           <Typography variant="h6" to="/" className={classes.logo}>
-            <Link className={classes.title}>
+            <Link className={classes.title} to="/">
             ancaphub
             </Link>
           </Typography>

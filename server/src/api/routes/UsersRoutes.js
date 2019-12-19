@@ -58,11 +58,11 @@ router.get('/search/searchNearbyUsers', auth, async (req, res) => {
       const distance = haversine(allUsers[index].lastLocation, lastLocation);
 
       if (distance <= radius) {
-        const { _id, avatar, name } = allUsers[index];
+        const { _id, avatar, username } = allUsers[index];
         nearbyUsers.push({
           _id,
           avatar,
-          name,
+          username,
           distance: parseFloat(distance).toFixed(2)
         });
       }
@@ -81,11 +81,11 @@ router.get('/:id', async (request, response) => {
   try {
     const user = await User.findById(
       request.params.id,
-      '_id name avatar bio birthday currentCity site following followers'
+      '_id username avatar bio birthday currentCity site following followers'
     );
     const result = {
       _id: user._id,
-      name: user.name,
+      username: user.username,
       avatar: user.avatar,
       bio: user.bio,
       birthday: user.birthday,
@@ -107,7 +107,7 @@ router.get('/:id/followers', async (request, response) => {
   try {
     var result = await User.findById(request.params.id, 'followers').populate(
       'followers',
-      'name avatar _id'
+      'username avatar _id'
     );
     response.send(result);
   } catch (error) {
@@ -122,7 +122,7 @@ router.get('/:id/following', async (request, response) => {
   try {
     var result = await User.findById(request.params.id, 'following').populate(
       'following',
-      'name avatar _id'
+      'username avatar _id'
     );
     response.send(result);
   } catch (error) {
@@ -171,7 +171,7 @@ router.get('/:id/contributions', async (request, response) => {
 router.post(
   '/',
   [
-    check('name', 'O campo NOME é obrigatório')
+    check('username', 'O campo NOME DE USUÁRIO é obrigatório')
       .not()
       .isEmpty(),
     check('email', 'E-mail inválido').isEmail(),
@@ -193,7 +193,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -207,7 +207,7 @@ router.post(
 
       // Cria um novo usuário
       user = new User({
-        name,
+        username,
         email,
         password
       });
@@ -242,7 +242,7 @@ router.put(
   '/',
   auth,
   [
-    check('name', 'O campo NOME é obrigatório')
+    check('username', 'O campo NOME DE USUÁRIO é obrigatório')
       .not()
       .isEmpty()
   ],
@@ -253,12 +253,12 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, bio, site, currentCity, birthday, avatar } = req.body;
+    const { username, bio, site, currentCity, birthday, avatar } = req.body;
 
     try {
       var result = await User.findByIdAndUpdate(
         req.user.id,
-        { name, bio, site, currentCity, birthday, avatar },
+        { username, bio, site, currentCity, birthday, avatar },
         { new: true }
       );
       res.send(result);
@@ -318,7 +318,7 @@ router.put('/:id/follow', auth, async (request, response) => {
         type: 'user_followed',
         data: {
           _id: userFollowed._id,
-          name: userFollowed.name,
+          username: userFollowed.username,
           avatar: userFollowed.avatar
         }
       });

@@ -18,7 +18,7 @@ function UserCollection(props) {
 
   return (
     <>
-      <Title title={`${props.user.name} - Coleção`} />
+      <Title title={`${props.user.username} - Coleção`} />
       <Grid container spacing={2}>
         {props.collection && !isEmpty(props.collection) ? (
           props.collection.map(item => (

@@ -102,7 +102,7 @@ function SignInForm(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
+                    control={<Checkbox value="remember" color="secondary" />}
                     label="Manter-me logado"
                   />
                 </Grid>

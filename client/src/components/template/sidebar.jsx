@@ -14,12 +14,15 @@ import clsx from 'clsx';
 import Menu from './menu';
 import SearchBox from '../search/searchBox';
 import UserMenu from '../auth/userMenu';
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   title: {
     color: theme.palette.primary.contrastText,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: 18,
+    textDecoration: 'none'
   },
   menuButton: {
     marginRight: 10
@@ -84,9 +87,9 @@ export default function Sidebar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title} variant="h6" noWrap>
+            <Link className={classes.title} to="/">
               ancaphub
-            </Typography>
+            </Link>
 
             <div
               style={{
@@ -147,9 +150,9 @@ export default function Sidebar(props) {
           }}
           open={true}>
           <Box id="header" px={2} mt={1} display="flex" alignItems="center">
-            <Typography className={classes.title} variant="h6" noWrap>
+          <Link className={classes.title} to="/">
               ancaphub
-            </Typography>
+            </Link>
 
             <div
               style={{

@@ -18,7 +18,7 @@ function UserContributions(props) {
 
   return (
     <>
-      <Title title={`${props.user.name} - Contribuições`} />
+      <Title title={`${props.user.username} - Contribuições`} />
       <Grid container spacing={2}>
         {props.contributions && !isEmpty(props.contributions) ? (
           props.contributions.map(item => (

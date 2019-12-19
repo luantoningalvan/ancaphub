@@ -73,7 +73,7 @@ function Ratings(props) {
                           gutterBottom
                           variant="subtitle2"
                           style={{ fontWeight: 'bold' }}>
-                          {rate.user.name}
+                          {rate.user.username}
                         </Typography>
                         <Rating value={rate.value} readOnly />
                         <Typography
@@ -121,7 +121,7 @@ function Ratings(props) {
                           gutterBottom
                           variant="subtitle2"
                           style={{ fontWeight: 'bold' }}>
-                          {rate.user.name}
+                          {rate.user.username}
                         </Typography>
                         <Rating value={rate.value} readOnly />
                         <Typography

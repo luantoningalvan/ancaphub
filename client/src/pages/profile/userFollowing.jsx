@@ -16,7 +16,7 @@ function UserFollowing(props) {
 
   return (
     <>
-      <Title title={`${props.user.name} - Seguindo`} />
+      <Title title={`${props.user.username} - Seguindo`} />
       <Grid container spacing={2}>
         {props.following && !isEmpty(props.following) ? (
           props.following.map(user => (

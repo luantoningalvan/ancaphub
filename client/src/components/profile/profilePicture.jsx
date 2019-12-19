@@ -28,7 +28,7 @@ export default props => {
       {props.avatar && props.avatar !== '' ? (
         <Avatar
           src={props.avatar}
-          alt={props.name}
+          alt={props.username}
           className={classes.picture}
           classes={{ img: classes.img }}
         />

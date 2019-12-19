@@ -137,7 +137,7 @@ function AddBook(props) {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h2">
-                        Capa do Artigo
+                        Capa do Livro
                       </Typography>
 
                       <Field component={ImageUpload} name="cover" />
