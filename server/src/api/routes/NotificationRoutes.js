@@ -30,7 +30,7 @@ router.put('/', auth, async (request, response) => {
     { $push: { read_by: { readerId: request.user.id } } }
   )
     .sort({ created_at: 'desc' })
-    .populate("sender", "name avatar _id");
+    .populate("sender", "username avatar _id");
   response.send(notifications);
 });
 

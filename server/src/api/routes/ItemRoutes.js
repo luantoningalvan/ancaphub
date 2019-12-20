@@ -83,7 +83,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (request, response) => {
   try {
     var result = await Item.findById(request.params.id)
-      .populate('user', 'name avatar _id')
+      .populate('user', 'username avatar _id')
       .populate('cover');
     response.send(result);
   } catch (error) {

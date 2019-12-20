@@ -10,7 +10,7 @@ const Notification = require("../models/NotificationModel")
 // @access 	Public
 router.get("/:id", async (request, response) => {
   try {
-    var result = await Rate.find({ item: request.params.id }).populate("user", "_id name avatar").sort("createdAt");
+    var result = await Rate.find({ item: request.params.id }).populate("user", "_id username avatar").sort("createdAt");
     response.send(result);
   } catch (error) {
     response.status(500).send(error);
@@ -50,7 +50,7 @@ router.post("/", auth, async (request, response) => {
     await item.update(updateItem)
     await rate.save();
     await notify.save();
-    await rate.populate('user', 'name _id avatar').execPopulate()
+    await rate.populate('user', 'username _id avatar').execPopulate()
     response.send(rate);
   } catch (error) {
     response.status(500).send(error);
