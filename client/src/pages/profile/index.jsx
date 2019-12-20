@@ -41,7 +41,8 @@ const useStyles = makeStyles(theme => ({
   icon: {
     minWidth: '34px'
   },
-  infoIcon: { color: theme.palette.text.primary }
+  infoIcon: { color: theme.palette.text.primary },
+  infoText: {overflow: "hidden"}
 }));
 
 function Profile(props) {
@@ -166,7 +167,7 @@ function Profile(props) {
                                 <ListItemIcon classes={{ root: classes.icon }}>
                                   <LocationIcon className={classes.infoIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={currentCity} />
+                                <ListItemText primary={currentCity} className={classes.infoText} />
                               </ListItem>
                             )}
 
@@ -181,6 +182,7 @@ function Profile(props) {
                                       {site}
                                     </MaterialLink>
                                   }
+                                  className={classes.infoText}
                                 />
                               </ListItem>
                             )}
@@ -190,7 +192,7 @@ function Profile(props) {
                                 <ListItemIcon classes={{ root: classes.icon }}>
                                   <BirthDayIcon className={classes.infoIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={moment(birthday).locale('pt-br').format('L')} />
+                                <ListItemText className={classes.infoText} primary={moment(birthday).locale('pt-br').format('L')} />
                               </ListItem>
                             )}
                           </List>

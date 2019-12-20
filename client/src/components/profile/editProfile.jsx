@@ -35,9 +35,10 @@ function EditProfile(props) {
   }
   const ProfileSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'Nome de usuário muito curto!')
-      .max(50, 'Nome de usuário muito longo!')
-      .required('O campo nome é obrigatório!'),
+    .min(3, 'Nome de usuário muito curto!')
+    .max(30, 'Nome de usuário muito longo!')
+    .matches(/^[a-zA-Z0-9_]+$/, "É permitido apenas letras, números e _ ")
+    .required('O campo nome é obrigatório!'),
     bio: Yup.string().max(160, 'Sua bio deve ter máximo 160 caracteres.!'),
     site: Yup.string().url('URL inválida!'),
     birthday: Yup.date().max(new Date(), 'Tu é viajante do tempo por acaso?')

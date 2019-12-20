@@ -45,7 +45,7 @@ export default function UserCard(props) {
               width="70%"
               height="auto"
             />
-            <Typography variant="subtitle1" className={classes.name}>{props.user.name}</Typography>
+            <Typography variant="subtitle1" className={classes.name}>{props.user.username}</Typography>
 
             {props.user.distance && (
               <Box
