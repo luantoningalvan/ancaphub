@@ -69,7 +69,7 @@ function Filter(props) {
   const beforePageButton = () => {
     return (
       <IconButton
-        color="primary"
+        color="secondary"
         aria-label="Próxima"
         component="span"
         size="small"
@@ -83,7 +83,7 @@ function Filter(props) {
   const nextPageButton = () => {
     return (
       <IconButton
-        color="primary"
+        color="secondary"
         aria-label="Próxima"
         component="span"
         size="small"
