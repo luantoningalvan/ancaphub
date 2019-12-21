@@ -39,9 +39,10 @@ import UnavaliableContent from '../../components/error/unavaliableContent'
 
 const useStyles = makeStyles(theme => ({
   icon: {
-    minWidth: '34px'
+    minWidth: '34px',
+    color: 'inherit'
   },
-  infoIcon: { color: theme.palette.text.primary },
+
   infoText: {overflow: "hidden"}
 }));
 
