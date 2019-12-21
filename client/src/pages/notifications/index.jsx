@@ -60,9 +60,7 @@ const Notifications = props => {
             {props.notifications.map((notification, index) => (
               <Fragment key={notification._id}>
                 {index > 0 && <Divider />}
-                <ListItem>
-                  <Notification notification={notification} />
-                </ListItem>
+                <Notification notification={notification} />
               </Fragment>
             ))}
           </List>

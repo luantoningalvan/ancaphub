@@ -1,9 +1,10 @@
 import React from 'react'
-import { ListItemIcon, Badge, Avatar } from '@material-ui/core'
+import { ListItem, ListItemIcon, Badge, Avatar } from '@material-ui/core'
 import {
   PersonAdd as FollowIcon,
 } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 import ProfilePicture from '../../profile/profilePicture'
 
 const SmallAvatar = withStyles(theme => ({
@@ -16,7 +17,7 @@ const SmallAvatar = withStyles(theme => ({
 }))(Avatar);
 
 export default ({ notification }) => (
-  <>
+  <ListItem component={Link} to={`/${notification.sender._id}`} style={{color: 'inherit'}}>
     <ListItemIcon>
       <Badge
         overlap="circle"
@@ -30,5 +31,5 @@ export default ({ notification }) => (
       </Badge>
     </ListItemIcon>
     <span><strong>{notification.sender.username}</strong> começou a seguir você</span>
-  </>
+  </ListItem>
 )
