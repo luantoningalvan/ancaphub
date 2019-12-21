@@ -76,10 +76,10 @@ export function addItem(data, type) {
       .post(`/api/items`, { ...data, type })
       .then(item => {
         dispatch({ type: types.ADD_ITEM_SUCCESS, payload: item.data });
-        dispatch(showSnack('Artigo Adicionado com Sucesso'));
+        dispatch(showSnack('Item enviado com Sucesso'));
       })
       .catch(error => {
-        console.error('Erro ao adicionar item: ', error);
+        dispatch(showSnack('Item enviado com Sucesso', 'error'));
       });
   };
 }
