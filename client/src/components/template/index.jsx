@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Sidebar from './sidebar';
+import Sidebar from './navbar';
 import Main from './main';
 import TopBar from './topBar';
 import SnackMessage from '../alerts/snackMessage';

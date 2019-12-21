@@ -1,32 +1,20 @@
 import React, { Fragment, useEffect } from 'react';
 import {
   Box,
-  Typography,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Link as MaterialLink,
   Hidden
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import deafaultCover from '../../assets/images/default-thumbnail.jpg'
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
+import Sidebar from '../../components/template/sidebar'
 import ShowPosts from '../../components/posts/showPosts';
 import LoadingItems from '../../components/loaders/loadingItems'
 import PostNewStatus from '../../components/posts/postNewStatus'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadUserFeed } from '../../actions/postActions';
-import { fetchAllItems } from '../../actions/itemActions';
 
 function Feed(props) {
-  const AdapterLink = React.forwardRef((props, ref) => (
-    <Link innerRef={ref} {...props} />
-  ));
-
   useEffect(() => {
     if (!props.auth.loading) {
       if (props.auth.isAuthenticated) {
@@ -34,10 +22,6 @@ function Feed(props) {
       }
     }
   }, [props.auth.isAuthenticated, props.auth.loading]);
-
-  useEffect(() => {
-    props.fetchAllItems({ pageSize: 5 });
-  }, [])
 
   return (
     <Template>
@@ -56,52 +40,9 @@ function Feed(props) {
 
         <Grid item sm={4}>
           <Hidden xsDown implementation="css">
-            <Box mb={0.5}>
-              <Typography variant="h6" component="h2">
-                Últimas contribuições
-            </Typography>
-            </Box>
-            {props.items.loading ? (
-              <Box pt={2}>
-                <LoadingItems />
-              </Box>
-            ) : (
-                <List disablePadding>
-                  {props.items.allItems.items &&
-                    props.items.allItems.items.map(item => (
-                      <ListItem alignItems="flex-start" disableGutters key={item._id}>
-                        <ListItemAvatar
-                          style={{
-                            height: '60px',
-                            width: '40px',
-                            background: `url(${item.cover ? item.cover.url : deafaultCover})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            marginRight: '10px'
-                          }}
-                        />
-                        <ListItemText
-                          primary={
-                            <Typography
-                              variant="subtitle2"
-                              noWrap>
-                              <MaterialLink
-                                color="textPrimary"
-                                component={AdapterLink}
-                                to={`/${item.type}s/${item._id}`}>
-                                {item.title}
-                              </MaterialLink>
-                            </Typography>
-                          }
-                          secondary={item.author}
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-              )}
+            <Sidebar />
           </Hidden>
         </Grid>
-
       </Grid>
     </Template>
   );
@@ -109,11 +50,10 @@ function Feed(props) {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  posts: state.posts,
-  items: state.items
+  posts: state.posts
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ loadUserFeed, fetchAllItems }, dispatch);
+  bindActionCreators({ loadUserFeed }, dispatch);
 
 export default connect(
   mapStateToProps,

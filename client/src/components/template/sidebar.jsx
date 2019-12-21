@@ -1,177 +1,81 @@
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
 import {
-  Drawer,
   Box,
   Typography,
-  Hidden,
-  AppBar,
-  Toolbar,
-  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Link as MDLink
 } from '@material-ui/core';
-import { Menu as MenuIcon } from '@material-ui/icons';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Menu from './menu';
-import SearchBox from '../search/searchBox';
-import UserMenu from '../auth/userMenu';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import deafaultCover from '../../assets/images/default-thumbnail.jpg'
+import LoadingItems from '../../components/loaders/loadingItems'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { fetchAllItems } from '../../actions/itemActions';
 
-const drawerWidth = 240;
-const useStyles = makeStyles(theme => ({
-  title: {
-    color: theme.palette.primary.contrastText,
-    fontWeight: 'bold',
-    fontSize: 18,
-    textDecoration: 'none'
-  },
-  menuButton: {
-    marginRight: 10
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap'
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1
-    }
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
-  },
-  paper: {
-    background: theme.palette.primary.main,
-    border: 'none'
-  }
-}));
-
-export default function Sidebar(props) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  function handleDrawerToggle() {
-    setMobileOpen(!mobileOpen);
-  }
+const Sidebar = props => {
+  useEffect(() => {
+    props.fetchAllItems({ pageSize: 5, order: 'desc'});
+  }, [])
 
   return (
     <>
-      <Hidden mdUp implementation="css">
-        <AppBar position="fixed" >
-
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Link className={classes.title} to="/">
-              ancaphub
-            </Link>
-
-            <div
-              style={{
-                flexGrow: '1',
-                display: 'flex',
-                justifyContent: 'flex-end'
-              }}
-            >
-              <UserMenu />
-            </div>
-          </Toolbar>
-        </AppBar>
-      </Hidden>
-
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: true,
-            [classes.drawerClose]: !true
-          })}
-          classes={{
-            paper: clsx(classes.paper, {
-              [classes.drawerOpen]: true,
-              [classes.drawerClose]: !true
-            })
-          }}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          <Box display="flex" alignItems="center" width="100%" height="100%">
-            <div style={{ flexGrow: 1 }}>
-              <Box id="search" px={2} my={1}>
-                <SearchBox />
-              </Box>
-              <Menu />
-            </div>
-          </Box>
-        </Drawer>
-      </Hidden>
-
-      <Hidden smDown implementation="css">
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: true,
-            [classes.drawerClose]: !true
-          })}
-          classes={{
-            paper: clsx(classes.paper, {
-              [classes.drawerOpen]: true,
-              [classes.drawerClose]: !true
-            })
-          }}
-          open={true}>
-          <Box id="header" px={2} mt={1} display="flex" alignItems="center">
-          <Link className={classes.title} to="/">
-              ancaphub
-            </Link>
-
-            <div
-              style={{
-                flexGrow: '1',
-                display: 'flex',
-                justifyContent: 'flex-end'
-              }}
-            >
-              <UserMenu />
-            </div>
-          </Box>
-          <Box id="search" px={2} my={1}>
-            <SearchBox />
-          </Box>
-          <Menu />
-        </Drawer>
-      </Hidden>
+      <Box mb={0.5}>
+        <Typography variant="h6" component="h2">
+          Últimas contribuições
+            </Typography>
+      </Box>
+      {props.items.loading ? (
+        <Box pt={2}>
+          <LoadingItems />
+        </Box>
+      ) : (
+          <List disablePadding>
+            {props.items.allItems.items &&
+              props.items.allItems.items.map(item => (
+                <ListItem alignItems="flex-start" disableGutters key={item._id}>
+                  <ListItemAvatar
+                    style={{
+                      height: '60px',
+                      width: '40px',
+                      background: `url(${item.cover ? item.cover.url : deafaultCover})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      marginRight: '10px'
+                    }}
+                  />
+                  <ListItemText
+                    primary={
+                      <Typography
+                        variant="subtitle2"
+                        noWrap>
+                        <MDLink
+                          color="textPrimary"
+                          component={Link}
+                          to={`/${item.type}s/${item._id}`}>
+                          {item.title}
+                        </MDLink>
+                      </Typography>
+                    }
+                    secondary={item.author}
+                  />
+                </ListItem>
+              ))}
+          </List>
+        )}
     </>
-
-  );
+  )
 }
 
+const mapStateToProps = state => ({
+  items: state.items
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchAllItems }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidebar);
