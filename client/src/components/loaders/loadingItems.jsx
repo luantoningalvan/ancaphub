@@ -6,6 +6,6 @@ import {
 
 export default props => (
     <Box display="flex" height="100%" justifyContent="center" alignItems="center">
-        <CircularProgress />
+        <CircularProgress  color="secondary"/>
     </Box>
 )
