@@ -12,6 +12,7 @@ import VideoCard from '../../components/collection/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUserContributions } from '../../actions/userActions';
+import LoadContent from '../../components/loaders/loadContent'
 
 function UserContributions(props) {
   useEffect(() => props.getUserContributions(props.user._id), [props.user._id]);
@@ -19,6 +20,7 @@ function UserContributions(props) {
   return (
     <>
       <Title title={`${props.user.username} - Contribuições`} />
+      <LoadContent loading={false}>
       <Grid container spacing={2}>
         {props.contributions && !isEmpty(props.contributions) ? (
           props.contributions.map(item => (
@@ -38,6 +40,7 @@ function UserContributions(props) {
             </Grid>
           )}
       </Grid>
+      </LoadContent>
     </>
   );
 }

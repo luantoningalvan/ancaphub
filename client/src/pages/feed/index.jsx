@@ -10,6 +10,7 @@ import Title from '../../components/template/titleComponent'
 import Sidebar from '../../components/template/sidebar'
 import ShowPosts from '../../components/posts/showPosts';
 import LoadingItems from '../../components/loaders/loadingItems'
+import LoadContent from '../../components/loaders/loadContent'
 import PostNewStatus from '../../components/posts/postNewStatus'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -27,8 +28,8 @@ function Feed(props) {
   const [currentPage, setCurrentPage] = useState(1)
 
   const loadMorePosts = () => {
-    setCurrentPage(currentPage => currentPage +1)
-    props.loadUserFeed({currentPage: currentPage + 1});
+    setCurrentPage(currentPage => currentPage + 1)
+    props.loadUserFeed({ currentPage: currentPage + 1 });
   }
 
   return (
@@ -36,22 +37,20 @@ function Feed(props) {
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
-          {props.posts.loading && currentPage == 1 ? (
-            <LoadingItems />
-          ) : (
-              <Box>
-                <PostNewStatus />
-                <ShowPosts posts={props.posts.posts} />
-                <Box width="100%">
-                
+          <LoadContent laoding={props.posts.loading && currentPage == 1}>
+            <Box>
+              <PostNewStatus />
+              <ShowPosts posts={props.posts.posts} />
+              <Box width="100%">
+
                 {props.posts.loading && currentPage != 1 ? (
                   <LoadingItems />
                 ) : (
-                  <Button fullWidth onClick={loadMorePosts}>Carregar mais postagens</Button>
-                )}
-                </Box>
+                    <Button fullWidth onClick={loadMorePosts}>Carregar mais postagens</Button>
+                  )}
               </Box>
-            )}
+            </Box>
+          </LoadContent>
         </Grid>
 
         <Grid item sm={4}>

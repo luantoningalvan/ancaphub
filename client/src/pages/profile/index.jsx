@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+
+// Material Components
 import {
   Grid,
   Box,
@@ -10,40 +12,48 @@ import {
   Link as MaterialLink,
   Tabs,
   Tab,
-  CircularProgress
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles'
+
+// Material Icons
 import {
   LocationOn as LocationIcon,
   Link as SiteIcon,
   Cake as BirthDayIcon
 } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles'
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { Link } from 'react-router-dom';
+
+// Custom Components
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
+import UnavaliableContent from '../../components/error/unavaliableContent'
 import ProfilePicture from '../../components/profile/profilePicture';
 import EditProfile from '../../components/profile/editProfile';
 import FollowButton from '../../components/profile/followButton';
+import Loader from '../../components/loaders/loadingItems'
+import LoadContent from '../../components/loaders/loadContent'
+
+// Profile Pages
 import UserFeed from './userFeed';
 import UserCollection from './userCollection';
 import UserContributions from './userContributions';
 import UserFollowers from './userFollowers';
 import UserFollowing from './userFollowing';
-import LoadingItems from '../../components/loaders/loadingItems'
+
+//Redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUser } from '../../actions/userActions';
+
+// Others
+import { Link } from 'react-router-dom';
 import moment from 'moment';
-import UnavaliableContent from '../../components/error/unavaliableContent'
 
 const useStyles = makeStyles(theme => ({
   icon: {
     minWidth: '34px',
     color: 'inherit'
   },
-
-  infoText: {overflow: "hidden"}
+  infoText: { overflow: "hidden" }
 }));
 
 function Profile(props) {
@@ -94,157 +104,148 @@ function Profile(props) {
       }
     } else {
       return (
-        <Box mx="auto" my="auto">
-          <CircularProgress />
-        </Box>
+        <Loader />
       );
     }
   }
 
   return (
     <Template>
-      {props.user.loading ? (
-        <Box width="100%" height="100%" display="flex" alignContent="center" justifyContent="center">
-          <LoadingItems />
-        </Box>
-      ) : (
-          <>
-            {props.user.user === null ? (
-              <UnavaliableContent />
-            ) : (
-                <>
-                  <Title title={username} />
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} sm={5} md={4} lg={3}>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        flexDirection="column"
-                        textAlign="center"
-                      >
-                        <ProfilePicture
-                          avatar={avatar}
-                          width="120px"
-                          height="120px"
-                        />
-                        <Box my={2}>
-                          <Typography variant="h6" style={{ fontWeight: 'bold' }}>{username}</Typography>
-                          <Typography variant="body2">{bio}</Typography>
-                        </Box>
-                        <Box display="flex">
-                          <div
-                            style={{
-                              paddingRight: '15px',
-                              borderRight: '1px solid #d8d8d8'
-                            }}>
-                            <MaterialLink
-                              component={AdapterLink}
-                              color="textPrimary"
-                              to={`/${_id}/following`}>
-                              <Typography variant="body2" style={{ fontWeight: 'bold' }}>
-                                {followingCount}
-                              </Typography>
-                              <Typography variant="subtitle2">Seguindo</Typography>
-                            </MaterialLink>
-                          </div>
-                          <div style={{ paddingLeft: '15px' }}>
-                            <MaterialLink
-                              component={AdapterLink}
-                              color="textPrimary"
-                              to={`/${_id}/followers`}>
-                              <Typography variant="body2" style={{ fontWeight: 'bold' }}>
-                                {followersCount}
-                              </Typography>
-                              <Typography variant="subtitle2">Seguidores</Typography>
-                            </MaterialLink>
-                          </div>
-                        </Box>
-                      </Box>
-                      {(currentCity || site || birthday) && (
-                        <Box mt={2}>
-                          <List disablePadding>
-                            {currentCity && (
-                              <ListItem>
-                                <ListItemIcon classes={{ root: classes.icon }}>
-                                  <LocationIcon className={classes.infoIcon} />
-                                </ListItemIcon>
-                                <ListItemText primary={currentCity} className={classes.infoText} />
-                              </ListItem>
-                            )}
-
-                            {site && (
-                              <ListItem>
-                                <ListItemIcon classes={{ root: classes.icon }}>
-                                  <SiteIcon className={classes.infoIcon} />
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={
-                                    <MaterialLink target="_blank" href={site} color="textPrimary">
-                                      {site}
-                                    </MaterialLink>
-                                  }
-                                  className={classes.infoText}
-                                />
-                              </ListItem>
-                            )}
-
-                            {birthday && (
-                              <ListItem>
-                                <ListItemIcon classes={{ root: classes.icon }}>
-                                  <BirthDayIcon className={classes.infoIcon} />
-                                </ListItemIcon>
-                                <ListItemText className={classes.infoText} primary={moment(birthday).locale('pt-br').format('L')} />
-                              </ListItem>
-                            )}
-                          </List>
-                        </Box>
-                      )}
-                      <Box mt={2} px={2}>
-                        {props.auth.isAuthenticated && (
-                          <React.Fragment>
-                            {isUserLoggedProfile ? (
-                              <EditProfile data={props.user.user} />
-                            ) : (
-                                <FollowButton profile={props.user.user} />
-                              )}
-                          </React.Fragment>
+      <LoadContent loading={props.user.loading}>
+        {props.user.user === null ? (
+          <UnavaliableContent />
+        ) : (
+            <>
+              <Title title={username} />
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={5} md={4} lg={3}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    flexDirection="column"
+                    textAlign="center"
+                  >
+                    <ProfilePicture
+                      avatar={avatar}
+                      width="120px"
+                      height="120px"
+                    />
+                    <Box my={2}>
+                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>{username}</Typography>
+                      <Typography variant="body2">{bio}</Typography>
+                    </Box>
+                    <Box display="flex">
+                      <div
+                        style={{
+                          paddingRight: '15px',
+                          borderRight: '1px solid #d8d8d8'
+                        }}>
+                        <MaterialLink
+                          component={AdapterLink}
+                          color="textPrimary"
+                          to={`/${_id}/following`}>
+                          <Typography variant="body2" style={{ fontWeight: 'bold' }}>
+                            {followingCount}
+                          </Typography>
+                          <Typography variant="subtitle2">Seguindo</Typography>
+                        </MaterialLink>
+                      </div>
+                      <div style={{ paddingLeft: '15px' }}>
+                        <MaterialLink
+                          component={AdapterLink}
+                          color="textPrimary"
+                          to={`/${_id}/followers`}>
+                          <Typography variant="body2" style={{ fontWeight: 'bold' }}>
+                            {followersCount}
+                          </Typography>
+                          <Typography variant="subtitle2">Seguidores</Typography>
+                        </MaterialLink>
+                      </div>
+                    </Box>
+                  </Box>
+                  {(currentCity || site || birthday) && (
+                    <Box mt={2}>
+                      <List disablePadding>
+                        {currentCity && (
+                          <ListItem>
+                            <ListItemIcon classes={{ root: classes.icon }}>
+                              <LocationIcon className={classes.infoIcon} />
+                            </ListItemIcon>
+                            <ListItemText primary={currentCity} className={classes.infoText} />
+                          </ListItem>
                         )}
-                      </Box>
-                    </Grid>
 
-                    <Grid item xs={12} sm={7} md={8} lg={9}>
-                      <Tabs
-                        indicatorColor="secondary"
-                        textColor="secondary"
-                        value={props.match.path}>
-                        <Tab
-                          component={AdapterLink}
-                          to={`/${_id}/`}
-                          label="Feed"
-                          value="/:id"
-                        />
-                        <Tab
-                          component={AdapterLink}
-                          to={`/${_id}/collection`}
-                          label="Coleção"
-                          value="/:id/collection"
-                        />
-                        <Tab
-                          component={AdapterLink}
-                          to={`/${_id}/contributions`}
-                          label="Contribuições"
-                          value="/:id/contributions"
-                        />
-                      </Tabs>
+                        {site && (
+                          <ListItem>
+                            <ListItemIcon classes={{ root: classes.icon }}>
+                              <SiteIcon className={classes.infoIcon} />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={
+                                <MaterialLink target="_blank" href={site} color="textPrimary">
+                                  {site}
+                                </MaterialLink>
+                              }
+                              className={classes.infoText}
+                            />
+                          </ListItem>
+                        )}
 
-                      <Box py={2}>{showComponent()}</Box>
-                    </Grid>
-                  </Grid>
-                </>
-              )}
-          </>
-        )}
+                        {birthday && (
+                          <ListItem>
+                            <ListItemIcon classes={{ root: classes.icon }}>
+                              <BirthDayIcon className={classes.infoIcon} />
+                            </ListItemIcon>
+                            <ListItemText className={classes.infoText} primary={moment(birthday).locale('pt-br').format('L')} />
+                          </ListItem>
+                        )}
+                      </List>
+                    </Box>
+                  )}
+                  <Box mt={2} px={2}>
+                    {props.auth.isAuthenticated && (
+                      <React.Fragment>
+                        {isUserLoggedProfile ? (
+                          <EditProfile data={props.user.user} />
+                        ) : (
+                            <FollowButton profile={props.user.user} />
+                          )}
+                      </React.Fragment>
+                    )}
+                  </Box>
+                </Grid>
 
+                <Grid item xs={12} sm={7} md={8} lg={9}>
+                  <Tabs
+                    indicatorColor="secondary"
+                    textColor="secondary"
+                    value={props.match.path}>
+                    <Tab
+                      component={AdapterLink}
+                      to={`/${_id}/`}
+                      label="Feed"
+                      value="/:id"
+                    />
+                    <Tab
+                      component={AdapterLink}
+                      to={`/${_id}/collection`}
+                      label="Coleção"
+                      value="/:id/collection"
+                    />
+                    <Tab
+                      component={AdapterLink}
+                      to={`/${_id}/contributions`}
+                      label="Contribuições"
+                      value="/:id/contributions"
+                    />
+                  </Tabs>
+
+                  <Box py={2}>{showComponent()}</Box>
+                </Grid>
+              </Grid>
+            </>
+          )}
+      </LoadContent>
     </Template>
   );
 }

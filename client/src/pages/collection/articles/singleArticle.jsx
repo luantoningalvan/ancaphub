@@ -12,7 +12,7 @@ import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
-import LoadingItems from '../../../components/loaders/loadingItems'
+import LoadContent from '../../../components/loaders/loadContent'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -22,7 +22,7 @@ function SingleArticle(props) {
   const { id } = props.match.params;
   useEffect(() => props.fetchItem(id), []);
 
-  const { title, author, categories, content, cover } = props.article.item;
+  const { title, author, categories, content, cover, type } = props.article.item;
 
   const useStyles = makeStyles(theme => ({
     banner: {
@@ -46,60 +46,54 @@ function SingleArticle(props) {
 
   return (
     <Template noPadding>
-      {props.article.loading ? (
-        <Box width="100%" height="100%" display="flex" alignContent="center" justifyContent="center">
-          <LoadingItems />
-        </Box>
-      ) : (
+      <LoadContent loading={props.article.loading}>
+        {!isEmpty(props.article.item) && type === 'article' ? (
           <Fragment>
-            {!isEmpty(props.article.item) && props.article.item.type === 'article' ? (
-              <Fragment>
-                <Title title={`${title} - ${author}`} />
-                <div className={classes.banner}>
-                  <Box
-                    pt={8}
-                    py={12}
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center">
-                    <Categories categories={categories} />
-                    <Typography
-                      style={{ textAlign: 'center' }}
-                      variant="h4"
-                      component="h2"
-                      className={classes.title}>
-                      {title}
-                    </Typography>
-                    <Typography
-                      style={{ textAlign: 'center' }}
-                      variant="h6"
-                      component="h3"
-                      className={classes.author}>
-                      {author}
-                    </Typography>
-                  </Box>
-                </div>
-                <Box mt={-3}>
-                  <Container style={{ position: 'absolute', width: 'auto' }}>
-                    <Box mb={4}>
-                      <Paper>
-                        <Box px={4} py={2}>
-                          {parse(`${content}`)}
-                        </Box>
-                      </Paper>
+            <Title title={`${title} - ${author}`} />
+            <div className={classes.banner}>
+              <Box
+                pt={8}
+                py={12}
+                display="flex"
+                flexDirection="column"
+                alignItems="center">
+                <Categories categories={categories} />
+                <Typography
+                  style={{ textAlign: 'center' }}
+                  variant="h4"
+                  component="h2"
+                  className={classes.title}>
+                  {title}
+                </Typography>
+                <Typography
+                  style={{ textAlign: 'center' }}
+                  variant="h6"
+                  component="h3"
+                  className={classes.author}>
+                  {author}
+                </Typography>
+              </Box>
+            </div>
+            <Box mt={-3}>
+              <Container style={{ position: 'absolute', width: 'auto' }}>
+                <Box mb={4}>
+                  <Paper>
+                    <Box px={4} py={2}>
+                      {parse(`${content}`)}
                     </Box>
-                  </Container>
+                  </Paper>
                 </Box>
-              </Fragment>
-            ) : (
-                <Container>
-                  <Box mt={2}>
-                    <UnavaliableContent />
-                  </Box>
-                </Container>
-              )}
+              </Container>
+            </Box>
           </Fragment>
-        )}
+        ) : (
+            <Container>
+              <Box mt={2}>
+                <UnavaliableContent />
+              </Box>
+            </Container>
+          )}
+      </LoadContent>
     </Template>
   );
 }

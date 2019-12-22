@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player';
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
-import LoadingItems from '../../../components/loaders/loadingItems'
+import LoadContent from '../../../components/loaders/loadContent'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -49,61 +49,55 @@ function SingleVideo(props) {
 
   return (
     <Template noPadding>
-      {props.video.loading ? (
-        <Box width="100%" height="100%" display="flex" alignContent="center" justifyContent="center">
-          <LoadingItems />
-        </Box>
-      ) : (
+      <LoadContent loading={props.video.loading}>
+        {!isEmpty(props.video.item) && props.video.item.type === 'video' ? (
           <Fragment>
-            {!isEmpty(props.video.item) && props.video.item.type === 'video' ? (
-              <Fragment>
-                <Title title={title} />
-                <Box className={classes.banner}>
-                  <Container>
-                    <div className={classes.playerWrapper}>
-                      <ReactPlayer
-                        url={extraFields.videoUrl}
-                        className={classes.videoPlayer}
-                        width='100%'
-                        height='100%'
-                      />
-                    </div>
-                    <Box mt={4}>
-                      <Categories categories={categories} />
-                      <Typography
-                        variant="h4"
-                        component="h2"
-                        className={classes.title}>
-                        {title}
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        component="p"
-                        className={classes.author}>
-                        Participantes: {author}
-                      </Typography>
-                    </Box>
-                  </Container>
-                </Box>
-                <Container>
-                  <Box my={2}>
-                    <Typography variant="body1" component="p">
-                      {content}
-                    </Typography>
-                  </Box>
-                </Container>
-              </Fragment>
-            ) : (
+            <Title title={title} />
+            <Box className={classes.banner}>
               <Container>
-                <Box mt={2}>
-                  <UnavaliableContent />
+                <div className={classes.playerWrapper}>
+                  <ReactPlayer
+                    url={extraFields.videoUrl}
+                    className={classes.videoPlayer}
+                    width='100%'
+                    height='100%'
+                  />
+                </div>
+                <Box mt={4}>
+                  <Categories categories={categories} />
+                  <Typography
+                    variant="h4"
+                    component="h2"
+                    className={classes.title}>
+                    {title}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    component="p"
+                    className={classes.author}>
+                    Participantes: {author}
+                  </Typography>
                 </Box>
               </Container>
-            )}
-        </Fragment>
-      )}
-  </Template>
-);
+            </Box>
+            <Container>
+              <Box my={2}>
+                <Typography variant="body1" component="p">
+                  {content}
+                </Typography>
+              </Box>
+            </Container>
+          </Fragment>
+        ) : (
+            <Container>
+              <Box mt={2}>
+                <UnavaliableContent />
+              </Box>
+            </Container>
+          )}
+      </LoadContent>
+    </Template>
+  );
 }
 const mapStateToProps = state => ({ video: state.items });
 const mapDispatchToProps = dispatch =>

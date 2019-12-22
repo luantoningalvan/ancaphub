@@ -25,7 +25,7 @@ import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import Ratings from '../../../components/collection/ratings';
 import ProfilePicture from '../../../components/profile/profilePicture';
-import LoadingItems from '../../../components/loaders/loadingItems'
+import LoadContent from '../../../components/loaders/loadContent'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -67,7 +67,6 @@ function SingleBook(props) {
   }, [extraFields])
 
   const useStyles = makeStyles(theme => {
-    console.log(theme)
     return ({
       banner: {
         background: `url(${cover ? cover.url : defaultThumbnail}) rgba(0,0,0,0.5)`,
@@ -112,98 +111,92 @@ function SingleBook(props) {
 
   return (
     <Template noPadding>
-      {props.book.loading ? (
-        <Box width="100%" height="100%" display="flex" alignContent="center" justifyContent="center">
-          <LoadingItems />
-        </Box>
-      ) : (
+      <LoadContent loading={props.book.loading}>
+        {!isEmpty(props.book.item) && props.book.item.type === 'book' ? (
           <Fragment>
-            {!isEmpty(props.book.item) && props.book.item.type === 'book' ? (
-              <Fragment>
-                <Title title={`${title} - ${author}`} />
-                <div className={classes.banner}></div>
-                <Box mt={-17} position="absolute" width="inherit">
-                  <Container>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} sm={5} md={4}>
-                        <Paper>
-                          <img
-                            src={cover ? cover.url : defaultThumbnail}
-                            alt={`Capa do livro ${title}`}
-                            style={{ width: '100%' }}
+            <Title title={`${title} - ${author}`} />
+            <div className={classes.banner}></div>
+            <Box mt={-17} position="absolute" width="inherit">
+              <Container>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={5} md={4}>
+                    <Paper>
+                      <img
+                        src={cover ? cover.url : defaultThumbnail}
+                        alt={`Capa do livro ${title}`}
+                        style={{ width: '100%' }}
+                      />
+                      <List>
+                        {files && files.map(download => (
+                          <ListItem key={`${_id} ${download.name}`}>
+                            <ListItemText primary={download.name} />
+                            <ListItemSecondaryAction>
+                              <IconButton
+                                edge="end"
+                                aria-label="Delete"
+                                className={classes.icon}
+                                href={download.url}
+                                target="_blank">
+                                <DownloadIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Paper>
+                    <Box mt={2}>
+                      <span>Enviado por</span>
+                      <Link
+                        component={RouterLink}
+                        to={`/usuario/${user._id}`}
+                        underline="none"
+                        color="textPrimary">
+                        <Box display="flex" alignItems="center" mt={1}>
+                          <ProfilePicture
+                            avatar={user.avatar}
+                            width="40px"
+                            height="40px"
                           />
-                          <List>
-                            {files && files.map(download => (
-                              <ListItem key={`${_id} ${download.name}`}>
-                                <ListItemText primary={download.name} />
-                                <ListItemSecondaryAction>
-                                  <IconButton
-                                    edge="end"
-                                    aria-label="Delete"
-                                    className={classes.icon}
-                                    href={download.url}
-                                    target="_blank">
-                                    <DownloadIcon />
-                                  </IconButton>
-                                </ListItemSecondaryAction>
-                              </ListItem>
-                            ))}
-                          </List>
-                        </Paper>
-                        <Box mt={2}>
-                          <span>Enviado por</span>
-                          <Link
-                            component={RouterLink}
-                            to={`/usuario/${user._id}`}
-                            underline="none"
-                            color="textPrimary">
-                            <Box display="flex" alignItems="center" mt={1}>
-                              <ProfilePicture
-                                avatar={user.avatar}
-                                width="40px"
-                                height="40px"
-                              />
-                              <span style={{ paddingLeft: '10px' }}>{user.name}</span>
-                            </Box>
-                          </Link>
+                          <span style={{ paddingLeft: '10px' }}>{user.name}</span>
                         </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={8}>
-                        <Box mb={2}>
-                          <Categories categories={categories} />
-                          <Typography
-                            variant="h4"
-                            component="h2"
-                            className={classes.title}>
-                            {title}
-                          </Typography>
-                          <Typography
-                            variant="h6"
-                            component="h3"
-                            className={classes.author}>
-                            {author}
-                          </Typography>
-                        </Box>
-                        <Typography variant="body1" style={{ paddingTop: '16px' }}>
-                          {content}
-                        </Typography>
-                        <Box my={2}>
-                          <Ratings item={props.book.item} />
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Container>
-                </Box>
-              </Fragment>
-            ) : (
-                <Container>
-                  <Box mt={2}>
-                    <UnavaliableContent />
-                  </Box>
-                </Container>
-              )}
+                      </Link>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={8}>
+                    <Box mb={2}>
+                      <Categories categories={categories} />
+                      <Typography
+                        variant="h4"
+                        component="h2"
+                        className={classes.title}>
+                        {title}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        component="h3"
+                        className={classes.author}>
+                        {author}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body1" style={{ paddingTop: '16px' }}>
+                      {content}
+                    </Typography>
+                    <Box my={2}>
+                      <Ratings item={props.book.item} />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Container>
+            </Box>
           </Fragment>
-        )}
+        ) : (
+            <Container>
+              <Box mt={2}>
+                <UnavaliableContent />
+              </Box>
+            </Container>
+          )}
+      </LoadContent>
     </Template>
   );
 }

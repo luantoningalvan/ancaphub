@@ -13,11 +13,12 @@ import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Filter from '../../../components/collection/filter';
 import VideoCard from '../../../components/collection/video/videoCard';
-import LoadingItems from '../../../components/loaders/loadingItems'
+import LoadContent from '../../../components/loaders/loadContent'
 import { connect } from 'react-redux';
 
-function VideosList(props) {
+function Videos(props) {
   const { videos } = props;
+
   return (
     <Template>
       <Box display="flex" flexDirection="column" height="100%">
@@ -25,7 +26,7 @@ function VideosList(props) {
         <Box mb={3} display="flex" justifyContent="space-between">
           <Typography variant="h4" component="h2">
             Vídeos
-        </Typography>
+          </Typography>
           <Button
             component={Link}
             to="/contribute/video"
@@ -33,35 +34,28 @@ function VideosList(props) {
             color="secondary">
             <AddIcon style={{ marginRight: '10px' }} />
             Contribuir
-        </Button>
+          </Button>
         </Box>
 
         <Filter type="video" />
 
-
-        {!videos.loading ? (
-          <Fragment>
-            {!isEmpty(videos.allItems.items) ? (
-              <Grid container spacing={2}>
-                {videos.allItems.items.map((video, index) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                    <VideoCard video={video} user={props.user} />
-                  </Grid>
-                ))}
-              </Grid>
-            ) : (
-                <Paper>
-                  <Box p={2}>
-                    Nenhum vídeo encontrado.
+        <LoadContent loading={videos.loading}>
+          {!isEmpty(videos.allItems.items) ? (
+            <Grid container spacing={2}>
+              {videos.allItems.items.map((video, index) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                  <VideoCard video={video} user={props.user} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+              <Paper>
+                <Box p={2}>
+                  Nenhum vídeo encontrado.
               </Box>
-                </Paper>
-              )}
-          </Fragment>
-        ) : (
-            <Box flex="1">
-              <LoadingItems />
-            </Box>
-          )}
+              </Paper>
+            )}
+        </LoadContent>
       </Box>
     </Template>
   );
@@ -71,4 +65,4 @@ const mapStateToProps = state => ({
   videos: state.items,
   user: state.auth.user
 });
-export default connect(mapStateToProps)(VideosList);
+export default connect(mapStateToProps)(Videos);

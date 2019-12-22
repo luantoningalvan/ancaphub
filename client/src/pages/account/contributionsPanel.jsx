@@ -16,6 +16,7 @@ import Title from '../../components/template/titleComponent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getContributions } from '../../actions/itemActions';
+import LoadContent from '../../components/loaders/loadContent'
 
 const useStyles = makeStyles(theme => ({
   pending: {
@@ -47,6 +48,8 @@ const ContributionsPanel = props => {
     draft: 'Rascunho'
   };
 
+  const {contributions} = props.auth.user
+
   return (
     <Template>
       <Title title="Painel de Contribuições" />
@@ -57,7 +60,8 @@ const ContributionsPanel = props => {
       </Box>
 
       <Paper>
-        {!isEmpty(props.contributions) && (
+        <LoadContent loading={false}>
+        {!isEmpty(contributions) && (
           <Table>
             <TableHead>
               <TableRow>
@@ -66,7 +70,7 @@ const ContributionsPanel = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.contributions.map(contribution => (
+              {contributions.map(contribution => (
                 <TableRow key={contribution._id}>
                   <TableCell component="th" scope="row">
                     {contribution.title}
@@ -82,13 +86,14 @@ const ContributionsPanel = props => {
             </TableBody>
           </Table>
         )}
+        </LoadContent>
       </Paper>
     </Template>
   );
 };
 
 const mapStateToProps = state => ({
-  contributions: state.auth.user.contributions
+  auth: state.auth
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getContributions }, dispatch);

@@ -14,6 +14,7 @@ import VideoCard from '../../components/collection/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSaved } from '../../actions/itemActions';
+import LoadContent from '../../components/loaders/loadContent'
 
 const SavedItems = props => {
   useEffect(() => props.getSaved(), []);
@@ -27,6 +28,7 @@ const SavedItems = props => {
         </Typography>
       </Box>
 
+      <LoadContent loading={false}>
       <Grid container spacing={2}>
         {props.saved && !isEmpty(props.saved) ? (
           props.saved.map(item => (
@@ -46,6 +48,7 @@ const SavedItems = props => {
             </Grid>
           )}
       </Grid>
+      </LoadContent>
     </Template>
   );
 };

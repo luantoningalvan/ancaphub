@@ -6,12 +6,10 @@ import {
   Paper,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle
 } from '@material-ui/core';
-import {Add as AddIcon} from '@material-ui/icons'
+import { Add as AddIcon } from '@material-ui/icons'
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import GroupCard from '../../components/groups/groupCard'
@@ -20,6 +18,7 @@ import { connect } from 'react-redux';
 import { fetchAllPublicGroups, fetchAllAuthGroups } from '../../actions/groupActions';
 import isEmpty from 'is-empty'
 import NewGroup from '../../components/groups/newGroup'
+import LoadContent from '../../components/loaders/loadContent'
 
 const Groups = props => {
   const [open, setOpen] = React.useState(false);
@@ -61,11 +60,13 @@ const Groups = props => {
 
         <Button startIcon={<AddIcon />} variant="contained" color="secondary" onClick={handleClick}>Criar Grupo</Button>
       </Box>
-        <Box mt={3}>
-          <Typography variant="h6" gutterBottom>
-            Seus Grupos
-          </Typography>
 
+      <Box mt={3}>
+        <Typography variant="h6" gutterBottom>
+          Seus Grupos
+        </Typography>
+
+        <LoadContent loading={props.groups.loading}>
           {!isEmpty(props.groups.authGroups) ? (
             <Grid container spacing={2}>
               {props.groups.authGroups.map(group => (
@@ -81,12 +82,15 @@ const Groups = props => {
                 </Box>
               </Paper>
             )}
-        </Box>
-        <Box mt={2}>
-          <Typography variant="h6" component="p" gutterBottom>
-            Grupos Públicos
-          </Typography>
+        </LoadContent>
+      </Box>
 
+      <Box mt={2}>
+        <Typography variant="h6" component="p" gutterBottom>
+          Grupos Públicos
+        </Typography>
+
+        <LoadContent loading={props.groups.loading}>
           {!isEmpty(props.groups.allGroups) ? (
             <Grid container spacing={2}>
               {props.groups.allGroups.map(group => (
@@ -102,7 +106,8 @@ const Groups = props => {
                 </Box>
               </Paper>
             )}
-        </Box>
+        </LoadContent>
+      </Box>
     </Template>
   )
 };

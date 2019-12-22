@@ -12,6 +12,7 @@ import VideoCard from '../../components/collection/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUserCollection } from '../../actions/userActions';
+import LoadContent from '../../components/loaders/loadContent'
 
 function UserCollection(props) {
   useEffect(() => props.getUserCollection(props.user._id), [props.user._id]);
@@ -19,25 +20,28 @@ function UserCollection(props) {
   return (
     <>
       <Title title={`${props.user.username} - Coleção`} />
-      <Grid container spacing={2}>
-        {props.collection && !isEmpty(props.collection) ? (
-          props.collection.map(item => (
-            <Grid item xs={12} sm={8} md={6} lg={4}>
-              {item.type === 'book' && <BookCard book={item} />}
 
-              {item.type === 'article' && <ArticleCard article={item} />}
+      <LoadContent loading={false}>
+        <Grid container spacing={2}>
+          {props.collection && !isEmpty(props.collection) ? (
+            props.collection.map(item => (
+              <Grid item xs={12} sm={8} md={6} lg={4}>
+                {item.type === 'book' && <BookCard book={item} />}
 
-              {item.type === 'video' && <VideoCard video={item} />}
-            </Grid>
-          ))
-        ) : (
-            <Grid item xs={12}>
-              <Paper>
-                <Box p={2}>Esse usuário não possui nenhum item na coleção.</Box>
-              </Paper>
-            </Grid>
-          )}
-      </Grid>
+                {item.type === 'article' && <ArticleCard article={item} />}
+
+                {item.type === 'video' && <VideoCard video={item} />}
+              </Grid>
+            ))
+          ) : (
+              <Grid item xs={12}>
+                <Paper>
+                  <Box p={2}>Esse usuário não possui nenhum item na coleção.</Box>
+                </Paper>
+              </Grid>
+            )}
+        </Grid>
+      </LoadContent>
     </>
   );
 }

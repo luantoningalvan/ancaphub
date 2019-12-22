@@ -15,6 +15,7 @@ import { fetchGroup } from '../../../actions/groupActions'
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Loader from '../../../components/loaders/loadingItems'
+import LoadContent from '../../../components/loaders/loadContent'
 import Wall from './wall'
 import Chat from './chat'
 import Files from './files'
@@ -72,28 +73,24 @@ const SingleGroup = props => {
 
   return (
     <Template noPadding>
-      {props.groups.loading ? (
-        <Loader />
-      ) : (
-          <>
-            <Title title="Grupo Individual" />
-            <Toolbar className={classes.groupHeader}>
-              <Typography variant="h6" component="h2">
-                {props.groups.group.name}
-              </Typography>
-              <Tabs value={props.match.path}>
-                <Tab component={Link} to={`/groups/${props.groups.group._id}/`} value="/groups/:id" label="Mural"></Tab>
-                <Tab component={Link} to={`/groups/${props.groups.group._id}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
-                <Tab component={Link} to={`/groups/${props.groups.group._id}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
-                <Tab component={Link} to={`/groups/${props.groups.group._id}/members`} value="/groups/:id/members" label="Membros"></Tab>
-              </Tabs>
-            </Toolbar>
-            <Box className={classes.tabContent}>
-              {showComponent()}
-            </Box>
-          </>
-        )}
+      <LoadContent loading={props.groups.loading}>
+        <Title title="Grupo Individual" />
+        <Toolbar className={classes.groupHeader}>
+          <Typography variant="h6" component="h2">
+            {props.groups.group.name}
+          </Typography>
 
+          <Tabs value={props.match.path}>
+            <Tab component={Link} to={`/groups/${props.groups.group._id}/`} value="/groups/:id" label="Mural"></Tab>
+            <Tab component={Link} to={`/groups/${props.groups.group._id}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
+            <Tab component={Link} to={`/groups/${props.groups.group._id}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
+            <Tab component={Link} to={`/groups/${props.groups.group._id}/members`} value="/groups/:id/members" label="Membros"></Tab>
+          </Tabs>
+        </Toolbar>
+        <Box className={classes.tabContent}>
+          {showComponent()}
+        </Box>
+      </LoadContent>
     </Template>
   )
 };

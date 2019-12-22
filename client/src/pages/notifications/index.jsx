@@ -6,7 +6,6 @@ import {
   Typography,
   IconButton,
   List,
-  ListItem,
   Paper,
   Divider
 } from '@material-ui/core';
@@ -28,7 +27,7 @@ import isEmpty from 'is-empty';
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import Notification from '../../components/notifications/notification'
-
+import LoadContent from '../../components/loaders/loadContent'
 
 const Notifications = props => {
   useEffect(() => props.fetchNotifications(), []);
@@ -55,22 +54,24 @@ const Notifications = props => {
       </Box>
 
       <Paper>
-        {!isEmpty(props.notifications) ? (
-          <List>
-            {props.notifications.map((notification, index) => (
-              <Fragment key={notification._id}>
-                {index > 0 && <Divider />}
-                <Notification notification={notification} />
-              </Fragment>
-            ))}
-          </List>
-        ) : (
-            <Paper>
-              <Box p={2}>
-                Nenhuma notificação não encontrada.
-            </Box>
-            </Paper>
-          )}
+        <LoadContent loading={props.notifications.loading}>
+          {!isEmpty(props.notifications) ? (
+            <List>
+              {props.notifications.map((notification, index) => (
+                <Fragment key={notification._id}>
+                  {index > 0 && <Divider />}
+                  <Notification notification={notification} />
+                </Fragment>
+              ))}
+            </List>
+          ) : (
+              <Paper>
+                <Box p={2}>
+                  Nenhuma notificação não encontrada.
+                </Box>
+              </Paper>
+            )}
+        </LoadContent>
       </Paper>
     </Template>
   );
