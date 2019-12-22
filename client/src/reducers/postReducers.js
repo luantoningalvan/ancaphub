@@ -22,6 +22,12 @@ export default function (state = INITIAL_STATE, action) {
         posts: payload,
         loading: false
       };
+      case types.LOAD_MORE_POSTS_SUCCESS:
+        return {
+          ...state,
+          posts: [ ...state.posts, ...payload],
+          loading: false
+        }  
     case types.ADD_POST_SUCCESS:
       return {
         ...state,

@@ -15,13 +15,20 @@ export function loadAllPublicPosts() {
   };
 }
 
-export function loadUserFeed() {
+export function loadUserFeed(props) {
+  const pageSize = props && props.pageSize || 10
+  const currentPage = props && props.currentPage || 1
+
   return dispatch => {
     dispatch({ type: types.LOADING_POSTS });
     axios
-      .get(`/api/posts/feed`)
+      .get(`/api/posts/feed`, { params: { pageSize, currentPage } })
       .then(function (posts) {
-        dispatch({ type: types.LOAD_USER_FEED_SUCCESS, payload: posts.data });
+        if(currentPage > 1){
+          dispatch({ type: types.LOAD_MORE_POSTS_SUCCESS, payload: posts.data });
+        } else {
+          dispatch({ type: types.LOAD_USER_FEED_SUCCESS, payload: posts.data });
+        }
       })
       .catch(function (error) {
         console.error('Erro ao carregar postagens: ', error);

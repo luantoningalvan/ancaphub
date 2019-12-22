@@ -8,12 +8,14 @@ const auth = require('../middleware/auth');
 // @desc 	  Obtém o feed de um usuário
 // @access 	Public
 router.get('/feed', auth, async (request, response) => {
-  const pageSize = request.query.pageSize ? request.query.pageSize : 3
+  const pageSize = request.query.pageSize ? request.query.pageSize : 10
   const currentPage = request.query.currentPage ? request.query.currentPage : 1
-
+  
   try {
     const following = await User.findById(request.user.id);
-    const result = await Post.find({ user: [...following.following, request.user.id] })
+    const filterQuery = { user: [...following.following, request.user.id] }
+    const itemCount = await Post.countDocuments(filterQuery);
+    const result = await Post.find(filterQuery)
       .populate('user', 'username id avatar')
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))

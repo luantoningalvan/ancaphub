@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
+  Button,
   Hidden
 } from '@material-ui/core';
 import Template from '../../components/template';
@@ -23,17 +24,32 @@ function Feed(props) {
     }
   }, [props.auth.isAuthenticated, props.auth.loading]);
 
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const loadMorePosts = () => {
+    setCurrentPage(currentPage => currentPage +1)
+    props.loadUserFeed({currentPage: currentPage + 1});
+  }
+
   return (
     <Template>
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
-          {props.posts.loading ? (
+          {props.posts.loading && currentPage == 1 ? (
             <LoadingItems />
           ) : (
               <Box>
                 <PostNewStatus />
-                <ShowPosts posts={props.posts.posts} loading={props.posts.loading} />
+                <ShowPosts posts={props.posts.posts} />
+                <Box width="100%">
+                
+                {props.posts.loading && currentPage != 1 ? (
+                  <LoadingItems />
+                ) : (
+                  <Button fullWidth onClick={loadMorePosts}>Carregar mais postagens</Button>
+                )}
+                </Box>
               </Box>
             )}
         </Grid>
