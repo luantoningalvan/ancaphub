@@ -8,10 +8,10 @@ import Title from '../../components/template/titleComponent'
 
 export default props => (
   <Template>
-    <Title title="Campanhas" />
+    <Title title="Projetos" />
     <Box mb={3}>
       <Typography variant="h4" component="h2">
-        Campanhas
+        Projetos
       </Typography>
       <Typography variant="body2" component="p">
         Esta página está em construção.

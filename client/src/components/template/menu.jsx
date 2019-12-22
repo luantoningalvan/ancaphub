@@ -75,10 +75,10 @@ function Menu(props) {
         )}
         {isAuthenticated && (
           <MenuItem
-            selected={url.includes('/campaigns')}
+            selected={url.includes('/projects')}
             icon={<CampaignIcon />}
-            label="Campanhas"
-            link="/campaigns"
+            label="Projetos"
+            link="/projects"
           />
         )}
       </List>

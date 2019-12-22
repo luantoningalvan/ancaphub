@@ -18,7 +18,7 @@ import AddVideo from './pages/collection/videos/addVideo';
 import Groups from './pages/groups';
 import SingleGroup from './pages/groups/single';
 import Events from './pages/events';
-import Campaigns from './pages/campaigns';
+import Projects from './pages/projects';
 import Profile from './pages/profile';
 import SearchResults from './pages/search/searchResults';
 import FindPeople from './pages/search/findPeople';
@@ -50,7 +50,7 @@ if(!props.auth.loading){
       <Route path="/groups/:id/members" component={SingleGroup} />
       <Route path="/groups/:id/files" component={SingleGroup} />
       <Route path="/events" component={Events} />
-      <Route path="/campaigns" component={Campaigns} />
+      <Route path="/projects" component={Projects} />
       <Route path="/search" component={SearchResults} />
       <PrivateRoute path="/find-people" component={FindPeople} />
       <PrivateRoute path="/saved" component={SavedItems} />
