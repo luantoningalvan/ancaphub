@@ -18,7 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'is-empty';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchAllCategories } from '../../actions/categoriesAction';
+import { fetchAllCategories } from '../../actions/categoryAction';
 import {
   fetchAllItems,
   selectCategory,

@@ -14,7 +14,7 @@ import Select from 'react-select';
 import isEmpty from 'is-empty';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchAllCategories } from '../../actions/categoriesAction';
+import { fetchAllCategories } from '../../actions/categoryAction';
 
 const useStyles = makeStyles(theme => ({
   root: {

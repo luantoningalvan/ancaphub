@@ -43,33 +43,6 @@ export function fetchItem(id) {
   };
 }
 
-export function fetchRates(item) {
-  return dispatch => {
-    axios
-      .get(`/api/rates/${item}`)
-      .then(rates => {
-        dispatch({ type: types.FETCH_RATES, payload: rates.data });
-      })
-      .catch(error => {
-        console.error('Erro ao obter avaliações do item: ', error);
-      });
-  };
-}
-
-export function addRate({ item, value, comment }) {
-  return dispatch => {
-    axios
-      .post(`/api/rates`, { item, value, comment })
-      .then(rate => {
-        console.log('teste');
-        dispatch({ type: types.ADD_RATE_SUCCESS, payload: rate.data });
-        dispatch(showSnack('Avaliação adicionado com sucesso'));
-      })
-      .catch(error => {
-        console.error('Erro ao avaliar item: ', error);
-      });
-  };
-}
 export function addItem(data, type) {
   return dispatch => {
     axios

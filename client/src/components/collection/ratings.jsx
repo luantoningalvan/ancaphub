@@ -17,7 +17,7 @@ import isEmpty from 'is-empty';
 import ProfilePicture from '../profile/profilePicture';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchRates, addRate } from '../../actions/itemActions';
+import { fetchRates, addRate } from '../../actions/rateActions';
 
 function Ratings(props) {
   const [open, setOpen] = React.useState(false);
