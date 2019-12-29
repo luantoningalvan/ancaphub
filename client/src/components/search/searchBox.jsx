@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   InputBase,
   IconButton,
@@ -9,7 +9,7 @@ import {
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -27,8 +27,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary
   },
   searchIcon: {
-    paddingRight: theme.spacing(1),
-    height: '24px',
+    marginRight: theme.spacing(1),
     color: theme.palette.text.primary
   },
   inputRoot: {
@@ -39,8 +38,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SearchBox(props) {
+const SearchBox = props => {
   const classes = useStyles();
+  const [term, setTerm] = useState("")
+  
+  const search = () => {
+    if(term !== ""){
+      props.history.push(`/search?s=${term}`)
+    }
+  }
+
+  const handleKeyPress = (e) => {
+    if(e.key === "Enter"){
+      search()
+    }
+  }
 
   return (
     <div className={classes.search}>
@@ -58,10 +70,15 @@ export default function SearchBox(props) {
           input: classes.inputInput
         }}
         inputProps={{ 'aria-label': 'Buscar' }}
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+        onKeyPress={handleKeyPress}
       />
-      <div className={classes.searchIcon}>
+      <IconButton className={classes.searchIcon} size="small" onClick={search}>
         <SearchIcon />
-      </div>
+      </IconButton>
     </div>
   );
 }
+
+export default withRouter(SearchBox)

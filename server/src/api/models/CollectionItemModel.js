@@ -10,11 +10,13 @@ const ItemSchema = new Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true, 
+      trim: true
     },
     author: {
       type: String,
-      required: true
+      required: true, 
+      trim: true
     },
     content: String,
     cover: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
@@ -35,5 +37,7 @@ const ItemSchema = new Schema(
   },
   { timestamps: true }
 );
+
+ItemSchema.index({title: 'text', author: 'text'})
 
 module.exports = mongoose.model('Item', ItemSchema);

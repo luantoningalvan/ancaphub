@@ -33,4 +33,6 @@ const UserSchema = new Schema({
   geoLocation: false
 }, { timestamps: true })
 
+UserSchema.index({username: 'text'})
+
 module.exports = mongoose.model('User', UserSchema);

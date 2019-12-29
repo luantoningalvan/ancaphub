@@ -7,6 +7,7 @@ import notificationReducers from './notificationReducers'
 import templateReducers from './templateReducers'
 import groupReducers from './groupReducers'
 import categoriesReducer from './categoriesReducer';
+import searchReducer from './searchReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   groups: groupReducers,
   posts: postReducers,
   notifications: notificationReducers,
+  search: searchReducer,
   template: templateReducers
 });
 

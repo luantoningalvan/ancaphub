@@ -23,6 +23,7 @@ const auth = require('./api/routes/AuthRoutes');
 const notification = require('./api/routes/NotificationRoutes');
 const events = require('./api/routes/EventRoutes');
 const groups = require('./api/routes/GroupRoutes');
+const search = require('./api/routes/SearchRoutes');
 
 server.use('/api/items/', items);
 server.use('/api/rates/', rates);
@@ -34,6 +35,7 @@ server.use('/api/auth/', auth);
 server.use('/api/events/', events);
 server.use('/api/groups/', groups);
 server.use('/api/notifications/', notification);
+server.use('/api/search/', search);
 
 server.use('/public', express.static('public'));
 

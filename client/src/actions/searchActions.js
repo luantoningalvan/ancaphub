@@ -1,8 +1,13 @@
 import axios from '../services/api';
 import types from './_types'
 
+const searchLoading = () =>{
+  return { type: types.SEARCH_LOADING }
+}
+
 export function setLastLocation(location) {
   return dispatch => {
+    dispatch(searchLoading())
     axios
       .put('/api/users/setLastLocation', location)
       .then(user => {
@@ -16,6 +21,7 @@ export function setLastLocation(location) {
 
 export function searchUsers(radius) {
   return dispatch => {
+    dispatch(searchLoading())
     axios
       .get(`/api/users/search/searchNearbyUsers?radius=${radius}`)
       .then(users => {
@@ -26,3 +32,19 @@ export function searchUsers(radius) {
       });
   };
 }
+
+export function searchTerm(term) {
+  console.log(term)
+  return dispatch => {
+    dispatch(searchLoading())
+    axios
+      .post(`/api/search`, {query: term})
+      .then(results => {
+        dispatch({ type: types.SEARCH_TERM_SUCCESS, payload: results.data });
+      })
+      .catch(error => {
+        dispatch({ type: types.SEARCH_TERM_FAILURE, payload: error });
+      });
+  };
+}
+
