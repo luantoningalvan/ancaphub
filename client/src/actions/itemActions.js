@@ -16,7 +16,7 @@ export function fetchAllItems(config) {
     dispatch({ type: types.ITEMS_LOADING });
     axios
       .get(
-        `/api/items?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter &&
+        `/api/library?type=${type}&&page=${page}&&pageSize=${pageSize}&&orderBy=${order}${filter &&
         `&&filter=${filter}&&filterOn=${filterOn}`}${category && category !== "all" ?
           `&&category=${category}` : ''}`
       )
@@ -33,7 +33,7 @@ export function fetchItem(id) {
   return dispatch => {
     dispatch({ type: types.ITEMS_LOADING });
     axios
-      .get(`/api/items/${id}`)
+      .get(`/api/library/${id}`)
       .then(item => {
         dispatch({ type: types.FETCH_ITEM_SUCCESS, payload: item.data });
       })
@@ -45,8 +45,9 @@ export function fetchItem(id) {
 
 export function addItem(data, type) {
   return dispatch => {
+    console.log(data)
     axios
-      .post(`/api/items`, { ...data, type })
+      .post(`/api/library`, { ...data, type })
       .then(item => {
         dispatch({ type: types.ADD_ITEM_SUCCESS, payload: item.data });
         dispatch(showSnack('Item enviado com Sucesso'));
@@ -101,7 +102,7 @@ export const saveItem = item => async dispatch => {
 export function getContributions() {
   return dispatch => {
     axios
-      .get('/api/items/auth/contributions')
+      .get('/api/library/auth/contributions')
       .then(res => {
         dispatch({
           type: types.GET_CONTRIBUTIONS_SUCCESS,
@@ -118,7 +119,7 @@ export function getContributions() {
 
 export const getSaved = id => dispatch => {
   axios
-    .get(`/api/items/auth/saved`)
+    .get(`/api/library/auth/saved`)
     .then(collection => {
       dispatch({
         type: types.GET_SAVED_SUCCESS,

@@ -7,7 +7,7 @@ export function fetchAllCategories() {
     axios
       .get('/api/categories')
       .then(categories => {
-        dispatch({ type: types.ETCH_ALL_CATEGORIES, payload: categories.data });
+        dispatch({ type: types.FETCH_ALL_CATEGORIES, payload: categories.data });
       })
       .catch(error => {
         console.error('Erro ao obter a lista de categorias: ', error);

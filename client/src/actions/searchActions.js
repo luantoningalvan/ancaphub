@@ -9,7 +9,7 @@ export function setLastLocation(location) {
   return dispatch => {
     dispatch(searchLoading())
     axios
-      .put('/api/users/setLastLocation', location)
+      .patch('/api/users/setlocation', location)
       .then(user => {
         dispatch({ type: types.UPDATE_USER_SUCCESS, payload: user.data });
       })
@@ -23,7 +23,7 @@ export function searchUsers(radius) {
   return dispatch => {
     dispatch(searchLoading())
     axios
-      .get(`/api/users/search/searchNearbyUsers?radius=${radius}`)
+      .get(`/api/search/nearby?radius=${radius}`)
       .then(users => {
         dispatch({ type: types.SEARCH_NEARBY_USERS, payload: users.data });
       })

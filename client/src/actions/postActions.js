@@ -1,20 +1,6 @@
 import axios from '../services/api';
 import types from './_types'
 
-export function loadAllPublicPosts() {
-  return dispatch => {
-    dispatch({ type: types.LOADING_POSTS });
-    axios
-      .get(`/api/posts/public`)
-      .then(function (posts) {
-        dispatch({ type: types.LOAD_PUBLIC_POSTS_SUCCESS, payload: posts.data });
-      })
-      .catch(function (error) {
-        console.error('Erro ao carregar postagens: ', error);
-      });
-  };
-}
-
 export function loadUserFeed(props) {
   const pageSize = props && props.pageSize || 10
   const currentPage = props && props.currentPage || 1
@@ -22,7 +8,7 @@ export function loadUserFeed(props) {
   return dispatch => {
     dispatch({ type: types.LOADING_POSTS });
     axios
-      .get(`/api/posts/feed`, { params: { pageSize, currentPage } })
+      .get(`/api/posts/auth/feed`, { params: { pageSize, currentPage } })
       .then(function (posts) {
         if(currentPage > 1){
           dispatch({ type: types.LOAD_MORE_POSTS_SUCCESS, payload: posts.data });

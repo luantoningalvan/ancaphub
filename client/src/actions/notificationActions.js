@@ -16,7 +16,7 @@ export function fetchNotifications() {
 
 export function markAsReadAllNotifications() {
   return dispatch => {
-    axios.put('/api/notifications')
+    axios.put('/api/notifications/markallasread')
       .then(notifications => {
         dispatch({ type: types.READ_NOTIFICATIONS_SUCCESS, payload: notifications.data })
       })
