@@ -74,6 +74,7 @@ const get = async (req, res) => {
 
 
 const insert = async (req, res) => {
+  console.log(req)
   const { title, author, content, cover, categories, type } = req.body;
   const user = await User.findById(req.user.id);
 
@@ -189,6 +190,7 @@ const getAuthContributions = async (req, res) => {
     var result = await Item.find({ user: req.user.id }).populate('cover');
     res.send(result);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };
@@ -203,6 +205,7 @@ const getAuthSaved = async (req, res) => {
       });
     res.send(result);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };

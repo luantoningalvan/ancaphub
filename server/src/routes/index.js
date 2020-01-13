@@ -50,14 +50,14 @@ router.post('/groups', auth, Group.insert)
 // Library
 router.get('/library/', Library.getAll)
 router.get('/library/:id', Library.get)
-router.post('/library/', Library.insert)
+router.post('/library/', auth, Library.insert)
 router.put('/library/:id', Library.update)
 router.delete('/library/:id', Library.remove)
 router.post('/library/:id/approve', Library.approveItem)
-router.get('/library/auth/:id/contributions', Library.getAuthContributions)
-router.get('/library/auth/:id/saved', Library.getAuthSaved)
-router.post('/library/auth/save', Library.saveItem)
-router.post('/library/auth/addtolibrary', Library.addToLibrary)
+router.get('/library/auth/contributions', auth, Library.getAuthContributions)
+router.get('/library/auth/saved', auth, Library.getAuthSaved)
+router.post('/library/auth/save', auth, Library.saveItem)
+router.post('/library/auth/addtolibrary', auth, Library.addToLibrary)
 
 // Notification
 router.get('/notifications', auth, Notification.getAll)
@@ -91,9 +91,9 @@ router.get('/search/nearby', auth, Search.searchNearbyUsers)
 
 // User
 router.get('/users', User.getAll)
-router.get('/:id', User.get)
-router.post('/', User.insert)
-router.put('/:id', auth, User.update)
-router.patch('/setlocation', auth, User.updateLocation)
+router.get('/users/:id', User.get)
+router.post('/users', User.insert)
+router.put('/users', auth, User.update)
+router.patch('/users/setlocation', auth, User.updateLocation)
 
 module.exports = router

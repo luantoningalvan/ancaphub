@@ -6,76 +6,76 @@ const Notification = require('../models/NotificationModel')
 
 const getFollowers = async (req, res) => {
   try {
-    var result = await User.findById(request.params.id, 'followers').populate(
+    var result = await User.findById(req.params.id, 'followers').populate(
       'followers',
       'username avatar _id'
     );
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
 const getFollowing = async (req, res) => {
   try {
-    var result = await User.findById(request.params.id, 'following').populate(
+    var result = await User.findById(req.params.id, 'following').populate(
       'following',
       'username avatar _id'
     );
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
 const getCollection = async (req, res) => {
   try {
     var result = await User.findById(
-      request.params.id,
+      req.params.id,
       'personalCollection'
     ).populate({
       path: 'personalCollection',
       model: 'Item',
       populate: { path: 'cover', model: 'File' }
     });
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
 const getContributions = async (req, res) => {
   try {
     var result = await Item.find({
-      user: request.params.id,
+      user: req.params.id,
       status: 'published'
     }).populate('cover');
 
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
 const followUser = async (req, res) => {
-  const { id } = request.params;
+  const { id } = req.params;
   try {
     const userFollowed = await User.findById(id);
-    const follower = await User.findById(request.user.id);
+    const follower = await User.findById(req.user.id);
     if (userFollowed) {
-      if (userFollowed.followers.includes(request.user.id)) {
-        return response
+      if (userFollowed.followers.includes(req.user.id)) {
+        return res
           .status(400)
           .json({ errors: [{ msg: 'O usuário já é seguido pelo usuário logado.' }] });
       }
 
-      userFollowed.followers.push(request.user.id);
+      userFollowed.followers.push(req.user.id);
       follower.following.push(id);
 
 
       await userFollowed.save();
       var result = await follower.save();
-      response.send(result.following);
+      res.send(result.following);
 
       const notify = new Notification({
         receiver: userFollowed._id,
@@ -90,39 +90,39 @@ const followUser = async (req, res) => {
 
       await notify.save();
     } else {
-      return response
+      return res
         .status(400)
         .json({ errors: [{ msg: 'Esse usuário não existe.' }] });
     }
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
 const unfollowUser = async (req, res) => {
-  const { id } = request.params;
+  const { id } = req.params;
   try {
     const userFollowed = await User.findById(id);
-    const follower = await User.findById(request.user.id);
+    const follower = await User.findById(req.user.id);
     if (userFollowed) {
-      if (!userFollowed.followers.includes(request.user.id)) {
-        return response
+      if (!userFollowed.followers.includes(req.user.id)) {
+        return res
           .status(400)
           .json({ errors: [{ msg: 'O usuário já é seguido pelo usuário logado.' }] });
       }
 
-      userFollowed.followers.pull(request.user.id);
+      userFollowed.followers.pull(req.user.id);
       follower.following.pull(id);
       await userFollowed.save();
       var result = await follower.save();
-      response.send(result.following);
+      res.send(result.following);
     } else {
-      return response
+      return res
         .status(400)
         .json({ errors: [{ msg: 'Esse usuário não existe.' }] });
     }
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 };
 
