@@ -1,17 +1,9 @@
-const express = require("express");
-const router = express.Router();
 const User = require("../models/UserModel");
-const Notifications = require("../models/NotificationModel")
 const bcrypt = require("bcryptjs");
-const keys = require("../../config/keys")
+const keys = require("../config/keys")
 const jwt = require('jsonwebtoken')
-const { check, validationResult } = require('express-validator');
-const auth = require('../middleware/auth')
 
-// @route 	GET api/auth
-// @desc 	  Obtém os dados do usuário logado
-// @access 	Private
-router.get('/', auth, async (req, res) => {
+const get = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
@@ -19,24 +11,9 @@ router.get('/', auth, async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-});
+}
 
-// @route 	POST api/auth
-// @desc 	  Loga um usuário no sistema
-// @access 	Public
-router.post("/", [
-  check('email', "E-mail inválido.")
-    .isEmail(),
-  check('password', "A campo SENHA é obrigatório.")
-    .exists()
-
-], async (req, res) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
-
+const insert = async (req, res) => {
   const { email, password, level } = req.body
 
   try {
@@ -77,6 +54,6 @@ router.post("/", [
   } catch (error) {
     res.status(500).send(`Erro no servidor: ${error}`)
   }
-});
+}
 
-module.exports = router
+module.exports = { insert, get }
