@@ -1,6 +1,9 @@
 const Item = require('../models/CollectionItemModel');
 const User = require('../models/UserModel');
-const Notification = require('../models/NotificationModel');
+
+// Services
+const { notificationService } = require('../services')
+const { createNotification } = notificationService
 
 const getAll = async (req, res) => {
   const pageSize = req.query.pageSize ? req.query.pageSize : 10;
@@ -162,13 +165,13 @@ const remove = async (req, res) => {
   }
 };
 
-const approveItem = async (req, res) => {
+const approveItem = async (req, res, next) => {
   try {
     const result = await Item.findByIdAndUpdate(req.params.id, {
       status: 'published'
     });
 
-    const notify = new Notification({
+    await createNotification({
       receiver: result.user,
       type: 'approved_item',
       data: {
@@ -176,12 +179,12 @@ const approveItem = async (req, res) => {
         type: result.type,
         title: result.title
       }
-    });
+    })
 
-    await notify.save();
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 

@@ -1,8 +1,9 @@
 const User = require('../models/UserModel');
-const Post = require('../models/PostModel');
 const Item = require('../models/CollectionItemModel');
-const File = require('../models/FileModel');
-const Notification = require('../models/NotificationModel')
+
+// Services
+const { notificationService } = require('../services')
+const { createNotification } = notificationService
 
 const getFollowers = async (req, res) => {
   try {
@@ -77,7 +78,7 @@ const followUser = async (req, res) => {
       var result = await follower.save();
       res.send(result.following);
 
-      const notify = new Notification({
+      await createNotification({
         receiver: userFollowed._id,
         sender: follower._id,
         type: 'user_followed',
@@ -86,15 +87,15 @@ const followUser = async (req, res) => {
           username: userFollowed.username,
           avatar: userFollowed.avatar
         }
-      });
+      })
 
-      await notify.save();
     } else {
       return res
         .status(400)
         .json({ errors: [{ msg: 'Esse usuário não existe.' }] });
     }
   } catch (error) {
+    console.log(error.message)
     res.status(500).send(error);
   }
 };

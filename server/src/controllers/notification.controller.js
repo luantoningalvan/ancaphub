@@ -1,26 +1,22 @@
-const Notification = require('../models/NotificationModel');
+const { notificationService } = require('../services')
+const { getManyNotifications, updateMany } = notificationService
 
-const getAll = async (req, res) => {
-  const notifications = await Notification.find({
-    receiver: req.user.id
-  })
-    .sort({ created_at: 'desc' })
-    .populate("sender", "username avatar _id");
-  res.send({
-    notifications,
-    notReadCount: notifications.filter((n) => { return n.read_by.length == 0 || n.read_by.includes({ readerId: req.user.id }) }).length
-  });
+const getAll = async (req, res, next) => {
+  try {
+    const result = await getManyNotifications({ filter: { receiver: req.user.id } }, req.user)
+    res.status(200).send(result)
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
 };
 
-
-const markAllAsRead = async (req, res) => {
-  const notifications = await Notification.updateMany(
-    { receiver: req.user.id },
-    { $push: { read_by: { readerId: req.user.id } } }
-  )
-    .sort({ created_at: 'desc' })
-    .populate("sender", "username avatar _id");
-  res.send(notifications);
+const markAllAsRead = async (req, res, next) => {
+  try {
+    const result = await updateMany({ target: {receiver: req.user.id}, operation: { $push: { read_by: { readerId: req.user.id } }}})
+    res.status(200).send(result)
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
 };
 
 module.exports = { getAll, markAllAsRead }

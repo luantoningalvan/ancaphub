@@ -1,6 +1,9 @@
 const Item = require("../models/CollectionItemModel")
 const Rate = require("../models/RateModel")
-const Notification = require("../models/NotificationModel")
+
+// Services
+const { notificationService } = require('../services')
+const { createNotification } = notificationService
 
 const get = async (req, res) => {
   try {
@@ -11,7 +14,7 @@ const get = async (req, res) => {
   }
 };
 
-const insert = async (req, res) => {
+const insert = async (req, res, next) => {
   try {
     const rate = new Rate({
       item: req.body.item,
@@ -28,23 +31,23 @@ const insert = async (req, res) => {
       rateAverage: (item.rateValue + rate.value) / (item.rateCount + 1)
     }
 
-    const notify = new Notification({
+    await createNotification({
       sender: rate.user,
       receiver: item.user,
       type: 'rated_item',
       data: {
         _id: item._id,
-        title: item.title
+        title: item.title,
+        type: item.type
       }
-    });
+    })
 
     await item.update(updateItem)
     await rate.save();
-    await notify.save();
     await rate.populate('user', 'username _id avatar').execPopulate()
     res.send(rate);
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
