@@ -1,45 +1,50 @@
-const Category = require('../models/CategoryModel');
+const { categoryService } = require('../services')
+const { getManyCategories, getCategory, insertCategory, updateCategory } = categoryService
 
 const getAll = async (req, res) => {
   try {
-    const result = await Category.find().sort('title')
+    const result = await getManyCategories()
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
 const get = async (req, res) => {
+  const id = req.params.id
+
   try {
-    const result = await Category.findById(req.params.id)
+    const result = await getCategory(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
 const insert = async (req, res) => {
+  const data = req.body
+
   try {
-    const category = new Category(req.body);
-    const result = await category.save();
-    res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    const result = await insertCategory(data);
+    res.status(201).send(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
 const update = async (req, res) => {
-  try {
-    const category = await Category.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+  const id = req.params.id
+  const data = req.body
 
-    var result = await category.save();
-    res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+  try {
+    var result = await updateCategory(id, data);
+    res.send(result)
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
