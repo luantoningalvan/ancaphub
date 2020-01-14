@@ -1,23 +1,23 @@
-const File = require('../models/FileModel');
+const { fileService } = require('../services')
+const { insertFile, getFiles } = fileService
 
-const insert = async (req, res) => {
-  const { originalname, name, size, location: url = '' } = req.file;
-
-  const post = await File.create({
-    originalname,
-    name,
-    size,
-    url
-  });
-
-  return res.json(post);
+const insert = async (req, res, next) => {
+  try {
+    const { originalname, name, size, location: url = '' } = req.file;
+    const result = await insertFile({originalname, name, size, location})
+    res.status(200).json(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
 }
 
-const get = async (req, res) => {
+const get = async (req, res, next) => {
   try {
     const filesToLoad = JSON.parse(req.query['files']);
-    const files = await File.find({ _id: { $in: filesToLoad } });
-    res.status(200).send(files);
+    const result = await getFiles(filesToLoad)
+    res.status(200).send(result);
+    next()
   } catch (error) {
     res.status(500).send(error);
   }
