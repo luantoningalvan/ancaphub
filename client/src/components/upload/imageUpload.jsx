@@ -45,7 +45,7 @@ function ImageUpload({ field, form, ...props }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const getFiles = async (files) => {
-    await axios.get(`/api/upload?${querystring.stringify({ 'files': JSON.stringify(files) })}`)
+    await axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(files) })}`)
       .then(result =>
         setUploadedFiles(result.data.map(file => ({
           id: file._id,
@@ -110,7 +110,7 @@ function ImageUpload({ field, form, ...props }) {
     data.append('file', uploadedFile.file, uploadedFile.name);
 
     axios
-      .post('/api/upload', data, {
+      .post('/api/files', data, {
         onUploadProgress: e => {
           const progress = parseInt(Math.round((e.loaded * 100) / e.total));
 

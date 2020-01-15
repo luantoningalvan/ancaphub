@@ -151,7 +151,7 @@ export const getUserFollowing = id => dispatch => {
 
 export const followUser = user => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${user}/follow`);
+    const res = await axios.post(`/api/users/${user}/follow`);
     dispatch({
       type: types.FOLLOW_USER_SUCCESS,
       payload: res.data
@@ -165,7 +165,7 @@ export const followUser = user => async dispatch => {
 
 export const unfollowUser = user => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${user}/unfollow`);
+    const res = await axios.post(`/api/users/${user}/unfollow`);
     dispatch({
       type: types.UNFOLLOW_USER_SUCCESS,
       payload: res.data

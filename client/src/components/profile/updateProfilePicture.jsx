@@ -20,7 +20,7 @@ function ImageUpload({ field, form }) {
 
       try {
         setLoading(true)
-        const res = await axios.post(`/api/upload`, formData, config);
+        const res = await axios.post(`/api/files`, formData, config);
         setLoading(false)
         setFieldValue('avatar', res.data.url);
       } catch (error) {

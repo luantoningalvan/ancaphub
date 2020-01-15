@@ -49,7 +49,7 @@ function SingleBook(props) {
   } = props.book.item;
 
   const getFiles = () => {
-    axios.get(`/api/upload?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
+    axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
       .then(result =>
         setFiles(result.data.map(file => ({
           id: file._id,

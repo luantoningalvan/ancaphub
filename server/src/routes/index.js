@@ -38,8 +38,8 @@ router.post('/categories', auth, admin, Category.insert)
 router.put('/categories/:id', auth, admin, Category.update)
 
 // File
-router.get('/upload/:id', File.get)
-router.post('/upload', auth,  multer(multerConfig).single('file'), File.insert)
+router.get('/files', File.get)
+router.post('/files', auth,  multer(multerConfig).single('file'), File.insert)
 
 // Group
 router.get('/groups/:id', Group.get)

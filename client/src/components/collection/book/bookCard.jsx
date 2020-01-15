@@ -54,7 +54,7 @@ export default function BookCard(props) {
   const { book } = props;
 
   const getFiles = () => {
-    axios.get(`/api/upload?${querystring.stringify({ 'files': JSON.stringify(book.extraFields.downloadOptions) })}`)
+    axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(book.extraFields.downloadOptions) })}`)
       .then(result =>
         setFiles(result.data.map(file => ({
           id: file._id,
