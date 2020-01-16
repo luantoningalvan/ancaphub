@@ -77,8 +77,8 @@ router.get('/users/:id/followers', Profile.getFollowers)
 router.get('/users/:id/following', Profile.getFollowing)
 router.get('/users/:id/contributions', Profile.getContributions)
 router.get('/users/:id/collection', Profile.getCollection)
-router.post('/users/:id/follow', auth, Profile.followUser)
-router.post('/users/:id/unfollow', auth, Profile.unfollowUser)
+router.post('/users/:id/follow', auth, Profile.follow)
+router.post('/users/:id/unfollow', auth, Profile.unfollow)
 
 // Rate
 router.get('/rates/:id', Rate.get)

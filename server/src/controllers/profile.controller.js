@@ -1,130 +1,91 @@
-const User = require('../models/UserModel');
-const Item = require('../models/LibraryModel');
-
-// Services
-const { notificationService } = require('../services')
+const { notificationService, profileService } = require('../services')
 const { createNotification } = notificationService
+const { getFollowedUsers, getUserFollowers, getUserContributions, getUserCollection, followUser, unfollowUser } = profileService
 
-const getFollowers = async (req, res) => {
+const getFollowers = async (req, res, next) => {
+  const { id } = req.params
+
   try {
-    var result = await User.findById(req.params.id, 'followers').populate(
-      'followers',
-      'username avatar _id'
-    );
+    const result = await getUserFollowers(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const getFollowing = async (req, res) => {
+const getFollowing = async (req, res, next) => {
+  const { id } = req.params
+
   try {
-    var result = await User.findById(req.params.id, 'following').populate(
-      'following',
-      'username avatar _id'
-    );
+    const result = await getFollowedUsers(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const getCollection = async (req, res) => {
+const getCollection = async (req, res, next) => {
+  const { id } = req.params
+
   try {
-    var result = await User.findById(
-      req.params.id,
-      'personalCollection'
-    ).populate({
-      path: 'personalCollection',
-      model: 'Item',
-      populate: { path: 'cover', model: 'File' }
-    });
+    const result = await getUserCollection(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const getContributions = async (req, res) => {
+const getContributions = async (req, res, next) => {
+  const { id } = req.params
+
   try {
-    var result = await Item.find({
-      user: req.params.id,
-      status: 'published'
-    }).populate('cover');
-
+    const result = await getUserContributions(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const followUser = async (req, res) => {
-  const { id } = req.params;
+const follow = async (req, res, next) => {
+  const { id: followedId } = req.params;
+  const { id: followerId } = req.user;
+
   try {
-    const userFollowed = await User.findById(id);
-    const follower = await User.findById(req.user.id);
-    if (userFollowed) {
-      if (userFollowed.followers.includes(req.user.id)) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'O usuário já é seguido pelo usuário logado.' }] });
+    const result = await followUser(followedId, followerId)
+
+    await createNotification({
+      receiver: followedId,
+      sender: followerId,
+      type: 'user_followed',
+      data: {
+        _id: result._id,
+        username: result.username,
+        avatar: result.avatar
       }
+    })
 
-      userFollowed.followers.push(req.user.id);
-      follower.following.push(id);
-
-
-      await userFollowed.save();
-      var result = await follower.save();
-      res.send(result.following);
-
-      await createNotification({
-        receiver: userFollowed._id,
-        sender: follower._id,
-        type: 'user_followed',
-        data: {
-          _id: userFollowed._id,
-          username: userFollowed.username,
-          avatar: userFollowed.avatar
-        }
-      })
-
-    } else {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: 'Esse usuário não existe.' }] });
-    }
-  } catch (error) {
-    console.log(error.message)
-    res.status(500).send(error);
+    res.send(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const unfollowUser = async (req, res) => {
-  const { id } = req.params;
+const unfollow = async (req, res, next) => {
+  const { id: followedId } = req.params;
+  const { id: followerId } = req.user;
+
   try {
-    const userFollowed = await User.findById(id);
-    const follower = await User.findById(req.user.id);
-    if (userFollowed) {
-      if (!userFollowed.followers.includes(req.user.id)) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'O usuário já é seguido pelo usuário logado.' }] });
-      }
-
-      userFollowed.followers.pull(req.user.id);
-      follower.following.pull(id);
-      await userFollowed.save();
-      var result = await follower.save();
-      res.send(result.following);
-    } else {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: 'Esse usuário não existe.' }] });
-    }
-  } catch (error) {
-    res.status(500).send(error);
+    const result = await unfollowUser(followedId, followerId)
+    res.send(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-module.exports = { getFollowers, getFollowing, getCollection, getContributions, followUser, unfollowUser }
+module.exports = { getFollowers, getFollowing, getCollection, getContributions, follow, unfollow }
