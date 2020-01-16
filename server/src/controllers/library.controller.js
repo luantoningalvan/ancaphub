@@ -54,6 +54,7 @@ const get = async (req, res, next) => {
   try {
     const result = await getItem(id)
     res.send(result);
+    next()
   } catch (e) {
     res.sendStatus(500) && next(e)
   }
@@ -76,6 +77,7 @@ const insert = async (req, res, next) => {
 
     const result = await insertItem(data)
     res.send(result);
+    next()
   } catch (e) {
     res.sendStatus(500) && next(e)
   }
@@ -96,6 +98,7 @@ const update = async (req, res, next) => {
 
     const result = await updateItem(id, data)
     res.send(result);
+    next()
   } catch (e) {
     res.sendStatus(500) && next(e)
   }
@@ -107,6 +110,7 @@ const remove = async (req, res, next) => {
   try {
     const result = await removeItem(id)
     res.send(result);
+    next()
   } catch (e) {
     res.sendStatus(500) && next(e)
   }

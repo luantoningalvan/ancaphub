@@ -28,11 +28,15 @@ const getManyItems = async (query, type) => {
   }
 }
 
-const getItem = async (id) => {
+const getItem = async (id, config) => {
   try {
-    return await Item.findById(id)
+    if(config.populate){
+      return await Item.findById(id)
       .populate('user', 'username avatar _id')
       .populate('cover');
+    } else {
+      return await Item.findById(id)
+    }
   } catch (e) {
     throw new Error(e.message)
   }

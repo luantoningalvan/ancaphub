@@ -1,36 +1,40 @@
-const Item = require("../models/LibraryModel")
-const Rate = require("../models/RateModel")
-
-// Services
-const { notificationService } = require('../services')
+const { notificationService, rateService, libraryService } = require('../services')
 const { createNotification } = notificationService
+const { getRate, createRate } = rateService
+const { getItem, updateItem } = libraryService
 
 const get = async (req, res) => {
+  const { id } = req.params
   try {
-    var result = await Rate.find({ item: req.params.id }).populate("user", "_id username avatar").sort("createdAt");
+    const result = getRate(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
 const insert = async (req, res, next) => {
   try {
-    const rate = new Rate({
+    // Rate
+    const rateData = new Rate({
       item: req.body.item,
       user: req.user.id,
       value: req.body.value,
       comment: req.body.comment
     })
+    const rate = await createRate(rateData)
 
-    const item = await Item.findById(req.body.item)
-
-    const updateItem = {
+    // Item
+    const item = await getItem(req.body.item)
+    const updateItemData = {
       rateCount: item.rateCount + 1,
       rateValue: item.rateValue + rate.value,
       rateAverage: (item.rateValue + rate.value) / (item.rateCount + 1)
     }
+    await updateItem(updateItemData)
 
+    // Notification
     await createNotification({
       sender: rate.user,
       receiver: item.user,
@@ -42,13 +46,11 @@ const insert = async (req, res, next) => {
       }
     })
 
-    await item.update(updateItem)
-    await rate.save();
-    await rate.populate('user', 'username _id avatar').execPopulate()
     res.send(rate);
+    next()
   } catch (e) {
     res.sendStatus(500) && next(e)
   }
-};
+}
 
 module.exports = { get, insert }
