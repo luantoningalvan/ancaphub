@@ -1,12 +1,13 @@
-const Item = require('../models/CollectionItemModel');
+const Item = require('../models/LibraryModel');
 const User = require('../models/UserModel');
 
 // Services
-const { notificationService } = require('../services')
+const { notificationService, libraryService } = require('../services')
 const { createNotification } = notificationService
+const { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, getAuthSavedItems, addItemToLibrary, saveItem } = libraryService
 
-const getAll = async (req, res) => {
-  const pageSize = req.query.pageSize ? req.query.pageSize : 10;
+const getAll = async (req, res, next) => {
+  const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 10;
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0;
   const filter = req.query.filter || '';
   const filterOn = req.query.filterOn || '';
@@ -39,137 +40,83 @@ const getAll = async (req, res) => {
   filterQuery = { ...filterQuery, status };
 
   try {
-    const itemCount = await Item.countDocuments(filterQuery);
-
-    if (currentPage * pageSize > itemCount) {
-      return res.status(400).json([]);
-    }
-
-    var items = await Item.find(filterQuery)
-      .limit(parseInt(pageSize))
-      .skip(currentPage * pageSize)
-      .sort(sortQuery)
-      .populate('cover');
-
-    return res.status(200).json({
-      items,
-      type,
-      page: req.query.page || 1,
-      total: itemCount,
-      pageSize: pageSize
-    });
-  } catch (err) {
-    console.log('Erro ao obter a lista de itens:', err);
-    return res.status(500).json({ msg: 'Nenhum item encontrado' });
+    const result = await getManyItems({ pageSize, currentPage, filter: filterQuery, sort: sortQuery }, type)
+    res.status(200).send(result)
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 }
 
-const get = async (req, res) => {
+const get = async (req, res, next) => {
+  const id = req.params.id
+
   try {
-    var result = await Item.findById(req.params.id)
-      .populate('user', 'username avatar _id')
-      .populate('cover');
+    const result = await getItem(id)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-
-const insert = async (req, res) => {
-  console.log(req)
+const insert = async (req, res, next) => {
   const { title, author, content, cover, categories, type } = req.body;
-  const user = await User.findById(req.user.id);
 
   try {
-    let newItem = {
+    const data = {
       title,
       author,
       content,
       cover,
       categories,
-      status: user.role.includes('admin') ? 'published' : 'pending',
-      user: user._id,
+      status: 'pending',
+      user: req.user.id,
       type
     };
 
-    if (type == 'book') {
-      newItem = {
-        ...newItem,
-        extraFields: {
-          downloadOptions: req.body.downloadOptions
-        }
-      };
-    }
-
-    if (type == 'video') {
-      newItem = {
-        ...newItem,
-        extraFields: {
-          videoUrl: req.body.videoUrl
-        }
-      };
-    }
-
-    const item = new Item(newItem);
-    const result = await item.save();
+    const result = await insertItem(data)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
-};
+}
 
-const update = async (req, res) => {
-  const { title, author, content, cover, categories, type } = req.body;
+const update = async (req, res, next) => {
+  const { title, author, content, cover, categories } = req.body;
+  const { id } = req.params
 
   try {
-    let updatedItem = {
+    const data = {
       title,
       author,
       content,
       cover,
-      categories
+      categories,
     };
 
-    if (type == 'book') {
-      updatedItem = {
-        ...updatedItem,
-        extraFields: {
-          downloadOptions: req.body.downloadOptions
-        }
-      };
-    }
-
-    if (type == 'video') {
-      updatedItem = {
-        ...updatedItem,
-        extraFields: {
-          videoUrl: req.body.videoUrl
-        }
-      };
-    }
-
-    const result = await Item.findByIdAndUpdate(req.params.id, updatedItem);
+    const result = await updateItem(id, data)
     res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
+}
+
+const remove = async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const result = await removeItem(id)
+    res.send(result);
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
-const remove = async (req, res) => {
-  try {
-    var result = await Item.deleteOne({ _id: req.params.id }).exec();
-    res.send(result);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+const approve = async (req, res, next) => {
+  const { id } = req.params
 
-const approveItem = async (req, res, next) => {
   try {
-    const result = await Item.findByIdAndUpdate(req.params.id, {
-      status: 'published'
-    });
+    const result = await approveItem(id)
 
     await createNotification({
       receiver: result.user,
@@ -188,104 +135,74 @@ const approveItem = async (req, res, next) => {
   }
 };
 
-const getAuthContributions = async (req, res) => {
+const getAuthContributions = async (req, res, next) => {
+  const { id } = req.user
+
   try {
-    var result = await Item.find({ user: req.user.id }).populate('cover');
+    const result = await getAuthContributedItems(id)
     res.send(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
-const getAuthSaved = async (req, res) => {
+const getAuthSaved = async (req, res, next) => {
+  const { id } = req.user
+
   try {
-    var result = await User.findById(req.user.id, 'saved')
-      .populate({
-        path: 'saved',
-        model: 'Item',
-        populate: { path: 'cover', model: 'File' }
-      });
+    const result = await getAuthSavedItems(id)
     res.send(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-};
-
-const saveItem = async (req, res) => {
-  const { item: itemId } = req.body;
-
-  try {
-    const item = await Item.findById(itemId);
-    if (item) {
-      const user = await User.findById(req.user.id);
-
-      if (user.saved.includes(itemId)) {
-        user.saved.pull(itemId);
-      } else {
-        user.saved.push(itemId);
-      }
-
-      await item.save();
-      const result = await user.save();
-      res.send(result.saved);
-    } else {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: 'Este esse item não existe no acervo.' }] });
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-const addToLibrary = async (req, res) => {
-  const { item: itemId, post } = req.body;
-
-  try {
-    const item = await Item.findById(itemId);
-    if (item) {
-      const user = await User.findById(req.user.id);
-
-      if (user.personalCollection.includes(itemId)) {
-        user.personalCollection.pull(itemId);
-        item.collectedBy.pull(req.user.id);
-      } else {
-        user.personalCollection.push(itemId);
-        item.collectedBy.push(req.user.id);
-      }
-
-      await item.save();
-
-      if (post) {
-        const cover = await File.findById(item.cover);
-
-        const newPost = new Post({
-          type: 'collection_item',
-          user: req.user.id,
-          extraFields: {
-            _id: item._id,
-            title: item.title,
-            cover: cover.url,
-            type: item.type,
-            description: item.content
-          }
-        });
-
-        await newPost.save();
-      }
-
-      const result = await user.save();
-      res.send(result.personalCollection);
-    } else {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: 'Este esse item não existe no acervo.' }] });
-    }
-  } catch (error) {
-    res.status(500).send(error);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 }
 
-module.exports = { get, getAll, insert, update, remove, approveItem, getAuthContributions, getAuthSaved, saveItem, addToLibrary }
+const save = async (req, res, next) => {
+  const { item } = req.body;
+  const { id: user } = req.user;
+
+  try {
+    const result = saveItem(user, item)
+    res.send(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
+}
+
+
+const addToLibrary = async (req, res) => {
+  const { item, post } = req.body;
+  const { id: user } = req.user;
+
+  try {
+    const result = addItemToLibrary(user, item)
+
+    if (post) {
+      const cover = await File.findById(item.cover);
+
+      const newPost = new Post({
+        type: 'collection_item',
+        user: req.user.id,
+        extraFields: {
+          _id: item._id,
+          title: item.title,
+          cover: cover.url,
+          type: item.type,
+          description: item.content
+        }
+      });
+
+      await newPost.save();
+    }
+
+    res.send(result);
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
+  }
+}
+
+module.exports = { get, getAll, insert, update, remove, approve, getAuthContributions, getAuthSaved, save, addToLibrary }

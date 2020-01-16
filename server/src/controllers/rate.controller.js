@@ -1,4 +1,4 @@
-const Item = require("../models/CollectionItemModel")
+const Item = require("../models/LibraryModel")
 const Rate = require("../models/RateModel")
 
 // Services

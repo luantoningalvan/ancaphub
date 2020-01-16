@@ -1,4 +1,4 @@
-const Item = require("../models/CollectionItemModel")
+const Item = require("../models/LibraryModel")
 const User = require("../models/UserModel")
 const haversine = require('haversine');
 

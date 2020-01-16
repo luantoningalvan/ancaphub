@@ -1,5 +1,5 @@
 const User = require('../models/UserModel');
-const Item = require('../models/CollectionItemModel');
+const Item = require('../models/LibraryModel');
 
 // Services
 const { notificationService } = require('../services')
