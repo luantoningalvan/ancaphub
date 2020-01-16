@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -15,10 +15,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchAllItems } from '../../actions/itemActions';
 
-const Sidebar = props => {
+const Sidebar = ({items, fetchAllItems}) => {
   useEffect(() => {
-    props.fetchAllItems({ pageSize: 5, order: 'desc'});
-  }, [])
+    fetchAllItems({ pageSize: 5, order: 'desc'});
+  }, [fetchAllItems])
 
   return (
     <>
@@ -27,14 +27,14 @@ const Sidebar = props => {
           Últimas contribuições
             </Typography>
       </Box>
-      {props.items.loading ? (
+      {items.loading ? (
         <Box pt={2}>
           <LoadingItems />
         </Box>
       ) : (
           <List disablePadding>
-            {props.items.allItems.items &&
-              props.items.allItems.items.map(item => (
+            {items.allItems.items &&
+              items.allItems.items.map(item => (
                 <ListItem alignItems="flex-start" disableGutters key={item._id}>
                   <ListItemAvatar
                     style={{

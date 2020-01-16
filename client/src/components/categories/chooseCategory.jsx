@@ -311,14 +311,14 @@ const components = {
   ValueContainer,
 };
 
-function ChooseCategory({ field, form, ...props }) {
+function ChooseCategory({ field, form, fetchAllCategories, categories }) {
   const classes = useStyles();
   const theme = useTheme();
   useEffect(() => {
-    props.fetchAllCategories();
-  }, []);
+    fetchAllCategories();
+  }, [fetchAllCategories]);
 
-  const mapAllCategories = props.categories.allCategories.map(category => ({
+  const mapAllCategories = categories.allCategories.map(category => ({
     value: category._id,
     label: category.name
   }));
@@ -363,7 +363,7 @@ function ChooseCategory({ field, form, ...props }) {
       options={mapAllCategories}
       value={mapSelectedCategories}
       onChange={handleChangeMulti}
-      isLoading={props.categories.isLoading}
+      isLoading={categories.isLoading}
       isMulti
     />
   );

@@ -20,7 +20,7 @@ import isEmpty from 'is-empty'
 import NewGroup from '../../components/groups/newGroup'
 import LoadContent from '../../components/loaders/loadContent'
 
-const Groups = props => {
+const Groups = ({groups,auth,fetchAllAuthGroups}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -28,14 +28,14 @@ const Groups = props => {
   };
 
   useEffect(() => {
-    props.fetchAllPublicGroups()
+    fetchAllPublicGroups()
   }, [])
 
   useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      props.fetchAllAuthGroups()
+    if (auth.isAuthenticated) {
+      fetchAllAuthGroups()
     }
-  }, [props.auth.isAuthenticated])
+  }, [auth.isAuthenticated, fetchAllAuthGroups])
 
   return (
     <Template>
@@ -66,11 +66,11 @@ const Groups = props => {
           Seus Grupos
         </Typography>
 
-        <LoadContent loading={props.groups.loading}>
-          {!isEmpty(props.groups.authGroups) ? (
+        <LoadContent loading={groups.loading}>
+          {!isEmpty(groups.authGroups) ? (
             <Grid container spacing={2}>
-              {props.groups.authGroups.map(group => (
-                <Grid item xs={3}>
+              {groups.authGroups.map(group => (
+                <Grid item xs={3} key={group._id}>
                   <GroupCard group={group} />
                 </Grid>
               ))}
@@ -90,11 +90,11 @@ const Groups = props => {
           Grupos Públicos
         </Typography>
 
-        <LoadContent loading={props.groups.loading}>
-          {!isEmpty(props.groups.allGroups) ? (
+        <LoadContent loading={groups.loading}>
+          {!isEmpty(groups.allGroups) ? (
             <Grid container spacing={2}>
-              {props.groups.allGroups.map(group => (
-                <Grid item xs={3}>
+              {groups.allGroups.map(group => (
+                <Grid item xs={3} key={group._id}>
                   <GroupCard group={group} />
                 </Grid>
               ))}

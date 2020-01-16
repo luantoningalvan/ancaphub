@@ -18,11 +18,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
 
-function SingleArticle(props) {
-  const { id } = props.match.params;
-  useEffect(() => props.fetchItem(id), []);
+function SingleArticle({match, fetchItem, article}) {
+  const { id } = match.params;
+  useEffect(() => fetchItem(id), [id, fetchItem]);
 
-  const { title, author, categories, content, cover, type } = props.article.item;
+  const { title, author, categories, content, cover, type } = article.item;
 
   const useStyles = makeStyles(theme => ({
     banner: {
@@ -46,8 +46,8 @@ function SingleArticle(props) {
 
   return (
     <Template noPadding>
-      <LoadContent loading={props.article.loading}>
-        {!isEmpty(props.article.item) && type === 'article' ? (
+      <LoadContent loading={article.loading}>
+        {!isEmpty(article.item) && type === 'article' ? (
           <Fragment>
             <Title title={`${title} - ${author}`} />
             <div className={classes.banner}>

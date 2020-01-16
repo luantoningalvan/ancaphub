@@ -19,22 +19,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchRates, addRate } from '../../actions/rateActions';
 
-function Ratings(props) {
+function Ratings({rates, item, auth, fetchRates}) {
   const [open, setOpen] = React.useState(false);
-
   const [value, setValue] = React.useState(0);
   const [comment, setComment] = React.useState('');
 
-  useEffect(() => props.fetchRates(props.item._id), [props.item._id]);
+  useEffect(() => fetchRates(item._id), [item, fetchRates]);
   function handleClickOpen() {
     setOpen(true);
   }
 
   const userRate =
-    props.auth.isAuthenticated &&
-    props.rates &&
-    props.rates.filter(value => {
-      return value.user._id === props.auth.user._id;
+    auth.isAuthenticated &&
+    rates &&
+    rates.filter(value => {
+      return value.user._id === auth.user._id;
     });
 
   function handleClose() {
@@ -45,12 +44,12 @@ function Ratings(props) {
     handleClose();
     setValue(0);
     setComment('');
-    props.addRate({ item: props.item._id, value, comment });
+    addRate({ item: item._id, value, comment });
   }
 
   return (
     <div>
-      {props.auth.isAuthenticated && (
+      {auth.isAuthenticated && (
         <Box mb={3}>
           {!isEmpty(userRate) ? (
             <Fragment>
@@ -58,7 +57,7 @@ function Ratings(props) {
                 Sua Avaliação
               </Typography>
               {userRate.map(rate => (
-                <Paper>
+                <Paper key={rate._id}>
                   <Box p={1.5}>
                     <Grid container spacing={2}>
                       <Grid item>
@@ -102,13 +101,13 @@ function Ratings(props) {
       )}
 
       <Box>
-        {!isEmpty(props.rates) ? (
+        {!isEmpty(rates) ? (
           <Box mb={2}>
             <Typography
               variant="h6"
               component="h3">{`Todas Avaliações`}</Typography>
 
-            {props.rates.map(rate => (
+            {rates.map(rate => (
               <Box key={rate._id} my={1}>
                 <Paper>
                   <Box p={1.5}>
@@ -150,7 +149,7 @@ function Ratings(props) {
         fullWidth
         maxWidth="xs">
         <DialogTitle id="form-dialog-title">
-          Avaliar {props.item.title}
+          Avaliar {item.title}
         </DialogTitle>
         <DialogContent>
           <Box display="flex" justifyContent="center" mb={2}>

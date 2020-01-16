@@ -12,11 +12,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
 
-function SingleVideo(props) {
-  const { id } = props.match.params;
-  useEffect(() => props.fetchItem(id), []);
+function SingleVideo({match, fetchItem, video}) {
+  const { id } = match.params;
+  useEffect(() => fetchItem(id), [fetchItem, id]);
 
-  const { title, author, categories, content, extraFields } = props.video.item;
+  const { title, author, categories, content, extraFields } = video.item;
 
   const useStyles = makeStyles(theme => ({
     banner: {
@@ -49,8 +49,8 @@ function SingleVideo(props) {
 
   return (
     <Template noPadding>
-      <LoadContent loading={props.video.loading}>
-        {!isEmpty(props.video.item) && props.video.item.type === 'video' ? (
+      <LoadContent loading={video.loading}>
+        {!isEmpty(video.item) && video.item.type === 'video' ? (
           <Fragment>
             <Title title={title} />
             <Box className={classes.banner}>

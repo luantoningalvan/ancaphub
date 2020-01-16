@@ -56,7 +56,7 @@ function PostNewStatus(props) {
                   </div>
                   <Button
                     color="secondary"
-                    disabled={values.content == ""}
+                    disabled={values.content === ""}
                     variant="contained"
                     size="small"
                     type="submit">

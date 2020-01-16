@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     height: '100%',
     width: 'calc(100% - 240px)',
-    display: 'flex',
     flexDirection: 'column'
   },
   groupHeader: {
@@ -41,16 +40,17 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SingleGroup = props => {
+const SingleGroup = ({fetchGroup, groups, match}) => {
   const classes = useStyles()
-
+  const { id } = match.params
+  
   useEffect(() => {
-    props.fetchGroup(props.match.params.id)
-  }, [])
+    fetchGroup(id)
+  }, [fetchGroup, id])
 
   function showComponent() {
-    if (!props.groups.loading) {
-      switch (props.match.path) {
+    if (!groups.loading) {
+      switch (match.path) {
         case '/groups/:id':
           return <Wall />;
         case '/groups/:id/chat':
@@ -60,7 +60,7 @@ const SingleGroup = props => {
         case '/groups/:id/members':
           return <Members />;
         default:
-          console.log(props.match.path);
+          console.log(match.path);
       }
     } else {
       return (
@@ -73,18 +73,18 @@ const SingleGroup = props => {
 
   return (
     <Template noPadding>
-      <LoadContent loading={props.groups.loading}>
+      <LoadContent loading={groups.loading}>
         <Title title="Grupo Individual" />
         <Toolbar className={classes.groupHeader}>
           <Typography variant="h6" component="h2">
-            {props.groups.group.name}
+            {groups.group.name}
           </Typography>
 
-          <Tabs value={props.match.path}>
-            <Tab component={Link} to={`/groups/${props.groups.group._id}/`} value="/groups/:id" label="Mural"></Tab>
-            <Tab component={Link} to={`/groups/${props.groups.group._id}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
-            <Tab component={Link} to={`/groups/${props.groups.group._id}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
-            <Tab component={Link} to={`/groups/${props.groups.group._id}/members`} value="/groups/:id/members" label="Membros"></Tab>
+          <Tabs value={match.path}>
+            <Tab component={Link} to={`/groups/${groups.group._id}/`} value="/groups/:id" label="Mural"></Tab>
+            <Tab component={Link} to={`/groups/${groups.group._id}/chat`} value="/groups/:id/chat" label="Chat"></Tab>
+            <Tab component={Link} to={`/groups/${groups.group._id}/files`} value="/groups/:id/files" label="Arquivos"></Tab>
+            <Tab component={Link} to={`/groups/${groups.group._id}/members`} value="/groups/:id/members" label="Membros"></Tab>
           </Tabs>
         </Toolbar>
         <Box className={classes.tabContent}>

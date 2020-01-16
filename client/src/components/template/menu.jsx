@@ -14,7 +14,7 @@ import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-function Menu(props) {
+const Menu = (props)  =>{
   const url = props.match.path;
   const { isAuthenticated } = props
 
@@ -86,5 +86,5 @@ function Menu(props) {
   );
 }
 const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated, notReadCount: state.notifications.notReadCount })
-Menu = connect(mapStateToProps)(Menu)
-export default withRouter(Menu);
+const MenuWithRouter = connect(mapStateToProps)(Menu)
+export default withRouter(MenuWithRouter);

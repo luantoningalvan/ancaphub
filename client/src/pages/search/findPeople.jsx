@@ -50,23 +50,19 @@ const PrettoSlider = withStyles(theme => ({
   }
 }))(Slider);
 
-function FindPeople(props) {
+function FindPeople({auth, users, searchUsers, setLastLocation}) {
   const [radius, setRadius] = useState(50);
 
-  function getUsers(radius) {
-    props.searchUsers(radius);
-  }
-
   useEffect(() => {
-    if (props.auth.user.geoLocation) {
-      getUsers(radius);
+    if (auth.user.geoLocation) {
+      searchUsers(radius)
     }
-  }, [radius, props.auth.user.geoLocation]);
+  }, [radius, auth.user.geoLocation, searchUsers]);
 
   function updateLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(location => {
-        props.setLastLocation({
+        setLastLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude
         });
@@ -77,7 +73,7 @@ function FindPeople(props) {
   return (
     <Template>
       <Title title="Encontrar Pessoas Próximas" />
-      {props.auth.user.geoLocation ? (
+      {auth.user.geoLocation ? (
         <Box>
           <Box
             display="flex"
@@ -110,7 +106,7 @@ function FindPeople(props) {
             </Box>
           </Paper>
 
-          {!isEmpty(props.users.allUsers) ? (
+          {!isEmpty(users.allUsers) ? (
             <Box>
               <Typography
                 style={{ marginBottom: '16px' }}
@@ -122,8 +118,8 @@ function FindPeople(props) {
               </Typography>
 
               <Grid container spacing={2}>
-                {props.users.allUsers.map(user => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                {users.allUsers.map(user => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={user._id}>
                     <UserCard user={user} />
                   </Grid>
                 ))}

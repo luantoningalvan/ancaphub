@@ -66,7 +66,7 @@ const BorderLinearProgress = withStyles({
 
 export default ({ field, form, ...props }) => {
   const classes = useStyles()
-  const { values, setFieldValue } = form;
+  const { setFieldValue } = form;
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const getFiles = async (files) => {
@@ -84,7 +84,7 @@ export default ({ field, form, ...props }) => {
   }
 
   useEffect(() => {
-    if (field.value != "") {
+    if (field.value !== "") {
       getFiles(field.value)
     }
   }, [])
@@ -95,7 +95,7 @@ export default ({ field, form, ...props }) => {
 
 
   useEffect(() => {
-    if (form.status == "sending") {
+    if (form.status === "sending") {
       setUploadedFiles([])
     }
   }, [form.status])

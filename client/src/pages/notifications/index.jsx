@@ -29,9 +29,9 @@ import Title from '../../components/template/titleComponent'
 import Notification from '../../components/notifications/notification'
 import LoadContent from '../../components/loaders/loadContent'
 
-const Notifications = props => {
-  useEffect(() => props.fetchNotifications(), []);
-  useEffect(() => props.markAsReadAllNotifications(), []);
+const Notifications = ({fetchNotifications, markAsReadAllNotifications, notifications}) => {
+  useEffect(() => fetchNotifications(), [fetchNotifications]);
+  useEffect(() => markAsReadAllNotifications(), [markAsReadAllNotifications]);
 
   return (
     <Template>
@@ -47,17 +47,17 @@ const Notifications = props => {
         <IconButton
           variant="outlined"
           color="secondary"
-          onClick={() => props.markAsReadAllNotifications()}
+          onClick={() => markAsReadAllNotifications()}
         >
           <DoneIcon />
         </IconButton>
       </Box>
 
       <Paper>
-        <LoadContent loading={props.notifications.loading}>
-          {!isEmpty(props.notifications) ? (
+        <LoadContent loading={notifications.loading}>
+          {!isEmpty(notifications) ? (
             <List>
-              {props.notifications.map((notification, index) => (
+              {notifications.map((notification, index) => (
                 <Fragment key={notification._id}>
                   {index > 0 && <Divider />}
                   <Notification notification={notification} />

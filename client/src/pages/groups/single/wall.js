@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import PostNewStatus from '../../../components/posts/postNewStatus';
 import ShowPosts from '../../../components/posts/showPosts';
 import { Box, Grid, Container } from '@material-ui/core';
-import image from '../../../assets/images/1.jpg'
 
 const useStyles = makeStyles(theme => ({
   groupCover: {
@@ -26,7 +25,7 @@ export default props => {
     <Box mt={10}>
       <Container>
         <div className={classes.groupCover}>
-          <a href="#" style={{color: 'inherit', textDecoration: 'none'}}>Selecionar capa</a>
+          <button style={{color: 'inherit', textDecoration: 'none'}}>Selecionar capa</button>
         </div>
         <Grid container justify="center">
           <Grid item xs={8}>

@@ -16,20 +16,22 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadUserFeed } from '../../actions/postActions';
 
-function Feed(props) {
+function Feed({auth, loadUserFeed, posts,}) {
+const {loading: authLoading, isAuthenticated} = auth
+
   useEffect(() => {
-    if (!props.auth.loading) {
-      if (props.auth.isAuthenticated) {
-        props.loadUserFeed();
+    if (!authLoading) {
+      if (isAuthenticated) {
+        loadUserFeed();
       }
     }
-  }, [props.auth.isAuthenticated, props.auth.loading]);
+  }, [isAuthenticated, authLoading, loadUserFeed]);
 
   const [currentPage, setCurrentPage] = useState(1)
 
   const loadMorePosts = () => {
     setCurrentPage(currentPage => currentPage + 1)
-    props.loadUserFeed({ currentPage: currentPage + 1 });
+    loadUserFeed({ currentPage: currentPage + 1 });
   }
 
   return (
@@ -37,13 +39,13 @@ function Feed(props) {
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
-          <LoadContent laoding={props.posts.loading && currentPage == 1}>
+          <LoadContent loading={posts.loading && currentPage === 1}>
             <Box>
               <PostNewStatus />
-              <ShowPosts posts={props.posts.posts} />
+              <ShowPosts posts={posts.posts} />
               <Box width="100%">
 
-                {props.posts.loading && currentPage != 1 ? (
+                {posts.loading && currentPage !== 1 ? (
                   <LoadingItems />
                 ) : (
                     <Button fullWidth onClick={loadMorePosts}>Carregar mais postagens</Button>

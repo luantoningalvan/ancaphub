@@ -70,7 +70,7 @@ export function selectPage(page) {
 
 export const addItemToCollection = (item, post) => async dispatch => {
   try {
-    const res = await axios.put('/api/users/addItemToCollection', {
+    const res = await axios.post('/api/library/auth/addtolibrary', {
       item,
       post
     });
@@ -87,7 +87,7 @@ export const addItemToCollection = (item, post) => async dispatch => {
 
 export const saveItem = item => async dispatch => {
   try {
-    const res = await axios.put('/api/users/saveItem', { item });
+    const res = await axios.post('/api/library/auth/save', { item });
     dispatch({
       type: types.SAVE_ITEM_SUCCESS,
       payload: res.data

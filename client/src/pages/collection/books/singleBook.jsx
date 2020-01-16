@@ -13,7 +13,7 @@ import {
   Link
 } from '@material-ui/core';
 import { CloudDownload as DownloadIcon } from '@material-ui/icons';
-import { makeStyles, get } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import filesize from 'filesize'
 import querystring from 'querystring'
@@ -31,11 +31,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
 
-function SingleBook(props) {
-  const { id } = props.match.params;
+function SingleBook({match, fetchItem, book}) {
+  const { id } = match.params;
   const [files, setFiles] = useState([]);
 
-  useEffect(() => props.fetchItem(id), []);
+  useEffect(() => fetchItem(id), [fetchItem, id]);
 
   const {
     _id,
@@ -46,23 +46,21 @@ function SingleBook(props) {
     cover,
     user,
     extraFields
-  } = props.book.item;
+  } = book.item;
 
-  const getFiles = () => {
-    axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
-      .then(result =>
-        setFiles(result.data.map(file => ({
-          id: file._id,
-          name: file.originalname,
-          readableSize: filesize(file.size),
-          url: file.url,
-        })))
-      )
-  }
+
 
   useEffect(() => {
     if (extraFields && extraFields.downloadOptions) {
-      getFiles()
+        axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
+          .then(result =>
+            setFiles(result.data.map(file => ({
+              id: file._id,
+              name: file.originalname,
+              readableSize: filesize(file.size),
+              url: file.url,
+            })))
+          )
     }
   }, [extraFields])
 
@@ -111,8 +109,8 @@ function SingleBook(props) {
 
   return (
     <Template noPadding>
-      <LoadContent loading={props.book.loading}>
-        {!isEmpty(props.book.item) && props.book.item.type === 'book' ? (
+      <LoadContent loading={book.loading}>
+        {!isEmpty(book.item) && book.item.type === 'book' ? (
           <Fragment>
             <Title title={`${title} - ${author}`} />
             <div className={classes.banner}></div>
@@ -182,7 +180,7 @@ function SingleBook(props) {
                       {content}
                     </Typography>
                     <Box my={2}>
-                      <Ratings item={props.book.item} />
+                      <Ratings item={book.item} />
                     </Box>
                   </Grid>
                 </Grid>

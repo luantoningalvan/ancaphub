@@ -53,12 +53,12 @@ function Filter(props) {
   } = props;
   const { category, order, page } = items.filters;
 
-  useEffect(() => fetchAllItems({ type, category, order, page }), [
+  useEffect(() => fetchAllItems({ type, category, order, page }), [fetchAllItems, type,
     category,
     order,
     page
   ]);
-  useEffect(() => fetchAllCategories(), []);
+  useEffect(() => fetchAllCategories(), [fetchAllCategories]);
 
   const { pageSize, total } = items.allItems;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 // Material Components
 import {
@@ -56,11 +56,10 @@ const useStyles = makeStyles(theme => ({
   infoText: { overflow: "hidden" }
 }));
 
-function Profile(props) {
+function Profile({ getUser, auth, user, match}) {
   const classes = useStyles()
-  useEffect(() => props.getUser(props.match.params.id), [
-    props.match.params.id
-  ]);
+  const { id } = match.params
+  useEffect(() => getUser(id), [getUser, id])
 
   const AdapterLink = React.forwardRef((props, ref) => (
     <Link innerRef={ref} {...props} />
@@ -75,32 +74,32 @@ function Profile(props) {
     avatar,
     followersCount,
     followingCount
-  } = props.user.user || {};
+  } = user.user || {};
   const isUserLoggedProfile =
-    props.auth.isAuthenticated &&
-    props.user.user &&
-    props.user.user._id === props.auth.user._id;
+    auth.isAuthenticated &&
+    user.user &&
+    user.user._id === auth.user._id;
 
   function showComponent() {
-    if (!props.user.isLoading && !props.auth.loading) {
-      switch (props.match.path) {
+    if (!user.isLoading && !auth.loading) {
+      switch (match.path) {
         case '/:id':
           return (
             <UserFeed
-              user={props.user.user}
+              user={user.user}
               isUserLoggedProfile={isUserLoggedProfile}
             />
           );
         case '/:id/followers':
-          return <UserFollowers user={props.user.user} />;
+          return <UserFollowers user={user.user} />;
         case '/:id/following':
-          return <UserFollowing user={props.user.user} />;
+          return <UserFollowing user={user.user} />;
         case '/:id/collection':
-          return <UserCollection user={props.user.user} />;
+          return <UserCollection user={user.user} />;
         case '/:id/contributions':
-          return <UserContributions user={props.user.user} />;
+          return <UserContributions user={user.user} />;
         default:
-          console.log(props.match.path);
+          console.log(match.path);
       }
     } else {
       return (
@@ -111,8 +110,8 @@ function Profile(props) {
 
   return (
     <Template>
-      <LoadContent loading={props.user.loading}>
-        {props.user.user === null ? (
+      <LoadContent loading={user.loading}>
+        {user.user === null ? (
           <UnavaliableContent />
         ) : (
             <>
@@ -203,12 +202,12 @@ function Profile(props) {
                     </Box>
                   )}
                   <Box mt={2} px={2}>
-                    {props.auth.isAuthenticated && (
+                    {auth.isAuthenticated && (
                       <React.Fragment>
                         {isUserLoggedProfile ? (
-                          <EditProfile data={props.user.user} />
+                          <EditProfile data={user.user} />
                         ) : (
-                            <FollowButton profile={props.user.user} />
+                            <FollowButton profile={user.user} />
                           )}
                       </React.Fragment>
                     )}
@@ -219,7 +218,7 @@ function Profile(props) {
                   <Tabs
                     indicatorColor="secondary"
                     textColor="secondary"
-                    value={props.match.path}>
+                    value={match.path}>
                     <Tab
                       component={AdapterLink}
                       to={`/${_id}/`}

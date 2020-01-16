@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { Box, Grid, Typography, Paper, Tabs, Tab } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Box, Grid, Typography, Tabs, Tab } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views';
 import Login from '../../components/auth/login';
@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 })
 
 const Home = props => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState(0);
   const classes = useStyles()
   console.log(value)

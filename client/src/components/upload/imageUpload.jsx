@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 function ImageUpload({ field, form, ...props }) {
   const classes = useStyles()
-  const { values, setFieldValue } = form;
+  const { setFieldValue } = form;
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const getFiles = async (files) => {
@@ -59,13 +59,13 @@ function ImageUpload({ field, form, ...props }) {
   }
 
   useEffect(() => {
-    if (field.value != "") {
+    if (field.value !== "") {
       getFiles(field.value)
     }
   }, [])
 
   useEffect(() => {
-    if (form.status == "sending") {
+    if (form.status === "sending") {
       setUploadedFiles([])
     }
   }, [form.status])
@@ -149,7 +149,7 @@ function ImageUpload({ field, form, ...props }) {
                       {f.uploaded ? (
                         <>
                           <Box className={classes.previewBox}>
-                            <img src={f.url} className={classes.imagePreview} />
+                            <img src={f.url} className={classes.imagePreview} alt={f.name}/>
                           </Box>
                           <Link onClick={() => removeFile(f.id)}>Remover Imagem</Link>
                         </>

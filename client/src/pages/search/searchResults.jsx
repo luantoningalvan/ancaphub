@@ -18,28 +18,27 @@ import BookCard from '../../components/collection/book/bookCard'
 import ArticleCard from '../../components/collection/article/articleCard'
 import VideoCard from '../../components/collection/video/videoCard'
 
-const SearchResults = props => {
-  const getSearchTheme = () => {
+const SearchResults = ({searchTerm, search}) => {
+  const getSearchTerm = () => {
     const urlString = window.location.href
     const url = new URL(urlString);
     const searchTerm = url.searchParams.get("s");
     return searchTerm
   }
 
-  const searchTerm = getSearchTheme()
-  console.log(searchTerm)
+  const term = getSearchTerm()
 
   useEffect(() => {
     if (searchTerm !== "") {
-      props.searchTerm(searchTerm)
+      searchTerm(term)
     }
-  }, [searchTerm])
+  }, [term, searchTerm])
 
   return (
     <Template>
       <Box mb={3}>
         <Typography variant="h4" component="h2" noWrap>
-          Resultados para: {searchTerm}
+          Resultados para: {term}
         </Typography>
       </Box>
 
@@ -54,21 +53,21 @@ const SearchResults = props => {
         </Tabs>
       </Paper>
 
-      <LoadContent loading={props.search.loading}>
-        {!isEmpty(props.search.searchResults.users) || !isEmpty(props.search.searchResults.items) ? (
+      <LoadContent loading={search.loading}>
+        {!isEmpty(search.searchResults.users) || !isEmpty(search.searchResults.items) ? (
           <Box mt={3}>
             <Grid container spacing={2}>
-              {props.search.searchResults.users.map(user => (
-                <Grid item xs={12} md={4} lg={3}>
+              {search.searchResults.users.map(user => (
+                <Grid item xs={12} md={4} lg={3}  key={user._id}>
                   <UserCard user={user} />
                 </Grid>
               ))}
 
-              {props.search.searchResults.items.map(item => (
-                <Grid item xs={12} md={4} lg={3}>
-                  {item.type == "book" && <BookCard book={item} />}
-                  {item.type == "article" && <ArticleCard article={item} />}
-                  {item.type == "video" && <VideoCard video={item} />}
+              {search.searchResults.items.map(item => (
+                <Grid item xs={12} md={4} lg={3} key={item._id}>
+                  {item.type === "book" && <BookCard book={item} />}
+                  {item.type === "article" && <ArticleCard article={item} />}
+                  {item.type === "video" && <VideoCard video={item} />}
                 </Grid>
               ))}
             </Grid>

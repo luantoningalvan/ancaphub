@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   IconButton,
   Typography,
   Grid,
@@ -14,7 +13,6 @@ import {
   Edit as EditIcon,
   Close as CloseIcon
 } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';
 import UpdateProfilePicture from './updateProfilePicture';

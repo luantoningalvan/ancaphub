@@ -53,8 +53,9 @@ export default function BookCard(props) {
 
   const { book } = props;
 
-  const getFiles = () => {
-    axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(book.extraFields.downloadOptions) })}`)
+  useEffect(() => {
+    if (book.extraFields && book.extraFields.downloadOptions) {
+      axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(book.extraFields.downloadOptions) })}`)
       .then(result =>
         setFiles(result.data.map(file => ({
           id: file._id,
@@ -63,13 +64,8 @@ export default function BookCard(props) {
           url: file.url,
         })))
       )
-  }
-
-  useEffect(() => {
-    if (book.extraFields && book.extraFields.downloadOptions) {
-      getFiles()
     }
-  }, [])
+  }, [book])
 
   return (
     <Card>

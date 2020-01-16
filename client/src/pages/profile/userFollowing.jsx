@@ -12,17 +12,17 @@ import { connect } from 'react-redux';
 import { getUserFollowing } from '../../actions/userActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-function UserFollowing(props) {
-  useEffect(() => props.getUserFollowing(props.user._id), [props.user._id]);
+function UserFollowing({getUserFollowing, following, user}) {
+  useEffect(() => getUserFollowing(user._id), [user._id, getUserFollowing]);
 
   return (
     <>
-      <Title title={`${props.user.username} - Seguindo`} />
+      <Title title={`${user.username} - Seguindo`} />
 
       <LoadContent loading={false}>
       <Grid container spacing={2}>
-        {props.following && !isEmpty(props.following) ? (
-          props.following.map(user => (
+        {following && !isEmpty(following) ? (
+          following.map(user => (
             <Grid item xs={6} md={4} lg={3} key={`following-${user._id}`}>
               <UserCard user={user} />
             </Grid>

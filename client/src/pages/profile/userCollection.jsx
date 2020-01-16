@@ -14,18 +14,18 @@ import { connect } from 'react-redux';
 import { getUserCollection } from '../../actions/userActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-function UserCollection(props) {
-  useEffect(() => props.getUserCollection(props.user._id), [props.user._id]);
+function UserCollection({getUserCollection, collection, user}) {
+  useEffect(() => getUserCollection(user._id), [user._id, getUserCollection]);
 
   return (
     <>
-      <Title title={`${props.user.username} - Coleção`} />
+      <Title title={`${user.username} - Coleção`} />
 
       <LoadContent loading={false}>
         <Grid container spacing={2}>
-          {props.collection && !isEmpty(props.collection) ? (
-            props.collection.map(item => (
-              <Grid item xs={12} sm={8} md={6} lg={4}>
+          {collection && !isEmpty(collection) ? (
+            collection.map(item => (
+              <Grid item xs={12} sm={8} md={6} lg={4}  key={item._id}>
                 {item.type === 'book' && <BookCard book={item} />}
 
                 {item.type === 'article' && <ArticleCard article={item} />}

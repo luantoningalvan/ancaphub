@@ -16,8 +16,8 @@ import { connect } from 'react-redux';
 import { getSaved } from '../../actions/itemActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-const SavedItems = props => {
-  useEffect(() => props.getSaved(), []);
+const SavedItems = ({saved, getSaved}) => {
+  useEffect(() => getSaved(), [getSaved]);
 
   return (
     <Template>
@@ -30,9 +30,9 @@ const SavedItems = props => {
 
       <LoadContent loading={false}>
       <Grid container spacing={2}>
-        {props.saved && !isEmpty(props.saved) ? (
-          props.saved.map(item => (
-            <Grid item xs={12} sm={6} md={4} lg={3}>
+        {saved && !isEmpty(saved) ? (
+          saved.map(item => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
               {item.type === 'book' && <BookCard book={item} />}
 
               {item.type === 'article' && <ArticleCard article={item} />}

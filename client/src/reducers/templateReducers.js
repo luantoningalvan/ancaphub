@@ -1,9 +1,9 @@
 import types from '../actions/_types'
 
-const INITIAL_STATE = { darkMode: localStorage.getItem('darkMode') == "true" };
+const INITIAL_STATE = { darkMode: localStorage.getItem('darkMode') === "true" };
 
 export default function (state = INITIAL_STATE, action) {
-  const { type, payload } = action;
+  const { type } = action;
 
   switch (type) {
     case types.SET_DARK_MODE:

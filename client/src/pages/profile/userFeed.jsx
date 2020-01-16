@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 import { loadUserPosts } from '../../actions/postActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-function UserFeed(props) {
-  useEffect(() => props.loadUserPosts(props.user._id), [props.user._id]);
+function UserFeed({loadUserPosts, isUserLoggedProfile, posts, user}) {
+  useEffect(() => loadUserPosts(user._id), [user._id, loadUserPosts]);
 
   return (
     <>
-      {props.isUserLoggedProfile && <PostNewStatus user={props.user} />}
+      {isUserLoggedProfile && <PostNewStatus user={user} />}
       
-      <LoadContent loading={props.posts.loading}>
-        <ShowPosts posts={props.posts.posts} />
+      <LoadContent loading={posts.loading}>
+        <ShowPosts posts={posts.posts} />
       </LoadContent>
     </>
   );

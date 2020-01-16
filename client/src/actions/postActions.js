@@ -2,8 +2,8 @@ import axios from '../services/api';
 import types from './_types'
 
 export function loadUserFeed(props) {
-  const pageSize = props && props.pageSize || 10
-  const currentPage = props && props.currentPage || 1
+  const pageSize = props && (props.pageSize || 10)
+  const currentPage = props && (props.currentPage || 1)
 
   return dispatch => {
     dispatch({ type: types.LOADING_POSTS });
@@ -65,7 +65,7 @@ export function deletePost(post) {
 export function updateLikes(post) {
   return dispatch => {
     axios
-      .put(`/api/posts/${post}/like`)
+      .post(`/api/posts/${post}/like`)
       .then(result => {
         dispatch({ type: types.UPDATE_LIKES_SUCCESS, payload: result.data });
       })

@@ -36,8 +36,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContributionsPanel = props => {
-  useEffect(() => props.getContributions(), []);
+const ContributionsPanel = ({auth, getContributions}) => {
+  useEffect(() => getContributions(), [getContributions]);
 
   const classes = useStyles();
   const statusText = {
@@ -48,7 +48,7 @@ const ContributionsPanel = props => {
     draft: 'Rascunho'
   };
 
-  const {contributions} = props.auth.user
+  const {contributions} = auth.user
 
   return (
     <Template>

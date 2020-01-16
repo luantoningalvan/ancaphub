@@ -29,7 +29,7 @@ const NewGroup = props => {
         props.createGroup(values);
       }}
       render={formProps => {
-        const { values, errors, touched, handleBlur, handleChange } = formProps
+        const { values, handleBlur, handleChange } = formProps
 
         return (
           <Form>

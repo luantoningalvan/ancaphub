@@ -14,17 +14,17 @@ import { connect } from 'react-redux';
 import { getUserContributions } from '../../actions/userActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-function UserContributions(props) {
-  useEffect(() => props.getUserContributions(props.user._id), [props.user._id]);
+function UserContributions({getUserContributions, contributions, user}) {
+  useEffect(() => getUserContributions(user._id), [user._id, getUserContributions]);
 
   return (
     <>
-      <Title title={`${props.user.username} - Contribuições`} />
+      <Title title={`${user.username} - Contribuições`} />
       <LoadContent loading={false}>
       <Grid container spacing={2}>
-        {props.contributions && !isEmpty(props.contributions) ? (
-          props.contributions.map(item => (
-            <Grid item xs={12} sm={8} md={6} lg={4}>
+        {contributions && !isEmpty(contributions) ? (
+          contributions.map(item => (
+            <Grid item xs={12} sm={8} md={6} lg={4} key={item._id}>
               {item.type === 'book' && <BookCard book={item} />}
 
               {item.type === 'article' && <ArticleCard article={item} />}
