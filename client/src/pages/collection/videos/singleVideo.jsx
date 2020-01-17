@@ -7,6 +7,7 @@ import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadContent from '../../../components/loaders/loadContent'
+import InvitedBy from '../../../components/profile/invitedBy'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,7 +17,7 @@ function SingleVideo({match, fetchItem, video}) {
   const { id } = match.params;
   useEffect(() => fetchItem(id), [fetchItem, id]);
 
-  const { title, author, categories, content, extraFields } = video.item;
+  const { title, author, categories, content, user, extraFields } = video.item;
 
   const useStyles = makeStyles(theme => ({
     banner: {
@@ -85,6 +86,7 @@ function SingleVideo({match, fetchItem, video}) {
                 <Typography variant="body1" component="p">
                   {content}
                 </Typography>
+                <InvitedBy user={user} />
               </Box>
             </Container>
           </Fragment>

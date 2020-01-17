@@ -10,11 +10,9 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   IconButton,
-  Link
 } from '@material-ui/core';
 import { CloudDownload as DownloadIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link as RouterLink } from 'react-router-dom';
 import filesize from 'filesize'
 import querystring from 'querystring'
 import isEmpty from 'is-empty';
@@ -24,8 +22,8 @@ import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import Ratings from '../../../components/collection/ratings';
-import ProfilePicture from '../../../components/profile/profilePicture';
 import LoadContent from '../../../components/loaders/loadContent'
+import InvitedBy from '../../../components/profile/invitedBy'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -47,8 +45,6 @@ function SingleBook({match, fetchItem, book}) {
     user,
     extraFields
   } = book.item;
-
-
 
   useEffect(() => {
     if (extraFields && extraFields.downloadOptions) {
@@ -142,23 +138,8 @@ function SingleBook({match, fetchItem, book}) {
                         ))}
                       </List>
                     </Paper>
-                    <Box mt={2}>
-                      <span>Enviado por</span>
-                      <Link
-                        component={RouterLink}
-                        to={`/usuario/${user._id}`}
-                        underline="none"
-                        color="textPrimary">
-                        <Box display="flex" alignItems="center" mt={1}>
-                          <ProfilePicture
-                            avatar={user.avatar}
-                            width="40px"
-                            height="40px"
-                          />
-                          <span style={{ paddingLeft: '10px' }}>{user.name}</span>
-                        </Box>
-                      </Link>
-                    </Box>
+                    
+                    <InvitedBy user={user} />
                   </Grid>
                   <Grid item xs={12} sm={6} md={8}>
                     <Box mb={2}>

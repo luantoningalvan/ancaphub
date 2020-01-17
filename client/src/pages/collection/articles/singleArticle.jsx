@@ -14,6 +14,7 @@ import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadContent from '../../../components/loaders/loadContent'
 import UnavaliableContent from '../../../components/error/unavaliableContent'
+import InvitedBy from '../../../components/profile/invitedBy'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItem } from '../../../actions/itemActions';
@@ -22,7 +23,7 @@ function SingleArticle({match, fetchItem, article}) {
   const { id } = match.params;
   useEffect(() => fetchItem(id), [id, fetchItem]);
 
-  const { title, author, categories, content, cover, type } = article.item;
+  const { title, author, categories, content, cover, type, user } = article.item;
 
   const useStyles = makeStyles(theme => ({
     banner: {
@@ -82,6 +83,8 @@ function SingleArticle({match, fetchItem, article}) {
                       {parse(`${content}`)}
                     </Box>
                   </Paper>
+
+                  <InvitedBy user={user} />
                 </Box>
               </Container>
             </Box>
