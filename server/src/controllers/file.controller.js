@@ -4,7 +4,7 @@ const { insertFile, getFiles } = fileService
 const insert = async (req, res, next) => {
   try {
     const { originalname, name, size, location: url = '' } = req.file;
-    const result = await insertFile({originalname, name, size, location})
+    const result = await insertFile({originalname, name, size, url})
     res.status(200).json(result);
     next()
   } catch (e) {

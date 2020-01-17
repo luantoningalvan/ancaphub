@@ -7,7 +7,7 @@ const get = async (req, res) => {
   const { id } = req.params
   try {
     const result = getRate(id)
-    res.send(result);
+    res.send(result.rates);
     next()
   } catch (e) {
     res.sendStatus(500) && next(e)

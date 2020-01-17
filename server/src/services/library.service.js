@@ -48,9 +48,9 @@ const insertItem = async (data) => {
 
     switch (data.type) {
       case "book":
-        extraFields = { downloadOptions: req.body.downloadOptions }
+        extraFields = { downloadOptions: data.downloadOptions }
       case "video":
-        extraFields = { videoUrl: req.body.videoUrl }
+        extraFields = { videoUrl: data.videoUrl }
       default:
         extraFields
     }

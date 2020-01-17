@@ -49,10 +49,10 @@ const getAll = async (req, res, next) => {
 }
 
 const get = async (req, res, next) => {
-  const id = req.params.id
+  const {id} = req.params
 
   try {
-    const result = await getItem(id)
+    const result = await getItem(id, { populate: true })
     res.send(result);
     next()
   } catch (e) {
@@ -61,7 +61,7 @@ const get = async (req, res, next) => {
 }
 
 const insert = async (req, res, next) => {
-  const { title, author, content, cover, categories, type } = req.body;
+  const { title, author, content, cover, categories, type, downloadOptions, videoUrl } = req.body;
 
   try {
     const data = {
@@ -72,7 +72,9 @@ const insert = async (req, res, next) => {
       categories,
       status: 'pending',
       user: req.user.id,
-      type
+      type,
+      downloadOptions,
+      videoUrl
     };
 
     const result = await insertItem(data)

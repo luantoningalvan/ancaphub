@@ -1,4 +1,5 @@
 const User = require('../models/UserModel')
+const Item = require('../models/LibraryModel')
 
 const getUserFollowers = async (id) => {
   try {
