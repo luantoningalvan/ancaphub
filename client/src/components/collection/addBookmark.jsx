@@ -1,25 +1,25 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
 import {
-  Bookmark as SaveIcon,
-  BookmarkBorder as NotSaveIcon
+  Bookmark as AddBookmarkIcon,
+  BookmarkBorder as RemoveBookmarkIcon
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveItem } from '../../actions/itemActions';
+import { addBookmark } from '../../actions/bookmarkActions';
 
-function AddItemToCollection(props) {
+function AddBookmark({item, auth, addBookmark}) {
   return (
     <>
-      {props.auth.isAuthenticated && (
+      {auth.isAuthenticated && (
         <IconButton
           size="small"
           color="secondary"
-          onClick={() => props.saveItem(props.item)}>
-          {props.auth.user.saved && props.auth.user.saved.includes(props.item) ? (
-            <SaveIcon />
+          onClick={() => addBookmark(item._id)}>
+          {item.hasSaved ? (
+            <AddBookmarkIcon />
           ) : (
-              <NotSaveIcon />
+              <RemoveBookmarkIcon />
             )}
         </IconButton>
       )}
@@ -29,9 +29,9 @@ function AddItemToCollection(props) {
 
 const mapStateToProps = state => ({ auth: state.auth });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ saveItem }, dispatch);
+  bindActionCreators({ addBookmark }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddItemToCollection);
+)(AddBookmark);

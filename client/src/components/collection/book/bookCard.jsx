@@ -22,7 +22,7 @@ import querystring from 'querystring'
 import axios from '../../../services/api'
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import AddToCollection from '../addItemToCollection';
-import SaveItem from '../saveItem';
+import AddBookmark from '../addBookmark';
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -52,10 +52,11 @@ export default function BookCard(props) {
   }
 
   const { book } = props;
+  const { _id, cover, title, author, extraFields, hasSaved} = book
 
   useEffect(() => {
-    if (book.extraFields && book.extraFields.downloadOptions) {
-      axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(book.extraFields.downloadOptions) })}`)
+    if (extraFields && extraFields.downloadOptions) {
+      axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
       .then(result =>
         setFiles(result.data.map(file => ({
           id: file._id,
@@ -65,28 +66,28 @@ export default function BookCard(props) {
         })))
       )
     }
-  }, [book])
+  }, [extraFields])
 
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/books/${book._id}`}>
+      <CardActionArea component={AdapterLink} to={`/books/${_id}`}>
         <CardMedia
           className={classes.media}
-          image={book.cover ? book.cover.url : defaultThumbnail}
-          title={`Capa do livro ${book.title}`}>
+          image={cover ? cover.url : defaultThumbnail}
+          title={`Capa do livro ${title}`}>
           <BookIcon className={classes.type} />
         </CardMedia>
         <CardContent>
           <Typography variant="h6" component="h2" noWrap style={{ fontWeight: 'bold' }}>
-            {book.title}
+            {title}
           </Typography>
-          <Typography variant="subtitle1">{book.author}</Typography>
+          <Typography variant="subtitle1">{author}</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
-          <AddToCollection item={book._id} />
-          <SaveItem item={book._id} />
+          <AddToCollection item={_id} />
+          <AddBookmark item={{_id, hasSaved}} />
         </div>
         {files && !isEmpty(files) && (
           <>
@@ -94,7 +95,7 @@ export default function BookCard(props) {
               <DownloadIcon />
             </IconButton>
             <Menu
-              id={`menubook-${book._id}`}
+              id={`menubook-${_id}`}
               getContentAnchorEl={null}
               anchorEl={anchorEl}
               anchorOrigin={{
@@ -111,7 +112,7 @@ export default function BookCard(props) {
               {files.map(download => (
                 <MenuItem
                   component="a"
-                  key={`${book._id} ${download.name}`}
+                  key={`${_id} ${download.name}`}
                   href={download.url}
                   target="_blank">
                   {download.name}

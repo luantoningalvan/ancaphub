@@ -1,5 +1,5 @@
 const { fileService } = require('../services')
-const { insertFile, getFiles } = fileService
+const { insertFile, getManyFiles } = fileService
 
 const insert = async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ const insert = async (req, res, next) => {
 const get = async (req, res, next) => {
   try {
     const filesToLoad = JSON.parse(req.query['files']);
-    const result = await getFiles(filesToLoad)
+    const result = await getManyFiles(filesToLoad)
     res.status(200).send(result);
     next()
   } catch (error) {

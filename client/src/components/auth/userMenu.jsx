@@ -12,7 +12,7 @@ import {
   Person as PersonIcon,
   Edit as ContributionsIcon,
   Settings as SettingsIcon,
-  Bookmarks as SavedIcon,
+  Bookmarks as BookmarkIcon,
   ExitToApp as LogoutIcon,
   BrightnessMedium as DarkModeIcon,
 } from '@material-ui/icons';
@@ -95,9 +95,9 @@ function UserMenu(props) {
                   <MenuItem
                     onClick={handleMenuClose}
                     component={Link}
-                    to={`/saved`}
+                    to={`/bookmarks`}
                   >
-                    <SavedIcon className={classes.menuIcon} />
+                    <BookmarkIcon className={classes.menuIcon} />
                     Salvos
                   </MenuItem>
 

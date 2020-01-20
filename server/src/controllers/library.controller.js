@@ -1,10 +1,9 @@
-const Item = require('../models/LibraryModel');
-const User = require('../models/UserModel');
-
-// Services
-const { notificationService, libraryService } = require('../services')
+const { notificationService, libraryService, fileService } = require('../services')
 const { createNotification } = notificationService
-const { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, getAuthSavedItems, addItemToLibrary, saveItem } = libraryService
+const { getFile } = fileService
+const { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, addItemToLibrary, saveItem } = libraryService
+const Post = require('../models/PostModel')
+const verifyToken = require('../utils/verifyToken')
 
 const getAll = async (req, res, next) => {
   const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 10;
@@ -39,8 +38,10 @@ const getAll = async (req, res, next) => {
 
   filterQuery = { ...filterQuery, status };
 
+  const isAutheticated = verifyToken(req)
+
   try {
-    const result = await getManyItems({ pageSize, currentPage, filter: filterQuery, sort: sortQuery }, type)
+    const result = await getManyItems({ pageSize, currentPage, filter: filterQuery, sort: sortQuery }, type, isAutheticated)
     res.status(200).send(result)
     next()
   } catch (e) {
@@ -96,6 +97,8 @@ const update = async (req, res, next) => {
       content,
       cover,
       categories,
+      downloadOptions,
+      videoUrl
     };
 
     const result = await updateItem(id, data)
@@ -153,51 +156,25 @@ const getAuthContributions = async (req, res, next) => {
   }
 };
 
-const getAuthSaved = async (req, res, next) => {
-  const { id } = req.user
-
-  try {
-    const result = await getAuthSavedItems(id)
-    res.send(result);
-    next()
-  } catch (e) {
-    res.sendStatus(500) && next(e)
-  }
-}
-
-const save = async (req, res, next) => {
-  const { item } = req.body;
-  const { id: user } = req.user;
-
-  try {
-    const result = saveItem(user, item)
-    res.send(result);
-    next()
-  } catch (e) {
-    res.sendStatus(500) && next(e)
-  }
-}
-
-
-const addToLibrary = async (req, res) => {
+const addToLibrary = async (req, res, next) => {
   const { item, post } = req.body;
   const { id: user } = req.user;
 
   try {
-    const result = addItemToLibrary(user, item)
-
+    const result = await addItemToLibrary(user, item)
+    
     if (post) {
-      const cover = await File.findById(item.cover);
+      const cover = await getFile(result.cover)
 
       const newPost = new Post({
         type: 'collection_item',
         user: req.user.id,
         extraFields: {
-          _id: item._id,
-          title: item.title,
+          _id: result._id,
+          title: result.title,
           cover: cover.url,
-          type: item.type,
-          description: item.content
+          type: result.type,
+          description: result.content
         }
       });
 
@@ -211,4 +188,4 @@ const addToLibrary = async (req, res) => {
   }
 }
 
-module.exports = { get, getAll, insert, update, remove, approve, getAuthContributions, getAuthSaved, save, addToLibrary }
+module.exports = { get, getAll, insert, update, remove, approve, getAuthContributions, addToLibrary }

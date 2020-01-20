@@ -8,7 +8,16 @@ const insertFile = async (data) => {
   }
 }
 
-const getFiles = async (filesToLoad) => {
+const getFile = async (id) => {
+  try {
+    return await File.findById(id);
+  } catch (e) {
+    throw new Error(e.message)
+  }
+};
+
+
+const getManyFiles = async (filesToLoad) => {
   try {
     return await File.find({ _id: { $in: filesToLoad } });
   } catch (e) {
@@ -16,4 +25,4 @@ const getFiles = async (filesToLoad) => {
   }
 };
 
-module.exports = { insertFile, getFiles };
+module.exports = { insertFile, getFile, getManyFiles };

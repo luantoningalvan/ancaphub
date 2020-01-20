@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import AddToCollection from '../addItemToCollection';
-import SaveItem from '../saveItem';
+import AddBookmark from '../addBookmark';
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -31,7 +31,7 @@ export default function ArticleCard(props) {
     <Link innerRef={ref} {...props} />
   ));
 
-  const { _id, title, author, cover } = props.article;
+  const { _id, title, author, cover, hasSaved } = props.article;
   return (
     <Card>
       <CardActionArea component={AdapterLink} to={`/articles/${_id}`}>
@@ -51,8 +51,8 @@ export default function ArticleCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <AddToCollection item={_id} />
-        <SaveItem item={_id} />
+        <AddToCollection item={{_id}} />
+        <AddBookmark item={{_id, hasSaved}}  />
       </CardActions>
     </Card>
   );

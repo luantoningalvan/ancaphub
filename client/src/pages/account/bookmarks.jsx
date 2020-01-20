@@ -13,11 +13,11 @@ import ArticleCard from '../../components/collection/article/articleCard';
 import VideoCard from '../../components/collection/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getSaved } from '../../actions/itemActions';
+import { getBookmarks } from '../../actions/bookmarkActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-const SavedItems = ({saved, getSaved}) => {
-  useEffect(() => getSaved(), [getSaved]);
+const Bookmarks = ({bookmarks, getBookmarks}) => {
+  useEffect(() => getBookmarks(), [getBookmarks]);
 
   return (
     <Template>
@@ -28,10 +28,10 @@ const SavedItems = ({saved, getSaved}) => {
         </Typography>
       </Box>
 
-      <LoadContent loading={false}>
+      <LoadContent loading={bookmarks.loading}>
       <Grid container spacing={2}>
-        {saved && !isEmpty(saved) ? (
-          saved.map(item => (
+        {bookmarks.allItems && !isEmpty(bookmarks.allItems) ? (
+          bookmarks.allItems.items.map(item => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
               {item.type === 'book' && <BookCard book={item} />}
 
@@ -53,11 +53,11 @@ const SavedItems = ({saved, getSaved}) => {
   );
 };
 
-const mapStateToProps = state => ({ saved: state.auth.saved });
+const mapStateToProps = state => ({ bookmarks: state.items });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getSaved }, dispatch);
+  bindActionCreators({ getBookmarks }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SavedItems);
+)(Bookmarks);

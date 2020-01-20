@@ -1,7 +1,7 @@
 const Item = require('../models/LibraryModel');
 const User = require('../models/UserModel');
 
-const getManyItems = async (query, type) => {
+const getManyItems = async (query, type, auth) => {
   const { pageSize, currentPage, filter, sort } = query
 
   try {
@@ -11,12 +11,19 @@ const getManyItems = async (query, type) => {
       return res.status(400).json([]);
     }
 
-    const items = await Item.find(filter)
+    console.log(filter)
+
+    let items = await Item.find(filter)
       .limit(pageSize)
       .skip(currentPage * pageSize)
       .sort(sort)
       .populate('cover')
 
+    if(auth) {
+      const user = await User.findById(auth.id)
+      items = items.map(item => ({ ...item._doc, hasSaved: user.saved.includes(item._id)}))
+    }
+  
     return {
       items,
       type,
@@ -68,9 +75,9 @@ const updateItem = async (id, data) => {
 
     switch (data.type) {
       case "book":
-        extraFields = { downloadOptions: req.body.downloadOptions }
+        extraFields = { downloadOptions: data.downloadOptions }
       case "video":
-        extraFields = { videoUrl: req.body.videoUrl }
+        extraFields = { videoUrl: data.videoUrl }
       default:
         extraFields
     }
@@ -106,19 +113,6 @@ const getAuthContributedItems = async (id) => {
   }
 }
 
-const getAuthSavedItems = async (id) => {
-  try {
-    return await User.findById(id, 'saved')
-      .populate({
-        path: 'saved',
-        model: 'Item',
-        populate: { path: 'cover', model: 'File' }
-      });
-  } catch (e) {
-    throw new Error(e.message)
-  }
-}
-
 const saveItem = async (userId, itemId) => {
   try {
     const item = await Item.findById(itemId);
@@ -133,7 +127,13 @@ const saveItem = async (userId, itemId) => {
       user.saved.push(itemId);
     }
 
-    return await user.save();
+    await user.save();
+
+    return {
+      _id: item._doc._id,
+      hasSaved: user.saved.includes(itemId)
+    }
+
   } catch (e) {
     throw new Error(e.message)
   }
@@ -144,23 +144,23 @@ const addItemToLibrary = async (userId, itemId) => {
   try {
     const item = await Item.findById(itemId);
 
-    if (item) throw new Error('Este esse item não existe no acervo.')
+    if (!item) throw new Error('Este esse item não existe no acervo.')
 
     const user = await User.findById(userId);
 
     if (user.personalCollection.includes(itemId)) {
       user.personalCollection.pull(itemId);
-      item.collectedBy.pull(req.user.id);
+      item.collectedBy.pull(userId);
     } else {
       user.personalCollection.push(itemId);
-      item.collectedBy.push(req.user.id);
+      item.collectedBy.push(userId);
     }
 
-    await item.save();
-    return await user.save()
+    await user.save()
+    return await item.save();
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
-module.exports = { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, getAuthSavedItems, saveItem, addItemToLibrary }
+module.exports = { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, saveItem, addItemToLibrary }

@@ -23,7 +23,7 @@ import Profile from './pages/profile';
 import SearchResults from './pages/search/searchResults';
 import FindPeople from './pages/search/findPeople';
 import AccountSetting from './pages/account/accountSettings';
-import SavedItems from './pages/account/savedItems';
+import Bookmarks from './pages/account/bookmarks';
 import ContributionsPanel from './pages/account/contributionsPanel';
 import Notifications from './pages/notifications'
 import { connect } from 'react-redux'
@@ -53,7 +53,7 @@ if(!props.auth.loading){
       <Route path="/projects" component={Projects} />
       <Route path="/search" component={SearchResults} />
       <PrivateRoute path="/find-people" component={FindPeople} />
-      <PrivateRoute path="/saved" component={SavedItems} />
+      <PrivateRoute path="/bookmarks" component={Bookmarks} />
       <PrivateRoute path="/settings" component={AccountSetting} />
       <PrivateRoute path="/notifications" component={Notifications} />
       <PrivateRoute path="/contributions" component={ContributionsPanel} />

@@ -58,16 +58,6 @@ export function addItem(data, type) {
   };
 }
 
-export function selectCategory(category) {
-  return { type: types.SELECT_ITEMS_CATEGORY, payload: category };
-}
-export function selectOrder(order) {
-  return { type: types.SELECT_ITEMS_ORDER, payload: order };
-}
-export function selectPage(page) {
-  return { type: types.SELECT_ITEMS_PAGE, payload: page };
-}
-
 export const addItemToCollection = (item, post) => async dispatch => {
   try {
     const res = await axios.post('/api/library/auth/addtolibrary', {
@@ -81,20 +71,6 @@ export const addItemToCollection = (item, post) => async dispatch => {
   } catch (error) {
     dispatch({
       type: types.ADD_ITEM_TO_COLLECTION_FAIL
-    });
-  }
-};
-
-export const saveItem = item => async dispatch => {
-  try {
-    const res = await axios.post('/api/library/auth/save', { item });
-    dispatch({
-      type: types.SAVE_ITEM_SUCCESS,
-      payload: res.data
-    });
-  } catch (error) {
-    dispatch({
-      type: types.SAVE_ITEM_FAIL
     });
   }
 };
@@ -117,19 +93,12 @@ export function getContributions() {
   };
 }
 
-export const getSaved = id => dispatch => {
-  axios
-    .get(`/api/library/auth/saved`)
-    .then(collection => {
-      dispatch({
-        type: types.GET_SAVED_SUCCESS,
-        payload: collection.data
-      });
-    })
-    .catch(err => {
-      dispatch({
-        type: types.GET_SAVED_FAIL,
-        payload: err
-      });
-    });
-};
+export function selectCategory(category) {
+  return { type: types.SELECT_ITEMS_CATEGORY, payload: category };
+}
+export function selectOrder(order) {
+  return { type: types.SELECT_ITEMS_ORDER, payload: order };
+}
+export function selectPage(page) {
+  return { type: types.SELECT_ITEMS_PAGE, payload: page };
+}

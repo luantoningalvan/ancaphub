@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import AddToCollection from '../addItemToCollection';
-import SaveItem from '../saveItem';
+import AddBookmark from '../addBookmark';
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -51,8 +51,8 @@ export default function VideoCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <AddToCollection item={video._id} />
-        <SaveItem item={video._id} />
+        <AddToCollection item={{_id:video._id}} />
+        <AddBookmark item={{_id:video._id, hasSaved: video.hasSaved}} />
       </CardActions>
     </Card>
   );

@@ -22,7 +22,8 @@ const {
     Profile, 
     Rate, 
     Search, 
-    User
+    User,
+    Bookmark
 } = require('../controllers')
 
 // Routes
@@ -55,9 +56,11 @@ router.put('/library/:id', Library.update)
 router.delete('/library/:id', Library.remove)
 router.post('/library/:id/approve', Library.approve)
 router.get('/library/auth/contributions', auth, Library.getAuthContributions)
-router.get('/library/auth/saved', auth, Library.getAuthSaved)
-router.post('/library/auth/save', auth, Library.save)
 router.post('/library/auth/addtolibrary', auth, Library.addToLibrary)
+
+// Bookmark
+router.get('/bookmarks', auth, Bookmark.getAll)
+router.post('/bookmarks', auth, Bookmark.insert)
 
 // Notification
 router.get('/notifications', auth, Notification.getAll)

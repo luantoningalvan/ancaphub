@@ -5,7 +5,6 @@ const INITIAL_STATE = {
   isAuthenticated: false,
   loading: true,
   user: null,
-  saved: null
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -52,25 +51,10 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         user: { ...state.user, following: payload }
       };
-    case types.ADD_ITEM_TO_COLLECTION_SUCCESS:
-      return {
-        ...state,
-        user: { ...state.user, personalCollection: payload }
-      };
-    case types.SAVE_ITEM_SUCCESS:
-      return {
-        ...state,
-        user: { ...state.user, saved: payload }
-      };
     case types.GET_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
         user: { ...state.user, contributions: payload }
-      };
-    case types.GET_SAVED_SUCCESS:
-      return {
-        ...state,
-        saved: payload.saved
       };
     default:
       return state;

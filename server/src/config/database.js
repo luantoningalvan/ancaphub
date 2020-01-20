@@ -4,5 +4,6 @@ const databaseUrl = process.env.MONGO_URI;
 module.exports = mongoose.connect(databaseUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 });

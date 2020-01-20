@@ -9,6 +9,7 @@ const Profile = require('./profile.controller')
 const Rate = require('./rate.controller')
 const Search = require('./search.controller')
 const User = require('./user.controller')
+const Bookmark = require('./bookmark.controller')
 
 module.exports = {
   Auth,
@@ -21,5 +22,6 @@ module.exports = {
   Profile,
   Rate,
   Search,
-  User
+  User,
+  Bookmark
 }
