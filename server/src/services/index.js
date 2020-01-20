@@ -4,6 +4,7 @@ const categoryService = require('./category.service')
 const libraryService = require('./library.service')
 const rateService = require('./rate.service')
 const profileService = require('./profile.service')
+const userService = require('./user.service')
 
 module.exports = {
   notificationService,
@@ -12,4 +13,5 @@ module.exports = {
   libraryService,
   rateService,
   profileService,
+  userService
 }
