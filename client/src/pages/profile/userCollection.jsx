@@ -26,11 +26,11 @@ function UserCollection({getUserCollection, collection, user}) {
           {collection && !isEmpty(collection) ? (
             collection.map(item => (
               <Grid item xs={12} sm={8} md={6} lg={4}  key={item._id}>
-                {item.type === 'book' && <BookCard book={item} />}
+                {item.type === 'book' && <BookCard book={item} location="user"/>}
 
-                {item.type === 'article' && <ArticleCard article={item} />}
+                {item.type === 'article' && <ArticleCard article={item} location="user"/>}
 
-                {item.type === 'video' && <VideoCard video={item} />}
+                {item.type === 'video' && <VideoCard video={item} location="user"/>}
               </Grid>
             ))
           ) : (

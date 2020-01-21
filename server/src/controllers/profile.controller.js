@@ -1,6 +1,9 @@
-const { notificationService, profileService } = require('../services')
+const { notificationService, profileService, libraryService, userService } = require('../services')
 const { createNotification } = notificationService
-const { getFollowedUsers, getUserFollowers, getUserContributions, getUserCollection, followUser, unfollowUser } = profileService
+const { getFollowedUsers, getUserFollowers, followUser, unfollowUser } = profileService
+const { getManyItems } = libraryService
+const { getUser } = userService
+const verifyToken = require('../utils/verifyToken')
 
 const getFollowers = async (req, res, next) => {
   const { id } = req.params
@@ -30,7 +33,9 @@ const getCollection = async (req, res, next) => {
   const { id } = req.params
 
   try {
-    const result = await getUserCollection(id)
+    const isAutheticated = verifyToken(req)
+    const user = await getUser(id, "personalCollection")
+    const result = await getManyItems({filter: { '_id': {$in: user.personalCollection}}}, "", isAutheticated)
     res.send(result);
     next()
   } catch (e) {
@@ -42,7 +47,8 @@ const getContributions = async (req, res, next) => {
   const { id } = req.params
 
   try {
-    const result = await getUserContributions(id)
+    const isAutheticated = verifyToken(req)
+    const result = await getManyItems({filter: { 'user': id }}, "", isAutheticated)
     res.send(result);
     next()
   } catch (e) {

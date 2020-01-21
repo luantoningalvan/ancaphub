@@ -19,12 +19,12 @@ export const getBookmarks = () => dispatch => {
       });
   };
 
-export const addBookmark = item => async dispatch => {
+export const addBookmark = (item, location = 'items') => async dispatch => {
     try {
       const res = await axios.post('/api/bookmarks', { item });
       dispatch({
         type: types.ADD_BOOKMARK_SUCCESS,
-        payload: res.data
+        payload: { item: res.data, location}
       });
     } catch (error) {
       console.log(error)

@@ -56,8 +56,20 @@ export default function (state = INITIAL_STATE, action) {
     case types.GET_USER_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
-        user: { ...state.user, contributions: payload }
+        user: { ...state.user, contributions: payload.items }
       };
+    case types.ADD_BOOKMARK_SUCCESS:
+      if(payload.location == 'user') {
+        return {
+          ...state,
+          user:{
+            ...state.user,
+            contributions: state.user.contributions.map(item =>
+              item._id === payload.item._id ? { ...item, ...payload.item } : item
+            )
+          } 
+        };  
+      }
     default:
       return state;
   }

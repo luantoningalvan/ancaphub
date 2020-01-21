@@ -15,7 +15,7 @@ function AddBookmark({item, auth, addBookmark}) {
         <IconButton
           size="small"
           color="secondary"
-          onClick={() => addBookmark(item._id)}>
+          onClick={() => addBookmark(item._id, item.location)}>
           {item.hasSaved ? (
             <AddBookmarkIcon />
           ) : (

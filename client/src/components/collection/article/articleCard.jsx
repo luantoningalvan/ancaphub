@@ -52,7 +52,7 @@ export default function ArticleCard(props) {
       </CardActionArea>
       <CardActions>
         <AddToCollection item={{_id}} />
-        <AddBookmark item={{_id, hasSaved}}  />
+        <AddBookmark item={{_id, hasSaved, location: props.location}}  />
       </CardActions>
     </Card>
   );

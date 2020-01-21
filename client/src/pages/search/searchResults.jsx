@@ -65,9 +65,9 @@ const SearchResults = ({searchTerm, search}) => {
 
               {search.searchResults.items.items.map(item => (
                 <Grid item xs={12} md={4} lg={3} key={item._id}>
-                  {item.type === "book" && <BookCard book={item} />}
-                  {item.type === "article" && <ArticleCard article={item} />}
-                  {item.type === "video" && <VideoCard video={item} />}
+                  {item.type === "book" && <BookCard book={item} location="search" />}
+                  {item.type === "article" && <ArticleCard article={item} location="search" />}
+                  {item.type === "video" && <VideoCard video={item} location="search" />}
                 </Grid>
               ))}
             </Grid>

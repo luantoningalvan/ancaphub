@@ -17,7 +17,22 @@ export default function (state = INITIAL_STATE, action) {
     case types.SEARCH_TERM_FAILURE:
       return {
         loading: false
-      }    
+      }
+      case types.ADD_BOOKMARK_SUCCESS:
+        if(payload.location == 'search') {
+          return {
+            ...state,
+            searchResults:{
+              ...state.searchResults,
+              items: {
+                ...state.searchResults.items,
+                items: state.searchResults.items.items.map(item =>
+                  item._id === payload.item._id ? { ...item, ...payload.item } : item
+                )
+              }
+            } 
+          };  
+        }      
     default:
       return state  
   }

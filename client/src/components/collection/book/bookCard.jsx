@@ -87,7 +87,7 @@ export default function BookCard(props) {
       <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <AddToCollection item={_id} />
-          <AddBookmark item={{_id, hasSaved}} />
+          <AddBookmark item={{_id, hasSaved, location: props.location}} />
         </div>
         {files && !isEmpty(files) && (
           <>

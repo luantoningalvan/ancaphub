@@ -21,30 +21,6 @@ const getFollowedUsers = async (id) => {
   }
 }
 
-const getUserCollection = async (id) => {
-  try {
-    return await User
-      .findById(id, 'personalCollection')
-      .populate({
-        path: 'personalCollection',
-        model: 'Item',
-        populate: { path: 'cover', model: 'File' }
-      });
-  } catch (e) {
-    throw new Error(e.message)
-  }
-}
-
-const getUserContributions = async (id) => {
-  try {
-    return await Item
-      .find({ user: id, status: 'published' })
-      .populate('cover');
-  } catch (e) {
-    throw new Error(e.message)
-  }
-}
-
 const followUser = async (followedId, followerId) => {
   try {
     const followed = await User.findById(followedId);
@@ -87,4 +63,4 @@ const unfollowUser = async (followedId, followerId) => {
   }
 }
 
-module.exports = { getFollowedUsers, getUserFollowers, getUserContributions, getUserCollection, followUser, unfollowUser }
+module.exports = { getFollowedUsers, getUserFollowers, followUser, unfollowUser }

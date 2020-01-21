@@ -52,7 +52,7 @@ export default function VideoCard(props) {
       </CardActionArea>
       <CardActions>
         <AddToCollection item={{_id:video._id}} />
-        <AddBookmark item={{_id:video._id, hasSaved: video.hasSaved}} />
+        <AddBookmark item={{_id:video._id, hasSaved: video.hasSaved, location: props.location}} />
       </CardActions>
     </Card>
   );

@@ -26,16 +26,17 @@ export default (state = INITIAL_STATE, action) => {
         )
       };
     case types.ADD_BOOKMARK_SUCCESS:
-      return {
-        ...state,
-        allItems:{
-          ...state.allItems,
-          items: state.allItems.items.map(item =>
-            item._id === payload._id ? { ...item, ...payload } : item
-          )
-        } 
-
-      };
+      if(payload.location == 'items') {
+        return {
+          ...state,
+          allItems:{
+            ...state.allItems,
+            items: state.allItems.items.map(item =>
+              item._id === payload.item._id ? { ...item, ...payload.item } : item
+            )
+          } 
+        };
+      }
     case types.FETCH_RATES:
       return { ...state, item: { ...state.item, rates: payload } };
     case types.ADD_RATE_SUCCESS:
