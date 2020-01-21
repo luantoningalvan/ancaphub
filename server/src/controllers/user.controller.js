@@ -69,10 +69,11 @@ const update = async (req, res, next) => {
 }
 
 const updateLocation = async (req, res, next) => {
-  const {id} = req.user
+  const { id } = req.user
+  const coordinates = [req.body.longitude, req.body.latitude]
 
   try {
-    const userUpdated = await updateUser(id, { lastLocation: { ...req.body }, geoLocation: true })
+    const userUpdated = await updateUser(id, { "lastLocation": { type: 'Point', coordinates }, geoLocation: true })
     const result = {
       lastLocation: userUpdated.lastLocation,
       geoLocation: userUpdated.geoLocation

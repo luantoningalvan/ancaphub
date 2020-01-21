@@ -12,21 +12,15 @@ const getManyUsers = async ({ filter }) => {
   }
 }
 
-const getUser = async (id) => {
+const getUser = async (id, extraFields) => {
   try {
     const user = await User
-      .findById(id, '_id username avatar bio birthday currentCity site following followers');
-    
+      .findById(id, `_id username avatar bio birthday currentCity site following followers ${extraFields}`);
+  
       return {
-      _id: user._id,
-      username: user.username,
-      avatar: user.avatar,
-      bio: user.bio,
-      birthday: user.birthday,
-      currentCity: user.currentCity,
-      site: user.site,
-      followersCount: user.followers.length,
-      followingCount: user.following.length
+        ...user._doc,
+        followersCount: user.followers.length,
+        followingCount: user.following.length
     }
   } catch (e) {
     throw new Error(e.message)

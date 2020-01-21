@@ -1,49 +1,45 @@
-const Item = require("../models/LibraryModel")
-const User = require("../models/UserModel")
-const haversine = require('haversine');
+const { userService, libraryService } = require('../services')
+const { getManyUsers, getUser } = userService
+const { getManyItems } = libraryService
 
-const searchTerm = async (req, res) => {
+const searchTerm = async (req, res, next) => {
   try {
-    const items = await Item.find({ "$text": { "$search": req.body.query } }, "_id title type description cover author")
-      .populate('cover')
-    const users = await User.find({ "$text": { "$search": req.body.query } }, "_id username avatar")
+    const items = await getManyItems({ filter: { $text: { $search: req.body.query } } })
+    const users = await getManyUsers({ filter: { $text: { $search: req.body.query } } })
+
     res.send({ items, users })
-  } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
 
-const searchNearbyUsers = async (req, res) => {
+const searchNearbyUsers = async (req, res, next) => {
+  const authUser = await getUser(req.user.id, "lastLocation")
+  const lastLocation = authUser.lastLocation.coordinates
+  const radius = req.query.radius * 1000
+
   try {
-    const authUser = await User.findById(req.user.id);
-    const allUsers = await User.find({
-      geoLocation: true,
-      _id: { $ne: authUser._id }
-    });
-    const lastLocation = authUser.lastLocation;
-    const radius = req.query.radius;
-
-    let nearbyUsers = [];
-
-    for (let index = 0; index < allUsers.length; index++) {
-      const distance = haversine(allUsers[index].lastLocation, lastLocation);
-
-      if (distance <= radius) {
-        const { _id, avatar, username } = allUsers[index];
-        nearbyUsers.push({
-          _id,
-          avatar,
-          username,
-          distance: parseFloat(distance).toFixed(2)
-        });
+    const result = await getManyUsers({
+      filter: {
+        _id: { $ne: authUser._id },
+        geoLocation: true,
+        lastLocation: {
+          $near: {
+            $geometry: {
+              type: 'Point',
+              coordinates: lastLocation
+            },
+            $maxDistance: radius
+          }
+        }
       }
-    }
+    })
 
-    res.send(nearbyUsers);
-  } catch (error) {
-    res.status(500).send(error);
+    res.send(result)
+    next()
+  } catch (e) {
+    res.sendStatus(500) && next(e)
   }
 };
-
 module.exports = { searchTerm, searchNearbyUsers }

@@ -63,7 +63,7 @@ const SearchResults = ({searchTerm, search}) => {
                 </Grid>
               ))}
 
-              {search.searchResults.items.map(item => (
+              {search.searchResults.items.items.map(item => (
                 <Grid item xs={12} md={4} lg={3} key={item._id}>
                   {item.type === "book" && <BookCard book={item} />}
                   {item.type === "article" && <ArticleCard article={item} />}
