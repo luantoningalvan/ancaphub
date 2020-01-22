@@ -1,39 +1,41 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import UnavailablePage from './pages/unavaliable';
 import PrivateRoute from './components/auth/privateRoute';
-
-// Telas
-import Home from './pages/home';
-import Feed from './pages/feed';
-import Books from './pages/collection/books';
-import SingleBook from './pages/collection/books/singleBook';
-import AddBook from './pages/collection/books/addBook';
-import Articles from './pages/collection/articles';
-import SingleArticle from './pages/collection/articles/singleArticle';
-import AddArticle from './pages/collection/articles/addArticle';
-import Videos from './pages/collection/videos';
-import SingleVideo from './pages/collection/videos/singleVideo';
-import AddVideo from './pages/collection/videos/addVideo';
-import Groups from './pages/groups';
-import SingleGroup from './pages/groups/single';
-import Events from './pages/events';
-import Projects from './pages/projects';
-import Profile from './pages/profile';
-import SearchResults from './pages/search/searchResults';
-import FindPeople from './pages/search/findPeople';
-import AccountSetting from './pages/account/accountSettings';
-import Bookmarks from './pages/account/bookmarks';
-import ContributionsPanel from './pages/account/contributionsPanel';
-import Notifications from './pages/notifications'
 import { connect } from 'react-redux'
 import Loading from './components/loaders/loadingItems'
+
+// Telas
+const Home = lazy(() => import ('./pages/home'))
+const Feed = lazy(() => import ('./pages/feed'))
+const Books = lazy(() => import ('./pages/collection/books'))
+const SingleBook = lazy(() => import ('./pages/collection/books/singleBook'))
+const AddBook = lazy(() => import ('./pages/collection/books/addBook'))
+const Articles = lazy(() => import ('./pages/collection/articles'))
+const SingleArticle = lazy(() => import ('./pages/collection/articles/singleArticle'))
+const AddArticle = lazy(() => import ('./pages/collection/articles/addArticle'))
+const Videos = lazy(() => import ('./pages/collection/videos'))
+const SingleVideo = lazy(() => import ('./pages/collection/videos/singleVideo'))
+const AddVideo = lazy(() => import ('./pages/collection/videos/addVideo'))
+const Groups = lazy(() => import ('./pages/groups'))
+const SingleGroup = lazy(() => import ('./pages/groups/single'))
+const Events = lazy(() => import ('./pages/events'))
+const Projects = lazy(() => import ('./pages/projects'))
+const Profile = lazy(() => import ('./pages/profile'))
+const SearchResults = lazy(() => import ('./pages/search/searchResults'))
+const FindPeople = lazy(() => import ('./pages/search/findPeople'))
+const AccountSetting = lazy(() => import ('./pages/account/accountSettings'))
+const Bookmarks = lazy(() => import ('./pages/account/bookmarks'))
+const ContributionsPanel = lazy(() => import ('./pages/account/contributionsPanel'))
+const Notifications = lazy(() => import ('./pages/notifications'))
+
 
 function Routes(props) {
 if(!props.auth.loading){
   return (
     <Router>
-    <Switch>
+    <Suspense fallback={<Loading />}>
+      <Switch>
       <Route exact path="/" component={props.auth.isAuthenticated ? Feed : Home} />
       <PrivateRoute path="/contribute/book" component={AddBook} />
       <PrivateRoute path="/contribute/article" component={AddArticle} />
@@ -63,7 +65,8 @@ if(!props.auth.loading){
       <Route exact path="/:id/collection" component={Profile} />
       <Route exact path="/:id/contributions" component={Profile} />
       <Route path="*" component={UnavailablePage} />
-    </Switch>
+      </Switch>
+    </Suspense>
   </Router>
   )
 } else {
