@@ -8,9 +8,9 @@ import {
 import isEmpty from 'is-empty';
 import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
-import BookCard from '../../components/collection/book/bookCard';
-import ArticleCard from '../../components/collection/article/articleCard';
-import VideoCard from '../../components/collection/video/videoCard';
+import BookCard from '../../components/library/book/bookCard';
+import ArticleCard from '../../components/library/article/articleCard';
+import VideoCard from '../../components/library/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getBookmarks } from '../../actions/bookmarkActions';

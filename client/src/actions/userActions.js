@@ -38,18 +38,18 @@ export const getUser = id => dispatch => {
     });
 };
 
-export const getUserCollection = id => dispatch => {
+export const getUserLibrary = id => dispatch => {
   axios
-    .get(`/api/users/${id}/collection`)
-    .then(collection => {
+    .get(`/api/users/${id}/library`)
+    .then(library => {
       dispatch({
-        type: types.GET_USER_COLLECTION_SUCCESS,
-        payload: collection.data
+        type: types.GET_USER_LIBRARY_SUCCESS,
+        payload: library.data
       });
     })
     .catch(err => {
       dispatch({
-        type: types.GET_USER_COLLECTION_FAIL,
+        type: types.GET_USER_LIBRARY_FAIL,
         payload: err
       });
     });

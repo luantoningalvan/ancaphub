@@ -18,15 +18,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, item: payload, loading: false };
     case types.FETCH_ITEM_FAILURE:
       return {...state, loading:false, item: {}} 
-    case types.ADD_ITEM_TO_COLLECTION_SUCCESS:
-      return {
-        ...state,
-        allItems: state.allItems.items.map(item =>
-          item._id === payload._id ? { ...item, ...payload } : item
-        )
-      };
+    case types.ADD_ITEM_TO_LIBRARY_SUCCESS:
     case types.ADD_BOOKMARK_SUCCESS:
-      if(payload.location == 'items') {
+      if(payload.location === 'items') {
         return {
           ...state,
           allItems:{

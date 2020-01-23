@@ -34,7 +34,7 @@ import LoadContent from '../../components/loaders/loadContent'
 
 // Profile Pages
 import UserFeed from './userFeed';
-import UserCollection from './userCollection';
+import UserLibrary from './userLibrary';
 import UserContributions from './userContributions';
 import UserFollowers from './userFollowers';
 import UserFollowing from './userFollowing';
@@ -94,8 +94,8 @@ function Profile({ getUser, auth, user, match}) {
           return <UserFollowers user={user.user} />;
         case '/:id/following':
           return <UserFollowing user={user.user} />;
-        case '/:id/collection':
-          return <UserCollection user={user.user} />;
+        case '/:id/library':
+          return <UserLibrary user={user.user} />;
         case '/:id/contributions':
           return <UserContributions user={user.user} />;
         default:
@@ -227,9 +227,9 @@ function Profile({ getUser, auth, user, match}) {
                     />
                     <Tab
                       component={AdapterLink}
-                      to={`/${_id}/collection`}
+                      to={`/${_id}/library`}
                       label="Coleção"
-                      value="/:id/collection"
+                      value="/:id/library"
                     />
                     <Tab
                       component={AdapterLink}

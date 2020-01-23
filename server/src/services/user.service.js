@@ -5,7 +5,7 @@ const getManyUsers = async ({ filter }) => {
   try {
     return await User
       .find(filter)
-      .select('-email -password -geoLocation -__v -saved -personalCollection -role')
+      .select('-email -password -geoLocation -__v -saved -library -role')
       .limit(20)
   } catch (e) {
     throw new Error(e.message)

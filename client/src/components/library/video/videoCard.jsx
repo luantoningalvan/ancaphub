@@ -7,11 +7,11 @@ import {
   CardContent,
   CardMedia
 } from '@material-ui/core';
-import { Description as ArticleIcon } from '@material-ui/icons';
+import { PlayArrow as VideoIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
-import AddToCollection from '../addItemToCollection';
+import AddToLibrary from '../addToLibrary';
 import AddBookmark from '../addBookmark';
 
 const useStyles = makeStyles(theme => ({
@@ -25,21 +25,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ArticleCard(props) {
+export default function VideoCard({video, location}) {
   const classes = useStyles();
-  const AdapterLink = React.forwardRef((props, ref) => (
-    <Link innerRef={ref} {...props} />
-  ));
+  const { _id, title, cover, author, inLibrary, hasSaved } = video;
 
-  const { _id, title, author, cover, hasSaved } = props.article;
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/articles/${_id}`}>
+      <CardActionArea component={Link} to={`/videos/${_id}`}>
         <CardMedia
           className={classes.media}
           image={cover ? cover.url : defaultThumbnail}
-          title={`Capa do artigo ${title}`}>
-          <ArticleIcon className={classes.type} />
+          title={`Capa do vídeo ${title}`}>
+          <VideoIcon className={classes.type} />
         </CardMedia>
         <CardContent>
           <Typography variant="h6" component="h2" noWrap style={{ fontWeight: 'bold' }}>
@@ -51,8 +48,8 @@ export default function ArticleCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <AddToCollection item={{_id}} />
-        <AddBookmark item={{_id, hasSaved, location: props.location}}  />
+        <AddToLibrary item={{_id, inLibrary, location}} />
+        <AddBookmark item={{_id, hasSaved, location}}  />
       </CardActions>
     </Card>
   );

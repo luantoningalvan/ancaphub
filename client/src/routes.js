@@ -8,15 +8,15 @@ import Loading from './components/loaders/loadingItems'
 // Telas
 const Home = lazy(() => import ('./pages/home'))
 const Feed = lazy(() => import ('./pages/feed'))
-const Books = lazy(() => import ('./pages/collection/books'))
-const SingleBook = lazy(() => import ('./pages/collection/books/singleBook'))
-const AddBook = lazy(() => import ('./pages/collection/books/addBook'))
-const Articles = lazy(() => import ('./pages/collection/articles'))
-const SingleArticle = lazy(() => import ('./pages/collection/articles/singleArticle'))
-const AddArticle = lazy(() => import ('./pages/collection/articles/addArticle'))
-const Videos = lazy(() => import ('./pages/collection/videos'))
-const SingleVideo = lazy(() => import ('./pages/collection/videos/singleVideo'))
-const AddVideo = lazy(() => import ('./pages/collection/videos/addVideo'))
+const Books = lazy(() => import ('./pages/library/books'))
+const SingleBook = lazy(() => import ('./pages/library/books/singleBook'))
+const AddBook = lazy(() => import ('./pages/library/books/addBook'))
+const Articles = lazy(() => import ('./pages/library/articles'))
+const SingleArticle = lazy(() => import ('./pages/library/articles/singleArticle'))
+const AddArticle = lazy(() => import ('./pages/library/articles/addArticle'))
+const Videos = lazy(() => import ('./pages/library/videos'))
+const SingleVideo = lazy(() => import ('./pages/library/videos/singleVideo'))
+const AddVideo = lazy(() => import ('./pages/library/videos/addVideo'))
 const Groups = lazy(() => import ('./pages/groups'))
 const SingleGroup = lazy(() => import ('./pages/groups/single'))
 const Events = lazy(() => import ('./pages/events'))
@@ -62,7 +62,7 @@ if(!props.auth.loading){
       <Route exact path="/:id" component={Profile} />
       <Route exact path="/:id/followers" component={Profile} />
       <Route exact path="/:id/following" component={Profile} />
-      <Route exact path="/:id/collection" component={Profile} />
+      <Route exact path="/:id/library" component={Profile} />
       <Route exact path="/:id/contributions" component={Profile} />
       <Route path="*" component={UnavailablePage} />
       </Switch>

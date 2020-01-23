@@ -34,7 +34,6 @@ export function searchUsers(radius) {
 }
 
 export function searchTerm(term) {
-  console.log(term)
   return dispatch => {
     dispatch(searchLoading())
     axios

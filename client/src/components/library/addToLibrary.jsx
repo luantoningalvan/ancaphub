@@ -10,14 +10,14 @@ import {
   Checkbox
 } from '@material-ui/core';
 import {
-  LibraryAdd as CollectionAddIcon,
-  LibraryAddOutlined as NotCollectionAddIcon
+  LibraryAdd as RemoveFromLibraryIcon,
+  LibraryAddOutlined as AddToLibraryIcon
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addItemToCollection } from '../../actions/itemActions';
+import { addToLibrary } from '../../actions/itemActions';
 
-function AddItemToCollection(props) {
+function AddToLibrary({auth, item, addToLibrary}) {
   const [open, setOpen] = React.useState(false);
   const [post, setPost] = React.useState(true);
 
@@ -29,26 +29,26 @@ function AddItemToCollection(props) {
     setOpen(false);
   }
 
-  function add(item) {
-    props.addItemToCollection(item, post);
+  function add() {
+    addToLibrary(item._id, post, item.location);
     handleClose();
   }
 
   return (
     <Fragment>
-      {props.auth.isAuthenticated && (
+      {auth.isAuthenticated && (
         <Fragment>
-          {props.auth.user.personalCollection.includes(props.item) ? (
+          {item.inLibrary ? (
             <IconButton
               size="small"
               color="secondary"
-              onClick={() => props.addItemToCollection(props.item)}>
-              <CollectionAddIcon />
+              onClick={() => addToLibrary(item._id, false, item.location)}>
+              <RemoveFromLibraryIcon />
 
             </IconButton>
           ) : (
               <IconButton size="small" color="secondary" onClick={handleClickOpen}>
-                <NotCollectionAddIcon />
+                <AddToLibraryIcon />
               </IconButton>
             )}
 
@@ -76,7 +76,7 @@ function AddItemToCollection(props) {
               <Button onClick={handleClose} color="default">
                 Cancelar
               </Button>
-              <Button onClick={() => add(props.item)} color="secondary" variant="outlined">
+              <Button onClick={add} color="secondary" variant="outlined">
                 Adicionar
               </Button>
             </DialogActions>
@@ -89,9 +89,9 @@ function AddItemToCollection(props) {
 
 const mapStateToProps = state => ({ auth: state.auth });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addItemToCollection }, dispatch);
+  bindActionCreators({ addToLibrary }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddItemToCollection);
+)(AddToLibrary);

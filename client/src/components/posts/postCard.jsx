@@ -37,16 +37,16 @@ import ProfilePicture from '../profile/profilePicture';
 
 // Templates
 import Status from './templates/status'
-import ItemAddedToCollection from './templates/itemAddedToCollection'
+import ItemAddedToLibrary from './templates/itemAddedToLibrary'
 
 const templates = {
-  collection_item: () => ItemAddedToCollection,
+  library_item: () => ItemAddedToLibrary,
   status: () => Status
 }
 
 const activities = {
   status: null,
-  collection_item: 'adicionou um item à sua coleção particular'
+  library_item: 'adicionou um item à sua coleção particular'
 };
 
 function ActivityCard(props) {

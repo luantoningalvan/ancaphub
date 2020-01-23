@@ -7,7 +7,7 @@ const PostSchema = new Schema({
     type: String,
     default: "status",
     lowercase: true,
-    enum: ['status', 'collection_item']
+    enum: ['status', 'library_item']
   },
   extraFields: Object,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

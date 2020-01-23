@@ -7,7 +7,7 @@ import Signup from '../../components/auth/signup';
 import Template from '../../components/template'
 import Title from '../../components/template/titleComponent'
 import {
-  FolderOutlined as CollectionIcon,
+  FolderOutlined as LibraryIcon,
   GroupOutlined as GroupIcon,
   EventOutlined as EventIcon,
   LocationSearching as LocationSearchIcon
@@ -50,7 +50,7 @@ const Home = props => {
           <Box textAlign="left" pr={5} pt={5}>
             <Typography variant="h3" gutterBottom style={{ fontWeight: 'bold' }}>Bem vindo à versão de testes do AncapHub!</Typography>
             <ul className={classes.features}>
-              <li className={classes.feature}><CollectionIcon className={classes.featureIcon} /><span>Tenha à sua disposição milhares de materiais para estudo.</span></li>
+              <li className={classes.feature}><LibraryIcon className={classes.featureIcon} /><span>Tenha à sua disposição milhares de materiais para estudo.</span></li>
               <li className={classes.feature}><LocationSearchIcon className={classes.featureIcon} /><span>Conheça libertários que morem perto de você.</span></li>
               <li className={classes.feature}><GroupIcon className={classes.featureIcon} /><span>Crie e participe de grupos de estudo.</span></li>
               <li className={classes.feature}><EventIcon className={classes.featureIcon} /><span>Confira eventos libertários que irão rolar.</span></li>

@@ -21,7 +21,7 @@ import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
-import Ratings from '../../../components/collection/ratings';
+import Ratings from '../../../components/library/ratings';
 import LoadContent from '../../../components/loaders/loadContent'
 import InvitedBy from '../../../components/profile/invitedBy'
 import UnavaliableContent from '../../../components/error/unavaliableContent'

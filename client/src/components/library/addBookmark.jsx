@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { addBookmark } from '../../actions/bookmarkActions';
 
 function AddBookmark({item, auth, addBookmark}) {
+  
   return (
     <>
       {auth.isAuthenticated && (

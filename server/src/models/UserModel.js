@@ -32,7 +32,7 @@ const UserSchema = new Schema({
     required: true,
     default: ['user']
   },
-  personalCollection: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+  library: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   saved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   following: [],
   followers: [],

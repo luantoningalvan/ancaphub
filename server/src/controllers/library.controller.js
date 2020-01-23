@@ -162,17 +162,17 @@ const addToLibrary = async (req, res, next) => {
 
   try {
     const result = await addItemToLibrary(user, item)
-    
+    console.log(result)
     if (post) {
-      const cover = await getFile(result.cover)
+      const cover = result.cover !== "" ? await getFile(result.cover) : null
 
       const newPost = new Post({
-        type: 'collection_item',
+        type: 'library_item',
         user: req.user.id,
         extraFields: {
           _id: result._id,
           title: result.title,
-          cover: cover.url,
+          cover: cover ? cover.url : "",
           type: result.type,
           description: result.content
         }
@@ -181,7 +181,10 @@ const addToLibrary = async (req, res, next) => {
       await newPost.save();
     }
 
-    res.send(result);
+    res.send({
+      _id: result._id,
+      inLibrary: result.inLibrary
+    });
     next()
   } catch (e) {
     res.sendStatus(500) && next(e)

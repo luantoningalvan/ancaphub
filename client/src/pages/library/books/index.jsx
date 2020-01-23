@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
 import isEmpty from 'is-empty';
 import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
-import BookCard from '../../../components/collection/book/bookCard';
-import Filter from '../../../components/collection/filter';
+import BookCard from '../../../components/library/book/bookCard';
+import Filter from '../../../components/library/filter';
 import LoadContent from '../../../components/loaders/loadContent'
 import { connect } from 'react-redux';
 

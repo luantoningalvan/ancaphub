@@ -21,7 +21,7 @@ import filesize from 'filesize'
 import querystring from 'querystring'
 import axios from '../../../services/api'
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
-import AddToCollection from '../addItemToCollection';
+import AddToLibrary from '../addToLibrary';
 import AddBookmark from '../addBookmark';
 
 const useStyles = makeStyles(theme => ({
@@ -39,9 +39,6 @@ export default function BookCard(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [files, setFiles] = useState([]);
-  const AdapterLink = React.forwardRef((props, ref) => (
-    <Link innerRef={ref} {...props} />
-  ));
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -52,7 +49,7 @@ export default function BookCard(props) {
   }
 
   const { book } = props;
-  const { _id, cover, title, author, extraFields, hasSaved} = book
+  const { _id, cover, title, author, extraFields, hasSaved, inLibrary} = book
 
   useEffect(() => {
     if (extraFields && extraFields.downloadOptions) {
@@ -70,7 +67,7 @@ export default function BookCard(props) {
 
   return (
     <Card>
-      <CardActionArea component={AdapterLink} to={`/books/${_id}`}>
+      <CardActionArea component={Link} to={`/books/${_id}`}>
         <CardMedia
           className={classes.media}
           image={cover ? cover.url : defaultThumbnail}
@@ -86,8 +83,8 @@ export default function BookCard(props) {
       </CardActionArea>
       <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
-          <AddToCollection item={_id} />
-          <AddBookmark item={{_id, hasSaved, location: props.location}} />
+          <AddToLibrary item={{_id, inLibrary, location: props.location}} />
+          <AddBookmark item={{_id, hasSaved, location: props.location}}  />
         </div>
         {files && !isEmpty(files) && (
           <>

@@ -4,11 +4,10 @@ import types from './_types'
 export const getBookmarks = () => dispatch => {
     axios
       .get(`/api/bookmarks`)
-      .then(collection => {
-        console.log(collection.data)
+      .then(bookmarks => {
         dispatch({
           type: types.GET_BOOKMARKS_SUCCESS,
-          payload: collection.data
+          payload: bookmarks.data
         });
       })
       .catch(err => {

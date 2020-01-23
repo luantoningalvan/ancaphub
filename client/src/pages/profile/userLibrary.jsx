@@ -6,16 +6,16 @@ import {
 } from '@material-ui/core';
 import isEmpty from 'is-empty';
 import Title from '../../components/template/titleComponent'
-import BookCard from '../../components/collection/book/bookCard';
-import ArticleCard from '../../components/collection/article/articleCard';
-import VideoCard from '../../components/collection/video/videoCard';
+import BookCard from '../../components/library/book/bookCard';
+import ArticleCard from '../../components/library/article/articleCard';
+import VideoCard from '../../components/library/video/videoCard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getUserCollection } from '../../actions/userActions';
+import { getUserLibrary } from '../../actions/userActions';
 import LoadContent from '../../components/loaders/loadContent'
 
-function UserCollection({getUserCollection, collection, user}) {
-  useEffect(() => getUserCollection(user._id), [user._id, getUserCollection]);
+function UserLibrary({getUserLibrary, library, user}) {
+  useEffect(() => getUserLibrary(user._id), [user._id, getUserLibrary]);
 
   return (
     <>
@@ -23,14 +23,14 @@ function UserCollection({getUserCollection, collection, user}) {
 
       <LoadContent loading={false}>
         <Grid container spacing={2}>
-          {collection && !isEmpty(collection) ? (
-            collection.map(item => (
+          {library && !isEmpty(library) ? (
+            library.map(item => (
               <Grid item xs={12} sm={8} md={6} lg={4}  key={item._id}>
-                {item.type === 'book' && <BookCard book={item} location="user"/>}
+                {item.type === 'book' && <BookCard book={item} location="user-library"/>}
 
-                {item.type === 'article' && <ArticleCard article={item} location="user"/>}
+                {item.type === 'article' && <ArticleCard article={item} location="user-library"/>}
 
-                {item.type === 'video' && <VideoCard video={item} location="user"/>}
+                {item.type === 'video' && <VideoCard video={item} location="user-library"/>}
               </Grid>
             ))
           ) : (
@@ -47,12 +47,12 @@ function UserCollection({getUserCollection, collection, user}) {
 }
 
 const mapStateToProps = state => ({
-  collection: state.users.user.personalCollection
+  library: state.users.user.personalLibrary
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getUserCollection }, dispatch);
+  bindActionCreators({ getUserLibrary }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserCollection);
+)(UserLibrary);

@@ -4,32 +4,32 @@ import {
   Grid,
   Box,
   Paper,
-  Button,
+  Button
 } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
-import isEmpty from 'is-empty';
 import { Link } from 'react-router-dom';
+import isEmpty from 'is-empty';
 import Template from '../../../components/template';
+import ArticleCard from '../../../components/library/article/articleCard';
+import Filter from '../../../components/library/filter';
 import Title from '../../../components/template/titleComponent'
-import Filter from '../../../components/collection/filter';
-import VideoCard from '../../../components/collection/video/videoCard';
 import LoadContent from '../../../components/loaders/loadContent'
 import { connect } from 'react-redux';
 
-function Videos(props) {
-  const { videos } = props;
-
+function Articles(props) {
+  const { articles } = props;
+  
   return (
     <Template>
       <Box display="flex" flexDirection="column" height="100%">
-        <Title title="Vídeos" />
+        <Title title="Artigos" />
         <Box mb={3} display="flex" justifyContent="space-between">
           <Typography variant="h4" component="h2">
-            Vídeos
+            Artigos
           </Typography>
           <Button
             component={Link}
-            to="/contribute/video"
+            to="/contribute/article"
             variant="outlined"
             color="secondary">
             <AddIcon style={{ marginRight: '10px' }} />
@@ -37,22 +37,22 @@ function Videos(props) {
           </Button>
         </Box>
 
-        <Filter type="video" />
+        <Filter type="article" />
 
-        <LoadContent loading={videos.loading}>
-          {!isEmpty(videos.allItems.items) ? (
+        <LoadContent loading={articles.loading}>
+          {!isEmpty(articles.allItems.items) ? (
             <Grid container spacing={2}>
-              {videos.allItems.items.map((video, index) => (
+              {articles.allItems.items.map((article, index) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                  <VideoCard video={video} user={props.user} />
+                  <ArticleCard article={article} user={props.user} />
                 </Grid>
               ))}
             </Grid>
           ) : (
               <Paper>
                 <Box p={2}>
-                  Nenhum vídeo encontrado.
-              </Box>
+                  Nenhum artigo encontrado.
+                </Box>
               </Paper>
             )}
         </LoadContent>
@@ -62,7 +62,7 @@ function Videos(props) {
 }
 
 const mapStateToProps = state => ({
-  videos: state.items,
+  articles: state.items,
   user: state.auth.user
 });
-export default connect(mapStateToProps)(Videos);
+export default connect(mapStateToProps)(Articles);

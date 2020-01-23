@@ -14,9 +14,9 @@ import { connect } from 'react-redux';
 import { searchTerm } from '../../actions/searchActions';
 import isEmpty from 'is-empty'
 import UserCard from '../../components/profile/userCard'
-import BookCard from '../../components/collection/book/bookCard'
-import ArticleCard from '../../components/collection/article/articleCard'
-import VideoCard from '../../components/collection/video/videoCard'
+import BookCard from '../../components/library/book/bookCard'
+import ArticleCard from '../../components/library/article/articleCard'
+import VideoCard from '../../components/library/video/videoCard'
 
 const SearchResults = ({searchTerm, search}) => {
   const getSearchTerm = () => {
@@ -45,7 +45,7 @@ const SearchResults = ({searchTerm, search}) => {
       <Paper>
         <Tabs value="all" variant="fullWidth">
           <Tab label="Tudo" value="all" />
-          <Tab disabled label="Coleção" value="collection" />
+          <Tab disabled label="Coleção" value="library" />
           <Tab disabled label="Usuários" value="users" />
           <Tab disabled label="Grupos" />
           <Tab disabled label="Eventos" />

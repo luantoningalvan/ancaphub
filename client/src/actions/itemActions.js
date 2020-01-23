@@ -45,7 +45,6 @@ export function fetchItem(id) {
 
 export function addItem(data, type) {
   return dispatch => {
-    console.log(data)
     axios
       .post(`/api/library`, { ...data, type })
       .then(item => {
@@ -58,19 +57,17 @@ export function addItem(data, type) {
   };
 }
 
-export const addItemToCollection = (item, post) => async dispatch => {
+export const addToLibrary = (item, post, location = 'items') => async dispatch => {
   try {
-    const res = await axios.post('/api/library/auth/addtolibrary', {
-      item,
-      post
-    });
+    const res = await axios.post('/api/library/auth/addtolibrary', { item, post });
     dispatch({
-      type: types.ADD_ITEM_TO_COLLECTION_SUCCESS,
-      payload: res.data
+      type: types.ADD_ITEM_TO_LIBRARY_SUCCESS,
+      payload: { item: res.data, location}
     });
   } catch (error) {
+    console.log(error)
     dispatch({
-      type: types.ADD_ITEM_TO_COLLECTION_FAIL
+      type: types.ADD_ITEM_TO_LIBRARY_FAIL
     });
   }
 };

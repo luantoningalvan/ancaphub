@@ -48,27 +48,31 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         user: { ...state.user, following: payload }
       };
-    case types.GET_USER_COLLECTION_SUCCESS:
+    case types.GET_USER_LIBRARY_SUCCESS:
       return {
         ...state,
-        user: { ...state.user, personalCollection: payload.personalCollection }
+        user: { ...state.user, personalLibrary: payload.items }
       };
     case types.GET_USER_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
         user: { ...state.user, contributions: payload.items }
       };
+    case types.ADD_ITEM_TO_LIBRARY_SUCCESS:
     case types.ADD_BOOKMARK_SUCCESS:
-      if(payload.location == 'user') {
+      if (payload.location === 'user-contributions' || payload.location === 'user-library') {
         return {
           ...state,
-          user:{
+          user: {
             ...state.user,
-            contributions: state.user.contributions.map(item =>
+            contributions: payload.location === 'user-contributions' ? state.user.contributions.map(item =>
               item._id === payload.item._id ? { ...item, ...payload.item } : item
-            )
-          } 
-        };  
+            ) : state.user.contributions,
+            personalLibrary: payload.location === 'user-library' ? state.user.personalLibrary.map(item =>
+              item._id === payload.item._id ? { ...item, ...payload.item } : item
+            ) : state.user.personalLibrary
+          }
+        };
       }
     default:
       return state;

@@ -1,11 +1,13 @@
 const { userService, libraryService } = require('../services')
 const { getManyUsers, getUser } = userService
 const { getManyItems } = libraryService
+const verifyToken = require('../utils/verifyToken')
 
 const searchTerm = async (req, res, next) => {
   try {
-    const items = await getManyItems({ filter: { $text: { $search: req.body.query } } })
-    const users = await getManyUsers({ filter: { $text: { $search: req.body.query } } })
+    const isAutheticated = verifyToken(req)
+    const items = await getManyItems({ filter: { $text: { $search: req.body.query } } }, "", isAutheticated)
+    const users = await getManyUsers({ filter: { $text: { $search: req.body.query } } }, "", isAutheticated)
 
     res.send({ items, users })
     next()

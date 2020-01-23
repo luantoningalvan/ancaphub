@@ -11,8 +11,6 @@ const getManyItems = async (query, type, auth) => {
       return res.status(400).json([]);
     }
 
-    console.log(filter)
-
     let items = await Item.find(filter)
       .limit(pageSize)
       .skip(currentPage * pageSize)
@@ -21,7 +19,13 @@ const getManyItems = async (query, type, auth) => {
 
     if(auth) {
       const user = await User.findById(auth.id)
-      items = items.map(item => ({ ...item._doc, hasSaved: user.saved.includes(item._id)}))
+      items = items.map(item => ({ 
+        ...item._doc, 
+        hasSaved: user.saved.includes(item._id),
+        inLibrary: user.library.includes(item._id)
+      }))
+    } else {
+      console.log ("Não logado")
     }
   
     return {
@@ -148,16 +152,21 @@ const addItemToLibrary = async (userId, itemId) => {
 
     const user = await User.findById(userId);
 
-    if (user.personalCollection.includes(itemId)) {
-      user.personalCollection.pull(itemId);
+    if (user.library.includes(itemId)) {
+      user.library.pull(itemId);
       item.collectedBy.pull(userId);
     } else {
-      user.personalCollection.push(itemId);
+      user.library.push(itemId);
       item.collectedBy.push(userId);
     }
 
     await user.save()
-    return await item.save();
+    await item.save();
+    return {
+      ...item._doc,
+      inLibrary: user.library.includes(itemId)
+    }
+    
   } catch (e) {
     throw new Error(e.message)
   }

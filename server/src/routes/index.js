@@ -79,7 +79,7 @@ router.post('/posts/:id/unlike', auth, Post.unlikePost)
 router.get('/users/:id/followers', Profile.getFollowers)
 router.get('/users/:id/following', Profile.getFollowing)
 router.get('/users/:id/contributions', Profile.getContributions)
-router.get('/users/:id/collection', Profile.getCollection)
+router.get('/users/:id/library', Profile.getLibrary)
 router.post('/users/:id/follow', auth, Profile.follow)
 router.post('/users/:id/unfollow', auth, Profile.unfollow)
 

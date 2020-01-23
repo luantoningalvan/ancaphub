@@ -29,13 +29,13 @@ const getFollowing = async (req, res, next) => {
   }
 }
 
-const getCollection = async (req, res, next) => {
+const getLibrary = async (req, res, next) => {
   const { id } = req.params
 
   try {
     const isAutheticated = verifyToken(req)
-    const user = await getUser(id, "personalCollection")
-    const result = await getManyItems({filter: { '_id': {$in: user.personalCollection}}}, "", isAutheticated)
+    const user = await getUser(id, "library")
+    const result = await getManyItems({filter: { '_id': {$in: user.library}}}, "", isAutheticated)
     res.send(result);
     next()
   } catch (e) {
@@ -94,4 +94,4 @@ const unfollow = async (req, res, next) => {
   }
 }
 
-module.exports = { getFollowers, getFollowing, getCollection, getContributions, follow, unfollow }
+module.exports = { getFollowers, getFollowing, getLibrary, getContributions, follow, unfollow }

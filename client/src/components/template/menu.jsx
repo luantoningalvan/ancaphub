@@ -3,7 +3,7 @@ import { List, Badge } from '@material-ui/core';
 import MenuItem from './menuItem';
 import MenuTree from './menuTree';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
-import CollectionIcon from '@material-ui/icons/FolderOutlined';
+import LibraryIcon from '@material-ui/icons/FolderOutlined';
 import BookIcon from '@material-ui/icons/BookOutlined';
 import ArticleIcon from '@material-ui/icons/DescriptionOutlined';
 import VideoIcon from '@material-ui/icons/PlayArrowOutlined';
@@ -36,7 +36,7 @@ const Menu = (props)  =>{
           />
         )}
 
-        <MenuTree icon={<CollectionIcon />} label="Coleção">
+        <MenuTree icon={<LibraryIcon />} label="Coleção">
           <MenuItem
             selected={url.includes('/books')}
             icon={<BookIcon />}

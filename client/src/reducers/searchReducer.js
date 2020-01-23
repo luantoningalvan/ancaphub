@@ -18,22 +18,23 @@ export default function (state = INITIAL_STATE, action) {
       return {
         loading: false
       }
-      case types.ADD_BOOKMARK_SUCCESS:
-        if(payload.location == 'search') {
-          return {
-            ...state,
-            searchResults:{
-              ...state.searchResults,
-              items: {
-                ...state.searchResults.items,
-                items: state.searchResults.items.items.map(item =>
-                  item._id === payload.item._id ? { ...item, ...payload.item } : item
-                )
-              }
-            } 
-          };  
-        }      
+    case types.ADD_BOOKMARK_SUCCESS:
+    case types.ADD_ITEM_TO_LIBRARY_SUCCESS:
+      if (payload.location === 'search') {
+        return {
+          ...state,
+          searchResults: {
+            ...state.searchResults,
+            items: {
+              ...state.searchResults.items,
+              items: state.searchResults.items.items.map(item =>
+                item._id === payload.item._id ? { ...item, ...payload.item } : item
+              )
+            }
+          }
+        };
+      }
     default:
-      return state  
+      return state
   }
 }
