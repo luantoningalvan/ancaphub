@@ -1,13 +1,12 @@
-const User = require('../models/UserModel');
-const { libraryService } = require('../services')
+const { libraryService, userService } = require('../services')
 const { getManyItems, saveItem } = libraryService
-
+const { getUser } = userService
 
 const getAll = async (req, res, next) => {
     const { id } = req.user
   
     try {
-      const user = await User.findById(id, 'saved')
+      const user = await getUser(id)
       const result = await getManyItems({filter: { '_id': {$in: user.saved}}}, "", req.user)
       res.send(result);
       next()
@@ -17,7 +16,7 @@ const getAll = async (req, res, next) => {
   }
   
   const insert = async (req, res, next) => {
-    const { item } = req.body;''
+    const { item } = req.body;
     const { id: user } = req.user;
   
     try {
