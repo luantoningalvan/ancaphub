@@ -60,4 +60,25 @@ const updateUser = async (id, data) => {
   }
 }
 
-module.exports = { getManyUsers, getUser, insertUser, updateUser }
+const authenticateUser = async ({email, password, level = "user"}) => {
+  try {
+    const user = await User.findOne({ email })
+
+    if (!user) throw new Error("E-mail ou senha não correspondem.");
+
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) throw new Error("E-mail ou senha não correspondem.");
+
+    if (!user.role.includes(level)) throw new Error("Seu nível de acesso não é suficiente para acessar esta página.");
+
+    return {
+      user: {
+        id: user._id
+      }
+    }
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+module.exports = { getManyUsers, getUser, insertUser, updateUser, authenticateUser }

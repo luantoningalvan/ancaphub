@@ -30,7 +30,7 @@ const {
 
 // Auth
 router.get('/auth', auth, Auth.get)
-router.post('/auth', Auth.insert)
+router.post('/auth', Auth.login)
 
 // Category
 router.get('/categories', Category.getAll)
