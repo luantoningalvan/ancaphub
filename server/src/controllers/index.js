@@ -1,7 +1,6 @@
 const Auth = require('./auth.controller')
 const Category = require('./category.controller')
 const File = require('./file.controller')
-const Group = require('./group.controller')
 const Library = require('./library.controller')
 const Notification = require('./notification.controller')
 const Post = require('./post.controller')
@@ -15,7 +14,6 @@ module.exports = {
   Auth,
   Category,
   File,
-  Group,
   Library,
   Notification,
   Post,

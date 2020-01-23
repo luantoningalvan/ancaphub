@@ -11,19 +11,18 @@ const multer = require('multer');
 const multerConfig = require('../config/multer');
 
 // Controllers
-const { 
-    Auth, 
-    Category, 
-    File, 
-    Group, 
-    Library, 
-    Notification, 
-    Post, 
-    Profile, 
-    Rate, 
-    Search, 
-    User,
-    Bookmark
+const {
+  Auth,
+  Category,
+  File,
+  Library,
+  Notification,
+  Post,
+  Profile,
+  Rate,
+  Search,
+  User,
+  Bookmark
 } = require('../controllers')
 
 // Routes
@@ -40,13 +39,7 @@ router.put('/categories/:id', auth, admin, Category.update)
 
 // File
 router.get('/files', File.get)
-router.post('/files', auth,  multer(multerConfig).single('file'), File.insert)
-
-// Group
-router.get('/groups/:id', Group.get)
-router.get('/groups/list/public', Group.getPublic)
-router.get('/groups/list/auth', auth, Group.getAuth)
-router.post('/groups', auth, Group.insert)
+router.post('/files', auth, multer(multerConfig).single('file'), File.insert)
 
 // Library
 router.get('/library/', Library.getAll)
@@ -73,7 +66,6 @@ router.post('/posts', auth, Post.insert)
 router.delete('/posts/:id', auth, Post.remove)
 router.post('/posts/:id/like', auth, Post.likePost)
 router.post('/posts/:id/unlike', auth, Post.unlikePost)
-
 
 // Profile
 router.get('/users/:id/followers', Profile.getFollowers)
