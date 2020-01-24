@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Material Components
 import {
@@ -12,6 +12,8 @@ import {
   Link as MaterialLink,
   Tabs,
   Tab,
+  Dialog,
+  DialogContent
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -31,6 +33,7 @@ import EditProfile from '../../components/profile/editProfile';
 import FollowButton from '../../components/profile/followButton';
 import Loader from '../../components/loaders/loadingItems'
 import LoadContent from '../../components/loaders/loadContent'
+import defaultProfilePicture from '../../assets/images/defaultProfilePicture.png';
 
 // Profile Pages
 import UserFeed from './userFeed';
@@ -58,9 +61,15 @@ const useStyles = makeStyles(theme => ({
 
 function Profile({ getUser, auth, user, match}) {
   const classes = useStyles()
+  const [openProfilePicture, setOpenProfilePicture] = useState(false)
+
   const { id } = match.params
   useEffect(() => getUser(id), [getUser, id])
 
+  const handleProfilePicture = () => {
+    setOpenProfilePicture(state => !state)
+  }
+  
   const AdapterLink = React.forwardRef((props, ref) => (
     <Link innerRef={ref} {...props} />
   ));
@@ -116,6 +125,9 @@ function Profile({ getUser, auth, user, match}) {
         ) : (
             <>
               <Title title={username} />
+              <Dialog open={openProfilePicture} onClose={handleProfilePicture}>
+                  <img src={avatar != "" ? avatar : defaultProfilePicture} style={{ width: '100%', height: "auto"}}/>
+              </Dialog>
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={5} md={4} lg={3}>
                   <Box
@@ -126,8 +138,10 @@ function Profile({ getUser, auth, user, match}) {
                   >
                     <ProfilePicture
                       avatar={avatar}
+                      style={{cursor: 'pointer'}}
                       width="120px"
                       height="120px"
+                      onClick={handleProfilePicture}
                     />
                     <Box my={2}>
                       <Typography variant="h6" style={{ fontWeight: 'bold' }}>{username}</Typography>

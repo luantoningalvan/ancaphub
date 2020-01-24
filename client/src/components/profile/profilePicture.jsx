@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Avatar } from '@material-ui/core';
 import defaultProfilePicture from '../../assets/images/defaultProfilePicture.png';
 
-export default props => {
+export default ({avatar, username, style, width, ...props}) => {
   const useStyles = makeStyles({
     picture: {
-      width: props.width,
+      width: width,
       height: "inherit",
       position: 'relative',
-      ...props.style,
+      ...style,
       "&:after": {
         content: "''",
         display: 'block',
@@ -25,12 +25,13 @@ export default props => {
   const classes = useStyles()
   return (
     <>
-      {props.avatar && props.avatar !== '' ? (
+      {avatar && avatar !== '' ? (
         <Avatar
-          src={props.avatar}
-          alt={props.username}
+          src={avatar}
+          alt={username}
           className={classes.picture}
           classes={{ img: classes.img }}
+          {...props}
         />
       ) : (
           <Avatar
@@ -38,6 +39,7 @@ export default props => {
             alt="Foto de perfil genérica"
             className={classes.picture}
             classes={{ img: classes.img }}
+            {...props}
           />
         )}
     </>
