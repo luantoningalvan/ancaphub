@@ -18,7 +18,6 @@ const Videos = lazy(() => import ('./pages/library/videos'))
 const SingleVideo = lazy(() => import ('./pages/library/videos/singleVideo'))
 const AddVideo = lazy(() => import ('./pages/library/videos/addVideo'))
 const Groups = lazy(() => import ('./pages/groups'))
-const SingleGroup = lazy(() => import ('./pages/groups/single'))
 const Events = lazy(() => import ('./pages/events'))
 const Projects = lazy(() => import ('./pages/projects'))
 const Profile = lazy(() => import ('./pages/profile'))
@@ -47,10 +46,6 @@ if(!props.auth.loading){
       <Route exact path="/videos" component={Videos} />
       <Route path="/videos/:id" component={SingleVideo} />
       <Route exact path="/groups" component={Groups} />
-      <Route exact path="/groups/:id" component={SingleGroup} />
-      <Route path="/groups/:id/chat" component={SingleGroup} />
-      <Route path="/groups/:id/members" component={SingleGroup} />
-      <Route path="/groups/:id/files" component={SingleGroup} />
       <Route path="/events" component={Events} />
       <Route path="/projects" component={Projects} />
       <Route path="/search" component={SearchResults} />
