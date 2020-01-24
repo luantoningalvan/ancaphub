@@ -24,8 +24,6 @@ const getManyItems = async (query, type, auth) => {
         hasSaved: user.saved.includes(item._id),
         inLibrary: user.library.includes(item._id)
       }))
-    } else {
-      console.log ("Não logado")
     }
   
     return {

@@ -55,6 +55,7 @@ function ActivityCard(props) {
     type,
     user,
     likes = [],
+    hasLiked,
     createdAt
   } = props.post;
   const isUserLoggedProfile = props.authUser.isAuthenticated && user._id === props.authUser.user._id;
@@ -123,7 +124,7 @@ function ActivityCard(props) {
                 color="secondary"
                 size="small"
                 onClick={() => props.updateLikes(_id)}>
-                {!likes.includes(props.authUser.user._id) ? (
+                {!hasLiked ? (
                   <NotFavoriteIcon />
                 ) : (
                     <FavoriteIcon />

@@ -64,8 +64,8 @@ router.get('/posts/auth/feed', auth, Post.getUserFeed)
 router.get('/posts/user/:id', auth, Post.getUserPosts)
 router.post('/posts', auth, Post.insert)
 router.delete('/posts/:id', auth, Post.remove)
-router.post('/posts/:id/like', auth, Post.likePost)
-router.post('/posts/:id/unlike', auth, Post.unlikePost)
+router.post('/posts/:id/like', auth, Post.like)
+router.post('/posts/:id/unlike', auth, Post.like)
 
 // Profile
 router.get('/users/:id/followers', Profile.getFollowers)
