@@ -23,9 +23,9 @@ const Projects = lazy(() => import ('./pages/projects'))
 const Profile = lazy(() => import ('./pages/profile'))
 const SearchResults = lazy(() => import ('./pages/search/searchResults'))
 const FindPeople = lazy(() => import ('./pages/search/findPeople'))
-const AccountSetting = lazy(() => import ('./pages/account/accountSettings'))
+const AccountSetting = lazy(() => import ('./pages/account/settings'))
 const Bookmarks = lazy(() => import ('./pages/account/bookmarks'))
-const ContributionsPanel = lazy(() => import ('./pages/account/contributionsPanel'))
+const ContributionsPanel = lazy(() => import ('./pages/account/contributions'))
 const Notifications = lazy(() => import ('./pages/notifications'))
 
 

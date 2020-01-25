@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContributionsPanel = ({auth, getContributions}) => {
+const Contributions = ({auth, getContributions}) => {
   useEffect(() => getContributions(), [getContributions]);
 
   const classes = useStyles();
@@ -101,4 +101,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContributionsPanel);
+)(Contributions);
