@@ -19,12 +19,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchRates, addRate } from '../../actions/rateActions';
 
-function Ratings({rates, item, auth, fetchRates}) {
+function Ratings({ rates, item, auth, fetchRates }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [comment, setComment] = React.useState('');
 
-  useEffect(() => fetchRates(item._id), [item, fetchRates]);
+  useEffect(() => {
+    fetchRates(item._id)
+  }, [fetchRates, item._id]);
+
   function handleClickOpen() {
     setOpen(true);
   }
