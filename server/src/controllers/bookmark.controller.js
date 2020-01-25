@@ -6,7 +6,7 @@ const getAll = async (req, res, next) => {
     const { id } = req.user
   
     try {
-      const user = await getUser(id)
+      const user = await getUser(id, 'saved')
       const result = await getManyItems({filter: { '_id': {$in: user.saved}}}, "", req.user)
       res.send(result);
       next()
