@@ -73,7 +73,7 @@ export const getUserContributions = id => dispatch => {
 };
 
 export const updateUser = ({
-  username,
+  name,
   bio,
   site,
   currentCity,
@@ -87,7 +87,7 @@ export const updateUser = ({
   };
 
   const body = JSON.stringify({
-    username,
+    name,
     bio,
     site,
     currentCity,
@@ -96,7 +96,7 @@ export const updateUser = ({
   });
 
   try {
-    const res = await axios.put(`/api/users/`, body, config);
+    const res = await axios.put(`/api/users/profile`, body, config);
     dispatch(clearAlerts());
     dispatch({
       type: types.UPDATE_USER_SUCCESS,

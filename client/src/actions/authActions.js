@@ -5,6 +5,7 @@ import { fetchNotifications } from './notificationActions'
 import types from './_types'
 
 export const signUp = ({
+  name,
   username,
   email,
   password,
@@ -16,7 +17,7 @@ export const signUp = ({
     }
   };
 
-  const body = JSON.stringify({ username, email, password, password2 });
+  const body = JSON.stringify({ name, username, email, password, password2 });
 
   try {
     const res = await axios.post('/api/users', body, config);

@@ -105,7 +105,7 @@ function ActivityCard(props) {
               to={`/${user._id}`}
               underline="none"
               color="secondary">
-              <span style={{ fontWeight: 'bold' }}>{user.username + " "}</span>
+              <span style={{ fontWeight: 'bold' }}>{user.name + " "}</span>
               <span style={{ fontSize: '13px', color: '#aaa' }}>
                 {activities[type]}
               </span>

@@ -32,10 +32,9 @@ function EditProfile(props) {
     setOpen(false);
   }
   const ProfileSchema = Yup.object().shape({
-    username: Yup.string()
-    .min(3, 'Nome de usuário muito curto!')
-    .max(30, 'Nome de usuário muito longo!')
-    .matches(/^[a-zA-Z0-9_]+$/, "É permitido apenas letras, números e _ ")
+    name: Yup.string()
+    .min(3, 'Nome muito curto!')
+    .max(30, 'Nome muito longo!')
     .required('O campo nome é obrigatório!'),
     bio: Yup.string().max(160, 'Sua bio deve ter máximo 160 caracteres.!'),
     site: Yup.string().url('URL inválida!'),
@@ -55,7 +54,7 @@ function EditProfile(props) {
       >
         <Formik
           initialValues={{
-            username: props.data.username,
+            name: props.data.name,
             avatar: props.data.avatar || '',
             bio: props.data.bio || '',
             currentCity: props.data.currentCity || '',
@@ -111,12 +110,12 @@ function EditProfile(props) {
                         required
                         fullWidth
                         id="name"
-                        label="Nome de Usuário"
-                        name="username"
-                        value={values.username}
+                        label="Nome"
+                        name="name"
+                        value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={errors.username && touched.username && errors.username}
+                        helperText={errors.name && touched.name && errors.name}
                         color="secondary"
                       />
                     </Grid>

@@ -75,6 +75,7 @@ function Profile({ getUser, auth, user, match}) {
   ));
   const {
     _id,
+    name,
     username,
     bio,
     site,
@@ -144,7 +145,8 @@ function Profile({ getUser, auth, user, match}) {
                       onClick={handleProfilePicture}
                     />
                     <Box my={2}>
-                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>{username}</Typography>
+                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>{name}</Typography>
+                      <Typography  style={{fontSize: '15px', color: "#aaa"}} gutterBottom>@{username}</Typography>
                       <Typography variant="body2">{bio}</Typography>
                     </Box>
                     <Box display="flex">

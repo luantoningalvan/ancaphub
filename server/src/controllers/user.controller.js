@@ -40,10 +40,10 @@ const get = async (req, res, next) => {
 }
 
 const insert = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { name, username, email, password } = req.body;
 
   try {
-    const payload = await insertUser({username, email, password})
+    const payload = await insertUser({name, username, email, password})
 
     jwt.sign(payload, keys.jwtSecret, { expiresIn: 86400 }, (err, token) => {
       if (err) throw new Error();
@@ -55,12 +55,12 @@ const insert = async (req, res, next) => {
   }
 }
 
-const update = async (req, res, next) => {
+const updateProfile = async (req, res, next) => {
   const {id} = req.user
-  const { username, bio, site, currentCity, birthday, avatar } = req.body;
+  const { name, bio, site, currentCity, birthday, avatar } = req.body;
 
   try {
-    const result = await updateUser(id, {username, bio, site, currentCity, birthday, avatar})
+    const result = await updateUser(id, {name, bio, site, currentCity, birthday, avatar})
     res.status(200).send(result)
     next()
   } catch (e) {
@@ -85,4 +85,4 @@ const updateLocation = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, get, insert, update, updateLocation }
+module.exports = { getAll, get, insert, updateProfile, updateLocation }

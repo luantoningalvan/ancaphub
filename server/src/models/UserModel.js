@@ -18,10 +18,12 @@ const UserSchema = new Schema({
     type: String,
     lowercase: true,
     required: true,
+    unique: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -31,6 +33,9 @@ const UserSchema = new Schema({
     type: Array,
     required: true,
     default: ['user']
+  },
+  name: {
+    type: String,
   },
   library: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   saved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],

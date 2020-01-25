@@ -7,7 +7,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
-      .populate('user', 'username id avatar')
+      .populate('user', 'name username id avatar')
 
     if (auth) {
       posts = posts.map(post => ({

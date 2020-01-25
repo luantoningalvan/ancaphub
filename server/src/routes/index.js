@@ -74,6 +74,7 @@ router.get('/users/:id/contributions', Profile.getContributions)
 router.get('/users/:id/library', Profile.getLibrary)
 router.post('/users/:id/follow', auth, Profile.follow)
 router.post('/users/:id/unfollow', auth, Profile.unfollow)
+router.put('/users/profile', auth, User.updateProfile)
 
 // Rate
 router.get('/rates/:id', Rate.get)
@@ -87,7 +88,6 @@ router.get('/search/nearby', auth, Search.searchNearbyUsers)
 router.get('/users', User.getAll)
 router.get('/users/:id', User.get)
 router.post('/users', User.insert)
-router.put('/users', auth, User.update)
 router.patch('/users/setlocation', auth, User.updateLocation)
 
 module.exports = router

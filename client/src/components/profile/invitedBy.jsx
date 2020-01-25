@@ -20,7 +20,7 @@ export default props => (
           width="40px"
           height="40px"
         />
-        <span style={{ paddingLeft: '10px' }}>@{props.user.username}</span>
+        <span style={{ paddingLeft: '10px' }}>@{props.user.name}</span>
       </Box>
     </Link>
   </Box>

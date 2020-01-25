@@ -15,7 +15,7 @@ const getManyUsers = async ({ filter }) => {
 const getUser = async (id, extraFields) => {
   try {
     const user = await User
-      .findById(id, `_id username avatar bio birthday currentCity site following followers ${extraFields}`);
+      .findById(id, `_id name username avatar bio birthday currentCity site following followers ${extraFields}`);
   
       return {
         ...user._doc,
