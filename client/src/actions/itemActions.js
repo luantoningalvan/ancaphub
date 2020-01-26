@@ -52,7 +52,7 @@ export function addItem(data, type) {
         dispatch(showSnack('Item enviado com Sucesso'));
       })
       .catch(error => {
-        dispatch(showSnack('Item enviado com Sucesso', 'error'));
+        dispatch(showSnack('Erro ao enviar item', 'error'));
       });
   };
 }
