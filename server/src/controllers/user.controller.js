@@ -1,5 +1,5 @@
 const { userService } = require('../services')
-const { getManyUsers, getUser, insertUser, updateUser } = userService
+const { getManyUsers, getUser, verifyUser, insertUser, updateUser, updateUserPassword } = userService
 const keys = require('../config/keys');
 const jwt = require('jsonwebtoken');
 
@@ -85,4 +85,46 @@ const updateLocation = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, get, insert, updateProfile, updateLocation }
+const updateUsername = async (req,res,next) => {
+  const {id: userId} = req.user
+  const {username} = req.body
+
+  try {
+    await verifyUser({username})
+    const result = await updateUser(userId, { username })
+    res.send({ _id: result._id, username: result.username })
+    next()
+  } catch (e) {
+    res.sendStatus(400) && next(e)
+  }
+}
+
+const updateEmail = async (req,res,next) => {
+  const {id: userId} = req.user
+  const {email} = req.body
+  
+  try {
+    await verifyUser({email})
+    const result = await updateUser(userId, { email })
+    res.send({ _id: result._id, email: result.email })
+    next()
+  } catch (e) {
+    res.sendStatus(401) && next(e)
+  }
+}
+
+const updatePassword = async (req,res,next) => {
+  const { id: userId } = req.user
+  const { currentPassword, newPassword } = req.body
+  
+  try {
+    await updateUserPassword(userId, currentPassword, newPassword)
+    res.send({ success: true })
+    next()
+  } catch (e) {
+    res.sendStatus(401) && next(e)
+  }
+}
+
+
+module.exports = { getAll, get, insert, updateProfile, updateLocation, updateUsername, updateEmail, updatePassword }

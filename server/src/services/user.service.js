@@ -27,6 +27,15 @@ const getUser = async (id, extraFields) => {
   }
 }
 
+const verifyUser = async(cond) => {
+  try {
+    const user = await User.findOne(cond) 
+    if (user) throw new Error("Esse usuário já existe.");
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
 const insertUser = async (data) => {
   try {
     let user = await User.findOne({ email: data.email });
@@ -60,6 +69,18 @@ const updateUser = async (id, data) => {
   }
 }
 
+const updateUserPassword = async (userId, currentPassword, newPassword) => {
+  const user = await getUser(userId, "password")
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password)
+  if (!isMatch) throw new Error("A senha atual fornecida está incorreta.");
+
+  const salt = await bcrypt.genSalt(10);
+  encryptedPassword = await bcrypt.hash(newPassword, salt);
+
+  await updateUser(userId, { password: encryptedPassword })
+}
+
 const authenticateUser = async ({email, password, level = "user"}) => {
   try {
     const user = await User.findOne({ email })
@@ -81,4 +102,4 @@ const authenticateUser = async ({email, password, level = "user"}) => {
   }
 }
 
-module.exports = { getManyUsers, getUser, insertUser, updateUser, authenticateUser }
+module.exports = { getManyUsers, getUser, verifyUser, insertUser, updateUser, updateUserPassword, authenticateUser }

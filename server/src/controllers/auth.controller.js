@@ -8,7 +8,7 @@ const get = async (req, res) => {
   const { id } = req.user
 
   try {
-    const user = await getUser(id)
+    const user = await getUser(id, "email")
     res.json(user);
   } catch (e) {
     res.sendStatus(500) && next(e)

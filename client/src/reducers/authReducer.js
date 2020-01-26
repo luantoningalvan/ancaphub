@@ -11,6 +11,11 @@ export default function (state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case types.LOADING_AUTH:
+      return {
+        ...state,
+        loading: true
+      }
     case types.REGISTER_SUCCESS:
     case types.LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
@@ -43,19 +48,36 @@ export default function (state = INITIAL_STATE, action) {
     case types.UPDATE_USER_SUCCESS:
       return {
         ...state,
-        user: { ...state.user, ...payload }
+        user: { ...state.user, ...payload },
+        loading: false
       };
     case types.UNFOLLOW_USER_SUCCESS:
     case types.FOLLOW_USER_SUCCESS:
       return {
         ...state,
-        user: { ...state.user, following: payload }
+        user: { ...state.user, following: payload },
+        loading: false
       };
     case types.GET_CONTRIBUTIONS_SUCCESS:
       return {
         ...state,
-        user: { ...state.user, contributions: payload }
+        user: { ...state.user, contributions: payload },
+        loading: false
       };
+    case types.UPDATE_EMAIL_SUCCESS:  
+    case types.UPDATE_USERNAME_SUCCESS:  
+      return {
+        ...state,
+        user: { ...state.user, ...payload },
+        loading: false
+      }
+    case types.UPDATE_EMAIL_FAIL:
+    case types.UPDATE_USERNAME_FAIL:
+    case types.UPDATE_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false
+      }  
     default:
       return state;
   }
