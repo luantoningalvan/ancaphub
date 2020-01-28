@@ -7,7 +7,7 @@ import LibraryIcon from '@material-ui/icons/FolderOutlined';
 import BookIcon from '@material-ui/icons/BookOutlined';
 import ArticleIcon from '@material-ui/icons/DescriptionOutlined';
 import VideoIcon from '@material-ui/icons/PlayArrowOutlined';
-import GroupIcon from '@material-ui/icons/GroupOutlined';
+import GroupIcon from '@material-ui/icons/GroupWorkOutlined';
 import EventIcon from '@material-ui/icons/EventOutlined';
 import CampaignIcon from '@material-ui/icons/ShareOutlined';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
