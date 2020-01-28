@@ -55,7 +55,6 @@ function EditProfile(props) {
         <Formik
           initialValues={{
             name: props.data.name,
-            avatar: props.data.avatar || '',
             bio: props.data.bio || '',
             currentCity: props.data.currentCity || '',
             site: props.data.site || '',
@@ -96,11 +95,7 @@ function EditProfile(props) {
                 <DialogContent dividers>
                   <Grid container>
                     <Grid item xs={12}>
-                      <Field
-                        name="avatar"
-                        uploadImage={props.uploadImage}
-                        component={UpdateProfilePicture}
-                      />
+                      <UpdateProfilePicture />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField

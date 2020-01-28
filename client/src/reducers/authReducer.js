@@ -46,6 +46,7 @@ export default function (state = INITIAL_STATE, action) {
         loading: false
       };
     case types.UPDATE_USER_SUCCESS:
+    case types.UPDATE_PROFILE_PICTURE_SUCCESS:
       return {
         ...state,
         user: { ...state.user, ...payload },

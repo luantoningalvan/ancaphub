@@ -173,3 +173,26 @@ export const unfollowUser = user => async dispatch => {
     });
   }
 };
+
+export const updateProfilePicture = data => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+
+  try {
+    const res = await axios.post(`/api/users/avatar`, data, config);
+
+    dispatch({
+      type: types.UPDATE_PROFILE_PICTURE_SUCCESS,
+      payload: res.data
+    });
+    dispatch(showSnack("Avatar atualizado com sucesso"))
+  } catch (err) {
+    dispatch({
+      type: types.UPDATE_PROFILE_PICTURE_FAILURE,
+      payload: err.response.data.message
+    })
+  }
+};
