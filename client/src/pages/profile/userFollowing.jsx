@@ -22,8 +22,8 @@ function UserFollowing({getUserFollowing, following, user}) {
       <LoadContent loading={false}>
       <Grid container spacing={2}>
         {following && !isEmpty(following) ? (
-          following.map(user => (
-            <Grid item xs={6} md={4} lg={3} key={`following-${user._id}`}>
+          following.map((user, key) => (
+            <Grid item xs={6} md={4} lg={3} key={`following-${key}`}>
               <UserCard user={user} />
             </Grid>
           ))
