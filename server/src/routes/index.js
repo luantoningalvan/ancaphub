@@ -93,5 +93,6 @@ router.patch('/users/setlocation', auth, User.updateLocation)
 router.patch('/users/username', auth, User.updateUsername)
 router.patch('/users/email', auth, User.updateEmail)
 router.patch('/users/password', auth, User.updatePassword)
+router.post('/users/avatar', auth, multer(multerConfig).single('file'), User.updateAvatar)
 
 module.exports = router
