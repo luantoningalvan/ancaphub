@@ -13,7 +13,7 @@ export const getBookmarks = () => dispatch => {
       .catch(err => {
         dispatch({
           type: types.GET_BOOKMARKS_FAIL,
-          payload: err
+          payload: err.response.data.message
         });
       });
   };
@@ -25,10 +25,10 @@ export const addBookmark = (item, location = 'items') => async dispatch => {
         type: types.ADD_BOOKMARK_SUCCESS,
         payload: { item: res.data, location}
       });
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
       dispatch({
-        type: types.ADD_BOOKMARK_FAIL
+        type: types.ADD_BOOKMARK_FAIL,
+        payload: err.response.data.message
       });
     }
   };

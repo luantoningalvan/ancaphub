@@ -43,8 +43,11 @@ export function createPost({ content }) {
       .then(function (result) {
         dispatch({ type: types.ADD_POST_SUCCESS, payload: result.data });
       })
-      .catch(function (error) {
-        console.error('Erro ao adicionar postagem: ', error);
+      .catch(function (err) {
+        dispatch({
+          type: types.ADD_POST_FAILURE,
+          payload: err.response.data.message
+        })
       });
   };
 }
@@ -56,8 +59,11 @@ export function deletePost(post) {
       .then(result => {
         dispatch({ type: types.DELETE_POST_SUCCESS, payload: post });
       })
-      .catch(error => {
-        dispatch({ type: types.DELETE_POST_ERROR });
+      .catch(err => {
+        dispatch({ 
+          type: types.DELETE_POST_ERROR,
+          payload: err.response.data.message
+        });
       });
   };
 }
@@ -69,8 +75,11 @@ export function updateLikes(post) {
       .then(result => {
         dispatch({ type: types.UPDATE_LIKES_SUCCESS, payload: result.data });
       })
-      .catch(error => {
-        dispatch({ type: types.UPDATE_LIKES_ERROR });
+      .catch(err => {
+        dispatch({ 
+          type: types.UPDATE_LIKES_ERROR,
+          payload: err.response.data.message
+        });
       });
   };
 }

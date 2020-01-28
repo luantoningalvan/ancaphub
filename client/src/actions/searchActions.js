@@ -41,8 +41,11 @@ export function searchTerm(term) {
       .then(results => {
         dispatch({ type: types.SEARCH_TERM_SUCCESS, payload: results.data });
       })
-      .catch(error => {
-        dispatch({ type: types.SEARCH_TERM_FAILURE, payload: error });
+      .catch(err => {
+        dispatch({ 
+          type: types.SEARCH_TERM_FAILURE, 
+          payload: err.response.data.message
+        });
       });
   };
 }

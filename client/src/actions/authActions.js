@@ -1,6 +1,6 @@
 import axios from '../services/api';
 import setAuthToken from '../utils/setAuthToken';
-import { setAlerts, clearAlerts } from './alertActions';
+import { showSnack } from './alertActions';
 import { fetchNotifications } from './notificationActions'
 import types from './_types'
 
@@ -21,20 +21,14 @@ export const signUp = ({
 
   try {
     const res = await axios.post('/api/users', body, config);
-    dispatch(clearAlerts());
     dispatch({
       type: types.REGISTER_SUCCESS,
       payload: res.data
     });
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      dispatch(setAlerts(errors));
-    }
-
     dispatch({
-      type: types.REGISTER_FAIL
+      type: types.REGISTER_FAIL,
+      payload: err.response.data.message
     });
   }
 };
@@ -80,14 +74,9 @@ export const signIn = ({ email, password }) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      dispatch(setAlerts(errors));
-    }
-
-    dispatch({
-      type: types.LOGIN_FAIL
+    dispatch({ 
+      type: types.LOGIN_FAIL,
+      payload: err.response.data.message
     });
   }
 };

@@ -13,12 +13,11 @@ export const updateUsername = username => async dispatch => {
         payload: res.data
       })
       dispatch(showSnack('Nome de usuário atualizado com Sucesso'));
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: types.UPDATE_USERNAME_FAIL,
-        payload: error
+        payload: err.response.data.message
       })
-      dispatch(showSnack(error.message, 'error'));
     }
   }
   
@@ -33,12 +32,11 @@ export const updateUsername = username => async dispatch => {
         payload: res.data
       })
       dispatch(showSnack('E-mail atualizado com Sucesso'));
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: types.UPDATE_EMAIL_FAIL,
-        payload: error
+        payload: err.response.data.message
       })
-      dispatch(showSnack(error.message, 'error'));
     }
   }
   
@@ -53,12 +51,11 @@ export const updateUsername = username => async dispatch => {
         payload: res.data
       })
       dispatch(showSnack('Senha atualizada com Sucesso'));
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: types.UPDATE_PASSWORD_FAIL,
-        payload: error
+        payload: err.response.data.message
       })
-      dispatch(showSnack(error.message, 'error'));
     }
   }
   

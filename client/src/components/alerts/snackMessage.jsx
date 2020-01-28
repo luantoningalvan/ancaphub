@@ -13,11 +13,11 @@ import {
 } from '@material-ui/icons';
 import { amber, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { clearAlerts } from '../../actions/alertActions';
+import isEmpty from 'is-empty'
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -81,35 +81,30 @@ function MySnackbarContentWrapper(props) {
   );
 }
 
-MySnackbarContentWrapper.propTypes = {
-  className: PropTypes.string,
-  message: PropTypes.string,
-  onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired
-};
-
 function SnackMessage(props) {
   return (
     <>
-      {props.alerts !== null ? (
+      {!isEmpty(props.alerts) && (
+        <>
+        {props.alerts.map(alert => (
         <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          open={true}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        open={true}
+        onClose={() => props.clearAlerts()}
+        autoHideDuration={6000}
+        ClickAwayListenerProps={{ onClickAway: () => null }}>
+        <MySnackbarContentWrapper
+          variant={alert.status}
+          message={alert.msg}
           onClose={() => props.clearAlerts()}
-          autoHideDuration={6000}
-          ClickAwayListenerProps={{ onClickAway: () => null }}>
-          <MySnackbarContentWrapper
-            variant={props.alerts.status}
-            message={props.alerts.msg}
-            onClose={() => props.clearAlerts()}
-          />
-        </Snackbar>
-      ) : (
-          <></>
-        )}
+        />
+      </Snackbar>
+        ))}
+        </>
+      )}
     </>
   );
 }

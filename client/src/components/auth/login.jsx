@@ -23,12 +23,6 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: '10px'
-  },
-  errorMessage: {
-    padding: '10px',
-    borderRadius: '5px',
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white'
   }
 }));
 
@@ -43,13 +37,6 @@ function SignInForm(props) {
   console.log(props);
   return (
     <React.Fragment>
-      {props.serverErrors.alerts !== null &&
-        props.serverErrors.alerts.msg.map((msg, index) => (
-          <Box mb={1} key={index}>
-            <p className={classes.errorMessage}>{msg.msg}</p>
-          </Box>
-        ))}
-
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={SigninSchema}
@@ -127,7 +114,6 @@ function SignInForm(props) {
 
 const mapStateToProps = state => ({
   login: state.auth,
-  serverErrors: state.alerts
 });
 const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch);
 

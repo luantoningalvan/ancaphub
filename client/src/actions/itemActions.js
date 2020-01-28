@@ -37,8 +37,8 @@ export function fetchItem(id) {
       .then(item => {
         dispatch({ type: types.FETCH_ITEM_SUCCESS, payload: item.data });
       })
-      .catch(error => {
-        dispatch({ type: types.FETCH_ITEM_FAILURE, payload: error });
+      .catch(err => {
+        dispatch({ type: types.FETCH_ITEM_FAILURE,    payload: err.response.data.message });
       });
   };
 }
@@ -51,8 +51,12 @@ export function addItem(data, type) {
         dispatch({ type: types.ADD_ITEM_SUCCESS, payload: item.data });
         dispatch(showSnack('Item enviado com Sucesso'));
       })
-      .catch(error => {
-        dispatch(showSnack('Erro ao enviar item', 'error'));
+      .catch(err => {
+        dispatch({
+          type: types.ADD_ITEM_FAILURE,
+          payload: err.response.data.message
+        }
+        );
       });
   };
 }
@@ -64,10 +68,10 @@ export const addToLibrary = (item, post, location = 'items') => async dispatch =
       type: types.ADD_ITEM_TO_LIBRARY_SUCCESS,
       payload: { item: res.data, location}
     });
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
     dispatch({
-      type: types.ADD_ITEM_TO_LIBRARY_FAIL
+      type: types.ADD_ITEM_TO_LIBRARY_FAIL,
+      payload: err.response.data.message
     });
   }
 };
@@ -84,7 +88,8 @@ export function getContributions() {
       })
       .catch(err => {
         dispatch({
-          type: types.GET_CONTRIBUTIONS_FAIL
+          type: types.GET_CONTRIBUTIONS_FAIL,
+          payload: err.response.data.message
         });
       });
   };

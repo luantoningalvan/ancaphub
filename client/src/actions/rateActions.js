@@ -21,12 +21,14 @@ export function addRate({ item, value, comment }) {
     axios
       .post(`/api/rates`, { item, value, comment })
       .then(rate => {
-        console.log('teste');
         dispatch({ type: types.ADD_RATE_SUCCESS, payload: rate.data });
         dispatch(showSnack('Avaliação adicionado com sucesso'));
       })
-      .catch(error => {
-        console.error('Erro ao avaliar item: ', error);
+      .catch(err => {
+        dispatch({
+          type: types.ADD_RATE_FAILURE,
+          payload: err.response.data.message
+        })
       });
   };
 }

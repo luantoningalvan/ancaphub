@@ -1,6 +1,6 @@
 import axios from '../services/api';
 import types from './_types'
-import { clearAlerts, setAlerts } from './alertActions'
+import { showSnack } from './alertActions'
 
 export const getAllUsers = (filter) => dispatch => {
   dispatch({ type: types.LOADING_USERS })
@@ -15,7 +15,7 @@ export const getAllUsers = (filter) => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_ALL_USERS_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -33,7 +33,7 @@ export const getUser = id => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_USER_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -50,7 +50,7 @@ export const getUserLibrary = id => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_USER_LIBRARY_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -67,7 +67,7 @@ export const getUserContributions = id => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_USER_CONTRIBUTIONS_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -97,21 +97,16 @@ export const updateUser = ({
 
   try {
     const res = await axios.put(`/api/users/profile`, body, config);
-    dispatch(clearAlerts());
     dispatch({
       type: types.UPDATE_USER_SUCCESS,
       payload: res.data
     });
+    dispatch(showSnack("Perfil Atualizado com sucesso"))
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      dispatch(setAlerts(errors));
-    }
-
     dispatch({
-      type: types.UPDATE_USER_FAIL
-    });
+      type: types.UPDATE_USER_FAIL,
+      payload: err.response.data.message
+    })
   }
 };
 
@@ -127,7 +122,7 @@ export const getUserFollowers = id => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_USER_FOLLOWERS_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -144,7 +139,7 @@ export const getUserFollowing = id => dispatch => {
     .catch(err => {
       dispatch({
         type: types.GET_USER_FOLLOWING_FAIL,
-        payload: err
+        payload: err.response.data.message
       });
     });
 };
@@ -156,9 +151,10 @@ export const followUser = user => async dispatch => {
       type: types.FOLLOW_USER_SUCCESS,
       payload: res.data
     });
-  } catch (error) {
+  } catch (err) {
     dispatch({
-      type: types.FOLLOW_USER_FAIL
+      type: types.FOLLOW_USER_FAIL,
+      payload: err.response.data.message
     });
   }
 };
@@ -170,9 +166,10 @@ export const unfollowUser = user => async dispatch => {
       type: types.UNFOLLOW_USER_SUCCESS,
       payload: res.data
     });
-  } catch (error) {
+  } catch (err) {
     dispatch({
-      type: types.UNFOLLOW_USER_FAIL
+      type: types.UNFOLLOW_USER_FAIL,
+      payload: err.response.data.message
     });
   }
 };

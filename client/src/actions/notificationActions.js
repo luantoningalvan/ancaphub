@@ -8,8 +8,11 @@ export function fetchNotifications() {
       .then(notifications => {
         dispatch({ type: types.GET_NOTIFICATIONS_SUCCESS, payload: notifications.data })
       })
-      .catch(error => {
-        dispatch({ type: types.GET_NOTIFICATIONS_ERROR, payload: error })
+      .catch(err => {
+        dispatch({ 
+          type: types.GET_NOTIFICATIONS_ERROR, 
+          payload: err.response.data.message
+        })
       })
   }
 }
@@ -20,8 +23,11 @@ export function markAsReadAllNotifications() {
       .then(notifications => {
         dispatch({ type: types.READ_NOTIFICATIONS_SUCCESS, payload: notifications.data })
       })
-      .catch(error => {
-        dispatch({ type: types.READ_NOTIFICATIONS_ERROR, payload: error })
+      .catch(err => {
+        dispatch({ 
+          type: types.READ_NOTIFICATIONS_ERROR, 
+          payload: err.response.data.message
+        })
       })
   }
 }
