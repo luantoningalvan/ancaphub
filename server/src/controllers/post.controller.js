@@ -15,7 +15,7 @@ const getUserFeed = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -27,7 +27,7 @@ const getUserPosts = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -40,7 +40,7 @@ const insert = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -53,7 +53,7 @@ const remove = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -66,7 +66,7 @@ const like = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 

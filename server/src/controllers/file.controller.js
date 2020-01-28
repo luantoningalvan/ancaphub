@@ -8,7 +8,7 @@ const insert = async (req, res, next) => {
     res.status(200).json(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -18,8 +18,8 @@ const get = async (req, res, next) => {
     const result = await getManyFiles(filesToLoad)
     res.status(200).send(result);
     next()
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (e) {
+    next(e)
   }
 };
 

@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -19,7 +19,7 @@ const get = async (req, res) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -31,7 +31,7 @@ const insert = async (req, res) => {
     res.status(201).send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -44,7 +44,7 @@ const update = async (req, res) => {
     res.send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 

@@ -10,7 +10,7 @@ const get = async (req, res) => {
     res.send(result.rates);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -49,7 +49,7 @@ const insert = async (req, res, next) => {
     res.send(rate);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 

@@ -45,7 +45,7 @@ const getAll = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -57,7 +57,7 @@ const get = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -82,7 +82,7 @@ const insert = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -105,7 +105,7 @@ const update = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -117,7 +117,7 @@ const remove = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -140,7 +140,7 @@ const approve = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -152,7 +152,7 @@ const getAuthContributions = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -187,7 +187,7 @@ const addToLibrary = async (req, res, next) => {
     });
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 

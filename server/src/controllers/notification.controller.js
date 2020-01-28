@@ -7,7 +7,7 @@ const getAll = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -17,7 +17,7 @@ const markAllAsRead = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 

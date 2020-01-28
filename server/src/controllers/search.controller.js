@@ -12,7 +12,7 @@ const searchTerm = async (req, res, next) => {
     res.send({ items, users })
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -41,7 +41,7 @@ const searchNearbyUsers = async (req, res, next) => {
     res.send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 module.exports = { searchTerm, searchNearbyUsers }

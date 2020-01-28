@@ -11,7 +11,7 @@ const getAll = async (req, res, next) => {
       res.send(result);
       next()
     } catch (e) {
-      res.sendStatus(500) && next(e)
+      next(e)
     }
   }
   
@@ -24,7 +24,7 @@ const getAll = async (req, res, next) => {
       res.json(result);
       next()
     } catch (e) {
-      res.sendStatus(500) && next(e)
+      next(e)
     }
   }
 

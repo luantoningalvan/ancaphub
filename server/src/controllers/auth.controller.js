@@ -11,7 +11,7 @@ const get = async (req, res) => {
     const user = await getUser(id, "email")
     res.json(user);
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
       }
     )    
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 

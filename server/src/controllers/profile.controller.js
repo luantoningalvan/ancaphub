@@ -13,7 +13,7 @@ const getFollowers = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -25,7 +25,7 @@ const getFollowing = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -39,7 +39,7 @@ const getLibrary = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -52,7 +52,7 @@ const getContributions = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -77,7 +77,7 @@ const follow = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -90,7 +90,7 @@ const unfollow = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 

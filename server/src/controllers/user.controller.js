@@ -23,7 +23,7 @@ const getAll = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -35,7 +35,7 @@ const get = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -51,7 +51,7 @@ const insert = async (req, res, next) => {
       next()
     });
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -64,7 +64,7 @@ const updateProfile = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 }
 
@@ -81,7 +81,7 @@ const updateLocation = async (req, res, next) => {
     res.status(200).send(result)
     next()
   } catch (e) {
-    res.sendStatus(500) && next(e)
+    next(e)
   }
 };
 
@@ -95,7 +95,7 @@ const updateUsername = async (req,res,next) => {
     res.send({ _id: result._id, username: result.username })
     next()
   } catch (e) {
-    res.sendStatus(400) && next(e)
+    next(e)
   }
 }
 
@@ -109,7 +109,7 @@ const updateEmail = async (req,res,next) => {
     res.send({ _id: result._id, email: result.email })
     next()
   } catch (e) {
-    res.sendStatus(401) && next(e)
+    next(e)
   }
 }
 
@@ -122,7 +122,7 @@ const updatePassword = async (req,res,next) => {
     res.send({ success: true })
     next()
   } catch (e) {
-    res.sendStatus(401) && next(e)
+    next(e)
   }
 }
 
