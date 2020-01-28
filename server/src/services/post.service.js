@@ -35,7 +35,7 @@ const insertPost = async (data) => {
   try {
     const post = new Post(data);
     await post.save();
-    return await post.populate('user', 'username id avatar').execPopulate();
+    return await post.populate('user', 'name username id avatar').execPopulate();
   } catch (e) {
     throw new Error(e.message)
   }
