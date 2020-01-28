@@ -4,7 +4,7 @@ const getUserFollowers = async (id) => {
   try {
     return await User
       .findById(id, 'followers')
-      .populate('followers', 'username avatar _id');
+      .populate('followers', 'name username avatar _id');
   } catch (e) {
     throw new Error(e.message)
   }
@@ -14,7 +14,7 @@ const getFollowedUsers = async (id) => {
   try {
     return await User
       .findById(id, 'following')
-      .populate('following', 'username avatar _id');
+      .populate('following', 'name username avatar _id');
   } catch (e) {
     throw new Error(e.message)
   }
@@ -34,8 +34,9 @@ const followUser = async (followedId, followerId) => {
     followed.followers.push(followerId);
     follower.following.push(followedId);
 
-    await follower.save();
-    return await followed.save();
+    await followed.save();
+    const result = await follower.save()
+    return result.following
   } catch (e) {
     throw new Error(e.message)
   }
@@ -55,8 +56,10 @@ const unfollowUser = async (followedId, followerId) => {
     followed.followers.pull(followerId);
     follower.following.pull(followedId);
 
-    await follower.save();
-    return await followed.save();
+
+    await followed.save();
+    const result = await follower.save()
+    return result.following
   } catch (e) {
     throw new Error(e.message)
   }
