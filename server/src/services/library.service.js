@@ -58,8 +58,10 @@ const insertItem = async (data) => {
     switch (data.type) {
       case "book":
         extraFields = { downloadOptions: data.downloadOptions }
+        break
       case "video":
         extraFields = { videoUrl: data.videoUrl }
+        break
       default:
         extraFields
     }
