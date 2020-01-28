@@ -211,7 +211,7 @@ function Profile({ getUser, auth, user, match}) {
                             <ListItemIcon classes={{ root: classes.icon }}>
                               <BirthDayIcon className={classes.infoIcon} />
                             </ListItemIcon>
-                            <ListItemText className={classes.infoText} primary={moment(birthday).locale('pt-br').format('L')} />
+                            <ListItemText className={classes.infoText} primary={moment.utc(birthday).format('L')} />
                           </ListItem>
                         )}
                       </List>
