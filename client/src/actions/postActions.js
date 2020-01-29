@@ -83,3 +83,19 @@ export function updateLikes(post) {
       });
   };
 }
+
+export function addComment(post, content) {
+  return dispatch => {
+    axios
+      .post(`/api/posts/${post}/comment`, content)
+      .then(comments => {
+        dispatch({ type: types.ADD_COMMENT_SUCCESS, payload: comments.data });
+      })
+      .catch(err => {
+        dispatch({ 
+          type: types.ADD_COMMENT_FAILURE,
+          payload: err.response.data.message
+        });
+      });
+  };
+}

@@ -3,7 +3,6 @@ import React from 'react';
 // Material-UI Components
 import {
   IconButton,
-  Typography,
   Card,
   CardHeader,
   CardContent,
@@ -11,16 +10,15 @@ import {
   Box,
   Menu,
   MenuItem,
-  Link
+  Button,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles'
 
 // Material-UI Icons
 import {
-  Favorite as FavoriteIcon,
-  FavoriteBorder as NotFavoriteIcon,
-  MoreVert as MoreVertIcon
+  MoreVert as MoreVertIcon,
+  CommentOutlined as CommentIcon
 } from '@material-ui/icons';
-
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,12 +26,14 @@ import { deletePost, updateLikes } from '../../actions/postActions';
 
 // Other
 import moment from 'moment-timezone/builds/moment-timezone-with-data';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ptBr from 'moment/locale/pt-br'
 import isEmpty from 'is-empty'
 
 // Custom Components
 import ProfilePicture from '../profile/profilePicture';
+import LikeButton from './likeButton'
+import CommentBox from './commentBox'
 
 // Templates
 import Status from './templates/status'
@@ -49,98 +49,99 @@ const activities = {
   library_item: 'adicionou um item à sua coleção particular'
 };
 
-function ActivityCard(props) {
-  const {
-    _id,
-    type,
-    user,
-    likes = [],
-    hasLiked,
-    createdAt
-  } = props.post;
-  const isUserLoggedProfile = props.authUser.isAuthenticated && user._id === props.authUser.user._id;
-  const Template = !isEmpty(props.post) ? templates[type]() : <p>Ocorreu um Erro</p>
+const useStyles = makeStyles(theme => ({
+  postActions: {
+    width: '100%',
+    justifyContent:"space-between",
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px 0px 0px 3px',
+    margin: 0
+  },
+  postAction: {
+    display: 'flex',
+    listStyle: 'none',
+    marginRight: 8
+  },
+  userName: {
+    fontWeight: 'bold', 
+    color: "inherit", 
+    textDecoration: 'none',
+    fontSize: 15
+  }
+}))
 
+function ActivityCard({ post, authUser, deletePost, updateLikes }) {
+  const { _id, type, user, createdAt, likeCount} = post;
+  const ownProfile = authUser.isAuthenticated && user._id === authUser.user._id;
+  const Template = !isEmpty(post) ? templates[type]() : <p>Ocorreu um Erro</p>
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [expanded, setExpanded] = React.useState(false);
+  const classes = useStyles()
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleAnchor = (event) => {
+    setAnchorEl(anchorEl == null ? event.currentTarget : null);
   }
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCommentBox = () => {
+    setExpanded(!expanded)
   }
 
   const handleDelete = () => {
     const confirm = window.confirm('Você realmente deseja excluir a postagem?');
 
     if (confirm) {
-      props.deletePost(_id);
+      deletePost(_id);
     }
   }
 
   return (
     <Box mb={2}>
-      <Card>
+      <Card elevation={0}>
         <CardHeader
           avatar={
-            <Link
-              component={RouterLink}
-              to={`/${user._id}`}
-              underline="none"
-            >
-              <ProfilePicture avatar={user.avatar} width="40px" height="40px" />
-            </Link>
+            <ProfilePicture avatar={user.avatar} width="45px" height="45px" component={Link} to={`/${user._id}`} />
           }
           action={
-            isUserLoggedProfile && (
-              <IconButton aria-label="Settings" onClick={handleClick}>
+            ownProfile && (
+              <IconButton aria-label="Settings" onClick={handleAnchor}>
                 <MoreVertIcon />
               </IconButton>
             )
           }
           title={
-            <Link
-              component={RouterLink}
-              to={`/${user._id}`}
-              underline="none"
-              color="secondary">
-              <span style={{ fontWeight: 'bold' }}>{user.name + " "}</span>
+            <div>
+              <Link to={`/${user._id}`} className={classes.userName}>
+                {user.name + " "}
+              </Link>
               <span style={{ fontSize: '13px', color: '#aaa' }}>
                 {activities[type]}
               </span>
-            </Link>
+            </div>
           }
           subheader={moment(createdAt).tz('America/Sao_Paulo').locale('pt-br', ptBr).startOf(createdAt).fromNow()}
         />
         <CardContent style={{ padding: '0px 16px' }}>
-          <Template post={props.post}/>
+          <Template post={post} />
         </CardContent>
-        <CardActions disableSpacing>
-          {props.authUser.isAuthenticated ? (
-            <>
-              <IconButton
-                aria-label="Curtir"
-                color="secondary"
-                size="small"
-                onClick={() => props.updateLikes(_id)}>
-                {!hasLiked ? (
-                  <NotFavoriteIcon />
-                ) : (
-                    <FavoriteIcon />
-                  )}
-
-              </IconButton>
-              <Typography variant="body2" style={{ paddingLeft: '8px' }}>
-                {likes.length}
-              </Typography>
-            </>
-          ) : (
-              <Typography variant="body2" style={{ paddingLeft: '8px' }}>
-                {likes.length} curtida(s)
-            </Typography>
-            )}
+        <CardActions>
+          <ul className={classes.postActions}>
+            <li className={classes.postAction}>
+            <li>
+              <LikeButton post={post} action={updateLikes} />
+            </li>
+            <li>
+              <Button startIcon={<CommentIcon />} onClick={handleCommentBox}>
+                Comentar
+              </Button>
+            </li>
+            </li>
+            <li className={classes.postAction}>
+              {`${post.likeCount} ${post.likeCount > 1 ? "curtidas" : "curtida"}`}
+            </li>
+          </ul>
         </CardActions>
+        <CommentBox expanded={expanded} post={post}/>
       </Card>
 
       <Menu
@@ -148,7 +149,7 @@ function ActivityCard(props) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}>
+        onClose={handleAnchor}>
         <MenuItem onClick={handleDelete}>Excluir</MenuItem>
       </Menu>
     </Box>

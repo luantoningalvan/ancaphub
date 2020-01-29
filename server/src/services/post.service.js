@@ -8,11 +8,13 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
       .populate('user', 'name username id avatar')
+      .populate("comments.user")
 
     if (auth) {
       posts = posts.map(post => ({
         ...post._doc,
         hasLiked: post.likes.includes(auth.id),
+        likeCount: post.likes.length
       }))
     }
 
@@ -24,8 +26,14 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
 
 const getPost = async (postId, auth) => {
   try {
-    const post = await Post.findById(postId)
-    return auth ? { ...post._doc, hasLiked: post.likes.includes(auth.id)} : post
+    const post = await Post
+    .findById(postId)
+    .populate({path: "comments", populate: { path: "user"}}, "_id name username avatar")
+    return auth ? { 
+      ...post._doc, 
+      hasLiked: post.likes.includes(auth.id),
+      likeCount: post.likes.length
+    } : post
   } catch (e) {
     throw new Error(e.message)
   }
@@ -35,7 +43,8 @@ const insertPost = async (data) => {
   try {
     const post = new Post(data);
     await post.save();
-    return await post.populate('user', 'name username id avatar').execPopulate();
+    await post.populate('user', 'name username id avatar').execPopulate();
+    return { ...post._doc, hasLiked: false, likeCount: 0 }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -66,7 +75,7 @@ const likePost = async (postId, userId) => {
       post.likes.push(userId);
     }
     await post.save();
-    return { _id: post._id, likes: post.likes, hasLiked: post.likes.includes(userId)}
+    return { _id: post._id, likes: post.likes, likeCount: post.likes.length, hasLiked: post.likes.includes(userId)}
   } catch (e) {
     throw new Error(e.message)
   }

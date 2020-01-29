@@ -49,6 +49,7 @@ export default function(state = initialState, action) {
     case types.UPDATE_EMAIL_FAIL:
     case types.UPDATE_PASSWORD_FAIL:
     case types.UPDATE_PROFILE_PICTURE_FAILURE:
+    case types.ADD_COMMENT_FAILURE:
       return {
         ...state,
         snackAlerts:  [...state.snackAlerts, { status: 'error', msg:payload}]

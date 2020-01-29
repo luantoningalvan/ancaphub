@@ -22,7 +22,8 @@ const {
   Rate,
   Search,
   User,
-  Bookmark
+  Bookmark,
+  Comment
 } = require('../controllers')
 
 // Routes
@@ -67,6 +68,9 @@ router.post('/posts', auth, Post.insert)
 router.delete('/posts/:id', auth, Post.remove)
 router.post('/posts/:id/like', auth, Post.like)
 router.post('/posts/:id/unlike', auth, Post.like)
+router.post('/posts/:postId/comment', auth, Comment.insert)
+router.put('/posts/:postId/comment/:commentId', auth, Comment.update)
+router.delete('/posts/:postId/comment/:commentId', auth, Comment.remove)
 
 // Profile
 router.get('/users/:id/followers', Profile.getFollowers)

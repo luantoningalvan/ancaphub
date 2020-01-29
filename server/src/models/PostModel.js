@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const CommentSchema = new Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  content: { type: String, required: true},
+  date: { type: Date, default: Date.now }
+})
+
 const PostSchema = new Schema({
   content: String,
   type: {
@@ -11,7 +17,8 @@ const PostSchema = new Schema({
   },
   extraFields: Object,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  likes: []
+  likes: [],
+  comments: [CommentSchema]
 }, { timestamps: true })
 
 module.exports = mongoose.model('Post', PostSchema);

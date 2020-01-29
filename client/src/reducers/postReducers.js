@@ -40,11 +40,18 @@ export default function (state = INITIAL_STATE, action) {
           return value._id !== payload;
         })
       };
+    case types.ADD_COMMENT_SUCCESS: 
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload._id ? { ...post, comments:payload.comments  } : post
+        )
+      }  
     case types.UPDATE_LIKES_SUCCESS:
       return {
         ...state,
         posts: state.posts.map(post =>
-          post._id === payload._id ? { ...post, likes: payload.likes, hasLiked: payload.hasLiked } : post
+          post._id === payload._id ? { ...post, ...payload } : post
         )
       };
     default:

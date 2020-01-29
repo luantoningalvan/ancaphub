@@ -5,6 +5,7 @@ const libraryService = require('./library.service')
 const rateService = require('./rate.service')
 const profileService = require('./profile.service')
 const userService = require('./user.service')
+const commentService = require('./comment.service')
 const postService = require('./post.service')
 
 module.exports = {
@@ -15,5 +16,6 @@ module.exports = {
   rateService,
   profileService,
   userService,
-  postService
+  postService,
+  commentService
 }
