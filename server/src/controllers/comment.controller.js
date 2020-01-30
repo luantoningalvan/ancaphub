@@ -1,5 +1,5 @@
 const { commentService } = require('../services')
-const { insertComment } = commentService
+const { insertComment, removeComment } = commentService
 
 const insert = async (req, res, next) => {
   const { postId } = req.params
@@ -21,7 +21,16 @@ const insert = async (req, res, next) => {
 };
 
 const remove = async (req, res, next) => {
-  res.send(true)
+  const { postId, commentId } = req.params
+  const { id:userId } = req.user
+
+  try {
+    const result = await removeComment(postId,commentId,userId)
+    res.send(result);
+    next()
+  } catch (e) {
+    next(e)
+  }
 };
 
 const update = async (req, res, next) => {
