@@ -24,7 +24,6 @@ import { fetchNotifications, markAsReadAllNotifications } from '../../actions/no
 import isEmpty from 'is-empty';
 
 // Custom Components
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import Notification from '../../components/notifications/notification'
 import LoadContent from '../../components/loaders/loadContent'
@@ -34,7 +33,7 @@ const Notifications = ({fetchNotifications, markAsReadAllNotifications, notifica
   useEffect(() => markAsReadAllNotifications(), [markAsReadAllNotifications]);
 
   return (
-    <Template>
+    <>
       <Title title="Notificações" />
       <Box
         display="flex"
@@ -73,7 +72,7 @@ const Notifications = ({fetchNotifications, markAsReadAllNotifications, notifica
             )}
         </LoadContent>
       </Paper>
-    </Template>
+    </>
   );
 };
 

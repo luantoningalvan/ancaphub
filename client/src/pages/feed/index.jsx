@@ -35,7 +35,7 @@ const {loading: authLoading, isAuthenticated} = auth
   }
 
   return (
-    <Template>
+    <>
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
@@ -61,7 +61,7 @@ const {loading: authLoading, isAuthenticated} = auth
           </Hidden>
         </Grid>
       </Grid>
-    </Template>
+    </>
   );
 }
 

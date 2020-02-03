@@ -10,7 +10,6 @@ import {
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import FileUpload from '../../../components/upload/fileUpload'
 import ImageUpload from '../../../components/upload/imageUpload';
@@ -37,7 +36,7 @@ function AddBook(props) {
   };
 
   return (
-    <Template>
+    <>
       <Title title="Adicionar Livro" />
 
       <Box mb={3}>
@@ -173,7 +172,7 @@ function AddBook(props) {
           );
         }}
       />
-    </Template>
+    </>
   );
 }
 

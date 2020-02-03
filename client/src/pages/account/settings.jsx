@@ -15,7 +15,6 @@ import {
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons'
 import * as Yup from 'yup';
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -79,7 +78,7 @@ const Settings = ({ auth, updateUsername, updateEmail, updatePassword }) => {
   };
 
   return (
-    <Template>
+    <>
       <Title title="Configurações" />
 
       <Box mb={3}>
@@ -231,7 +230,7 @@ const Settings = ({ auth, updateUsername, updateEmail, updatePassword }) => {
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </Template>
+    </>
   );
 };
 

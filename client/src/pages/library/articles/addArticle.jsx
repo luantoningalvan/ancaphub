@@ -9,7 +9,6 @@ import {
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
-import Template from '../../../components/template';
 import ChooseCategory from '../../../components/categories/chooseCategory';
 import RichTextEditor from '../../../components/editor/richTextEditor';
 import ImageUpload from '../../../components/upload/imageUpload';
@@ -35,7 +34,7 @@ function AddArticle(props) {
   };
 
   return (
-    <Template>
+    <>
       <Title title="Adicionar Artigo" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -141,7 +140,7 @@ function AddArticle(props) {
           );
         }}
       />
-    </Template>
+    </>
   );
 }
 

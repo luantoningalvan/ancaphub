@@ -18,7 +18,6 @@ import querystring from 'querystring'
 import isEmpty from 'is-empty';
 import axios from '../../../services/api'
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import Ratings from '../../../components/library/ratings';
@@ -104,7 +103,7 @@ function SingleBook({match, fetchItem, book}) {
   const classes = useStyles();
 
   return (
-    <Template noPadding>
+
       <LoadContent loading={book.loading}>
         {!isEmpty(book.item) && book.item.type === 'book' ? (
           <Fragment>
@@ -176,7 +175,6 @@ function SingleBook({match, fetchItem, book}) {
             </Container>
           )}
       </LoadContent>
-    </Template>
   );
 }
 const mapStateToProps = state => ({ book: state.items });

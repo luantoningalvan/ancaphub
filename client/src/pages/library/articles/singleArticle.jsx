@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'is-empty';
 import parse from 'html-react-parser';
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadContent from '../../../components/loaders/loadContent'
@@ -46,7 +45,6 @@ function SingleArticle({match, fetchItem, article}) {
   const classes = useStyles();
 
   return (
-    <Template noPadding>
       <LoadContent loading={article.loading}>
         {!isEmpty(article.item) && type === 'article' ? (
           <Fragment>
@@ -97,7 +95,6 @@ function SingleArticle({match, fetchItem, article}) {
             </Container>
           )}
       </LoadContent>
-    </Template>
   );
 }
 

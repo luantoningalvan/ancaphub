@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views';
 import Login from '../../components/auth/login';
 import Signup from '../../components/auth/signup';
-import Template from '../../components/template'
 import Title from '../../components/template/titleComponent'
 import {
   FolderOutlined as LibraryIcon,
@@ -43,7 +42,7 @@ const Home = props => {
   }
 
   return (
-    <Template>
+    <>
       <Title title="AncapHub - HUB de conteúdo Libertário" />
       <Grid container>
         <Grid item xs={12} md={6}>
@@ -75,7 +74,7 @@ const Home = props => {
           </Box>
         </Grid>
       </Grid>
-    </Template>
+    </>
   )
 }
 

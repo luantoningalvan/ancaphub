@@ -7,7 +7,6 @@ import {
   Paper,
   Grid
 } from '@material-ui/core';
-import Template from '../../components/template';
 import LoadContent from '../../components/loaders/loadContent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -35,7 +34,7 @@ const SearchResults = ({searchTerm, search}) => {
   }, [term, searchTerm])
 
   return (
-    <Template>
+    <>
       <Box mb={3}>
         <Typography variant="h4" component="h2" noWrap>
           Resultados para: {term}
@@ -80,7 +79,7 @@ const SearchResults = ({searchTerm, search}) => {
             </Paper>
           )}
       </LoadContent>
-    </Template>
+    </>
   )
 };
 

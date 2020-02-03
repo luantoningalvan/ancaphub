@@ -25,7 +25,6 @@ import {
 } from '@material-ui/icons';
 
 // Custom Components
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import UnavaliableContent from '../../components/error/unavaliableContent'
 import ProfilePicture from '../../components/profile/profilePicture';
@@ -119,7 +118,6 @@ function Profile({ getUser, auth, user, match}) {
   }
 
   return (
-    <Template>
       <LoadContent loading={user.loading}>
         {user.user === null ? (
           <UnavaliableContent />
@@ -261,7 +259,6 @@ function Profile({ getUser, auth, user, match}) {
             </>
           )}
       </LoadContent>
-    </Template>
   );
 }
 

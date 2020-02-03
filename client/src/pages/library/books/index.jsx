@@ -9,7 +9,6 @@ import {
 import { Add as AddIcon } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import isEmpty from 'is-empty';
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import BookCard from '../../../components/library/book/bookCard';
 import Filter from '../../../components/library/filter';
@@ -20,7 +19,7 @@ function Books(props) {
   const { books } = props;
 
   return (
-    <Template>
+    <>
       <Box display="flex" flexDirection="column" height="100%">
         <Title title="Livros" />
         <Box mb={3} display="flex" justifyContent="space-between">
@@ -57,7 +56,7 @@ function Books(props) {
             )}
         </LoadContent>
       </Box>
-    </Template>
+    </>
   );
 }
 

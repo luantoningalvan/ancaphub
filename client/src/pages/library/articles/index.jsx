@@ -9,7 +9,6 @@ import {
 import { Add as AddIcon } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import isEmpty from 'is-empty';
-import Template from '../../../components/template';
 import ArticleCard from '../../../components/library/article/articleCard';
 import Filter from '../../../components/library/filter';
 import Title from '../../../components/template/titleComponent'
@@ -20,7 +19,7 @@ function Articles(props) {
   const { articles } = props;
   
   return (
-    <Template>
+    <>
       <Box display="flex" flexDirection="column" height="100%">
         <Title title="Artigos" />
         <Box mb={3} display="flex" justifyContent="space-between">
@@ -57,7 +56,7 @@ function Articles(props) {
             )}
         </LoadContent>
       </Box>
-    </Template>
+    </>
   );
 }
 

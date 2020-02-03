@@ -12,7 +12,6 @@ import { Refresh as RefreshIcon } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import isEmpty from 'is-empty';
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import UserCard from '../../components/profile/userCard';
 import { connect } from 'react-redux';
@@ -71,7 +70,7 @@ function FindPeople({auth, users, searchUsers, setLastLocation}) {
   }
 
   return (
-    <Template>
+    <>
       <Title title="Encontrar Pessoas Próximas" />
       {auth.user.geoLocation ? (
         <Box>
@@ -159,7 +158,7 @@ function FindPeople({auth, users, searchUsers, setLastLocation}) {
           </Button>
           </Box>
         )}
-    </Template>
+    </>
   );
 }
 const mapStateToProps = state => ({ auth: state.auth, users: state.users });

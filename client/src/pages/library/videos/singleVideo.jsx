@@ -3,7 +3,6 @@ import { Typography, Box, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'is-empty';
 import ReactPlayer from 'react-player';
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Categories from '../../../components/categories/showElementCategories';
 import LoadContent from '../../../components/loaders/loadContent'
@@ -49,7 +48,6 @@ function SingleVideo({match, fetchItem, video}) {
   const classes = useStyles();
 
   return (
-    <Template noPadding>
       <LoadContent loading={video.loading}>
         {!isEmpty(video.item) && video.item.type === 'video' ? (
           <Fragment>
@@ -98,7 +96,6 @@ function SingleVideo({match, fetchItem, video}) {
             </Container>
           )}
       </LoadContent>
-    </Template>
   );
 }
 const mapStateToProps = state => ({ video: state.items });

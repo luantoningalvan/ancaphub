@@ -6,7 +6,6 @@ import {
   Typography
 } from '@material-ui/core';
 import isEmpty from 'is-empty';
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import BookCard from '../../components/library/book/bookCard';
 import ArticleCard from '../../components/library/article/articleCard';
@@ -20,7 +19,7 @@ const Bookmarks = ({bookmarks, getBookmarks}) => {
   useEffect(() => getBookmarks(), [getBookmarks]);
 
   return (
-    <Template>
+    <>
       <Title title="Itens Salvos" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -49,7 +48,7 @@ const Bookmarks = ({bookmarks, getBookmarks}) => {
           )}
       </Grid>
       </LoadContent>
-    </Template>
+    </>
   );
 };
 

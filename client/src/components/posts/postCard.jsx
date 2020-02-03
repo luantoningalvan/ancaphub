@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Button,
+  Link as MDLink
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -33,6 +34,7 @@ import isEmpty from 'is-empty'
 // Custom Components
 import ProfilePicture from '../profile/profilePicture';
 import LikeButton from './likeButton'
+import ShowLikes from './showLikes'
 import CommentBox from './commentBox'
 
 // Templates
@@ -52,6 +54,7 @@ const activities = {
 const useStyles = makeStyles(theme => ({
   postActions: {
     width: '100%',
+    flexWrap: 'wrap',
     justifyContent:"space-between",
     display: 'flex',
     alignItems: 'center',
@@ -68,6 +71,10 @@ const useStyles = makeStyles(theme => ({
     color: "inherit", 
     textDecoration: 'none',
     fontSize: 15
+  },
+  counters: {
+    marginLeft: 5,
+    cursor: 'pointer'
   }
 }))
 
@@ -77,6 +84,7 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
   const Template = !isEmpty(post) ? templates[type]() : <p>Ocorreu um Erro</p>
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [expanded, setExpanded] = React.useState(false);
+  const [showLikesState, setShowLikesState] = React.useState(false);
   const classes = useStyles()
 
   const handleAnchor = (event) => {
@@ -85,6 +93,10 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
 
   const handleCommentBox = () => {
     setExpanded(!expanded)
+  }
+
+  const handleShowLikes = () => {
+    setShowLikesState(!showLikesState)
   }
 
   const handleDelete = () => {
@@ -97,6 +109,7 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
 
   return (
     <Box mb={2}>
+      <ShowLikes post={_id} open={showLikesState} closeFunc={handleShowLikes}/>
       <Card elevation={0}>
         <CardHeader
           avatar={
@@ -136,8 +149,18 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
               </Button>
             </li>
             </li>
+            
             <li className={classes.postAction}>
-              {`${post.likeCount} ${post.likeCount > 1 ? "curtidas" : "curtida"}`}
+              <li className={classes.counters}>
+                <MDLink onClick={handleShowLikes} color="textPrimary">
+                {`${post.likeCount} ${post.likeCount > 1 ? "curtidas" : "curtida"}`}
+                </MDLink>
+              </li>
+              <li className={classes.counters}>
+                <MDLink onClick={handleCommentBox} color="textPrimary">
+                  {`${post.comments.length} ${post.comments.length > 1 ? "comentários" : "comentário"}`}
+                </MDLink>
+              </li>
             </li>
           </ul>
         </CardActions>

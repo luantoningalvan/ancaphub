@@ -9,7 +9,6 @@ import {
 import { Add as AddIcon } from '@material-ui/icons';
 import isEmpty from 'is-empty';
 import { Link } from 'react-router-dom';
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import Filter from '../../../components/library/filter';
 import VideoCard from '../../../components/library/video/videoCard';
@@ -20,7 +19,7 @@ function Videos(props) {
   const { videos } = props;
 
   return (
-    <Template>
+    <>
       <Box display="flex" flexDirection="column" height="100%">
         <Title title="Vídeos" />
         <Box mb={3} display="flex" justifyContent="space-between">
@@ -57,7 +56,7 @@ function Videos(props) {
             )}
         </LoadContent>
       </Box>
-    </Template>
+    </>
   );
 }
 

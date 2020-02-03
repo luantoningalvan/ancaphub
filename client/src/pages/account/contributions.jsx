@@ -11,7 +11,6 @@ import {
   Paper,
 } from '@material-ui/core';
 import isEmpty from 'is-empty';
-import Template from '../../components/template';
 import Title from '../../components/template/titleComponent'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -51,7 +50,7 @@ const Contributions = ({auth, getContributions}) => {
   const {contributions} = auth.user
 
   return (
-    <Template>
+    <>
       <Title title="Painel de Contribuições" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -88,7 +87,7 @@ const Contributions = ({auth, getContributions}) => {
         )}
         </LoadContent>
       </Paper>
-    </Template>
+    </>
   );
 };
 

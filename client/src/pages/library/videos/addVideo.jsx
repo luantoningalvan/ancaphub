@@ -10,7 +10,6 @@ import { Formik, Field, Form } from 'formik';
 import ReactPlayer from 'react-player';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import Template from '../../../components/template';
 import Title from '../../../components/template/titleComponent'
 import ChooseCategory from '../../../components/categories/chooseCategory';
 import ImageUpload from '../../../components/upload/imageUpload';
@@ -36,7 +35,7 @@ function AddVideo(props) {
   };
 
   return (
-    <Template>
+    <>
       <Title title="Adicionar Vídeo" />
 
       <Box mb={3}>
@@ -177,7 +176,7 @@ function AddVideo(props) {
           );
         }}
       />
-    </Template>
+    </>
   );
 }
 

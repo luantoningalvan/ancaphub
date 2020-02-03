@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     cursor: 'pointer',
     textDecoration: 'none',
+    height: 75,
     "&:hover": {
       backgroundColor: "rgba(0,0,0,0.03)",
     }
@@ -36,13 +37,17 @@ const useStyles = makeStyles(theme => ({
     width: 75,
     height: 75,
     overflow: 'hidden',
-    display: 'flex',
-    alignItems: 'center'
+    backgroundSize: 'cover'
   },
   title: {
     fontWeight: 'bold',
     fontSize: 17,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    BoxOrient: 'vertical',
+    LineClamp: 2
   },
   author: {
     fontWeight: 'light',
@@ -54,7 +59,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'flex-start', 
     justifyContent: 'center', 
-    padding: 10
+    padding: 10,
+    flex: 1,
   }
 }))
 
@@ -80,16 +86,14 @@ const Sidebar = ({items, fetchAllItems}) => {
             {items.allItems.items &&
               items.allItems.items.map(item => (
                 <Link className={classes.item} to={`/${item.type}s/${item._id}`} key={item._id}>
-                    <div className={classes.itemCover}>
-                      <img 
-                        src={ item.cover !== "" ? item.cover.url : deafaultCover }
-                        style={{ width: '100%'}}
-                      />
-                      
+                    <div 
+                    className={classes.itemCover} 
+                    style={{backgroundImage:`url(${item.cover !== "" ? item.cover.url : deafaultCover})`}}
+                    >
                     </div>
                     <div className={classes.itemContent}>
-                      <span className={classes.title}>{item.title}</span>
-                      <span className={classes.author}>{item.author}</span>
+                      <span className={classes.title} >{item.title.substr(0, 49)}</span>
+                      <span className={classes.author}>{item.author.substr(0, 49)}</span>
                     </div>
                 </Link>
               ))}
