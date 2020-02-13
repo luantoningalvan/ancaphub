@@ -69,8 +69,8 @@ function ImageUpload({ updateProfilePicture, form, user}) {
   const handleUpload = async () => {
     if (image.image) {
       let formData = new FormData();
+      formData.append('data', JSON.stringify(cropInfo))
       formData.append('file', image.image);
-      formData.append('data', cropInfo)
 
       updateProfilePicture(formData)
       handleCrop()

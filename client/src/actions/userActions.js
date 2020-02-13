@@ -175,6 +175,7 @@ export const unfollowUser = user => async dispatch => {
 };
 
 export const updateProfilePicture = data => async dispatch => {
+  console.log(data)
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data'
