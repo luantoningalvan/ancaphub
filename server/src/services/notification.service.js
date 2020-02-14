@@ -7,7 +7,7 @@ const getManyNotifications = async ({ filter, limit, skip }, user) => {
       .limit(limit)
       .skip(skip)
       .sort({ created_at: 'desc' })
-      .populate("sender", "username avatar _id")
+      .populate("sender", "username avatar _id isVerified")
 
     const notReadCount = notifications.filter((n) => { 
       return n.read_by.length == 0 || n.read_by.includes({ readerId: user.id }) 
@@ -26,7 +26,7 @@ const updateMany = async ({target, operation}) => {
   try {
     return await Notification.updateMany(target, operation)
       .sort({ created_at: 'desc' })
-      .populate("sender", "username avatar _id");
+      .populate("sender", "username avatar _id isVerified");
   } catch (e) {
     throw new Error(e.message)
   }

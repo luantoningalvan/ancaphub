@@ -3,7 +3,7 @@ const Rate = require("../models/RateModel")
 const getRate = async (id) => {
   try {
     return await Rate.find({ item: id })
-      .populate("user", "_id username avatar")
+      .populate("user", "_id username avatar isVerified")
       .sort("createdAt");
   } catch (e) {
     throw new Error(e.message)
@@ -15,7 +15,7 @@ const insertRate = async (data) => {
     const rate = new Rate(data)
     await rate.save();
     return await rate
-      .populate('user', 'username _id avatar')
+      .populate('user', 'username _id avatar isVerified')
       .execPopulate()
   } catch (e) {
     throw new Error(e.message)

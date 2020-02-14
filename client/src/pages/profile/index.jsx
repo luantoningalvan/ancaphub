@@ -33,7 +33,7 @@ import FollowButton from '../../components/profile/followButton';
 import Loader from '../../components/loaders/loadingItems'
 import LoadContent from '../../components/loaders/loadContent'
 import defaultProfilePicture from '../../assets/images/defaultProfilePicture.png';
-
+import ShowName from '../../components/profile/showName'
 // Profile Pages
 import UserFeed from './userFeed';
 import UserLibrary from './userLibrary';
@@ -143,7 +143,9 @@ function Profile({ getUser, auth, user, match}) {
                       onClick={handleProfilePicture}
                     />
                     <Box my={2}>
-                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>{name}</Typography>
+                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                        <ShowName user={user.user} fontSize={18}/>
+                      </Typography>
                       <Typography  style={{fontSize: '15px', color: "#aaa"}} gutterBottom>@{username}</Typography>
                       <Typography variant="body2">{bio}</Typography>
                     </Box>

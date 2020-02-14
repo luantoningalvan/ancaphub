@@ -4,6 +4,7 @@ import {
 } from "@material-ui/core"
 import { makeStyles } from '@material-ui/core'
 import ProfilePicture from '../profile/profilePicture';
+import ShowName from '../profile/showName'
 import moment from 'moment-timezone/builds/moment-timezone-with-data';
 import ptBr from 'moment/locale/pt-br'
 
@@ -44,7 +45,7 @@ const Comment = ({ comment }) => {
       <ProfilePicture avatar={comment.user.avatar} height="35" width="35" className={classes.avatar} />
       <div className={classes.commentContent}>
         <p className={classes.commentText}>
-          <Link to={`/${comment.user._id}`} className={classes.userName}>{comment.user.name}</Link> 
+          <ShowName user={comment.user} fontSize={14}/> 
           {" " + comment.content}
         </p>
         <span className={classes.date}>{moment(comment.date).tz('America/Sao_Paulo').locale('pt-br', ptBr).startOf(comment.date).fromNow()}</span>

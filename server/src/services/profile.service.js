@@ -4,7 +4,7 @@ const getUserFollowers = async (id) => {
   try {
     return await User
       .findById(id, 'followers')
-      .populate('followers', 'name username avatar _id');
+      .populate('followers', 'name username avatar _id isVerified');
   } catch (e) {
     throw new Error(e.message)
   }
@@ -14,7 +14,7 @@ const getFollowedUsers = async (id) => {
   try {
     return await User
       .findById(id, 'following')
-      .populate('following', 'name username avatar _id');
+      .populate('following', 'name username avatar _id isVerified');
   } catch (e) {
     throw new Error(e.message)
   }

@@ -7,7 +7,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
-      .populate('user', 'name username id avatar')
+      .populate('user', 'name username id avatar isVerified')
       .populate("comments.user")
 
     if (auth) {
@@ -28,7 +28,7 @@ const getPost = async (postId, auth) => {
   try {
     const post = await Post
     .findById(postId)
-    .populate({path: "comments", populate: { path: "user"}}, "_id name username avatar")
+    .populate({path: "comments", populate: { path: "user"}}, "_id name username avatar isVerified")
     return auth ? { 
       ...post._doc, 
       hasLiked: post.likes.includes(auth.id),
@@ -43,7 +43,7 @@ const insertPost = async (data) => {
   try {
     const post = new Post(data);
     await post.save();
-    await post.populate('user', 'name username id avatar').execPopulate();
+    await post.populate('user', 'name username id avatar isVerified').execPopulate();
     return { ...post._doc, hasLiked: false, likeCount: 0 }
   } catch (e) {
     throw new Error(e.message)

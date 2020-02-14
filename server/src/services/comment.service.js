@@ -6,7 +6,7 @@ const insertComment = async (postId, data) => {
     const post = await Post.findByIdAndUpdate(postId, { $push: { comments: data } }, { new: true })
     if (!post) throw new Error('Este post não existe.')
     return await post
-    .populate("comments.user", "_id name username avatar")
+    .populate("comments.user", "_id name username avatar isVerified")
     .execPopulate()
   } catch (e) {
     throw new Error(e.message)

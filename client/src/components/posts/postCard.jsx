@@ -30,12 +30,14 @@ import moment from 'moment-timezone/builds/moment-timezone-with-data';
 import { Link } from 'react-router-dom';
 import ptBr from 'moment/locale/pt-br'
 import isEmpty from 'is-empty'
+import clsx from 'clsx'
 
 // Custom Components
 import ProfilePicture from '../profile/profilePicture';
 import LikeButton from './likeButton'
 import ShowLikes from './showLikes'
 import CommentBox from './commentBox'
+import ShowName from '../profile/showName'
 
 // Templates
 import Status from './templates/status'
@@ -75,6 +77,13 @@ const useStyles = makeStyles(theme => ({
   counters: {
     marginLeft: 5,
     cursor: 'pointer'
+  },
+  verifiedUser: {
+    background: theme.palette.secondary.main,
+    borderRadius: 15,
+    color: 'white',
+    padding:'5px 10px',
+    marginRight: 5,
   }
 }))
 
@@ -123,12 +132,10 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
             )
           }
           title={
-            <div>
-              <Link to={`/${user._id}`} className={classes.userName}>
-                {user.name + " "}
-              </Link>
+            <div style={{marginBottom: classes.verifiedUser && 5 }}>
+              <ShowName user={user} />
               <span style={{ fontSize: '13px', color: '#aaa' }}>
-                {activities[type]}
+                {` ${activities[type] || ''}`}
               </span>
             </div>
           }

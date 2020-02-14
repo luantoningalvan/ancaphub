@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfilePicture from './profilePicture';
+import ShowName from './showName'
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Link,
@@ -20,7 +21,7 @@ export default props => (
           width="40px"
           height="40px"
         />
-        <span style={{ paddingLeft: '10px' }}>@{props.user.name}</span>
+        <span style={{ paddingLeft: '10px' }}><ShowName user={props.user}/></span>
       </Box>
     </Link>
   </Box>
