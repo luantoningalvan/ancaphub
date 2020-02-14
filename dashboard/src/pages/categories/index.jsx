@@ -3,31 +3,25 @@ import {
   Container,
   Paper,
   Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   TextField,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  IconButton
+  DialogTitle
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
   Edit as EditIcon
 } from '@material-ui/icons';
-import isEmpty from 'is-empty'
 import Hero from '../../components/template/hero';
 import TitleComponent from '../../components/template/titleComponent';
+import FullTable from '../../components/table/fullTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllCategories, editCategory } from '../../actions/categoryActions';
 
-function Categories({fetchAllCategories, editCategory, categories}) {
+function Categories({ fetchAllCategories, editCategory, categories }) {
   useEffect(() => fetchAllCategories(), [fetchAllCategories]);
   const [open, setOpen] = React.useState(false);
   const [categoryData, setCategoryData] = React.useState({});
@@ -57,33 +51,17 @@ function Categories({fetchAllCategories, editCategory, categories}) {
       <Box my={3}>
         <Container>
           <Paper>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Nome</TableCell>
-                  <TableCell align="right">Ações</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {!isEmpty(categories.allCategories) && categories.allCategories.map(category => (
-                  <TableRow key={category._id}>
-                    <TableCell>
-                      {category.name}
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton aria-label="Editar" onClick={() => openEditionDialog(category)}>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Delete"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <FullTable
+              fields={[
+                { label: "Nome", key: "name" },
+                { label: "Slug", key: "slug", align: "left" },
+              ]}
+              data={categories.allCategories}
+              actions={[
+                { label: "Editar", icon: EditIcon, action: openEditionDialog },
+                { label: "Deletar", icon: DeleteIcon }
+              ]}
+            />
           </Paper>
         </Container>
       </Box>
