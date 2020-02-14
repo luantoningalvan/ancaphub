@@ -8,7 +8,8 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  IconButton
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
@@ -57,10 +58,12 @@ function Categories({ fetchAllCategories, editCategory, categories }) {
                 { label: "Slug", key: "slug", align: "left" },
               ]}
               data={categories.allCategories}
-              actions={[
-                { label: "Editar", icon: EditIcon, action: openEditionDialog },
-                { label: "Deletar", icon: DeleteIcon }
-              ]}
+              actions={(category) => 
+                <>
+                  <IconButton onClick={() => openEditionDialog(category)}><EditIcon /></IconButton>
+                  <IconButton disabled><DeleteIcon /></IconButton>
+                </>
+              }
             />
           </Paper>
         </Container>

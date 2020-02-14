@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import {
   Paper,
   Container,
-  Box
+  Box,
+  IconButton
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
-  Edit as EditIcon
+  SettingsRounded as ManageIcon
 } from '@material-ui/icons';
 import Hero from '../../components/template/hero';
 import TitleComponent from '../../components/template/titleComponent';
 import FullTable from '../../components/table/fullTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchAllUsers, deleteUser } from '../../actions/userActions';
-
+import { fetchAllUsers } from '../../actions/userActions';
+import { Link } from "react-router-dom";
 
 function Users({fetchAllUsers, users}) {
   useEffect(() => fetchAllUsers(), [fetchAllUsers]);
@@ -33,10 +34,12 @@ function Users({fetchAllUsers, users}) {
                 { label: "Usuário", key: "username", align: "left" },
               ]}
               data={users.users}
-              actions={[
-                { label: "Editar", icon: EditIcon },
-                { label: "Deletar", icon: DeleteIcon }
-              ]}
+              actions={(user) => 
+                <>
+                  <IconButton component={Link} to={`/users/${user._id}`}><ManageIcon /></IconButton>
+                  <IconButton disabled><DeleteIcon /></IconButton>
+                </>
+              }
             />
             </Paper>
         </Container>
@@ -47,7 +50,7 @@ function Users({fetchAllUsers, users}) {
 
 const mapStateToProps = state => ({ users: state.users });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchAllUsers, deleteUser }, dispatch);
+  bindActionCreators({ fetchAllUsers }, dispatch);
 
 export default connect(
   mapStateToProps,

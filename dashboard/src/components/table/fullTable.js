@@ -5,7 +5,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  IconButton
 } from "@material-ui/core";
 import isEmpty from "is-empty";
 
@@ -34,14 +33,7 @@ function FullTable({ fields, data, actions }) {
                 </TableCell>
               ))}
               <TableCell key={`action-${index}`} align="right">
-                {actions.map(action => (
-                  <IconButton
-                    aria-label={action.label}
-                    onClick={() => action.action && action.action(data)}
-                  >
-                    <action.icon />
-                  </IconButton>
-                ))}
+                {actions(data)}
               </TableCell>
             </TableRow>
           ))}
