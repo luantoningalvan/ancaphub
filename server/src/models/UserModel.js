@@ -46,6 +46,7 @@ const UserSchema = new Schema({
   site: String,
   bio: String,
   currentCity: String,
+  isVerified: { type: Boolean, default: false},
   lastLocation: {
     type: PointSchema,
     index: '2dsphere'
