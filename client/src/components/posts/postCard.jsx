@@ -20,6 +20,7 @@ import {
   MoreVert as MoreVertIcon,
   CommentOutlined as CommentIcon
 } from '@material-ui/icons';
+
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,7 +31,6 @@ import moment from 'moment-timezone/builds/moment-timezone-with-data';
 import { Link } from 'react-router-dom';
 import ptBr from 'moment/locale/pt-br'
 import isEmpty from 'is-empty'
-import clsx from 'clsx'
 
 // Custom Components
 import ProfilePicture from '../profile/profilePicture';
@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent:"space-between",
     display: 'flex',
     alignItems: 'center',
-    padding: '10px 0px 0px 3px',
+    padding: '0px 0px 0px 3px',
     margin: 0
   },
   postAction: {
@@ -147,27 +147,31 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
         <CardActions>
           <ul className={classes.postActions}>
             <li className={classes.postAction}>
-            <li>
-              <LikeButton post={post} action={updateLikes} />
-            </li>
-            <li>
-              <Button startIcon={<CommentIcon />} onClick={handleCommentBox}>
-                Comentar
-              </Button>
-            </li>
+              <ul className={classes.postActions}>
+                <li className={classes.postAction}>
+                  <LikeButton post={post} action={updateLikes} />
+                </li>
+                <li  className={classes.postAction}>
+                  <Button startIcon={<CommentIcon />} onClick={handleCommentBox}>
+                    Comentar
+                  </Button>
+                </li>
+              </ul>
             </li>
             
             <li className={classes.postAction}>
-              <li className={classes.counters}>
+              <ul className={classes.postActions}>
+                <li className={classes.postAction}>
                 <MDLink onClick={handleShowLikes} color="textPrimary">
                 {`${post.likeCount} ${post.likeCount > 1 ? "curtidas" : "curtida"}`}
                 </MDLink>
               </li>
-              <li className={classes.counters}>
+              <li className={classes.postAction}>
                 <MDLink onClick={handleCommentBox} color="textPrimary">
                   {`${post.comments.length} ${post.comments.length > 1 ? "comentários" : "comentário"}`}
                 </MDLink>
               </li>
+              </ul>
             </li>
           </ul>
         </CardActions>

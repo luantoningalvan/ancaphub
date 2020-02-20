@@ -36,7 +36,7 @@ export function loadUserPosts(user) {
   };
 }
 
-export function createPost({ content }) {
+export function createPost(content) {
   return dispatch => {
     axios
       .post(`/api/posts`, { content })
