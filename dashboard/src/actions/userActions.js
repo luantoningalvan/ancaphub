@@ -14,9 +14,15 @@ export function fetchAllUsers() {
   };
 }
 
-// Remove um usuário pelo seu id
-export function deleteUser(id) {
+export function fetchUser(userId) {
   return dispatch => {
-    dispatch({ type: 'NOTHING' });
+    axios
+      .get(`/api/users/${userId}`)
+      .then(user => {
+        dispatch({ type: types.FETCH_USER_SUCCESS, payload: user.data });
+      })
+      .catch(error => {
+        dispatch({ type: types.FETCH_USER_FAILURE });
+      });
   };
 }

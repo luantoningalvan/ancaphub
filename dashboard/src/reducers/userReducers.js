@@ -1,7 +1,8 @@
 import types from '../actions/_types'
 
 const initialState = {
-  users: []
+  users: [],
+  user: {}
 };
 
 export default function(state = initialState, action) {
@@ -13,6 +14,11 @@ export default function(state = initialState, action) {
         ...state,
         users: payload
       };
+    case types.FETCH_USER_SUCCESS: 
+      return {
+        ...state,
+        user: payload
+      }  
     default:
       return state;
   }

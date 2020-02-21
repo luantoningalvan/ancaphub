@@ -5,6 +5,7 @@ import ArticleForm from '../pages/library/articles/articleFormPage';
 import VideoForm from '../pages/library/videos/videoFormPage';
 import Settings from '../pages/settings';
 import Users from '../pages/users';
+import SingleUser from '../pages/users/single';
 import Categories from '../pages/categories';
 import SignIn from '../pages/auth/signIn';
 
@@ -58,6 +59,11 @@ const closedRoutes = [
     exact: true,
     path: "/users",
     component: Users
+  },
+  {
+    exact: true,
+    path: "/users/:id",
+    component: SingleUser
   },
   {
     exact: true,
