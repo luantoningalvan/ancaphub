@@ -8,16 +8,11 @@ const {
   updateUser,
   updateUserPassword
 } = userService;
-const { insertFile } = fileService;
+const { uploadToS3 } = fileService;
 const keys = require("../config/keys");
 const jwt = require("jsonwebtoken");
 const Jimp = require("jimp");
-const AWS = require('aws-sdk');
-const fs = require('fs')
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-});
+
 
 const getAll = async (req, res, next) => {
   const filter = req.query.filter || "";
@@ -111,36 +106,21 @@ const updateLocation = async (req, res, next) => {
 };
 
 const updateAvatar = async (req, res, next) => {
-  const { originalname, name, size } = req.file;
   const { id: userId } = req.user;
   const crop = JSON.parse(req.body.data)
   const { x, y, width: w, height: h } = crop.croppedAreaPixels
-  console.log(x, y, w, h)
+
   try {
     const avatar = await Jimp.read(req.file.path)
     avatar
     .quality(60)
     .crop(x, y, w, h)
     .resize(256, 256)
-    .write(`/public/uploads/avatar/${name}`, async () => {
-      const fileContent = fs.createReadStream(`/public/uploads/avatar/${name}`);
-
-      const params = {
-        Bucket: 'ancaphub',
-        Key: name,
-        Body: fileContent,
-        ContentEncoding: 'base64',
-        ACL: 'public-read',
-      };
-      
-      s3.upload(params, async function(s3Err, data) {
-          if (s3Err) throw new Error(s3Err)
-          const file = await insertFile({ originalname, name, size, url: data.Location });
-
-          const result = await updateUser(userId, { avatar: file.url });
-          res.send({ _id: result._id, avatar: result.avatar });
-          next();
-      });
+    .write(`/public/uploads/avatar/${req.file.name}`, async () => {
+      const upload = await uploadToS3(req.file)
+      const result = await updateUser(userId, { avatar: upload.url });
+      res.send({ _id: result._id, avatar: result.avatar });
+      next();
     });
   } catch (err) {
     throw new Error(err)
