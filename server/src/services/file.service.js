@@ -22,9 +22,7 @@ const getFile = async (id) => {
   }
 };
 
-const uploadToS3 = async(file) => {
-  const fileContent = fs.createReadStream(`/public/uploads/avatar/${file.name}`);
-
+const uploadToS3 = async(file, fileContent) => {
   const params = {
     Bucket: 'ancaphub',
     Key: file.name,
@@ -34,7 +32,7 @@ const uploadToS3 = async(file) => {
   };
   
   try {
-    const data = s3.upload(params).promise();
+    const data = await s3.upload(params).promise();
     return await insertFile({ originalname: file.originalname, name: file.name, size: file.size, url: data.Location });
   } catch (s3Err) {
     throw new Error(s3Err)

@@ -10,6 +10,7 @@ const {
 } = userService;
 const { uploadToS3 } = fileService;
 const keys = require("../config/keys");
+const fs = require('fs')
 const jwt = require("jsonwebtoken");
 const Jimp = require("jimp");
 
@@ -117,7 +118,8 @@ const updateAvatar = async (req, res, next) => {
     .crop(x, y, w, h)
     .resize(256, 256)
     .write(`/public/uploads/avatar/${req.file.name}`, async () => {
-      const upload = await uploadToS3(req.file)
+      const fileContent = fs.createReadStream(`/public/uploads/avatar/${req.file.name}`);
+      const upload = await uploadToS3(req.file, fileContent)
       const result = await updateUser(userId, { avatar: upload.url });
       res.send({ _id: result._id, avatar: result.avatar });
       next();
