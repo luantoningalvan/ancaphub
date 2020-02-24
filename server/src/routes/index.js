@@ -71,6 +71,8 @@ router.post('/posts/:id/unlike', auth, Post.like)
 router.post('/posts/:postId/comment', auth, Comment.insert)
 router.put('/posts/:postId/comment/:commentId', auth, Comment.update)
 router.delete('/posts/:postId/comment/:commentId', auth, Comment.remove)
+router.post('/posts/:postId/comment/:commentId', auth, Comment.like)
+
 
 // Profile
 router.get('/users/:id/followers', Profile.getFollowers)
