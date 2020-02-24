@@ -34,7 +34,7 @@ const likeComment = async (postId, commentId, userId) => {
 
     if (!post) throw new Error('Este post não existe.')
 
-    const comment = post.comments.filter(comment => {
+    const comment = post.comments.filter((comment) => {
       return comment._id == commentId
     })
 
