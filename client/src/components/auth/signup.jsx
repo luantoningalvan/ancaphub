@@ -30,9 +30,6 @@ function SignUpForm(props) {
   const classes = useStyles();
   // Validação frontend do formulário
   const SignupSchema = Yup.object().shape({
-    code: Yup.string()
-      .length(20, "O código contém 20 caractéres")
-      .required("Você precisa inserir um código de conite"),
     name: Yup.string()
       .min(3, 'Nome muito curto!')
       .max(30, 'Nome muito longo!')
@@ -56,7 +53,7 @@ function SignUpForm(props) {
   return (
     <React.Fragment>
       <Formik
-        initialValues={{ code: "", name: "", username: '', email: '', password: '', password2: '' }}
+        initialValues={{ name: "", username: '', email: '', password: '', password2: '' }}
         validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
           props.signUp(values);
@@ -164,23 +161,6 @@ function SignUpForm(props) {
                     helperText={
                       errors.password2 && touched.password2 && errors.password2
                     }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    color="secondary"
-                    variant="outlined"
-                    type="text"
-                    margin="none"
-                    required
-                    fullWidth
-                    id="code"
-                    label="Código de Convite"
-                    name="code"
-                    value={values.code}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={errors.code && touched.code && errors.code}
                   />
                 </Grid>
                 <Grid item xs={12}>
