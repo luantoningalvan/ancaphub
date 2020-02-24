@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid, Typography, Tabs, Tab } from '@material-ui/core'
+import { Box, Grid, Typography, Tabs, Tab, Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views';
 import Login from '../../components/auth/login';
@@ -42,7 +42,7 @@ const Home = props => {
   }
 
   return (
-    <>
+    <Container>
       <Title title="AncapHub - HUB de conteúdo Libertário" />
       <Grid container>
         <Grid item xs={12} md={6}>
@@ -74,7 +74,7 @@ const Home = props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

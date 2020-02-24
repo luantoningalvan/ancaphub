@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from 'react';
 
 // Material-UI Components
 import {
+  Container,
   Box,
   Typography,
   IconButton,
@@ -33,13 +34,14 @@ const Notifications = ({fetchNotifications, markAsReadAllNotifications, notifica
   useEffect(() => markAsReadAllNotifications(), [markAsReadAllNotifications]);
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Notificações" />
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        mb={3}>
+        mb={2}>
         <Typography variant="h4" component="h2">
           Notificações
         </Typography>
@@ -72,7 +74,8 @@ const Notifications = ({fetchNotifications, markAsReadAllNotifications, notifica
             )}
         </LoadContent>
       </Paper>
-    </>
+      </Box>
+    </Container>
   );
 };
 

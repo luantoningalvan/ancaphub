@@ -8,7 +8,8 @@ import {
   ExpansionPanelSummary,
   TextField,
   Button,
-  CircularProgress
+  CircularProgress,
+  Container
 } from '@material-ui/core';
 import {
   Edit as EditIcon,
@@ -78,159 +79,162 @@ const Settings = ({ auth, updateUsername, updateEmail, updatePassword }) => {
   };
 
   return (
-    <>
-      <Title title="Configurações" />
+    <Container>
+      <Box mt={2}>
+        <Title title="Configurações" />
 
-      <Box mb={3}>
-        <Typography variant="h4" component="h2">
-          Configurações
-        </Typography>
-      </Box>
-
-      <ExpansionPanel expanded={panelState.username} onChange={handlePanel('username')}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography className={classes.heading}>Nome de Usuário</Typography>
-          <Typography className={classes.secondaryHeading}>@{auth.user.username}</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div style={{ width: "100%" }}>
-            <Box>
-              <TextField
-                label="Nome de Usuário"
-                value={data.username}
-                onChange={handleChange("username")}
-                placeholder="Insira seu novo nome de usuário"
-                color="secondary"
-                variant="outlined"
-                fullWidth
-              />
-            </Box>
-            <Box mt={2}>
-              <Button
-                color="secondary"
-                variant="contained"
-                disabled={auth.loading || data.username === auth.user.username}
-                startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
-                disableElevation
-                onClick={() => updateUsername(data.username)}
-              >
-                {auth.loading ? "Salvando" : "Salvar"}
-              </Button>
-            </Box>
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-
-      <ExpansionPanel expanded={panelState.email} onChange={handlePanel('email')}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography className={classes.heading}>E-mail</Typography>
-          <Typography className={classes.secondaryHeading}>
-            {auth.user.email}
+        <Box mb={3}>
+          <Typography variant="h4" component="h2">
+            Configurações
           </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div style={{ width: "100%" }}>
-            <Box>
-              <TextField
-                label="E-mail"
-                value={data.email}
-                onChange={handleChange("email")}
-                type="email"
-                placeholder="Insira seu novo e-mail"
-                color="secondary"
-                variant="outlined"
-                fullWidth
-              />
-            </Box>
-            <Box mt={2}>
-              <Button
-                color="secondary"
-                variant="contained"
-                disabled={auth.loading || data.email === auth.user.email}
-                startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
-                disableElevation
-                onClick={() => updateEmail(data.email)}
-              >
-                {auth.loading ? "Salvando" : "Salvar"}
-              </Button>
-            </Box>
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </Box>
 
-      <ExpansionPanel expanded={panelState.password} onChange={handlePanel('password')}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography className={classes.heading}>Senha</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div style={{ width: "100%" }}>
-            <Box>
-              <TextField
-                label="Nova Senha"
-                value={data.newPassword}
-                onChange={handleChange("newPassword")}
-                type="password"
-                placeholder="Insira sua nova senha"
-                color="secondary"
-                margin='normal'
-                variant="outlined"
-                fullWidth
-              />
-            </Box>
-            <Box>
-              <TextField
-                label="Confirmar nova senha"
-                value={data.confirmNewPassword}
-                onChange={handleChange("confirmNewPassword")}
-                type="password"
-                placeholder="Confirme sua nova senha"
-                color="secondary"
-                margin='normal'
-                variant="outlined"
-                fullWidth
-              />
-            </Box>
-            <Box>
-              <TextField
-                label="E-mail"
-                value={data.currentPassword}
-                onChange={handleChange("currentPassword")}
-                type="password"
-                placeholder="Digite sua senha atual"
-                color="secondary"
-                margin='normal'
-                variant="outlined"
-                fullWidth
-              />
-            </Box>
-            <Box mt={2}>
-              <Button
-                color="secondary"
-                onClick={() => updatePassword(data.currentPassword, data.newPassword)}
-                variant="contained"
-                disabled={auth.loading}
-                startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
-                disableElevation
-              >
-                {auth.loading ? "Salvando" : "Salvar"}
-              </Button>
-            </Box>
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </>
+        <ExpansionPanel expanded={panelState.username} onChange={handlePanel('username')}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <Typography className={classes.heading}>Nome de Usuário</Typography>
+            <Typography className={classes.secondaryHeading}>@{auth.user.username}</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div style={{ width: "100%" }}>
+              <Box>
+                <TextField
+                  label="Nome de Usuário"
+                  value={data.username}
+                  onChange={handleChange("username")}
+                  placeholder="Insira seu novo nome de usuário"
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box mt={2}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  disabled={auth.loading || data.username === auth.user.username}
+                  startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
+                  disableElevation
+                  onClick={() => updateUsername(data.username)}
+                >
+                  {auth.loading ? "Salvando" : "Salvar"}
+                </Button>
+              </Box>
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel expanded={panelState.email} onChange={handlePanel('email')}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2bh-content"
+            id="panel2bh-header"
+          >
+            <Typography className={classes.heading}>E-mail</Typography>
+            <Typography className={classes.secondaryHeading}>
+              {auth.user.email}
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div style={{ width: "100%" }}>
+              <Box>
+                <TextField
+                  label="E-mail"
+                  value={data.email}
+                  onChange={handleChange("email")}
+                  type="email"
+                  placeholder="Insira seu novo e-mail"
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box mt={2}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  disabled={auth.loading || data.email === auth.user.email}
+                  startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
+                  disableElevation
+                  onClick={() => updateEmail(data.email)}
+                >
+                  {auth.loading ? "Salvando" : "Salvar"}
+                </Button>
+              </Box>
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel expanded={panelState.password} onChange={handlePanel('password')}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3bh-content"
+            id="panel3bh-header"
+          >
+            <Typography className={classes.heading}>Senha</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div style={{ width: "100%" }}>
+              <Box>
+                <TextField
+                  label="Nova Senha"
+                  value={data.newPassword}
+                  onChange={handleChange("newPassword")}
+                  type="password"
+                  placeholder="Insira sua nova senha"
+                  color="secondary"
+                  margin='normal'
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box>
+                <TextField
+                  label="Confirmar nova senha"
+                  value={data.confirmNewPassword}
+                  onChange={handleChange("confirmNewPassword")}
+                  type="password"
+                  placeholder="Confirme sua nova senha"
+                  color="secondary"
+                  margin='normal'
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box>
+                <TextField
+                  label="E-mail"
+                  value={data.currentPassword}
+                  onChange={handleChange("currentPassword")}
+                  type="password"
+                  placeholder="Digite sua senha atual"
+                  color="secondary"
+                  margin='normal'
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box mt={2}>
+                <Button
+                  color="secondary"
+                  onClick={() => updatePassword(data.currentPassword, data.newPassword)}
+                  variant="contained"
+                  disabled={auth.loading}
+                  startIcon={auth.loading ? <CircularProgress color="secondary" size={20} /> : <EditIcon />}
+                  disableElevation
+                >
+                  {auth.loading ? "Salvando" : "Salvar"}
+                </Button>
+              </Box>
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        
+      </Box>
+    </Container>
   );
 };
 

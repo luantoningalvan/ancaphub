@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // Material Components
 import {
+  Container,
   Grid,
   Box,
   Typography,
@@ -118,6 +119,8 @@ function Profile({ getUser, auth, user, match}) {
   }
 
   return (
+    <Container>
+      <Box mt={2}>
       <LoadContent loading={user.loading}>
         {user.user === null ? (
           <UnavaliableContent />
@@ -261,6 +264,8 @@ function Profile({ getUser, auth, user, match}) {
             </>
           )}
       </LoadContent>
+      </Box>
+    </Container>
   );
 }
 

@@ -21,16 +21,12 @@ const useStyles = makeStyles(theme => ({
   contentWithoutSidebar: {
     width: '100%',
   },
-  padding: {
-    padding: theme.spacing(3)
-  },
   warning: {
     background: theme.palette.secondary.main,
     color: '#333',
     display: 'flex',
     alignItems: "center",
     justifyContent: "space-between",
-    padding: theme.spacing(1.5),
     marginBottom: theme.spacing(2)
   }
 }));
@@ -41,7 +37,6 @@ export default function Main(props) {
   return (
     <main
       className={clsx({
-        [classes.padding]: !props.noPadding,
         [classes.content]: props.open,
         [classes.contentWithoutSidebar]: !props.open,
       })}>

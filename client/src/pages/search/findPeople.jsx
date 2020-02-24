@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Container,
   Box,
   Grid,
   Paper,
@@ -49,7 +50,7 @@ const PrettoSlider = withStyles(theme => ({
   }
 }))(Slider);
 
-function FindPeople({auth, users, searchUsers, setLastLocation}) {
+function FindPeople({ auth, users, searchUsers, setLastLocation }) {
   const [radius, setRadius] = useState(50);
 
   useEffect(() => {
@@ -70,95 +71,97 @@ function FindPeople({auth, users, searchUsers, setLastLocation}) {
   }
 
   return (
-    <>
-      <Title title="Encontrar Pessoas Próximas" />
-      {auth.user.geoLocation ? (
-        <Box>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={2}>
-            <Typography variant="h4" component="h2">
-              Pessoas Próximas
+    <Container>
+      <Box mt={2}>
+        <Title title="Encontrar Pessoas Próximas" />
+        {auth.user.geoLocation ? (
+          <Box>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              mb={2}>
+              <Typography variant="h4" component="h2">
+                Pessoas Próximas
             </Typography>
-            <IconButton
-              component={Link}
-              onClick={() => updateLocation()}
-              variant="outlined"
-              color="primary">
-              <RefreshIcon />
-            </IconButton>
-          </Box>
-          <Paper>
-            <Box mb={3} p={2} display="flex" justifyContent="space-between">
-              <Typography component="span" style={{ lineHeight: '1.8' }}>
-                Raio de Pesquisa (km)
-              </Typography>
-              <PrettoSlider
-                valueLabelDisplay="auto"
-                defaultValue={50}
-                step={10}
-                max={300}
-                onChangeCommitted={(e, v) => setRadius(v)}
-              />
+              <IconButton
+                component={Link}
+                onClick={() => updateLocation()}
+                variant="outlined"
+                color="primary">
+                <RefreshIcon />
+              </IconButton>
             </Box>
-          </Paper>
-
-          {!isEmpty(users.allUsers) ? (
-            <Box>
-              <Typography
-                style={{ marginBottom: '16px' }}
-                variant="body2"
-                component="p">
-                Resultados com base na última localização sua e dos demais
-                usuários com o recurso de localização ativado e que correspondam
-                ao raio especificado.
+            <Paper>
+              <Box mb={3} p={2} display="flex" justifyContent="space-between">
+                <Typography component="span" style={{ lineHeight: '1.8' }}>
+                  Raio de Pesquisa (km)
               </Typography>
-
-              <Grid container spacing={2}>
-                {users.allUsers.map(user => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={user._id}>
-                    <UserCard user={user} />
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          ) : (
-              <Paper>
-                <Box p={2}>
-                  Nenhum usuário próximo a você com localização ativida
-                  encontrado.
+                <PrettoSlider
+                  valueLabelDisplay="auto"
+                  defaultValue={50}
+                  step={10}
+                  max={300}
+                  onChangeCommitted={(e, v) => setRadius(v)}
+                />
               </Box>
-              </Paper>
-            )}
-        </Box>
-      ) : (
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            height="100%">
-            <Typography
-              variant="body1"
-              gutterBottom
-              style={{ textAlign: 'center' }}>
-              <strong>
-                Para utilizar este recurso é necessário habilitá-lo.
-            </strong>
-              <br />
-              Após habilitá-lo, sempre que acessar esta págia sua localização será
-              pública e estará disponível para outros usuários.
-            <br />É possível desabilitar o recurso quando quiser na página de
-                                                    configurações.
-          </Typography>
-            <Button variant="outlined" onClick={() => updateLocation()}>
-              Habilitar e Obter Localização
-          </Button>
+            </Paper>
+
+            {!isEmpty(users.allUsers) ? (
+              <Box>
+                <Typography
+                  style={{ marginBottom: '16px' }}
+                  variant="body2"
+                  component="p">
+                  Resultados com base na última localização sua e dos demais
+                  usuários com o recurso de localização ativado e que correspondam
+                  ao raio especificado.
+              </Typography>
+
+                <Grid container spacing={2}>
+                  {users.allUsers.map(user => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={user._id}>
+                      <UserCard user={user} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            ) : (
+                <Paper>
+                  <Box p={2}>
+                    Nenhum usuário próximo a você com localização ativida
+                    encontrado.
+              </Box>
+                </Paper>
+              )}
           </Box>
-        )}
-    </>
+        ) : (
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              height="100%">
+              <Typography
+                variant="body1"
+                gutterBottom
+                style={{ textAlign: 'center' }}>
+                <strong>
+                  Para utilizar este recurso é necessário habilitá-lo.
+            </strong>
+                <br />
+                Após habilitá-lo, sempre que acessar esta págia sua localização será
+                pública e estará disponível para outros usuários.
+            <br />É possível desabilitar o recurso quando quiser na página de
+                                                        configurações.
+          </Typography>
+              <Button variant="outlined" onClick={() => updateLocation()}>
+                Habilitar e Obter Localização
+          </Button>
+            </Box>
+          )}
+      </Box>
+    </Container>
   );
 }
 const mapStateToProps = state => ({ auth: state.auth, users: state.users });

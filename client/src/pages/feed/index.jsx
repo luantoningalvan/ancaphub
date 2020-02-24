@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Container,
   Box,
   Grid,
   Button,
@@ -35,7 +36,8 @@ const {loading: authLoading, isAuthenticated} = auth
   }
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title />
       <Grid container spacing={4}>
         <Grid item xs={12} sm={8}>
@@ -61,7 +63,8 @@ const {loading: authLoading, isAuthenticated} = auth
           </Hidden>
         </Grid>
       </Grid>
-    </>
+      </Box>
+    </Container>
   );
 }
 

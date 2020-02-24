@@ -1,12 +1,14 @@
 import React from 'react';
 import {
   Box,
-  Typography
+  Typography,
+  Container
 } from '@material-ui/core';
 import Title from '../../components/template/titleComponent'
 
 export default props => (
-  <>
+  <Container>
+    <Box mt={2}>
     <Title title="Grupos" />
     <Box mb={3}>
       <Typography variant="h4" component="h2">
@@ -16,5 +18,6 @@ export default props => (
         Esta página está em construção.
       </Typography>
     </Box>
-  </>
+    </Box>
+  </Container>
 );

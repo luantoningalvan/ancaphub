@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+  Container,
   Box,
   Typography,
   Table,
@@ -50,7 +51,8 @@ const Contributions = ({auth, getContributions}) => {
   const {contributions} = auth.user
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Painel de Contribuições" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -87,7 +89,8 @@ const Contributions = ({auth, getContributions}) => {
         )}
         </LoadContent>
       </Paper>
-    </>
+    </Box>
+    </Container>
   );
 };
 

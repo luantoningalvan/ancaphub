@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+  Container,
   Box,
   Typography,
   Tabs,
@@ -34,7 +35,8 @@ const SearchResults = ({searchTerm, search}) => {
   }, [term, searchTerm])
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Box mb={3}>
         <Typography variant="h4" component="h2" noWrap>
           Resultados para: {term}
@@ -79,7 +81,8 @@ const SearchResults = ({searchTerm, search}) => {
             </Paper>
           )}
       </LoadContent>
-    </>
+      </Box>
+    </Container>
   )
 };
 

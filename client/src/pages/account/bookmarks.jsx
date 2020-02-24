@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+  Container,
   Box,
   Paper,
   Grid,
@@ -19,7 +20,8 @@ const Bookmarks = ({bookmarks, getBookmarks}) => {
   useEffect(() => getBookmarks(), [getBookmarks]);
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Itens Salvos" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -48,7 +50,8 @@ const Bookmarks = ({bookmarks, getBookmarks}) => {
           )}
       </Grid>
       </LoadContent>
-    </>
+      </Box>
+    </Container>
   );
 };
 
