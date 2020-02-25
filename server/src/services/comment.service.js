@@ -17,7 +17,7 @@ const removeComment = async (postId, commentId, userId) => {
   try {
     const post = await Post.findOneAndUpdate(
       {_id: postId, "comments._id": commentId, "comments.user": userId},
-      { $pull: { comments: { _id: commentId}}},
+      { $pull: { comments: { _id: commentId}}}
     )
     if (!post) throw new Error('Este comentário não existe ou não percence a você.')
 
