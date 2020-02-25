@@ -59,13 +59,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ChooseCategory({ field, form, fetchAllCategories, ...props }) {
+function ChooseCategory({ field, form, fetchAllCategories, categories }) {
   const classes = useStyles();
   useEffect(() => {
     fetchAllCategories();
   }, [fetchAllCategories]);
 
-  const mapAllCategories = props.categories.allCategories.map(category => ({
+  const mapAllCategories = categories.allCategories.map(category => ({
     value: category._id,
     label: category.name
   }));
@@ -85,9 +85,9 @@ function ChooseCategory({ field, form, fetchAllCategories, ...props }) {
 
   async function handleCreate(inputValue) {
     axios
-      .post('http://localhost:3000/api/categories', { name: inputValue })
+      .post('/api/categories', { name: inputValue })
       .then(function(categoryAdded) {
-        props.fetchAllCategories();
+        fetchAllCategories();
         const newOption = {
           name: categoryAdded.data.name,
           category: categoryAdded.data._id
@@ -115,7 +115,7 @@ function ChooseCategory({ field, form, fetchAllCategories, ...props }) {
       value={mapSelectedCategories}
       onChange={handleChangeMulti}
       onCreateOption={handleCreate}
-      isLoading={props.categories.isLoading}
+      isLoading={categories.isLoading}
       isMulti
     />
   );
