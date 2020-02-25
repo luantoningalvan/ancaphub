@@ -57,7 +57,7 @@ function ImageUpload({ field, form, ...props }) {
   }
 
   useEffect(() => {
-    if (field.value != "") {
+    if (field.value != null) {
       getFiles(field.value)
     }
   }, [])
