@@ -34,7 +34,6 @@ function SignInForm(props) {
       .required('O campo e-mail é obrigatório!'),
     password: Yup.string().required('O campo senha é obrigatório!')
   });
-  console.log(props);
   return (
     <React.Fragment>
       <Formik

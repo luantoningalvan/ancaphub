@@ -109,7 +109,7 @@ function Profile({ getUser, auth, user, match}) {
         case '/:id/contributions':
           return <UserContributions user={user.user} />;
         default:
-          console.log(match.path);
+          return <p>URL INCORRETA</p>
       }
     } else {
       return (

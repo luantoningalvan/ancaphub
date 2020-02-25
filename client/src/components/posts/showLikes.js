@@ -7,7 +7,6 @@ import { Dialog } from '@material-ui/core'
 export default ({ open, post, closeFunc }) => {
   useEffect(() => {
     if(open) {
-      console.log("Hello")
     }
   }, [open])
 

@@ -14,7 +14,6 @@ const insertComment = async (postId, data) => {
 }
 
 const removeComment = async (postId, commentId, userId) => {
-  console.log(postId, commentId, userId)
   try {
     const post = await Post.findOneAndUpdate(
       {_id: postId, "comments._id": commentId, "comments.user": userId},

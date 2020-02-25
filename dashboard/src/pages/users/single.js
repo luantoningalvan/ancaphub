@@ -22,7 +22,7 @@ function SingleUser({ fetchUser, users, match }) {
   useEffect(() => fetchUser(userId), [fetchUser, userId]);
 
   const verifyUser = () => {
-    console.log("");
+    return true
   };
 
   return (

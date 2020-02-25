@@ -37,7 +37,7 @@ function Books({fetchAllItems, fetchAllCategories, books, categories}) {
       <Title title="Livros" />
       <Box pt={2} pb={5} style={{background: "rgba(0, 0, 0, 0.05)"}}>
         <Container>
-          <Box mb={3} display="flex" justifyContent="space-between">
+          <Box mb={4} display="flex" justifyContent="space-between">
             <Typography variant="h4" component="h2">
               Livros
             </Typography>

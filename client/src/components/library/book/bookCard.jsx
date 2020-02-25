@@ -1,124 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Typography,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@material-ui/core';
-import {
-  Book as BookIcon,
-  CloudDownload as DownloadIcon
-} from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import isEmpty from 'is-empty'
-import filesize from 'filesize'
-import querystring from 'querystring'
-import axios from '../../../services/api'
+import React from 'react';
+import { Book as BookIcon } from '@material-ui/icons';
+import { Link as RouterLink } from 'react-router-dom';
 import defaultThumbnail from '../../../assets/images/default-thumbnail.jpg'
 import AddToLibrary from '../addToLibrary';
 import AddBookmark from '../addBookmark';
+import styled from 'styled-components'
 
-const useStyles = makeStyles(theme => ({
-  media: {
-    height: 200
-  },
-  type: {
-    margin: theme.spacing(1),
-    borderRadius: '5px',
-    color: 'white'
+const CardCover = styled.div`
+  width: 100%;
+  border-radius: 16px;
+  height: 280px;
+  background: url("${props => props.cover}");
+  background-position:center;
+  background-size: cover;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  position:relative;
+  transition: opacity 0.4s ease;
+
+  > .card-buttons {
+    display:none
+  };
+
+  &::before {
+    transition: opacity 0.4s ease;
+    opacity: 0
+  };
+  
+  &:hover {
+    background-size: scale(1.1);
+
+    > .card-buttons {
+      display:block
+    }
+
+    &::before {
+      width:100%;
+      height:280px;
+      background: linear-gradient(to bottom, rgba(0,0,0,.4) 0%,rgba(0,0,0,1) 100%);
+      content: "";
+      position:absolute;
+      opacity: 0.7;
+      border-radius: 16px;
   }
-}));
+}
+`
+
+const Link = styled(RouterLink)`
+  color: rgba(0,0,0,0.6);
+  text-decoration: none;  
+`
+
+const CardTitle = styled.h2`
+  margin: 10px 0px 0px;
+  padding:0px,
+  font-size:1em
+`
+const CardSubtitle = styled.h3`
+  font-weight: lighter;
+  margin:0
+`
+
+const CardType = styled.span`
+  position:absolute;
+  top: -10px;
+  background: #fb0;
+  color:white;
+  padding:5px;
+  border-radius:5px;
+  line-height:100%;
+  left: 10px;
+  font-size:10px
+`
+
 
 export default function BookCard(props) {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [files, setFiles] = useState([]);
-
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleClose() {
-    setAnchorEl(null);
-  }
-
   const { book } = props;
-  const { _id, cover, title, author, extraFields, hasSaved, inLibrary} = book
-
-  useEffect(() => {
-    if (extraFields && extraFields.downloadOptions) {
-      axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(extraFields.downloadOptions) })}`)
-      .then(result =>
-        setFiles(result.data.map(file => ({
-          id: file._id,
-          name: file.originalname,
-          readableSize: filesize(file.size),
-          url: file.url,
-        })))
-      )
-    }
-  }, [extraFields])
+  const { _id, cover, title, author, hasSaved, inLibrary } = book
 
   return (
-    <Card>
-      <CardActionArea component={Link} to={`/books/${_id}`}>
-        <CardMedia
-          className={classes.media}
-          image={cover ? cover.url : defaultThumbnail}
-          title={`Capa do livro ${title}`}>
-          <BookIcon className={classes.type} />
-        </CardMedia>
-        <CardContent>
-          <Typography variant="h6" component="h2" noWrap style={{ fontWeight: 'bold' }}>
-            {title}
-          </Typography>
-          <Typography variant="subtitle1">{author}</Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div>
-          <AddToLibrary item={{_id, inLibrary, location: props.location}} />
-          <AddBookmark item={{_id, hasSaved, location: props.location}}  />
-        </div>
-        {files && !isEmpty(files) && (
-          <>
-            <IconButton size="small" color="secondary" onClick={handleClick}>
-              <DownloadIcon />
-            </IconButton>
-            <Menu
-              id={`menubook-${_id}`}
-              getContentAnchorEl={null}
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'center'
-              }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'center'
-              }}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}>
-              {files.map(download => (
-                <MenuItem
-                  component="a"
-                  key={`${_id} ${download.name}`}
-                  href={download.url}
-                  target="_blank">
-                  {download.name}
-                </MenuItem>
-              ))}
-            </Menu>
-          </>
-        )}
-      </CardActions>
-    </Card>
+    <div>
+      <Link to={`/books/${_id}`}>
+        <CardCover cover={cover ? cover.url : defaultThumbnail}>
+          <CardType><BookIcon /></CardType>
+          <div class="card-buttons">
+          <AddToLibrary item={{ _id, inLibrary, location: props.location }} />
+          <AddBookmark item={{ _id, hasSaved, location: props.location }} />
+          </div>
+        </CardCover>
+      </Link>
+
+        <Link to={`/books/${_id}`}>
+          <CardTitle>
+          {title}
+          </CardTitle>
+        </Link>
+
+      <CardSubtitle variant="subtitle1">{author}</CardSubtitle>
+    </div>
   );
 }

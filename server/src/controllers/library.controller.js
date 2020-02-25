@@ -162,7 +162,6 @@ const addToLibrary = async (req, res, next) => {
 
   try {
     const result = await addItemToLibrary(user, item)
-    console.log(result)
     if (post) {
       const cover = result.cover !== "" ? await getFile(result.cover) : null
 

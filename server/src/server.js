@@ -17,7 +17,6 @@ server.get('/', (req,res) => res.send("Bem vindo a API 1.0 do AncapHub"))
 server.use("/api", routes)
 
 server.use(function(err, req, res, next) {
-  console.log("Erro:", err.message)
   res.status(500).json({ message: err.message});
 });
 

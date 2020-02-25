@@ -32,7 +32,6 @@ const useStyles = makeStyles({
 const Home = props => {
   const [value, setValue] = useState(0);
   const classes = useStyles()
-  console.log(value)
   function handleChange(event, newValue) {
     setValue(newValue);
   }
