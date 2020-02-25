@@ -27,6 +27,23 @@ const removeComment = async (postId, commentId, userId) => {
   }
 }
 
+const editComment = async (postId, commentId, userId, data) => {
+  try {
+    const post = await Post.findOneAndUpdate(
+      {_id: postId, "comments._id": commentId, "comments.user": userId},
+      { '$set': {'comments.$.content': data}},
+      { new: true }
+    )
+    if (!post) throw new Error('Este comentário não existe.')
+
+    return await post
+    .populate("comments.user", "_id name username avatar isVerified")
+    .execPopulate()
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
 const likeComment = async (postId, commentId, userId) => {
   try {
     const post = await Post.findById(postId);
@@ -53,4 +70,4 @@ const likeComment = async (postId, commentId, userId) => {
   }
 }
 
-module.exports = { insertComment, removeComment, likeComment };
+module.exports = { insertComment, removeComment, editComment, likeComment };
