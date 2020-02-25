@@ -125,7 +125,7 @@ function Header(props) {
           color="inherit">
           {props.user.avatar && props.user.avatar !== '' ? (
             <Avatar
-              src={`http://localhost:3000/public/uploads/${props.user.avatar}`}
+              src={props.user.avatar}
               alt={props.user.name}
               style={{ width: '40px', height: '40px' }}
             />
