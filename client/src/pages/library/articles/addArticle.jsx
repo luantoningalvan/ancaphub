@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Container,
   Typography,
   Grid,
   TextField,
@@ -34,7 +35,8 @@ function AddArticle(props) {
   };
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Adicionar Artigo" />
       <Box mb={3}>
         <Typography variant="h4" component="h2">
@@ -140,7 +142,8 @@ function AddArticle(props) {
           );
         }}
       />
-    </>
+    </Box>
+    </Container>
   );
 }
 

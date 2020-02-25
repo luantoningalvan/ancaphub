@@ -1,50 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Typography,
-  Grid,
   Paper,
   Box,
-  Button
+  Button,
+  Container
 } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import isEmpty from 'is-empty';
 import Title from '../../../components/template/titleComponent'
 import BookCard from '../../../components/library/book/bookCard';
-import Filter from '../../../components/library/filter';
 import LoadContent from '../../../components/loaders/loadContent'
+import ShowCategories from '../../../components/categories/showElementCategories'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { fetchAllItems } from '../../../actions/itemActions';
+import { fetchAllCategories } from '../../../actions/categoryAction';
+import styled from 'styled-components';
 
-function Books(props) {
-  const { books } = props;
+const Grid = styled.div`
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 30px 20px;
+`
+
+function Books({fetchAllItems, fetchAllCategories, books, categories}) {
+  useEffect(() => {
+    fetchAllItems({type: "book"})
+    fetchAllCategories()
+  }, [fetchAllItems, fetchAllCategories])
+
 
   return (
     <>
-      <Box display="flex" flexDirection="column" height="100%">
-        <Title title="Livros" />
-        <Box mb={3} display="flex" justifyContent="space-between">
-          <Typography variant="h4" component="h2">
-            Livros
-          </Typography>
-          <Button
-            component={Link}
-            to="/contribute/book"
-            variant="outlined"
-            color="secondary">
-            <AddIcon style={{ marginRight: '10px' }} />
-            Contribuir
-          </Button>
-        </Box>
+      <Title title="Livros" />
+      <Box pt={2} pb={5} style={{background: "rgba(0, 0, 0, 0.05)"}}>
+        <Container>
+          <Box mb={3} display="flex" justifyContent="space-between">
+            <Typography variant="h4" component="h2">
+              Livros
+            </Typography>
+              <Button
+                component={Link}
+                to="/contribute/book"
+                variant="contained"
+                disableElevation
+                size="small"
+                color="secondary">
+                <AddIcon />
+              </Button>
+          </Box>
+          <Box mb={3} display="flex" justifyContent="center">
 
-        <Filter type="book" />
+          <LoadContent loading={categories.loading}>
+           <ShowCategories categories={categories.allCategories} />
+          </LoadContent>
+          </Box>
+        </Container>
+      </Box>
 
+
+      <Container style={{marginTop: -28}}>
         <LoadContent loading={books.loading}>
           {!isEmpty(books.allItems.items) ? (
-            <Grid container spacing={2}>
+            <Grid>
               {books.allItems.items.map((book, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                  <BookCard book={book} user={props.user} />
-                </Grid>
+                <>
+                  <BookCard book={book} key={index} />
+                  </>
               ))}
             </Grid>
           ) : (
@@ -55,13 +79,14 @@ function Books(props) {
               </Paper>
             )}
         </LoadContent>
-      </Box>
+      </Container>
     </>
   );
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({fetchAllItems, fetchAllCategories}, dispatch)
 const mapStateToProps = state => ({
   books: state.items,
-  user: state.auth.user
+  categories: state.categories
 });
-export default connect(mapStateToProps)(Books);
+export default connect(mapStateToProps, mapDispatchToProps)(Books);

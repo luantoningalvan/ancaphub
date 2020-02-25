@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Container,
   Typography,
   Button,
   Grid,
@@ -36,7 +37,8 @@ function AddBook(props) {
   };
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Adicionar Livro" />
 
       <Box mb={3}>
@@ -172,7 +174,8 @@ function AddBook(props) {
           );
         }}
       />
-    </>
+    </Box>
+    </Container>
   );
 }
 

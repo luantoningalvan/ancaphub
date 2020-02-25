@@ -1,5 +1,6 @@
 import React from 'react';
 import { Chip, Box } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 import isEmpty from 'is-empty';
 
 function Categories(props) {
@@ -11,8 +12,11 @@ function Categories(props) {
             <Chip
               key={cat._id}
               label={cat.name}
-              variant="outlined"
-              color="secondary"
+              component={Link}
+              clickable
+              to={`/categories/${cat._id}`}
+              variant="default"
+              color="primary"
               style={{ marginRight: '8px' }}
             />
           ))}

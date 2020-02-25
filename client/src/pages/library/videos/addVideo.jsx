@@ -4,7 +4,8 @@ import {
   Grid,
   TextField,
   Box,
-  Button
+  Button,
+  Container
 } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import ReactPlayer from 'react-player';
@@ -35,7 +36,8 @@ function AddVideo(props) {
   };
 
   return (
-    <>
+    <Container>
+      <Box mt={2}>
       <Title title="Adicionar Vídeo" />
 
       <Box mb={3}>
@@ -176,7 +178,8 @@ function AddVideo(props) {
           );
         }}
       />
-    </>
+    </Box>
+    </Container>
   );
 }
 
