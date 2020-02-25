@@ -7,11 +7,20 @@ import {stateToHTML} from 'draft-js-export-html';
 import parser from 'html-react-parser'
 
 export default ({ post }) => {
-  const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(post.content)));
+
+  try {
+    const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(post.content)));
   
-  return (
-    <Typography variant="body1">
-    {parser(stateToHTML(editorState.getCurrentContent()))}
-    </Typography>  
-  )
+    return (
+      <Typography variant="body1">
+      {parser(stateToHTML(editorState.getCurrentContent()))}
+      </Typography>  
+    )
+  } catch (error) {
+    return (
+      <Typography variant="body1">
+      {post.content}
+      </Typography>  
+    )
+  }
 }
