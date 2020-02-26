@@ -43,7 +43,7 @@ function ImageUpload({ field, form, ...props }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const getFiles = async (files) => {
-    await axios.get(`/api/upload?${querystring.stringify({ 'files': JSON.stringify(files) })}`)
+    await axios.get(`/api/files?${querystring.stringify({ 'files': JSON.stringify(files) })}`)
       .then(result =>
         setUploadedFiles(result.data.map(file => ({
           id: file._id,
