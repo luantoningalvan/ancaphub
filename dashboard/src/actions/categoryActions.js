@@ -43,6 +43,19 @@ export const editCategory = data => {
   }
 }
 
+export const deleteCategory = category => {
+  return dispatch => {
+    axios
+    .delete(`/api/categories/${category}`)
+    .then(category => {
+      dispatch({ type: types.DELETE_CATEGORY_SUCCESS, payload: { _id: category } })
+    })
+    .catch(function(error) {
+      dispatch({ type: types.DELETE_CATEGORY_FAILURE });
+    });
+  }
+}
+
 export function setCategoriesLoading() {
   return {
     type: types.LOADING_CATEGORIES
