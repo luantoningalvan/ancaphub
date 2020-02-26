@@ -1,7 +1,7 @@
 const { categoryService } = require('../services')
 const { getManyCategories, getCategory, insertCategory, updateCategory } = categoryService
 
-const getAll = async (req, res) => {
+const getAll = async (req, res, next) => {
   try {
     const result = await getManyCategories()
     res.send(result);
@@ -11,7 +11,7 @@ const getAll = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+const get = async (req, res, next) => {
   const id = req.params.id
 
   try {
@@ -23,7 +23,7 @@ const get = async (req, res) => {
   }
 };
 
-const insert = async (req, res) => {
+const insert = async (req, res, next) => {
   const data = req.body
 
   try {
@@ -35,7 +35,7 @@ const insert = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   const id = req.params.id
   const data = req.body
 
