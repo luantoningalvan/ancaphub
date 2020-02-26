@@ -18,7 +18,9 @@ const PostSchema = new Schema({
   },
   extraFields: Object,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  likes: [],
+  likes: [
+    {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  ],
   comments: [CommentSchema]
 }, { timestamps: true })
 

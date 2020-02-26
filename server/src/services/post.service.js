@@ -28,10 +28,12 @@ const getPost = async (postId, auth) => {
   try {
     const post = await Post
     .findById(postId)
-    .populate({path: "comments", populate: { path: "user"}}, "_id name username avatar isVerified")
+    .populate(["likes"])
+
+    const likes = post.likes.filter((like) => like._id)
     return auth ? { 
       ...post._doc, 
-      hasLiked: post.likes.includes(auth.id),
+      hasLiked: likes.includes(auth.id),
       likeCount: post.likes.length
     } : post
   } catch (e) {

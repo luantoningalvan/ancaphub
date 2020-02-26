@@ -118,7 +118,7 @@ function ActivityCard({ post, authUser, deletePost, updateLikes }) {
 
   return (
     <Box mb={2}>
-      <ShowLikes post={_id} open={showLikesState} closeFunc={handleShowLikes}/>
+      <ShowLikes postId={_id} open={showLikesState} closeFunc={handleShowLikes}/>
       <Card elevation={0}>
         <CardHeader
           avatar={

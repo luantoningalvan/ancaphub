@@ -2,7 +2,7 @@ import types from '../actions/_types'
 
 const INITIAL_STATE = {
   posts: [],
-  loading: true
+  loading: true,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -13,6 +13,17 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: true
+      }
+    case types.LOAD_SINGLE_POST:
+      return {
+        ...state,
+        loadingLike: true,
+      }
+    case types.LOAD_SINGLE_POST_SUCCESS:
+      return {
+        ...state,
+        loadingLike: false,
+        post: payload
       }
     case types.LOAD_PUBLIC_POSTS_SUCCESS:
     case types.LOAD_USER_FEED_SUCCESS:

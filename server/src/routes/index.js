@@ -64,6 +64,7 @@ router.put('/notifications/markallasread', auth, Notification.markAllAsRead)
 // Post
 router.get('/posts/auth/feed', auth, Post.getUserFeed)
 router.get('/posts/user/:id', auth, Post.getUserPosts)
+router.get('/posts/:id', auth, Post.getPostById)
 router.post('/posts', auth, Post.insert)
 router.delete('/posts/:id', auth, Post.remove)
 router.post('/posts/:id/like', auth, Post.like)
