@@ -70,7 +70,7 @@ const insert = async (req, res, next) => {
       author,
       content,
       cover,
-      categories,
+      categories: categories.map(category => category.category),
       status: 'pending',
       user: req.user.id,
       type,
@@ -87,7 +87,7 @@ const insert = async (req, res, next) => {
 }
 
 const update = async (req, res, next) => {
-  const { title, author, content, cover, categories } = req.body;
+  const { title, author, content, cover, categories, downloadOptions, videoUrl } = req.body;
   const { id } = req.params
 
   try {
@@ -96,7 +96,7 @@ const update = async (req, res, next) => {
       author,
       content,
       cover,
-      categories,
+      categories: categories.map(category => category.category),
       downloadOptions,
       videoUrl
     };
