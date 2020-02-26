@@ -42,6 +42,7 @@ const getItem = async (id, config) => {
     if(config.populate){
       return await Item.findById(id)
       .populate('user', 'name username avatar _id isVerified')
+      .populate('categories')
       .populate('cover');
     } else {
       return await Item.findById(id)
@@ -75,19 +76,31 @@ const insertItem = async (data) => {
 
 const updateItem = async (id, data) => {
   try {
-    let extraFields = {}
+    const item = await Item.findById(id)
 
-    switch (data.type) {
+    let extraFields = {}
+    switch (item.type) {
       case "book":
         extraFields = { downloadOptions: data.downloadOptions }
+        break
       case "video":
         extraFields = { videoUrl: data.videoUrl }
+        break
       default:
         extraFields
     }
 
-    const updatedItem = { ...data, extraFields };
-    return await Item.findByIdAndUpdate(id, updatedItem);
+    item.updateOne({ ...data, extraFields })
+    return await item.save()
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+const updateManyItems = async(filter,query) => {
+  try {
+    const items = await Item.updateMany(filter, query)
+    return items.save()
   } catch (e) {
     throw new Error(e.message)
   }
@@ -172,4 +185,4 @@ const addItemToLibrary = async (userId, itemId) => {
   }
 }
 
-module.exports = { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, saveItem, addItemToLibrary }
+module.exports = { getManyItems, getItem, insertItem, updateItem, updateManyItems, removeItem, approveItem, getAuthContributedItems, saveItem, addItemToLibrary }

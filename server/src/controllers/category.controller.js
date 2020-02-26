@@ -1,5 +1,5 @@
 const { categoryService } = require('../services')
-const { getManyCategories, getCategory, insertCategory, updateCategory } = categoryService
+const { getManyCategories, getCategory, insertCategory, updateCategory, removeCategory } = categoryService
 
 const getAll = async (req, res, next) => {
   try {
@@ -48,4 +48,16 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, get, insert, update }
+const remove = async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const result = await deleteCategory(id);
+    res.send(result)
+    next()
+  } catch (e) {
+    next(e)
+  }
+};
+
+module.exports = { getAll, get, insert, update, remove }

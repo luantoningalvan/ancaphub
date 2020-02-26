@@ -1,4 +1,5 @@
 const Category = require('../models/CategoryModel');
+const { updateManyItems } = require('./library.service')
 
 const getManyCategories = async (filter) => {
   try {
@@ -39,4 +40,14 @@ const updateCategory = async (id, data) => {
   }
 };
 
-module.exports = { getManyCategories, getCategory, insertCategory, updateCategory }
+const removeCategory = async (id) => {
+  try {
+    await updateManyItems({ categories: id }, { $pull: { categories: id } })
+    const category = await Category.findByIdAndRemove(id)
+    return await category.save();
+  } catch (e) {
+    throw new Error(e.message)
+  }
+};
+
+module.exports = { getManyCategories, getCategory, insertCategory, updateCategory, removeCategory }

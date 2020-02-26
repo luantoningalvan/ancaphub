@@ -38,6 +38,7 @@ router.get('/categories', Category.getAll)
 router.get('/categories/:id', Category.get)
 router.post('/categories', auth, admin, Category.insert)
 router.put('/categories/:id', auth, admin, Category.update)
+router.delete('/categories/:id', auth, admin, Category.remove)
 
 // File
 router.get('/files', File.get)
