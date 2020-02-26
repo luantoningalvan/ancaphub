@@ -3,6 +3,8 @@ import {
   Close as CloseIcon
 } from '@material-ui/icons'
 import { Dialog } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+
 
 // Redux
 import { bindActionCreators } from 'redux';
@@ -11,7 +13,18 @@ import { loadSinglePost } from '../../actions/postActions';
 
 import LikeItem from './likeItem'
 
+const useStyles = makeStyles(theme => ({
+  list: {
+   padding: 20,
+   width: '30rem'
+  }
+}))
+
+
 function ShowLikes({ open, postId, closeFunc, post, loadSinglePost }){
+
+  const classes = useStyles()
+
   useEffect(() => {
     if(open) {
       loadPost()
@@ -29,9 +42,11 @@ function ShowLikes({ open, postId, closeFunc, post, loadSinglePost }){
     <>
       { open && !post.loadingLike && post.post ? (
         <Dialog open={open} onClose={closeFunc}>
-          {post.post.likes.map((like) =>(
-            <LikeItem data={like} key={like._id}/> 
-          ))}
+          <div className={classes.list}>
+            {post.post.likes.map((like) =>(
+              <LikeItem data={like} key={like._id}/> 
+            ))}
+          </div>
         </Dialog>
       ) : <></>}
     </>
