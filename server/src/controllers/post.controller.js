@@ -1,5 +1,5 @@
 const { postService, userService } = require('../services')
-const { getManyPosts, insertPost, removePost, likePost } = postService
+const { getManyPosts, insertPost, removePost, likePost, getPost } = postService
 const { getUser } = userService
 const verifyToken = require('../utils/verifyToken')
 
@@ -24,6 +24,18 @@ const getUserPosts = async (req, res, next) => {
   const auth = verifyToken(req)
   try {
     const result = await getManyPosts({filter: { user: id }}, auth)
+    res.send(result);
+    next()
+  } catch (e) {
+    next(e)
+  }
+};
+
+const getPostById = async (req, res, next) => {
+  const { id } = req.params
+  const auth = verifyToken(req)
+  try {
+    const result = await getPost(id, auth)
     res.send(result);
     next()
   } catch (e) {
@@ -70,4 +82,4 @@ const like = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserFeed, getUserPosts, insert, remove, like };
+module.exports = { getUserFeed, getUserPosts, getPostById, insert, remove, like };

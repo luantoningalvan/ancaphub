@@ -84,6 +84,23 @@ export function updateLikes(post) {
   };
 }
 
+export function loadSinglePost(post){
+  return dispatch => {
+    dispatch({ type: types.LOAD_SINGLE_POST })
+    axios
+      .get(`/api/posts/${post}`)
+      .then(result => {
+        dispatch({ type: types.LOAD_SINGLE_POST_SUCCESS, payload: result.data })
+      })
+      .catch(err => {
+        dispatch({
+          type: types.LOAD_SINGLE_POST_FAIL,
+          payload: err.response.data.message
+        })
+      })
+  }
+}
+
 export function addComment(post, content) {
   return dispatch => {
     axios

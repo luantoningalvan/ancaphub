@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function FollowButton(props) {
+function FollowButton({ fullWidth=true, ...props }) {
   const classes = useStyles()
 
   const followOrUnfollow = () => {
@@ -28,7 +28,7 @@ function FollowButton(props) {
         <Button
           variant={props.auth.user.following.includes(props.profile._id) ? 'contained' : 'outlined'}
           color="secondary"
-          fullWidth
+          fullWidth={fullWidth}
           classes={{ contained: classes.button }}
           onClick={() => followOrUnfollow()}>
           {props.auth.user.following.includes(props.profile._id)
@@ -38,7 +38,7 @@ function FollowButton(props) {
       );
     } else {
       return (
-        <Button fullWidth disabled>Você</Button>
+        <Button fullWidth={fullWidth} disabled>Você</Button>
       )
     }
 
