@@ -16,7 +16,7 @@ import LikeItem from './likeItem'
 const useStyles = makeStyles(theme => ({
   list: {
    padding: 20,
-   width: '30rem'
+   width: '35rem'
   }
 }))
 

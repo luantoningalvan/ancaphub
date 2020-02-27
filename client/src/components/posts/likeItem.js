@@ -6,11 +6,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { followUser, unfollowUser } from '../../actions/userActions';
 
+import ShowName from '../profile/showName'
 import FollowButton from '../profile/followButton'
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 }))
 
@@ -19,8 +22,8 @@ function LikeItem({ data, auth }) {
 
   return (
     <div className={classes.container}>
-      <h4>{data.username}</h4>
-      <FollowButton auth={auth} profile={data}/>
+      <ShowName user={data}/>
+      <FollowButton auth={auth} profile={data} fullWidth={false}/>
     </div>
   );
 }
