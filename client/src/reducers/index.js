@@ -1,13 +1,14 @@
-import alertReducers from './alertReducers';
-import itemReducers from './itemReducers';
-import authReducer from './authReducer';
-import userReducers from './userReducers';
-import postReducers from './postReducers';
-import notificationReducers from './notificationReducers'
-import templateReducers from './templateReducers'
-import categoryReducer from './categoryReducer';
-import searchReducer from './searchReducer';
-import { combineReducers } from 'redux';
+import alertReducers from "./alertReducers";
+import itemReducers from "./itemReducers";
+import authReducer from "./authReducer";
+import userReducers from "./userReducers";
+import postReducers from "./postReducers";
+import notificationReducers from "./notificationReducers";
+import templateReducers from "./templateReducers";
+import categoryReducer from "./categoryReducer";
+import searchReducer from "./searchReducer";
+import i18nReducer from "./i18nReducer";
+import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   alerts: alertReducers,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   posts: postReducers,
   notifications: notificationReducers,
   search: searchReducer,
-  template: templateReducers
+  template: templateReducers,
+  i18n: i18nReducer
 });
 
 export default rootReducer;
