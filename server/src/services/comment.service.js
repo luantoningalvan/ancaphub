@@ -1,10 +1,15 @@
 const Post = require('../models/PostModel');
+const Comment = require('../models/CommentModel');
 isEqual = require('lodash.isequal');
 
 const insertComment = async (postId, data) => {
   try {
-    const post = await Post.findByIdAndUpdate(postId, { $push: { comments: data } }, { new: true })
+    const post = await Post.findById(postId)
+    console.log(post)
     if (!post) throw new Error('Este post não existe.')
+    const comment = await Comment.create(data)
+    await post.comments.push(comment)
+    await post.save()
     return await post
     .populate("comments.user", "_id name username avatar isVerified")
     .execPopulate()
