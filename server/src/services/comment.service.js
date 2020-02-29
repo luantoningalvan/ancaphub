@@ -8,23 +8,20 @@ const insertComment = async (postId, data) => {
     console.log(post)
     if (!post) throw new Error('Este post não existe.')
     const comment = await Comment.create(data)
+    console.log(comment)
     await post.comments.push(comment)
     await post.save()
-    return await post
-    .populate("comments.user", "_id name username avatar isVerified")
-    .execPopulate()
+    return await comment
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
-const removeComment = async (postId, commentId, userId) => {
+const removeComment = async (commentId, userId) => {
   try {
-    const post = await Post.findOneAndUpdate(
-      {_id: postId, "comments._id": commentId, "comments.user": userId},
-      { $pull: { comments: { _id: commentId}}}
-    )
-    if (!post) throw new Error('Este comentário não existe ou não percence a você.')
+    const comment = await Comment.findById(commentId) 
+    if (!comment || comment.user !== userId) throw new Error('Este comentário não existe ou não percence a você.')
+    await Comment.findByIdAndRemove(commentId) 
 
     return true
   } catch (e) {
@@ -32,17 +29,17 @@ const removeComment = async (postId, commentId, userId) => {
   }
 }
 
-const editComment = async (postId, commentId, userId, data) => {
+const editComment = async (commentId, userId, data) => {
   try {
-    const post = await Post.findOneAndUpdate(
-      {_id: postId, "comments._id": commentId, "comments.user": userId},
-      { '$set': {'comments.$.content': data}},
-      { new: true }
-    )
-    if (!post) throw new Error('Este comentário não existe.')
-
-    return await post
-    .populate("comments.user", "_id name username avatar isVerified")
+    const oldComment = await Comment.findById(commentId)
+    if (!oldComment || oldComment.user != userId) throw new Error('Este comentário não existe ou não percence a você.')
+    const comment = await Comment.findByIdAndUpdate(commentId, {
+      $set:{
+        'content': data
+      }
+    }, { new: true })
+    return await comment
+    .populate("user", "_id name username avatar isVerified")
     .execPopulate()
   } catch (e) {
     throw new Error(e.message)

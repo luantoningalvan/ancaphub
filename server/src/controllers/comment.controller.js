@@ -34,12 +34,12 @@ const remove = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
   const { content } = req.body
 
   try {
-    const result = await editComment(postId,commentId,userId,content)
+    const result = await editComment(commentId,userId,content)
     res.send(result);
     next()
   } catch (e) {
