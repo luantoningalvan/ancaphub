@@ -42,11 +42,6 @@ export default ({ auth }) => {
     },
     {
       exact: true,
-      path: "/profile",
-      component: Profile
-    },
-    {
-      exact: true,
       path: "/notifications",
       component: Notifications
     },
@@ -54,7 +49,11 @@ export default ({ auth }) => {
       exact: true,
       path: "/messages",
       component: Messages
-    }        
+    },
+    {
+      path: "/:id",
+      component: Profile
+    }   
   ];
 
   return (
