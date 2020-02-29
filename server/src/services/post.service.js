@@ -8,7 +8,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
       .populate('user', 'name username id avatar isVerified')
-      .populate("comments.user")
+      .populate("comments")
 
     if (auth) {
       posts = posts.map(post => ({
