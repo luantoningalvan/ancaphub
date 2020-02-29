@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Material UI
-import { Paper, Box, IconButton, Button} from '@material-ui/core';
+import { Paper, Box, IconButton, Button } from '@material-ui/core';
 import {
   Image as ImageIcon,
   Poll as PollIcon,
@@ -21,7 +21,7 @@ import { bindActionCreators } from 'redux';
 import { createPost } from '../../actions/postActions';
 
 const listPlugin = createListPlugin();
-const plugins = [addLinkPlugin,basicTextStylePlugin, listPlugin]
+const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin]
 
 function PostNewStatus(props) {
   const [editorState, setEditorState] = useState(
@@ -40,50 +40,51 @@ function PostNewStatus(props) {
   }
 
   function handleSubmit() {
-    let note = {content: convertToRaw(contentState)}
+    let note = { content: convertToRaw(contentState) }
     note["content"] = JSON.stringify(note.content)
     props.createPost(note.content)
+    setEditorState(EditorState.createEmpty())
   }
 
-  		// Determine whether placeholder should be displayed (to avoid overlap with lists)
-      const blockType = RichUtils.getCurrentBlockType(editorState);
-      const isOl = blockType === "ordered-list-item";
-      const isUl = blockType === "unordered-list-item";
-      const placeholderIsVisible = !isOl && !isUl;
+  // Determine whether placeholder should be displayed (to avoid overlap with lists)
+  const blockType = RichUtils.getCurrentBlockType(editorState);
+  const isOl = blockType === "ordered-list-item";
+  const isUl = blockType === "unordered-list-item";
+  const placeholderIsVisible = !isOl && !isUl;
 
   return (
     <Box mb={2}>
-    <Paper>
-      <Box p={2}>
-        <Editor 
-        editorState={editorState} 
-        onChange={setEditorState} 
-        handleKeyCommand={handleKeyCommand}
-        placeholder={placeholderIsVisible ? "No que você está pensando?" : ""}
-        plugins={plugins}
-        spellCheck
-        />
-      </Box>
-      <Box display="flex" justifyContent="space-between" px={2} pb={2}>
-        <div>
-        <IconButton size="small" edge="start" disabled><ImageIcon /></IconButton>
-        <IconButton size="small" disabled><VideoIcon /></IconButton>
-        <IconButton size="small" disabled><PollIcon /></IconButton>
-        </div>
-
-        <Button 
-          variant="contained" 
-          disableElevation 
-          color="secondary" 
-          size="small" 
-          disabled={!contentState.hasText()}
-          onClick={handleSubmit}
-        >
-          Publicar
-        </Button>
-      </Box>
-    </Paper>
+      <Paper>
+        <Box p={2}>
+          <Editor
+            editorState={editorState}
+            onChange={setEditorState}
+            handleKeyCommand={handleKeyCommand}
+            placeholder={placeholderIsVisible ? "No que você está pensando?" : ""}
+            plugins={plugins}
+            spellCheck
+          />
         </Box>
+        <Box display="flex" justifyContent="space-between" px={2} pb={2}>
+          <div>
+            <IconButton size="small" edge="start" disabled><ImageIcon /></IconButton>
+            <IconButton size="small" disabled><VideoIcon /></IconButton>
+            <IconButton size="small" disabled><PollIcon /></IconButton>
+          </div>
+
+          <Button
+            variant="contained"
+            disableElevation
+            color="secondary"
+            size="small"
+            disabled={!contentState.hasText()}
+            onClick={handleSubmit}
+          >
+            Publicar
+        </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

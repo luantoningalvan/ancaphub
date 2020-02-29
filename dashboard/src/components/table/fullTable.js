@@ -10,7 +10,7 @@ import isEmpty from "is-empty";
 
 function FullTable({ fields, data, actions }) {
   return (
-    <Table>
+    <Table size="small">
       <TableHead>
         <TableRow>
           {fields.map(field => (

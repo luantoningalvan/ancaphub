@@ -29,6 +29,7 @@ const getPost = async (postId, auth) => {
     const post = await Post
     .findById(postId)
     .populate(["likes"])
+    .populate('user')
 
     const likes = post.likes.filter((like) => like._id)
     return auth ? { 

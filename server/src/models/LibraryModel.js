@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema({
-  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
-  name: String
-});
-
 const ItemSchema = new Schema(
   {
     title: {
@@ -29,7 +24,7 @@ const ItemSchema = new Schema(
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     extraFields: Object,
-    categories: [CategorySchema],
+    categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     rateCount: { type: Number, default: 0 },
     rateValue: { type: Number, default: 0 },

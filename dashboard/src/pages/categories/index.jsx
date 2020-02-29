@@ -9,7 +9,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton
+  IconButton,
+  Typography
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
@@ -20,29 +21,53 @@ import TitleComponent from '../../components/template/titleComponent';
 import FullTable from '../../components/table/fullTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchAllCategories, editCategory } from '../../actions/categoryActions';
+import { fetchAllCategories, editCategory, createCategory, deleteCategory } from '../../actions/categoryActions';
 
-function Categories({ fetchAllCategories, editCategory, categories }) {
+function Categories({ fetchAllCategories, createCategory, editCategory, deleteCategory, categories }) {
   useEffect(() => fetchAllCategories(), [fetchAllCategories]);
   const [open, setOpen] = React.useState(false);
-  const [categoryData, setCategoryData] = React.useState({});
+  const [editCategoryData, setEditCategoryData] = React.useState({});
+  const [newCategoryData, setNewCategoryData] = React.useState({});
+
+  // Edição de categoria
+  const handleChangeEdit = name => event => {
+    setEditCategoryData({ ...editCategoryData, [name]: event.target.value });
+  };
 
   const handleClick = () => {
     setOpen(state => !state);
   }
 
-  const handleChange = name => event => {
-    setCategoryData({ ...categoryData, [name]: event.target.value });
-  };
-
   const openEditionDialog = (category) => {
-    setCategoryData(category)
+    setEditCategoryData(category)
     handleClick()
   }
 
   const handleEditCategory = () => {
-    editCategory(categoryData)
+    editCategory(editCategoryData)
     handleClick()
+  }
+
+  // Criação de categoria
+  const handleChangeNew = name => event => {
+    setNewCategoryData({ ...newCategoryData, [name]: event.target.value });
+  };
+
+
+
+  const handleNewCategory = (e) => {
+    e.preventDefault()
+    createCategory(newCategoryData)
+    setNewCategoryData({name: "", slug: ""})
+  }
+
+  // Deleção de categoria
+  const handleDeleteCategory = (id) => {
+    const confirm = window.confirm("Você realmente deseja excluir esta categoria?")
+
+    if(confirm){
+      deleteCategory(id)
+    }
   }
 
   return (
@@ -51,6 +76,44 @@ function Categories({ fetchAllCategories, editCategory, categories }) {
       <Hero title="Categorias" />
       <Box my={3}>
         <Container>
+          <Box mb={2}>
+            <Paper>
+              <Box p={2} display="flex" alignItems="center" justifyContent="space-between">
+                <Typography variant="body1">Adicionar Categoria:</Typography>
+                <form style={{ display:"flex", alignItems:"center"}}>
+                <TextField
+                  margin="dense"
+                  variant="outlined"
+                  id="name-new"
+                  label="Nome"
+                  type="text"
+                  value={newCategoryData.name}
+                  onChange={handleChangeNew('name')}
+                   style={{marginRight:10}}
+                  />
+                <TextField
+                  margin="dense"
+                  variant="outlined"
+                  id="slug-new"
+                  label="Slug"
+                  type="text"
+                  value={newCategoryData.slug}
+                  onChange={handleChangeNew('slug')}
+                   style={{marginRight:10}}
+                  />
+                  <Button 
+                  type="submit" 
+                  onClick={handleNewCategory}
+                  variant="contained"
+                  color="secondary"
+                  disableElevation
+                  >
+                    Adicionar
+                    </Button>
+                  </form>
+              </Box>
+            </Paper>
+          </Box>
           <Paper>
             <FullTable
               fields={[
@@ -58,10 +121,10 @@ function Categories({ fetchAllCategories, editCategory, categories }) {
                 { label: "Slug", key: "slug", align: "left" },
               ]}
               data={categories.allCategories}
-              actions={(category) => 
+              actions={(category) =>
                 <>
                   <IconButton onClick={() => openEditionDialog(category)}><EditIcon /></IconButton>
-                  <IconButton disabled><DeleteIcon /></IconButton>
+                  <IconButton onClick={() => handleDeleteCategory(category._id)}><DeleteIcon /></IconButton>
                 </>
               }
             />
@@ -79,8 +142,18 @@ function Categories({ fetchAllCategories, editCategory, categories }) {
             label="Nome"
             type="text"
             fullWidth
-            value={categoryData.name}
-            onChange={handleChange('name')}
+            value={editCategoryData.name}
+            onChange={handleChangeEdit('name')}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="slug"
+            label="Slug"
+            type="text"
+            fullWidth
+            value={editCategoryData.slug}
+            onChange={handleChangeEdit('slug')}
           />
         </DialogContent>
         <DialogActions>
@@ -101,7 +174,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { fetchAllCategories, editCategory },
+    { fetchAllCategories, editCategory, deleteCategory, createCategory },
     dispatch
   );
 
