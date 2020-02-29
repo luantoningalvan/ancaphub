@@ -15,8 +15,11 @@ import LikeItem from './likeItem'
 
 const useStyles = makeStyles(theme => ({
   list: {
-   padding: 20,
+   padding: 15,
    width: '35rem'
+  },
+  total: {
+    textAlign: 'right'
   }
 }))
 
@@ -36,8 +39,6 @@ function ShowLikes({ open, postId, closeFunc, post, loadSinglePost }){
     loadSinglePost(postId)
   }
 
-  console.log(post)
-
   return (
     <>
       { open && !post.loadingLike && post.post ? (
@@ -46,6 +47,7 @@ function ShowLikes({ open, postId, closeFunc, post, loadSinglePost }){
             {post.post.likes.map((like) =>(
               <LikeItem data={like} key={like._id}/> 
             ))}
+            <p className={classes.total}>Curtidas: {post.post.likes.length}</p>
           </div>
         </Dialog>
       ) : <></>}
