@@ -6,10 +6,13 @@ import Paper from "../../components/ui/Paper";
 import defaultProfileCover from "../../assets/default-profile-cover.jpg";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 
+// i18n
+import { FormattedMessage } from "react-intl";
+
 // Icons
-import LocationIcon from 'react-ionicons/lib/IosPinOutline'
-import BirthIcon from 'react-ionicons/lib/IosEggOutline'
-import SiteIcon from 'react-ionicons/lib/IosLinkOutline'
+import LocationIcon from "react-ionicons/lib/IosPinOutline";
+import BirthIcon from "react-ionicons/lib/IosEggOutline";
+import SiteIcon from "react-ionicons/lib/IosLinkOutline";
 
 const ProfileHeader = styled.div`
   width: 100%;
@@ -121,12 +124,27 @@ const ProfileInfo = styled.div`
 `;
 
 const UserAbout = styled.div`
-  > p { margin: 10px 0px;}
-  > ul { display:flex; flex-direction: column; justify-content: flex-start;}
-  > ul li { list-style: none;margin:10px 0px;}
-  > ul li a { color:white; }
-  > ul li svg { float: left; fill: white;margin-right:10px; }
-`
+  > p {
+    margin: 10px 0px;
+  }
+  > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  > ul li {
+    list-style: none;
+    margin: 10px 0px;
+  }
+  > ul li a {
+    color: white;
+  }
+  > ul li svg {
+    float: left;
+    fill: white;
+    margin-right: 10px;
+  }
+`;
 
 const ProfileContent = styled.div`
   display: grid;
@@ -150,11 +168,21 @@ export default props => {
             <ul>
               <li>
                 <span className="counter">500</span>
-                <span>Seguidores</span>
+                <span>
+                  <FormattedMessage
+                    id="common.followers"
+                    description="Info quantidade de seguidores"
+                  />
+                </span>
               </li>
               <li>
                 <span className="counter">500</span>
-                <span>Seguindo</span>
+                <span>
+                  <FormattedMessage
+                    id="common.following"
+                    description="Info quantidade de usuário seguidos"
+                  />
+                </span>
               </li>
             </ul>
           </div>
@@ -165,8 +193,15 @@ export default props => {
           </div>
 
           <div className="user-action-buttons">
-            <Button color="secondary">Seguir</Button>
-            <Button>Mensagem</Button>
+            <Button color="secondary">
+              <FormattedMessage id="common.follow" description="Seguir" />
+            </Button>
+            <Button>
+              <FormattedMessage
+                id="common.sendMessage"
+                description="Enviar Mensagem"
+              />
+            </Button>
           </div>
         </ProfileInfo>
       </ProfileHeader>
@@ -174,24 +209,35 @@ export default props => {
       <ProfileContent>
         <Paper padding>
           <UserAbout>
-          <h3>Sobre</h3>
-          <p>
-            Dolor proident irure sunt elit nostrud anim nostrud eiusmod nostrud nostrud Lorem adipisicing cillum. Ut labore ullamco laborum Lorem.
-          </p>
-          <ul>
-            <li>
-              <LocationIcon />
-              <span>Nárnia</span>
-            </li>
-            <li>
-              <BirthIcon />
-              <span>00/00/0000</span>
-            </li>
-            <li>
-              <SiteIcon />
-              <span><a href="http://example.com" target="_black">example.com</a></span>
-            </li>
-          </ul>
+            <h3>
+              <FormattedMessage
+                id="common.about"
+                description="Sobre"
+              />
+            </h3>
+            <p>
+              Dolor proident irure sunt elit nostrud anim nostrud eiusmod
+              nostrud nostrud Lorem adipisicing cillum. Ut labore ullamco
+              laborum Lorem.
+            </p>
+            <ul>
+              <li>
+                <LocationIcon />
+                <span>Nárnia</span>
+              </li>
+              <li>
+                <BirthIcon />
+                <span>00/00/0000</span>
+              </li>
+              <li>
+                <SiteIcon />
+                <span>
+                  <a href="http://example.com" target="_black">
+                    example.com
+                  </a>
+                </span>
+              </li>
+            </ul>
           </UserAbout>
         </Paper>
 

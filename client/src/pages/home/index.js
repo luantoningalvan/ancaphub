@@ -1,3 +1,10 @@
-import React from 'react';
+import React from "react";
 
-export default props => <p>Home</p>
+// i18n
+import { FormattedMessage } from "react-intl";
+
+export default props => (
+  <p>
+    <FormattedMessage id="common.home" description="Título da página inicial" />
+  </p>
+);

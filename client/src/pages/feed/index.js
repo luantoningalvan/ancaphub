@@ -1,3 +1,10 @@
-import React from 'react';
+import React from "react";
 
-export default props => <p>Feed</p>
+// i18n
+import { FormattedMessage } from "react-intl";
+
+export default props => (
+  <p>
+    <FormattedMessage id="common.feed" description="Título da página de feed" />
+  </p>
+);
