@@ -10,48 +10,76 @@ import GroupIcon from "react-ionicons/lib/IosPeople";
 import EventIcon from "react-ionicons/lib/IosCalendar";
 import ProjectIcon from "react-ionicons/lib/IosBrush";
 
+// i18n
+import { FormattedMessage } from "react-intl";
+
 const MenuWrapper = styled.ul`
   display: flex;
   flex-direction: column;
 `;
 
 const Menu = () => {
-  const { url } = useRouteMatch()
+  const { url } = useRouteMatch();
 
   return (
     <MenuWrapper>
       <MenuItem
         current={url === "/"}
-        icon={<NewsFeedIcon/>}
-        label="Home"
+        icon={<NewsFeedIcon />}
+        label={
+          <FormattedMessage
+            id="common.home"
+            description="Label do menu - Home"
+          />
+        }
         link="/"
       />
 
       <MenuItem
         current={url.includes("/library")}
         icon={<LibraryIcon />}
-        label="Biblioteca"
+        label={
+          <FormattedMessage
+            id="common.library"
+            description="Label do menu - Biblioteca"
+          />
+        }
         link="/library"
       />
 
       <MenuItem
         current={url.includes("/groups")}
         icon={<GroupIcon />}
-        label="Grupos"
+        label={
+          <FormattedMessage
+            id="common.groups"
+            description="Label do menu - Grupos"
+          />
+        }
         link="/groups"
       />
 
       <MenuItem
         current={url.includes("/events")}
         icon={<EventIcon />}
-        label="Eventos"
+        label={
+          <FormattedMessage
+            id="common.events"
+            description="Label do menu - Eventos"
+          />
+        }
         link="/events"
       />
 
       <MenuItem
         current={url.includes("/projects")}
         icon={<ProjectIcon />}
-        label="Projetos"
+        label={
+          <FormattedMessage
+            id="common.projects"
+            description="Label do menu - Projetos"
+          />
+        }
         link="/projects"
       />
     </MenuWrapper>
