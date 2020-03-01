@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import styled from "styled-components";
 import Container from "../../components/ui/Container";
 import Button from "../../components/ui/Button";
@@ -201,17 +200,3 @@ export default props => {
     </Container>
   );
 };
-=======
-
-// i18n
-import { FormattedMessage } from "react-intl";
-
-export default props => (
-  <p>
-    <FormattedMessage
-      id="common.profile"
-      description="Título da página de perfil"
-    />
-  </p>
-);
->>>>>>> 2d200d4055f4d2a57c2307238419b6ae67b29c5d
