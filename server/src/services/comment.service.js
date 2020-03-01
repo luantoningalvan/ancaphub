@@ -66,4 +66,22 @@ const likeComment = async (commentId, userId) => {
   }
 }
 
-module.exports = { insertComment, removeComment, editComment, likeComment };
+const replyComment = async (commentId, data) => {
+  try {
+    const comment = await Comment.findById(commentId)
+    if (!comment) throw new Error('Este comentário não existe.')
+
+    const reply = await Comment.create(data)
+
+    comment.replies.push(reply)
+    await comment.save()
+    
+    return comment
+    .populate("replies")
+    .execPopulate()
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+module.exports = { insertComment, removeComment, editComment, likeComment, replyComment };
