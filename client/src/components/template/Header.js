@@ -8,12 +8,21 @@ import MessagesIcon from "react-ionicons/lib/IosChatbubbles";
 import Search from "./Search";
 
 const AppBar = styled.header`
-  grid-area: header;
   background: ${props => props.theme.pallete.secondary};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width:100%;
+  height: 64px;
+  position:fixed;
+  top:0;
+  left:0
 `;
+
+const HeaderWrapper = styled.div`
+  width:100%;
+  height:64px;
+`
 
 const Logo = styled.div`
   height: 64px;
@@ -61,6 +70,7 @@ const Header = () => {
   const { url } = useRouteMatch();
 
   return (
+    <>
     <AppBar>
       <Logo>
         <Link to="/"><img src={logo} alt="Logo AncapHub" /></Link>
@@ -81,6 +91,8 @@ const Header = () => {
         </HeaderMenuItem>
       </HeaderMenu>
     </AppBar>
+    <HeaderWrapper />
+    </>
   );
 };
 

@@ -10,12 +10,3 @@ body {
   font-family: Ubuntu;
   background: #161b28;
 }
-
-#root{
-  display: grid;
-  grid-template-columns: 64px auto;
-  grid-template-rows: 64px auto;
-  grid-template-areas: 
-  "header header"
-  "sidenav main";
-}

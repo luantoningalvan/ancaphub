@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 const Nav = styled.aside`
   width: 64px;
   height: calc(100vh - 64px);
+  position:fixed;
+  top:64px;
+  left:0;
   background: ${props => props.theme.pallete.paper};
-  grid-area: sidenav
 `;
 
 const UserMenu = styled.div`
