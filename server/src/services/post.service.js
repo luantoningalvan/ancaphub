@@ -30,6 +30,7 @@ const getPost = async (postId, auth) => {
     .findById(postId)
     .populate(["likes"])
     .populate('user')
+    .populate('comments')
 
     const likes = post.likes.filter((like) => like._id)
     return auth ? { 

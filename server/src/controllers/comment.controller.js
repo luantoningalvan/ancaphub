@@ -21,11 +21,11 @@ const insert = async (req, res, next) => {
 };
 
 const remove = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
 
   try {
-    const result = await removeComment(postId,commentId,userId)
+    const result = await removeComment(commentId,userId)
     res.send(result);
     next()
   } catch (e) {
@@ -48,11 +48,11 @@ const update = async (req, res, next) => {
 };
 
 const like = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
 
   try {
-    const result = await likeComment(postId, commentId, userId)
+    const result = await likeComment(commentId, userId)
     res.send(result)
     next()
   } catch (e) {

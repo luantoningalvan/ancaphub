@@ -5,12 +5,12 @@ isEqual = require('lodash.isequal');
 const insertComment = async (postId, data) => {
   try {
     const post = await Post.findById(postId)
-    console.log(post)
+    
     if (!post) throw new Error('Este post não existe.')
     const comment = await Comment.create(data)
-    console.log(comment)
     await post.comments.push(comment)
     await post.save()
+
     return await comment
   } catch (e) {
     throw new Error(e.message)
@@ -19,8 +19,9 @@ const insertComment = async (postId, data) => {
 
 const removeComment = async (commentId, userId) => {
   try {
-    const comment = await Comment.findById(commentId) 
-    if (!comment || comment.user !== userId) throw new Error('Este comentário não existe ou não percence a você.')
+    const comment = await Comment.findById(commentId)
+    
+    if (!comment || comment.user != userId) throw new Error('Este comentário não existe ou não percence a você.')
     await Comment.findByIdAndRemove(commentId) 
 
     return true
@@ -33,6 +34,7 @@ const editComment = async (commentId, userId, data) => {
   try {
     const oldComment = await Comment.findById(commentId)
     if (!oldComment || oldComment.user != userId) throw new Error('Este comentário não existe ou não percence a você.')
+
     const comment = await Comment.findByIdAndUpdate(commentId, {
       $set:{
         'content': data
@@ -46,27 +48,19 @@ const editComment = async (commentId, userId, data) => {
   }
 }
 
-const likeComment = async (postId, commentId, userId) => {
+const likeComment = async (commentId, userId) => {
   try {
-    const post = await Post.findById(postId);
+    const comment = await Comment.findById(commentId)
+    if (!comment) throw new Error('Este comentário não existe.')
 
-    if (!post) throw new Error('Este post não existe.')
-
-    const comment = post.comments.filter((comment) => {
-      return comment._id == commentId
-    })
-
-    if (comment.length === 0) throw new Error('Este comentário não existe.')
-
-    const indexComment = post.comments.indexOf(comment[0])
-
-    if (post.comments[indexComment].likes.includes(userId)) {
-      post.comments[indexComment].likes.pull(userId);
+    if (comment.likes.includes(userId)) {
+      comment.likes.pull(userId);
     } else {
-      post.comments[indexComment].likes.push(userId);
+      comment.likes.push(userId);
     }
-    await post.save();
-    return { _id: post.comments[indexComment]._id, likes: post.comments[indexComment].likes, likeCount: post.comments[indexComment].likes.length, hasLiked: post.comments[indexComment].likes.includes(userId)}
+    await comment.save()
+
+    return comment
   } catch (e) {
     throw new Error(e.message)
   }
