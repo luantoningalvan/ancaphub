@@ -51,9 +51,26 @@ export default ({ auth }) => {
       component: Messages
     },
     {
+      exact: true,
       path: "/:id",
       component: Profile
-    }   
+    },
+    {
+      path: "/:id/contributions",
+      component: Profile
+    },
+    {
+      path: "/:id/collection",
+      component: Profile
+    },
+    {
+      path: "/:id/followers",
+      component: Profile
+    },
+    {
+      path: "/:id/following",
+      component: Profile
+    }       
   ];
 
   return (

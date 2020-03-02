@@ -5,6 +5,8 @@ import Button from "../../components/ui/Button";
 import Paper from "../../components/ui/Paper";
 import defaultProfileCover from "../../assets/default-profile-cover.jpg";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
+import { Link } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 // i18n
 import { FormattedMessage } from "react-intl";
@@ -91,6 +93,7 @@ const ProfileInfo = styled.div`
           color: ${props => props.theme.pallete.text.secondary};
         }
         > .counter {
+          text-decoration: none;
           font-weight: bold;
           font-size: 1.375rem;
           color: ${props => props.theme.pallete.text.primary};
@@ -153,7 +156,33 @@ const ProfileContent = styled.div`
   margin: 1em 0;
 `;
 
+const Tabs = styled.ul`
+  display: flex;
+
+  > li {
+    list-style: none;
+    border-bottom: 3px solid transparent;
+
+    &:hover {
+      border-bottom: 3px solid rgba(0,0,0,0.2);
+    }
+  }
+
+  > li.current {
+    border-bottom: 3px solid ${props => props.theme.pallete.secondary};
+  }
+  > li a {
+    display:block;
+    color: white;
+    text-decoration: none;
+    padding: 16px 32px;
+
+  }
+`;
+
 export default props => {
+  const { path } = useRouteMatch()
+  
   return (
     <Container>
       <ProfileHeader>
@@ -167,7 +196,7 @@ export default props => {
           <div className="follower-count">
             <ul>
               <li>
-                <span className="counter">500</span>
+              <Link to="/user/followers" className="counter">500</Link>
                 <span>
                   <FormattedMessage
                     id="common.followers"
@@ -176,7 +205,7 @@ export default props => {
                 </span>
               </li>
               <li>
-                <span className="counter">500</span>
+                <Link to="/user/following" className="counter">500</Link>
                 <span>
                   <FormattedMessage
                     id="common.following"
@@ -210,10 +239,7 @@ export default props => {
         <Paper padding>
           <UserAbout>
             <h3>
-              <FormattedMessage
-                id="common.about"
-                description="Sobre"
-              />
+              <FormattedMessage id="common.about" description="Sobre" />
             </h3>
             <p>
               Dolor proident irure sunt elit nostrud anim nostrud eiusmod
@@ -241,7 +267,27 @@ export default props => {
           </UserAbout>
         </Paper>
 
-        <Paper padding>Teste</Paper>
+        <div>
+          <Paper>
+            <Tabs>
+              <li className={path === "/:id" ? "current" : ""}>
+                <Link to="/user">Feed</Link>
+              </li>
+              <li className={path.includes("/:id/collection") ? "current" : ""}>
+                <Link to="/user/collection">Coleção</Link>
+              </li>
+              <li className={path.includes("/:id/contributions") ? "current" : ""}>
+                <Link to="/user/contributions">Contribuições</Link>
+              </li>
+              <li className={path.includes("/:id/following") ? "current" : ""}>
+                <Link to="/user/following">Seguindo</Link>
+              </li>
+              <li className={path.includes("/:id/followers") ? "current" : ""}> 
+                <Link to="/user/followers">Seguidores</Link>
+              </li>
+            </Tabs>
+          </Paper>
+        </div>
       </ProfileContent>
     </Container>
   );

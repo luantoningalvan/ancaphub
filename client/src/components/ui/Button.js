@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Button = styled.button`
-    background: ${props => props.color == "secondary" ? props.theme.pallete.secondary : props.theme.pallete.paper};
+    background: ${props => props.color === "secondary" ? props.theme.pallete.secondary : props.theme.pallete.paper};
     cursor: pointer;
     color: ${props => props.theme.pallete.text.primary};
     border-radius: 10px;
