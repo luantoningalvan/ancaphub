@@ -74,6 +74,7 @@ router.post('/posts/:postId/comment', auth, Comment.insert)
 router.put('/posts/:postId/comment/:commentId', auth, Comment.update)
 router.delete('/posts/:postId/comment/:commentId', auth, Comment.remove)
 router.post('/posts/:postId/comment/:commentId', auth, Comment.like)
+router.post('/comment/:commentId/reply', auth, Comment.reply)
 
 
 // Profile
