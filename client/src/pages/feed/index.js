@@ -1,10 +1,18 @@
 import React from "react";
-
-// i18n
-import { FormattedMessage } from "react-intl";
+import Container from "../../components/ui/Container";
+import PostForm from "../../components/posts/PostForm";
+import PostCard from "../../components/posts/PostCard";
 
 export default props => (
-  <p>
-    <FormattedMessage id="common.feed" description="Título da página de feed" />
-  </p>
+  <Container>
+    <div style={{ display: "grid", gridTemplateColumns: "auto 300px", gap: "1em", marginTop: "15px" }}>
+      <div>
+        <PostForm />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+      </div>
+      <div>Sidebar</div>
+    </div>
+  </Container>
 );
