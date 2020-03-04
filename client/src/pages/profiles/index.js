@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
 import Container from "../../components/ui/Container";
 import Button from "../../components/ui/Button";
@@ -15,6 +15,13 @@ import { FormattedMessage } from "react-intl";
 import LocationIcon from "react-ionicons/lib/IosPinOutline";
 import BirthIcon from "react-ionicons/lib/IosEggOutline";
 import SiteIcon from "react-ionicons/lib/IosLinkOutline";
+
+// Areas
+const Feed = lazy(() => import("./Feed"));
+const Collection = lazy(() => import("./Collection"));
+const Contributions = lazy(() => import("./Contributions"));
+const Followers = lazy(() => import("./Followers"));
+const Following = lazy(() => import("./Following"));
 
 const ProfileHeader = styled.div`
   width: 100%;
@@ -164,7 +171,7 @@ const Tabs = styled.ul`
     border-bottom: 3px solid transparent;
 
     &:hover {
-      border-bottom: 3px solid rgba(0,0,0,0.2);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -172,17 +179,16 @@ const Tabs = styled.ul`
     border-bottom: 3px solid ${props => props.theme.pallete.secondary};
   }
   > li a {
-    display:block;
+    display: block;
     color: white;
     text-decoration: none;
     padding: 16px 32px;
-
   }
 `;
 
 export default props => {
-  const { path } = useRouteMatch()
-  
+  const { path } = useRouteMatch();
+
   return (
     <Container>
       <ProfileHeader>
@@ -196,7 +202,9 @@ export default props => {
           <div className="follower-count">
             <ul>
               <li>
-              <Link to="/user/followers" className="counter">500</Link>
+                <Link to="/user/followers" className="counter">
+                  500
+                </Link>
                 <span>
                   <FormattedMessage
                     id="common.followers"
@@ -205,7 +213,9 @@ export default props => {
                 </span>
               </li>
               <li>
-                <Link to="/user/following" className="counter">500</Link>
+                <Link to="/user/following" className="counter">
+                  500
+                </Link>
                 <span>
                   <FormattedMessage
                     id="common.following"
@@ -234,41 +244,41 @@ export default props => {
           </div>
         </ProfileInfo>
       </ProfileHeader>
-
       <ProfileContent>
-        <Paper padding>
-          <UserAbout>
-            <h3>
-              <FormattedMessage id="common.about" description="Sobre" />
-            </h3>
-            <p>
-              Dolor proident irure sunt elit nostrud anim nostrud eiusmod
-              nostrud nostrud Lorem adipisicing cillum. Ut labore ullamco
-              laborum Lorem.
-            </p>
-            <ul>
-              <li>
-                <LocationIcon />
-                <span>Nárnia</span>
-              </li>
-              <li>
-                <BirthIcon />
-                <span>00/00/0000</span>
-              </li>
-              <li>
-                <SiteIcon />
-                <span>
-                  <a href="http://example.com" target="_black">
-                    example.com
-                  </a>
-                </span>
-              </li>
-            </ul>
-          </UserAbout>
-        </Paper>
-
         <div>
-          <Paper>
+          <Paper padding>
+            <UserAbout>
+              <h3>
+                <FormattedMessage id="common.about" description="Sobre" />
+              </h3>
+              <p>
+                Dolor proident irure sunt elit nostrud anim nostrud eiusmod
+                nostrud nostrud Lorem adipisicing cillum. Ut labore ullamco
+                laborum Lorem.
+              </p>
+              <ul>
+                <li>
+                  <LocationIcon />
+                  <span>Nárnia</span>
+                </li>
+                <li>
+                  <BirthIcon />
+                  <span>00/00/0000</span>
+                </li>
+                <li>
+                  <SiteIcon />
+                  <span>
+                    <a href="http://example.com" target="_black">
+                      example.com
+                    </a>
+                  </span>
+                </li>
+              </ul>
+            </UserAbout>
+          </Paper>
+        </div>
+        <div>
+          <Paper style={{ marginBottom: 15 }}>
             <Tabs>
               <li className={path === "/:id" ? "current" : ""}>
                 <Link to="/user">Feed</Link>
@@ -276,17 +286,23 @@ export default props => {
               <li className={path.includes("/:id/collection") ? "current" : ""}>
                 <Link to="/user/collection">Coleção</Link>
               </li>
-              <li className={path.includes("/:id/contributions") ? "current" : ""}>
+              <li
+                className={path.includes("/:id/contributions") ? "current" : ""}
+              >
                 <Link to="/user/contributions">Contribuições</Link>
               </li>
               <li className={path.includes("/:id/following") ? "current" : ""}>
                 <Link to="/user/following">Seguindo</Link>
               </li>
-              <li className={path.includes("/:id/followers") ? "current" : ""}> 
+              <li className={path.includes("/:id/followers") ? "current" : ""}>
                 <Link to="/user/followers">Seguidores</Link>
               </li>
             </Tabs>
           </Paper>
+
+          <Suspense fallback={<p>Carregando</p>}>
+            <Feed />
+          </Suspense>
         </div>
       </ProfileContent>
     </Container>
