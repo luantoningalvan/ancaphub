@@ -1,98 +1,159 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Template from "./components/template";
+import React, { lazy,Suspense} from 'react';
+import UnavailablePage from './pages/unavaliable'
+import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route as OpenRoute, Switch } from 'react-router-dom'
+import PrivateRoute from './components/auth/privateRoute'
+import Template from './components/template'
+import Loading from './components/loaders/loadingItems'
 
 // Telas
-import Home from "./pages/home";
-import Feed from "./pages/feed";
-import Library from "./pages/library";
-import Groups from "./pages/groups";
-import Events from "./pages/events";
-import Projects from "./pages/projects";
-import Profile from "./pages/profiles";
-import Notifications from "./pages/notifications";
-import Messages from "./pages/messages";
+const Home = lazy(() => import('./pages/home'))
+const Feed = lazy(() => import('./pages/feed'))
+const Books = lazy(() => import('./pages/library/books'))
+const SingleBook = lazy(() => import('./pages/library/books/singleBook'))
+const AddBook = lazy(() => import('./pages/library/books/addBook'))
+const Articles = lazy(() => import('./pages/library/articles'))
+const SingleArticle = lazy(() => import('./pages/library/articles/singleArticle'))
+const AddArticle = lazy(() => import('./pages/library/articles/addArticle'))
+const Videos = lazy(() => import('./pages/library/videos'))
+const SingleVideo = lazy(() => import('./pages/library/videos/singleVideo'))
+const AddVideo = lazy(() => import('./pages/library/videos/addVideo'))
+const Groups = lazy(() => import('./pages/groups'))
+const Events = lazy(() => import('./pages/events'))
+const Projects = lazy(() => import('./pages/projects'))
+const Profile = lazy(() => import('./pages/profile'))
+const SearchResults = lazy(() => import('./pages/search/searchResults'))
+const FindPeople = lazy(() => import('./pages/search/findPeople'))
+const AccountSetting = lazy(() => import('./pages/account/settings'))
+const Bookmarks = lazy(() => import('./pages/account/bookmarks'))
+const ContributionsPanel = lazy(() => import('./pages/account/contributions'))
+const Notifications = lazy(() => import('./pages/notifications'))
 
-export default ({ auth }) => {
+const Routes = ({auth}) => {
   const allRoutes = [
     {
       exact: true,
       path: "/",
-      component: true ? Feed : Home
-    },
-    {
+      component: auth.isAuthenticated ? Feed : Home
+    }, {
+      isPrivate: true,
+      path: "/contribute/book",
+      component: AddBook
+    }, {
+      isPrivate: true,
+      path: "/contribute/article",
+      component: AddArticle
+    }, {
+      isPrivate: true,
+      path: "/contribute/video",
+      component: AddVideo
+    }, {
       exact: true,
-      path: "/library",
-      component: Library
-    },
-    {
+      path: "/books",
+      component: Books
+    }, {
+      path: "/books/:id",
+      component: SingleBook
+    }, {
+      exact: true,
+      path: "/articles",
+      component: Articles
+    }, {
+      path: "/articles/:id",
+      component: SingleArticle
+    }, {
+      exact: true,
+      path: "/videos",
+      component: Videos
+    }, {
+      path: "/videos/:id",
+      component: SingleVideo
+    }, {
       exact: true,
       path: "/groups",
       component: Groups
-    },
-    {
-      exact: true,
+    }, {
       path: "/events",
       component: Events
-    },
-    {
-      exact: true,
+    }, {
       path: "/projects",
       component: Projects
+    }, {
+      path: "/search",
+      component: SearchResults
+    }, {
+      isPrivate: true,
+      path: "/find-people",
+      component: FindPeople
+    }, {
+      isPrivate: true,
+      path: "/bookmarks",
+      component: Bookmarks
     },
     {
-      exact: true,
+      isPrivate: true,
+      path: "/settings",
+      component: AccountSetting
+    }, {
+      isPrivate: true,
       path: "/notifications",
       component: Notifications
-    },
-    {
-      exact: true,
-      path: "/messages",
-      component: Messages
-    },
-    {
+    }, {
+      isPrivate: true,
+      path: "/contributions",
+      component: ContributionsPanel
+    }, {
       exact: true,
       path: "/:id",
       component: Profile
     },
     {
-      path: "/:id/contributions",
-      component: Profile
-    },
-    {
-      path: "/:id/collection",
-      component: Profile
-    },
-    {
+      exact: true,
       path: "/:id/followers",
       component: Profile
-    },
-    {
+    }, {
+      exact: true,
       path: "/:id/following",
       component: Profile
-    }       
-  ];
+    }, {
+      exact: true,
+      path: "/:id/library",
+      component: Profile
+    }, {
+      exact: true,
+      path: "/:id/contributions",
+      component: Profile
+    }, {
+      path: "*",
+      component: UnavailablePage
+    }
+  ]
 
   return (
     <Router>
-      <Switch>
-        {allRoutes.map((route, index) => {
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={props => {
-                return (
-                  <Template {...props}>
+    <Switch>
+      {allRoutes.map((route, index) => {
+        const Route = route.isPrivate ? PrivateRoute : OpenRoute
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={props => {
+              return (
+                <Template {...props}>
+                  <Suspense fallback={<Loading />}>
                     <route.component {...props} />
-                  </Template>
-                );
-              }}
-            />
-          );
-        })}
-      </Switch>
-    </Router>
-  );
-};
+                  </Suspense>
+                </Template>
+              );
+            }}
+          />
+        );
+      })}
+    </Switch>
+  </Router>
+  )
+}
+
+export default connect((state) => ({auth: state.auth}))(Routes)
