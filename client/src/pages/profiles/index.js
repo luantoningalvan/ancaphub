@@ -18,7 +18,7 @@ import SiteIcon from "react-ionicons/lib/IosLinkOutline";
 
 // Areas
 const Feed = lazy(() => import("./Feed"));
-const Collection = lazy(() => import("./Collection"));
+const Lists = lazy(() => import("./Lists"));
 const Contributions = lazy(() => import("./Contributions"));
 const Followers = lazy(() => import("./Followers"));
 const Following = lazy(() => import("./Following"));
@@ -283,8 +283,8 @@ export default props => {
               <li className={path === "/:id" ? "current" : ""}>
                 <Link to="/user">Feed</Link>
               </li>
-              <li className={path.includes("/:id/collection") ? "current" : ""}>
-                <Link to="/user/collection">Coleção</Link>
+              <li className={path.includes("/:id/lists") ? "current" : ""}>
+                <Link to="/user/lists">Coleção</Link>
               </li>
               <li
                 className={path.includes("/:id/contributions") ? "current" : ""}
