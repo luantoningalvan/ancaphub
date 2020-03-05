@@ -2,9 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Item = styled.li``;
-const Icon = styled.i``;
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   color: #fff;
   display: block;
   padding: 9.5px;
@@ -20,15 +18,24 @@ const StyledLink = styled(Link)`
   &:hover {
     background: #616a82;
     > i svg {
-    fill: white
+      fill: white
     }
   }
 `
+
+export const Item = styled.li`
+  list-style:none;
+  position: ${props => props.position };
+  &:hover {
+    ul { display: block }
+  }
+`
+
 export default ({ link, icon, current }) => {
   return (
     <Item>
       <StyledLink to={link} current={current}>
-        <Icon>{icon}</Icon>
+        <i>{icon}</i>
       </StyledLink>
     </Item>
   );
