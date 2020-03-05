@@ -7,6 +7,7 @@ import Template from './components/template'
 import Loading from './components/loaders/loadingItems'
 
 // Telas
+<<<<<<< HEAD
 const Home = lazy(() => import('./pages/home'))
 const Feed = lazy(() => import('./pages/feed'))
 const Books = lazy(() => import('./pages/library/books'))
@@ -28,6 +29,22 @@ const AccountSetting = lazy(() => import('./pages/account/settings'))
 const Bookmarks = lazy(() => import('./pages/account/bookmarks'))
 const ContributionsPanel = lazy(() => import('./pages/account/contributions'))
 const Notifications = lazy(() => import('./pages/notifications'))
+=======
+import Home from "./pages/home";
+import Feed from "./pages/feed";
+import BooksOverview from "./pages/library/books";
+import SingeBook from "./pages/library/books/SingleBook";
+import ArticlesOverview from "./pages/library/articles";
+import SingleArticle from "./pages/library/articles/SingleArticle";
+import VideosOverview from "./pages/library/videos";
+import SingleVideo from "./pages/library/videos/SingleVideo";
+import Groups from "./pages/groups";
+import Events from "./pages/events";
+import Projects from "./pages/projects";
+import Profile from "./pages/profiles";
+import Notifications from "./pages/notifications";
+import Messages from "./pages/messages";
+>>>>>>> feature/new-template
 
 const Routes = ({auth}) => {
   const allRoutes = [
@@ -50,25 +67,31 @@ const Routes = ({auth}) => {
     }, {
       exact: true,
       path: "/books",
-      component: Books
-    }, {
+      component: BooksOverview
+    },
+    {
       path: "/books/:id",
-      component: SingleBook
-    }, {
+      component: SingeBook
+    },
+    {
       exact: true,
       path: "/articles",
-      component: Articles
-    }, {
+      component: ArticlesOverview
+    },
+    {
       path: "/articles/:id",
       component: SingleArticle
-    }, {
+    },
+    {
       exact: true,
       path: "/videos",
-      component: Videos
-    }, {
+      component: VideosOverview
+    },
+    {
       path: "/videos/:id",
       component: SingleVideo
-    }, {
+    },
+    {
       exact: true,
       path: "/groups",
       component: Groups

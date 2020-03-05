@@ -12,6 +12,12 @@ const Button = styled.button`
     box-shadow: ${ props => props.disableElevation ? "none" : "3px 5px 10px 0 rgba(0,0,0,.2)"};
     border: none;
     outline: none;
+    width: ${props => props.fullwidth ? '100%' : 'inherit'};
+    border: ${props => props.variant === "outlined" ? '1px solid #2f3749' : 'none'};
+    transition: background 0.4s;
+    &:hover {
+        background: rgba(0,0,0,0.2)
+    }
 `
 
 export default Button

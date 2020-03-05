@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import MenuItem from "./MenuItem";
+import MenuTree from "./MenuTree";
 import { useRouteMatch } from "react-router-dom";
 
 // Icons
 import NewsFeedIcon from "react-ionicons/lib/IosPaper";
 import LibraryIcon from "react-ionicons/lib/IosFolderOpen";
+import BookIcon from "react-ionicons/lib/IosBook";
+import ArticleIcon from "react-ionicons/lib/IosPaper";
+import VideoIcon from "react-ionicons/lib/IosPlay";
 import GroupIcon from "react-ionicons/lib/IosPeople";
 import EventIcon from "react-ionicons/lib/IosCalendar";
 import ProjectIcon from "react-ionicons/lib/IosBrush";
@@ -35,8 +39,8 @@ const Menu = () => {
         link="/"
       />
 
-      <MenuItem
-        current={url.includes("/library")}
+      <MenuTree
+        current={url.includes("/books") || url.includes("/articles") || url.includes("/videos")}
         icon={<LibraryIcon />}
         label={
           <FormattedMessage
@@ -44,8 +48,26 @@ const Menu = () => {
             description="Label do menu - Biblioteca"
           />
         }
-        link="/library"
-      />
+      >
+        <MenuItem
+          current={url.includes("/books")}
+          icon={<BookIcon />}
+          label="Livros"
+          link="/books"
+        />
+        <MenuItem
+          current={url.includes("/articles")}
+          icon={<ArticleIcon />}
+          label="Artigos"
+          link="/articles"
+        />
+        <MenuItem
+          current={url.includes("/videos")}
+          icon={<VideoIcon />}
+          label="Vídeos"
+          link="/videos"
+        />
+      </MenuTree>
 
       <MenuItem
         current={url.includes("/groups")}
