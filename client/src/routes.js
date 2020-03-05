@@ -5,7 +5,12 @@ import Template from "./components/template";
 // Telas
 import Home from "./pages/home";
 import Feed from "./pages/feed";
-import Library from "./pages/library";
+import BooksOverview from "./pages/library/books";
+import SingeBook from "./pages/library/books/SingleBook";
+import ArticlesOverview from "./pages/library/articles";
+import SingleArticle from "./pages/library/articles/SingleArticle";
+import VideosOverview from "./pages/library/videos";
+import SingleVideo from "./pages/library/videos/SingleVideo";
 import Groups from "./pages/groups";
 import Events from "./pages/events";
 import Projects from "./pages/projects";
@@ -22,8 +27,30 @@ export default ({ auth }) => {
     },
     {
       exact: true,
-      path: "/library",
-      component: Library
+      path: "/books",
+      component: BooksOverview
+    },
+    {
+      path: "/books/:id",
+      component: SingeBook
+    },
+    {
+      exact: true,
+      path: "/articles",
+      component: ArticlesOverview
+    },
+    {
+      path: "/articles/:id",
+      component: SingleArticle
+    },
+    {
+      exact: true,
+      path: "/videos",
+      component: VideosOverview
+    },
+    {
+      path: "/videos/:id",
+      component: SingleVideo
     },
     {
       exact: true,
