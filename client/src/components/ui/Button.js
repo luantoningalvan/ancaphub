@@ -7,9 +7,9 @@ const Button = styled.button`
     border-radius: 10px;
     font-size: .875rem;
     text-align: center;
-    padding: 15px;
+    padding: ${props => props.size === "small" ? "10px" : "15px"};
     transition: background-color .2s ease-in-out,color .2s ease-in-out,border-color .2s ease-in-out,box-shadow .2s ease-in-out;
-    box-shadow: 3px 5px 10px 0 rgba(0,0,0,.2);
+    box-shadow: ${ props => props.disableElevation ? "none" : "3px 5px 10px 0 rgba(0,0,0,.2)"};
     border: none;
     outline: none;
 `
