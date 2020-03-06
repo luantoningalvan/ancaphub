@@ -6,13 +6,14 @@ const ScrollableWrap = styled.div`
   flex-grow: ${props => (props.grow ? 1 : 0)};
   flex-direction: column;
   position: relative;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: 1px solid #2f3749;
   & > div.wrapped {
     width: 100%;
     overflow-y: scroll;
+    flex:1;
 
     & > div.inner {
-      min-height: 600px;
+      min-height: 100%;
       display: flex;
       flex-direction: column;
     }

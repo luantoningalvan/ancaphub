@@ -4,7 +4,6 @@ import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 
 const ChatboxListItemWrapper = styled.div`
   display: flex;
-  width: calc(20vw + 8px);
   transition: all ease-in-out 0.3s;
   padding: 8px;
   cursor: pointer;
@@ -16,13 +15,13 @@ const ChatboxListItemWrapper = styled.div`
     align-items: flex-start;
     padding: 8px;
     & > img {
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       border-radius: 100%;
     }
 
     & > p.chatUserName {
-      font-size: 12px;
+      font-size: 0.9em;
       font-weight: bold;
       line-height: 1em;
       margin-bottom: 0.5em;
@@ -34,14 +33,17 @@ const ChatboxListItemWrapper = styled.div`
           margin: 0 0.5em;
         }
         line-height: 1em;
-        font-size: 11px;
+        font-size: 0.7em;
         color: ${props => props.theme.pallete.text.secondary};
       }
     }
 
     & > p.lastMessage {
       color: ${props => props.theme.pallete.text.secondary};
-      font-size: 11px;
+      font-size: 0.8em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
