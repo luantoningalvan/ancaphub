@@ -1,5 +1,5 @@
 import React from "react";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import clsx from "clsx";
 
@@ -17,6 +17,50 @@ const SPACING_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 // For determining grid item sizes
 const SIZING_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, true, "auto"];
 const SIZING_LEVEL_NUMBER = SIZING_LEVELS.length - 2;
+const COMMON_BREAKPOINTS_PROPTYPE = [...SIZING_LEVELS, false];
+
+// Prop types for both container and item components
+const commonPropTypes = {
+  alignContent: PropTypes.oneOf([
+    "stretch",
+    "center",
+    "flex-start",
+    "flex-end",
+    "space-between",
+    "space-around"
+  ]),
+  alignItems: PropTypes.oneOf([
+    "center",
+    "flex-start",
+    "flex-end",
+    "stretch",
+    "baseline"
+  ]),
+  children: PropTypes.node,
+  className: PropTypes.string,
+  direction: PropTypes.oneOf([
+    "row",
+    "row-reverse",
+    "column",
+    "column-reverse"
+  ]),
+  justifyContent: PropTypes.oneOf([
+    "center",
+    "flex-start",
+    "flex-end",
+    "space-between",
+    "space-around",
+    "space-evenly"
+  ]),
+  xs: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
+  sm: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
+  md: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
+  lg: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
+  xl: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
+  spacing: PropTypes.oneOf(SPACING_LEVELS),
+  zeroMinWidth: PropTypes.bool,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+};
 
 const makeGrid = (baseStyles = ``, breakpoint) => {
   let jss = ``;
@@ -166,25 +210,29 @@ const generateClassNames = props => {
     [`grid-xs-${props.xs}`]: props.xs !== false,
     [`grid-sm-${props.sm}`]: props.sm !== false,
     [`grid-md-${props.md}`]: props.md !== false,
-    [`grid-lg-${props.xs}`]: props.lg !== false,
-    [`grid-xl-${props.xs}`]: props.xl !== false
+    [`grid-lg-${props.lg}`]: props.lg !== false,
+    [`grid-xl-${props.xl}`]: props.xl !== false
   });
   return classNames;
 };
 
-export const GridContainerWrapper = styled.div`
+const GridContainerWrapper = styled.div`
   display: flex;
   ${props => commonStyles(props)}
   box-sizing: border-box;
   width: 100%;
 `;
 
-export const GridItemWrapper = styled.div`
+GridContainerWrapper.propTypes = commonPropTypes;
+
+const GridItemWrapper = styled.div`
   display: flex;
   ${props => commonStyles(props)}
   box-sizing: border-box;
   margin: 0;
 `;
+
+GridItemWrapper.propTypes = commonPropTypes;
 
 export const GridContainer = props => {
   // default prop values:
