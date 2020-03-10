@@ -25,13 +25,13 @@ const BubbleBody = styled.div`
   align-items: center;
   & > span.messageBody {
     display: inline-block;
-    font-size: 14px;
+    font-size: 0.9em;
     line-height: 1em;
   }
 
   & > span.messageTime {
     display: inline-block;
-    font-size: 11px;
+    font-size: 0.6em;
     line-height: 1em;
     margin: 0 1em;
     vertical-align: center;
