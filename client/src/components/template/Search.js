@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import styled from "styled-components";
 
 // Icons
@@ -60,4 +60,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default memo(Search);
