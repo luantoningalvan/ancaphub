@@ -124,26 +124,25 @@ const getSpacing = multiplier => {
   return 8 * multiplier;
 };
 
-const makeSpacing = breakpoint => {
+export const makeSpacing = prop => {
+  let baseStyles = ``;
   let jss = ``;
 
   SPACING_LEVELS.forEach(spacing => {
     const currentSpacing = getSpacing(spacing);
-
     if (!currentSpacing) return;
-
-    jss += `
-    .spacing-${breakpoint}-${spacing} {
-      margin: -${offset(currentSpacing, 2)};
-      width: calc(100% + ${offset(currentSpacing)});
-      & > .item {
-        padding: ${offset(currentSpacing, 2)};
-      }
-    }
+    if (spacing === prop) {
+      jss += `
+        margin: -${offset(currentSpacing, 2)};
+        width: calc(100% + ${offset(currentSpacing)});
+        & > .item {
+          padding: ${offset(currentSpacing)};
+        }
     `;
+    }
   });
-
-  return jss;
+  baseStyles += jss;
+  return baseStyles;
 };
 
 export const commonStyles = props => `
@@ -180,9 +179,6 @@ export const commonStyles = props => `
   & > .justify-xs-space-between { justify-content: space-between; }
   & > .justify-xs-space-around { justify-content: space-around; }
   & > .justify-xs-space-evenly { justify-content: space-evenly; }
-  
-  /* make spacing */
-  ${makeSpacing("xs")}
 
   /* generate grids for each breakpoint */
   ${makeGrid("xs")}
@@ -202,7 +198,6 @@ export const propertyDefault = (prop, defaultValue) => {
 export const generateClassNames = props => {
   const classNames = clsx({
     zeroMinWidth: props.zeroMinWidth,
-    [`spacing-xs-${props.spacing}`]: props.spacing !== 0,
     [`direction-xs-${props.flexDirection}`]: props.flexDirection !== "row",
     [`wrap-xs-${props.flexWrap}`]: props.flexWrap !== "wrap",
     [`align-items-xs-${props.alignItems}`]: props.alignItems !== "stretch",

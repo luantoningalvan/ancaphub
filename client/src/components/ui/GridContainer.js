@@ -4,12 +4,14 @@ import {
   propertyDefault,
   commonPropTypes,
   generateClassNames,
-  commonStyles
+  commonStyles,
+  makeSpacing
 } from "./Grid";
 
 const GridContainerWrapper = styled.div`
   display: flex;
   ${props => commonStyles(props)}
+  ${props => makeSpacing(props.spacing)}
   box-sizing: border-box;
   width: 100%;
 `;
