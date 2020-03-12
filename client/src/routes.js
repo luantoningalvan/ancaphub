@@ -12,6 +12,7 @@ import SingleArticle from "./pages/library/articles/SingleArticle";
 import VideosOverview from "./pages/library/videos";
 import SingleVideo from "./pages/library/videos/SingleVideo";
 import Groups from "./pages/groups";
+import SingleGroup from "./pages/groups/SingleGroup";
 import Events from "./pages/events";
 import Projects from "./pages/projects";
 import Profile from "./pages/profiles";
@@ -56,6 +57,10 @@ export default ({ auth }) => {
       exact: true,
       path: "/groups",
       component: Groups
+    },
+    {
+      path: "/groups/:id",
+      component: SingleGroup
     },
     {
       exact: true,

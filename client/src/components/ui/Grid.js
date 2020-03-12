@@ -1,15 +1,14 @@
-import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 import clsx from "clsx";
 
+// This file only provides basic functionality that is common to all grid components.
+// It is NOT a component and can be moved to another folder in future.
 // This implementation aims to be close to Bootstrap's grid layout implemenation
 // and the structure is very similar to Material UI's one.
+// The main differences are that the grid is split between two components and every class is already
+// defined. Each one is applied conditionally instead of also being generated dynamically on component mount.
 // see https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/Grid/Grid.js Material UI's Grid component implementation
 // see https://github.com/twbs/bootstrap/blob/8fccaa2439e97ec72a4b7dc42ccc1f649790adb0/dist/css/bootstrap-grid.css Bootstrap's CSS grid implementation
-
-// Breakpoint keys
-//const BREAKPOINTS = ["xs", "sm", "md", "lg", "xl"];
 
 // For spacing properties
 const SPACING_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -20,7 +19,7 @@ const SIZING_LEVEL_NUMBER = SIZING_LEVELS.length - 2;
 const COMMON_BREAKPOINTS_PROPTYPE = [...SIZING_LEVELS, false];
 
 // Prop types for both container and item components
-const commonPropTypes = {
+export const commonPropTypes = {
   alignContent: PropTypes.oneOf([
     "stretch",
     "center",
@@ -62,7 +61,8 @@ const commonPropTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 };
 
-const makeGrid = (baseStyles = ``, breakpoint) => {
+const makeGrid = breakpoint => {
+  let baseStyles = ``;
   let jss = ``;
   SIZING_LEVELS.forEach(sizing => {
     const classKey = `grid-${breakpoint}-${sizing}`;
@@ -101,7 +101,7 @@ const makeGrid = (baseStyles = ``, breakpoint) => {
       baseStyles += `@media only screen and (min-width: 601px) and (max-width: 1279px) { ${jss} }`;
     } else if (breakpoint === "lg") {
       // large is from 961px to 1919px
-      baseStyles += `@media only screen and (min-width: 961px) and (max-width: 1919px) { ${jss} }`;
+      baseStyles += `@media only screen and (min-width: 1280px) and (max-width: 1919px) { ${jss} }`;
     } else if (breakpoint === "xl") {
       // extra large is from 1920px and above
       baseStyles += `@media only screen and (min-width: 1920px) { ${jss} }`;
@@ -134,8 +134,11 @@ const makeSpacing = breakpoint => {
 
     jss += `
     .spacing-${breakpoint}-${spacing} {
-      margin: -${offset(spacing, 2)};
-      width: calc(100% + ${offset(spacing)});
+      margin: -${offset(currentSpacing, 2)};
+      width: calc(100% + ${offset(currentSpacing)});
+      & > .item {
+        padding: ${offset(currentSpacing, 2)};
+      }
     }
     `;
   });
@@ -143,9 +146,9 @@ const makeSpacing = breakpoint => {
   return jss;
 };
 
-const commonStyles = props => `
+export const commonStyles = props => `
   /* handle flex direction */
-  ${!props.direction ? "flex-direction: row" : ""};
+  ${!props.flexDirection ? "flex-direction: row" : ""};
   & > .direction-xs-column { flex-direction: column; }
   & > .direction-xs-column-reverse { flex-direction: column-reverse; }
   & > .direction-xs-row-reverse { flex-direction: row-reverse; }
@@ -154,7 +157,7 @@ const commonStyles = props => `
   & > .zeroMinWidth { min-width: 0; }
   
   /* handle nowrap */
-  flex-wrap: ${props.wrap};
+  flex-wrap: ${props.flexWrap};
   
   /* handle align-items */
   & > .align-items-xs-stretch { align-items: stretch; }
@@ -182,26 +185,26 @@ const commonStyles = props => `
   ${makeSpacing("xs")}
 
   /* generate grids for each breakpoint */
-  ${makeGrid(``, "xs")}
-  ${makeGrid(``, "sm")}
-  ${makeGrid(``, "md")}
-  ${makeGrid(``, "lg")}
-  ${makeGrid(``, "xl")}
+  ${makeGrid("xs")}
+  ${makeGrid("sm")}
+  ${makeGrid("md")}
+  ${makeGrid("lg")}
+  ${makeGrid("xl")}
 
 `;
 
-const propertyDefault = (prop, defaultValue) => {
+export const propertyDefault = (prop, defaultValue) => {
   if (prop === undefined) {
     return defaultValue;
   } else return prop;
 };
 
-const generateClassNames = props => {
+export const generateClassNames = props => {
   const classNames = clsx({
     zeroMinWidth: props.zeroMinWidth,
     [`spacing-xs-${props.spacing}`]: props.spacing !== 0,
-    [`direction-xs-${props.direction}`]: props.direction !== "row",
-    [`wrap-xs-${props.wrap}`]: props.wrap !== "wrap",
+    [`direction-xs-${props.flexDirection}`]: props.flexDirection !== "row",
+    [`wrap-xs-${props.flexWrap}`]: props.flexWrap !== "wrap",
     [`align-items-xs-${props.alignItems}`]: props.alignItems !== "stretch",
     [`align-content-xs-${props.alignContent}`]:
       props.alignContent !== "stretch",
@@ -214,82 +217,4 @@ const generateClassNames = props => {
     [`grid-xl-${props.xl}`]: props.xl !== false
   });
   return classNames;
-};
-
-const GridContainerWrapper = styled.div`
-  display: flex;
-  ${props => commonStyles(props)}
-  box-sizing: border-box;
-  width: 100%;
-`;
-
-GridContainerWrapper.propTypes = commonPropTypes;
-
-const GridItemWrapper = styled.div`
-  display: flex;
-  ${props => commonStyles(props)}
-  box-sizing: border-box;
-  margin: 0;
-`;
-
-GridItemWrapper.propTypes = commonPropTypes;
-
-export const GridContainer = props => {
-  // default prop values:
-  let newProps = {
-    alignContent: propertyDefault(props.alignContent, "stretch"),
-    alignItems: propertyDefault(props.alignItems, "stretch"),
-    direction: propertyDefault(props.direction, "row"),
-    justifyContent: propertyDefault(props.justifyContent, "flex-start"),
-    xs: propertyDefault(props.xs, false),
-    sm: propertyDefault(props.sm, false),
-    md: propertyDefault(props.md, false),
-    lg: propertyDefault(props.lg, false),
-    xl: propertyDefault(props.xl, false),
-    spacing: propertyDefault(props.spacing, 0),
-    wrap: propertyDefault(props.wrap, "wrap"),
-    zeroMinWidth: propertyDefault(props.zeroMinWidth, false)
-  };
-
-  Object.preventExtensions(newProps);
-
-  return (
-    <GridContainerWrapper
-      {...newProps}
-      style={props.style}
-      className={generateClassNames(newProps)}
-    >
-      {props.children}
-    </GridContainerWrapper>
-  );
-};
-
-export const GridItem = props => {
-  // default prop values:
-  let newProps = {
-    alignContent: propertyDefault(props.alignContent, "stretch"),
-    alignItems: propertyDefault(props.alignItems, "stretch"),
-    direction: propertyDefault(props.direction, "row"),
-    justifyContent: propertyDefault(props.justifyContent, "flex-start"),
-    xs: propertyDefault(props.xs, false),
-    sm: propertyDefault(props.sm, false),
-    md: propertyDefault(props.md, false),
-    lg: propertyDefault(props.lg, false),
-    xl: propertyDefault(props.xl, false),
-    spacing: propertyDefault(props.spacing, 0),
-    wrap: propertyDefault(props.wrap, "wrap"),
-    zeroMinWidth: propertyDefault(props.zeroMinWidth, false)
-  };
-
-  Object.preventExtensions(newProps);
-
-  return (
-    <GridItemWrapper
-      {...newProps}
-      style={props.style}
-      className={generateClassNames(newProps)}
-    >
-      {props.children}
-    </GridItemWrapper>
-  );
 };

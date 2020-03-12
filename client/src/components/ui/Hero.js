@@ -7,6 +7,8 @@ const HeroWrapper = styled.div`
   background: ${ props => props.theme.pallete.paper };
   padding: 40px 30px;
   margin-top: 15px;
+  display:flex;
+  justify-content:space-between;
 
   > h2 { 
     font-size:30px;
@@ -14,10 +16,16 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const Hero = ({ title, description }) => (
+const Hero = ({ title, description, actions }) => (
   <HeroWrapper>
-    <h2>{title}</h2>
-    <p>{description}</p>
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+
+    <div>
+      {actions}
+    </div>
   </HeroWrapper>
 );
 
