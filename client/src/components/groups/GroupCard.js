@@ -3,6 +3,7 @@ import Paper from '../ui/Paper'
 import Button from '../ui/Button'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import defaultGroupCover from '../../assets/default-group-cover.png'
 
 const GroupCover = styled.div`
   width: 100%;
@@ -27,18 +28,23 @@ const GroupInfo = styled.div`
   }
 `
 
-const GroupCard = () => {
+const GroupCard = (props) => {
+  const { _id, name, cover, membersCounts, hasEnrolled } = props.data
   return (
+    <div style={{width:'100%'}}>
     <Paper>
-      <Link to="/groups/id">
-      <GroupCover cover="https://www.outraestacao.com/wp-content/uploads/2019/04/significado_bandeira_rio_grande_do_sul.jpg" />
+      <Link to={`/groups/${_id}`}>
+        <GroupCover cover={cover || defaultGroupCover} />
       </Link>
       <GroupInfo>
-        <h4><Link to="/groups/id">Anarco Bagualismo</Link></h4>
-        <span>11 mil membros</span>
-        <Button fullwidth variant="outlined" disableElevation>Entrar</Button>
+        <h4><Link to="/groups/id">{name}</Link></h4>
+        <span>{membersCounts} membros</span>
+        <Button fullwidth variant="outlined" disableElevation>
+          {hasEnrolled ? "Sair" : "Entrar"}
+        </Button>
       </GroupInfo>
     </Paper>
+    </div>
   )
 }
 
