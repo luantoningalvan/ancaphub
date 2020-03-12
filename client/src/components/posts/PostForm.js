@@ -65,6 +65,7 @@ function PostForm(props) {
   const placeholderIsVisible = !isOl && !isUl;
 
   return (
+    <div style={{width: '100%'}}>
       <Paper>
         <TextBox p={2}>
           <Editor
@@ -95,6 +96,7 @@ function PostForm(props) {
         </Button>
         </FormActions>
       </Paper>
+      </div>
   );
 }
 

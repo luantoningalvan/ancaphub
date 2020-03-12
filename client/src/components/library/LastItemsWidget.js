@@ -5,6 +5,7 @@ import CardBody from '../ui/CardBody'
 
 const LastItemsWidget = props => {
   return (
+    <div style={{width: "100%"}}>
     <Card>
       <CardHeader>
         <h3>Contribuições Recentes</h3>
@@ -13,6 +14,7 @@ const LastItemsWidget = props => {
         Teste
       </CardBody>
     </Card>
+    </div>
   )
 }
 
