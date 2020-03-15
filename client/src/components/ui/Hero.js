@@ -3,16 +3,16 @@ import styled from "styled-components";
 
 const HeroWrapper = styled.div`
   width: 100%;
-  border-radius:5px;
+  border-radius: 5px;
   background: ${ props => props.theme.pallete.paper };
   padding: 40px 30px;
   margin-top: 15px;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 
   > h2 { 
-    font-size:30px;
-    margin-bottom:5px
+    font-size: 30px;
+    margin-bottom: 5px;
   }
 `;
 

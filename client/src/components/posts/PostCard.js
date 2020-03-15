@@ -3,23 +3,23 @@ import Paper from "../ui/Paper";
 import PostActions from "./PostActions";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import styled from "styled-components";
-import { Link } from 'react-router-dom' 
+import { Link } from "react-router-dom" ;
 
 const ProfilePicture = styled.div`
   height: 44px;
   width: 44px;
   border-radius: 100%;
   overflow: hidden;
-  margin-right:10px;
+  margin-right: 10px;
   > img {
     width: 100%;
   }
 `;
 
 const PostCardHeader = styled.div`
-  display:flex;
-  padding:20px 20px 0px;
-  align-items:center;
+  display: flex;
+  padding: 20px 20px 0px;
+  align-items: center;
 
   a { 
     display: block; 
@@ -28,16 +28,16 @@ const PostCardHeader = styled.div`
     color: ${ props => props.theme.pallete.text.primary };
     line-height: 100%;
     font-size: 1rem;
-    margin-bottom:5px
+    margin-bottom: 5px
   }
 
   span { 
-    display:block;
+    display: block;
     color: ${ props => props.theme.pallete.text.secondary };
     line-height: 100%;
     font-size: 0.8rem
   }
-`
+`;
 
 const PostCard = () => {
   return (

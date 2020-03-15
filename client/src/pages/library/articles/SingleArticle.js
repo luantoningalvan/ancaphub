@@ -4,14 +4,13 @@ import Container from "../../../components/ui/Container";
 import defaultThumbnail from "../../../assets/default-book-cover.jpg";
 import styled from "styled-components";
 //import parse from "html-react-parser";
-//import Categories from '../../../components/categories/showElementCategories';
-//import LoadContent from '../../../components/loaders/loadContent'
-//import UnavaliableContent from '../../../components/error/unavaliableContent'
-//import InvitedBy from '../../../components/profile/invitedBy'
+//import Categories from "../../../components/categories/showElementCategories";
+//import LoadContent from "../../../components/loaders/loadContent"
+//import UnavaliableContent from "../../../components/error/unavaliableContent"
+//import InvitedBy from "../../../components/profile/invitedBy"
 
 const Banner = styled.div`
-  background: url(${props => (props.cover ? props.cover : defaultThumbnail)})
-  rgba(0, 0, 0, 0.8);
+  background: url(${props => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.8);
   background-size: cover;
   background-position: center;
   width: 100%;

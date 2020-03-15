@@ -2,9 +2,9 @@ import React from "react";
 import Container from "../../../components/ui/Container";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
-//import Categories from '../../../components/categories/showElementCategories';
-//import LoadContent from '../../../components/loaders/loadContent'
-//import InvitedBy from '../../../components/profile/invitedBy'
+//import Categories from "../../../components/categories/showElementCategories";
+//import LoadContent from "../../../components/loaders/loadContent"
+//import InvitedBy from "../../../components/profile/invitedBy"
 
 const PlayerWrapper = styled.div`
   position: relative;

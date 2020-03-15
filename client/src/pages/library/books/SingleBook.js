@@ -7,10 +7,10 @@ import filesize from "filesize";
 import querystring from "querystring";
 import defaultThumbnail from "../../../assets/default-book-cover.jpg";
 import styled from "styled-components";
-//import Categories from '../../../components/categories/showElementCategories';
-//import Ratings from '../../../components/library/ratings';
-//import InvitedBy from '../../../components/profile/invitedBy'
-//import UnavaliableContent from '../../../components/error/unavaliableContent'
+//import Categories from "../../../components/categories/showElementCategories";
+//import Ratings from "../../../components/library/ratings";
+//import InvitedBy from "../../../components/profile/invitedBy"
+//import UnavaliableContent from "../../../components/error/unavaliableContent"
 
 function SingleBook({ match, fetchItem, book }) {
   const Title = styled.h2`
@@ -24,16 +24,15 @@ function SingleBook({ match, fetchItem, book }) {
     font-weight: lighter;
     color: ${props => props.theme.pallete.text.primary};
     font-size: 1.25rem;
-    margin-bottom:34px
+    margin-bottom: 34px
   `;
 
   const BookCover = styled.img`
-    width:100%
-  `
+    width: 100%;
+  `;
 
   const Banner = styled.div`
-    background: url(${props => (props.cover ? props.cover : defaultThumbnail)})
-      rgba(0, 0, 0, 0.5);
+    background: url(${props => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.5);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -63,9 +62,9 @@ function SingleBook({ match, fetchItem, book }) {
       {true ? (
         <>
           <Banner cover="https://ancaphub.s3.sa-east-1.amazonaws.com/1580105305533-o-que-deve-ser-feito.jpg"/>
-          <div style={{marginTop: -137, position:'absolute', width: 'inherit'}}>
+          <div style={{marginTop: -137, position:"absolute", width: "inherit"}}>
             <Container>
-              <div style={{display: "grid", gridTemplateColumns: '33.3333% auto', gap: '1.4em'}}>
+              <div style={{display: "grid", gridTemplateColumns: "33.3333% auto", gap: "1.4em"}}>
                 <div>
                   <Paper>
                     <BookCover src="https://ancaphub.s3.sa-east-1.amazonaws.com/1580105305533-o-que-deve-ser-feito.jpg" />
@@ -81,7 +80,7 @@ function SingleBook({ match, fetchItem, book }) {
                 </div>
                 <div>
                   {/*<Categories categories={categories} />*/}
-                  <div style={{padding:'15px 0px'}}>
+                  <div style={{padding:"15px 0px"}}>
                   Categories
                   </div>
                   <Title>O que deve ser feito</Title>
@@ -105,6 +104,6 @@ function SingleBook({ match, fetchItem, book }) {
       )}
     </>
   );
-}
+};
 
 export default SingleBook;
