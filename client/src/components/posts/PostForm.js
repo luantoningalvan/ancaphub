@@ -29,9 +29,12 @@ const FormActions = styled.div`
 `
 
 const TextBox = styled.div`
-  padding:20px;
-  min-height:100px;
-`
+  padding: 20px;
+  min-height: 100px;
+  .public-DraftEditor-content {
+     min-height: 60px;
+  }
+`;
 
 const listPlugin = createListPlugin();
 const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin]
