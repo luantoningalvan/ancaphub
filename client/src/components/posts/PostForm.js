@@ -1,32 +1,32 @@
 import React, { useState } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 import Paper from "../ui/Paper";
 import Button from "../ui/Button";
 import IconButton from "../ui/IconButton";
 
 // Icons
-import ImageIcon from 'react-ionicons/lib/IosImageOutline'
-import VideoIcon from 'react-ionicons/lib/IosVideocamOutline'
-import PollIcon from 'react-ionicons/lib/IosPodiumOutline'
+import ImageIcon from "react-ionicons/lib/IosImageOutline";
+import VideoIcon from "react-ionicons/lib/IosVideocamOutline";
+import PollIcon from "react-ionicons/lib/IosPodiumOutline";
 
 // Text Editor
-import { EditorState, RichUtils, convertToRaw } from 'draft-js';
-import Editor from 'draft-js-plugins-editor'
-import 'draft-js/dist/Draft.css';
-import basicTextStylePlugin from '../editor/plugins/basicTextStylePlugin';
-import addLinkPlugin from '../editor/plugins/addLinkPlugin';
+import { EditorState, RichUtils, convertToRaw } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import "draft-js/dist/Draft.css";
+import basicTextStylePlugin from "../editor/plugins/basicTextStylePlugin";
+import addLinkPlugin from "../editor/plugins/addLinkPlugin";
 import createListPlugin from "draft-js-list-plugin";
 
 // i18n
 import { FormattedMessage } from "react-intl";
 
 const FormActions = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   padding: 15px;
-  border-top:1px solid #2f3749;
+  border-top: 1px solid #2f3749;
   background: rgba(0,0,0,.1)
-`
+`;
 
 const TextBox = styled.div`
   padding: 20px;
@@ -37,7 +37,7 @@ const TextBox = styled.div`
 `;
 
 const listPlugin = createListPlugin();
-const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin]
+const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin];
 
 function PostForm(props) {
   const [editorState, setEditorState] = useState(
@@ -50,15 +50,15 @@ function PostForm(props) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
-      return 'handled';
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   }
 
   function handleSubmit() {
-    let note = { content: convertToRaw(contentState) }
-    note["content"] = JSON.stringify(note.content)
-    setEditorState(EditorState.createEmpty())
+    let note = { content: convertToRaw(contentState) };
+    note["content"] = JSON.stringify(note.content);
+    setEditorState(EditorState.createEmpty());
   }
 
   // Determine whether placeholder should be displayed (to avoid overlap with lists)
@@ -101,4 +101,4 @@ function PostForm(props) {
   );
 }
 
-export default PostForm
+export default PostForm;

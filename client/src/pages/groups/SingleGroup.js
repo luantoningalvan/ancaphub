@@ -1,47 +1,45 @@
-import React from 'react';
-import Container from '../../components/ui/Container'
-import Paper from '../../components/ui/Paper'
-import Tab from '../../components/ui/Tab'
-import Button from '../../components/ui/Button'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import React from "react";
+import Container from "../../components/ui/Container";
+import Paper from "../../components/ui/Paper";
+import Tab from "../../components/ui/Tab";
+import Button from "../../components/ui/Button";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const GroupBanner = styled.div`
   height: 200px;
-  background: url("${props => props.cover}")
-  rgba(0,0,0,.5);
+  background: url("${props => props.cover}") rgba(0,0,0,.5);
   background-size: cover;
-  background-blend-mode:overlay;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background-position:center;
+  background-blend-mode: overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
 
   h2 {
     color: ${props => props.theme.pallete.text.primary};
-    font-size:1.9em;
-    margin-bottom:5px;
+    font-size: 1.9em;
+    margin-bottom: 5px;
   }
 
   span {
-  color: ${props => props.theme.pallete.text.secondary};
-  font-size:1.1em;
-  font-weight:lighter;
-
+    color: ${props => props.theme.pallete.text.secondary};
+    font-size: 1.1em;
+    font-weight: lighter;
   }
-`
+`;
 
 const GroupMenu = styled.div`
-  width:100%;
-  background:rgba(255,255,255,0.02)
-`
+  width: 100%;
+  background: rgba(255,255,255,0.02);
+`;
 
 const SingleGroup = () => {
   return (
     <>
       <GroupBanner cover="https://www.outraestacao.com/wp-content/uploads/2019/04/significado_bandeira_rio_grande_do_sul.jpg">
         <Container>
-          <div style={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <h2>Anarco Bagualismo</h2>
               <span>Grupo Público - 120 membros</span>
@@ -55,7 +53,7 @@ const SingleGroup = () => {
 
         <GroupMenu>
       <Container>
-          <ul style={{ display: 'flex' }}>
+          <ul style={{ display: "flex" }}>
             <Tab>                
               <Link to="/user" className="current">Quadro</Link>
             </Tab>
@@ -73,6 +71,6 @@ const SingleGroup = () => {
         </GroupMenu>
     </>
   )
-}
+};
 
-export default SingleGroup
+export default SingleGroup;

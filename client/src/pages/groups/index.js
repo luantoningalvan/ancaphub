@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../../components/ui/Container";
 import Hero from "../../components/ui/Hero";
 import Button from "../../components/ui/Button";
-import GroupCard from '../../components/groups/GroupCard'
+import GroupCard from "../../components/groups/GroupCard";
 
 // i18n
 import { FormattedMessage } from "react-intl";
@@ -29,9 +29,9 @@ export default props => {
           </Button>
         }
       />
-      <h3 style={{margin: '20px 0px 10px'}}>Explorar Grupos</h3>
+      <h3 style={{margin: "20px 0px 10px"}}>Explorar Grupos</h3>
 
-      <div style={{display:'grid', gridTemplateColumns: "1fr 1fr 1fr", gap: '1em'}}>
+      <div style={{display:"grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1em"}}>
         <GroupCard />
         <GroupCard />
         <GroupCard />

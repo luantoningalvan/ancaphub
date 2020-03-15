@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Tab = styled.li`
   list-style: none;
@@ -19,4 +19,4 @@ const Tab = styled.li`
   }
 `;
 
-export default Tab
+export default Tab;

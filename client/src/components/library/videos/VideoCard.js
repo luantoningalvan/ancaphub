@@ -9,30 +9,30 @@ const CardCover = styled.div`
   border-radius: 16px;
   height: 130px;
   background: url("${props => props.cover}");
-  background-position:center;
+  background-position: center;
   background-size: cover;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  position:relative;
+  position: relative;
   transition: opacity 0.4s ease;
   > .card-buttons {
-    display:none
+    display: none;
   };
   &::before {
     transition: opacity 0.4s ease;
-    opacity: 0
+    opacity: 0;
   };
   
   &:hover {
     background-size: scale(1.1);
     > .card-buttons {
-      display:block
+      display: block;
     }
     &::before {
-      width:100%;
-      height:130px;
+      width: 100%;
+      height: 130px;
       background: linear-gradient(to bottom, rgba(0,0,0,.4) 0%,rgba(0,0,0,1) 100%);
       content: "";
       position:absolute;
@@ -49,10 +49,10 @@ const Link = styled(RouterLink)`
 
 const CardTitle = styled.h2`
   margin: 10px 0px 0px;
-  padding:0px;
-  line-height:1.25rem;
-  font-size:1.25rem;
-  margin:15px 0px 5px;
+  padding: 0px;
+  line-height: 1.25rem;
+  font-size: 1.25rem;
+  margin: 15px 0px 5px;
 `;
 const CardSubtitle = styled.h3`
   font-weight: lighter;

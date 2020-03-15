@@ -1,7 +1,7 @@
 import {
     getDefaultKeyBinding,
     RichUtils,
-  } from 'draft-js';
+  } from "draft-js";
   
   const basicTextStylePlugin = {
     keyBindingFn(event) {
@@ -14,9 +14,9 @@ import {
       );
       if (newEditorState) {
         setEditorState(newEditorState);
-        return 'handled';
+        return "handled";
       }
-      return 'not-handled';
+      return "not-handled";
     }
   };
   

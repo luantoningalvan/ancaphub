@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import {
   KeyBindingUtil
-} from 'draft-js';
+} from "draft-js";
 
 
 export const linkStrategy = (contentBlock, callback, contentState) => {
@@ -10,7 +10,7 @@ export const linkStrategy = (contentBlock, callback, contentState) => {
       const entityKey = character.getEntity();
       return (
         entityKey !== null &&
-        contentState.getEntity(entityKey).getType() === 'LINK'
+        contentState.getEntity(entityKey).getType() === "LINK"
       );
     },
     callback
@@ -40,7 +40,7 @@ const addLinkPlugin = {
       return;
     }
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 75) {
-      return 'add-link'
+      return "add-link"
     }
   },
 

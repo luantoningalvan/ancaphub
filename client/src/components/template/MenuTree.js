@@ -4,7 +4,7 @@ import { StyledLink, Item } from "./MenuItem";
 
 const Tree = styled.ul`
   position: absolute;
-  z-index:99;
+  z-index: 99;
 
   left: 74px;
   top: 10px;
@@ -16,7 +16,7 @@ const Tree = styled.ul`
   &:after {
     content: "";
     position: absolute;
-    z-index:99;
+    z-index: 99;
     top: 20px;
     left: -10px;
     width: 0;
