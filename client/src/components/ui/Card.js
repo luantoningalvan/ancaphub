@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const CardBody = styled.div`
+const Card = styled.div`
     display: flex;
     flex-direction: column;
     background: ${ props => props.theme.pallete.paper};
@@ -8,4 +8,4 @@ const CardBody = styled.div`
     border-radius: 10px;
 `;
 
-export default CardBody;
+export default Card;
