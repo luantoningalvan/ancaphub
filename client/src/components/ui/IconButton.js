@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const IconButton = styled.button`
     background: transparent;
@@ -16,6 +16,6 @@ const IconButton = styled.button`
         height: 2em;
         width: 2em;
      }
-`
+`;
 
-export default IconButton
+export default IconButton;

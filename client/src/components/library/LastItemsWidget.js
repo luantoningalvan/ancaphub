@@ -1,7 +1,7 @@
-import React from 'react';
-import Card from '../ui/Card'
-import CardHeader from '../ui/CardHeader'
-import CardBody from '../ui/CardBody'
+import React from "react";
+import Card from "../ui/Card";
+import CardHeader from "../ui/CardHeader";
+import CardBody from "../ui/CardBody";
 
 const LastItemsWidget = props => {
   return (
@@ -16,6 +16,6 @@ const LastItemsWidget = props => {
     </Card>
     </div>
   )
-}
+};
 
-export default LastItemsWidget
+export default LastItemsWidget;

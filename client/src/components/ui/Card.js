@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const CardBody = styled.div`
     display:flex;
@@ -9,4 +9,4 @@ const CardBody = styled.div`
     border-radius: 10px;
 `;
 
-export default CardBody
+export default Card;

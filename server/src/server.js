@@ -23,7 +23,7 @@ server.use(function(err, req, res, next) {
 server.use('/public', express.static('public'));
 
 server.listen(port, function () {
-  console.log(`BACKEND está rodando na porta ${port}.`);
+  console.log(`BACKEND está rodando na porta ${port}.`,`http://localhost:${port}/`);
 });
 
 module.exports = server;

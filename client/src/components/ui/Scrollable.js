@@ -10,7 +10,7 @@ const ScrollableWrap = styled.div`
   & > div.wrapped {
     width: 100%;
     overflow-y: scroll;
-    flex:1;
+    flex: 1;
 
     & > div.inner {
       min-height: 100%;

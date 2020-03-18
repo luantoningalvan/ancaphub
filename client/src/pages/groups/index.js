@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../../components/ui/Container";
 import Hero from "../../components/ui/Hero";
 import Button from "../../components/ui/Button";
-import GroupCard from '../../components/groups/GroupCard'
+import GroupCard from '../../components/groups/GroupCard';
 import GridItem from "../../components/ui/GridItem";
 import GridContainer from "../../components/ui/GridContainer";
 
@@ -62,7 +62,7 @@ export default props => {
           </Button>
         }
       />
-      <h3 style={{margin: '20px 0px 10px'}}>Explorar Grupos</h3>
+      <h3 style={{margin: "20px 0px 10px"}}>Explorar Grupos</h3>
 
       <GridContainer spacing={1}>
         {groups.map(group => (

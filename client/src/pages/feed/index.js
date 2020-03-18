@@ -4,8 +4,7 @@ import Container from "../../components/ui/Container";
 import GridItem from "../../components/ui/GridItem";
 import GridContainer from "../../components/ui/GridContainer";
 import PostCard from "../../components/posts/PostCard";
-import LastItemsWidget from '../../components/library/LastItemsWidget'
-
+import LastItemsWidget from "../../components/library/LastItemsWidget";
 export default props => (
   <Container>
     <GridContainer spacing={1}>

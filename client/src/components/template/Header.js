@@ -12,18 +12,18 @@ const AppBar = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:100%;
+  width: 100%;
   height: 64px;
-  position:fixed;
-  z-index:100;
-  top:0;
-  left:0
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0
 `;
 
 const HeaderWrapper = styled.div`
-  width:100%;
-  height:64px;
-`
+  width: 100%;
+  height: 64px;
+`;
 
 const Logo = styled.div`
   height: 64px;
