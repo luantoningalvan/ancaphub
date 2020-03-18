@@ -10,6 +10,7 @@
     "draft-js": "^0.11.4",
     "draft-js-list-plugin": "^1.0.2",
     "draft-js-plugins-editor": "^3.0.0",
+    "filesize": "^6.1.0",
     "html-react-parser": "^0.10.1",
     "lodash": "^4.17.15",
     "querystring": "^0.2.0",
