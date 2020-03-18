@@ -8,7 +8,7 @@ import LastItemsWidget from '../../components/library/LastItemsWidget'
 
 export default props => (
   <Container>
-    <GridContainer spacing="12">
+    <GridContainer spacing={1}>
       <GridItem xs={12} lg={8}>
         <PostForm />
         <PostCard />

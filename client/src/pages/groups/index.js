@@ -64,7 +64,7 @@ export default props => {
       />
       <h3 style={{margin: '20px 0px 10px'}}>Explorar Grupos</h3>
 
-      <GridContainer spacing={2}>
+      <GridContainer spacing={1}>
         {groups.map(group => (
           <GridItem xs={12} md={6} lg={4}>
             <GroupCard data={group} />
