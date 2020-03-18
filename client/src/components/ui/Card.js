@@ -7,6 +7,6 @@ const Card = styled.div`
     background: ${ props => props.theme.pallete.paper};
     color: ${props => props.theme.pallete.text.primary};
     border-radius: 10px;
-`;
+`
 
 export default Card;

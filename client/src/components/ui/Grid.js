@@ -95,10 +95,10 @@ const makeGrid = breakpoint => {
       baseStyles += jss;
     } else if (breakpoint === "sm") {
       // small breakpoint is from 600px to 960px
-      baseStyles += `@media only screen and (min-width: 600px) { ${jss} }`;
+      baseStyles += `@media only screen and (min-width: 600px) and (max-width: 959px) { ${jss} }`;
     } else if (breakpoint === "md") {
       // medium breakpoint is from 960px to 1280px
-      baseStyles += `@media only screen and (min-width: 601px) and (max-width: 1279px) { ${jss} }`;
+      baseStyles += `@media only screen and (min-width: 960px) and (max-width: 1279px) { ${jss} }`;
     } else if (breakpoint === "lg") {
       // large is from 961px to 1919px
       baseStyles += `@media only screen and (min-width: 1280px) and (max-width: 1919px) { ${jss} }`;
