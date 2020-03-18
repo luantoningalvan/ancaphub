@@ -39,14 +39,16 @@ const ScrollableWrap = styled.div`
     height: 100%;
     top: 0;
     right: 0;
-    width: 0.2 em;
-    -webkit-transition: all 0.3s;
+    width: 0.2em;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
     opacity: 1;
   }
 
   &:hover > div.cover {
     opacity: 0;
-    -webkit-transition: all 0.3s;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
   }
 `;
 
