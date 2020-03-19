@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../ui/Card";
+import CardFooter from "../ui/CardFooter";
 import CardHeader from "../ui/CardHeader";
 import CardBody from "../ui/CardBody";
 import styled from "styled-components";
@@ -106,6 +107,7 @@ const LastItemsWidget = props => {
             ))}
           </LastItems>
         </CardBody>
+        <CardFooter link="/" label="Show more" />
       </Card>
     </div>
   )
