@@ -19,8 +19,8 @@ GridItemWrapper.propTypes = commonPropTypes;
 const GridItem = props => {
   // default prop values:
   let newProps = {
-    alignContent: propertyDefault(props.alignContent, "stretch"),
-    alignItems: propertyDefault(props.alignItems, "stretch"),
+    alignContent: propertyDefault(props.alignContent, "flex-start"),
+    alignItems: propertyDefault(props.alignItems, "flex-start"),
     flexDirection: propertyDefault(props.direction, "row"),
     justifyContent: propertyDefault(props.justifyContent, "flex-start"),
     xs: propertyDefault(props.xs, false),
