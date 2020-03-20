@@ -4,6 +4,9 @@ import PostActions from "./PostActions";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import styled from "styled-components";
 import { Link } from "react-router-dom" ;
+import Dropdown from "../../components/ui/Dropdown";
+import IconButton from "../../components/ui/IconButton";
+import MdMore from "react-ionicons/lib/MdMore";
 
 const ProfilePicture = styled.div`
   height: 44px;
@@ -44,11 +47,16 @@ const PostCard = () => {
     <Paper style={{ marginTop: 15 }}>
       <PostCardHeader>
         <ProfilePicture>
-          <img src={defaultProfilePicture} />
+          <img src={defaultProfilePicture} alt="Default profile pic" />
         </ProfilePicture>
         <div>
         <Link to="/user">Nome do Usuário </Link>
         <span>há poucos segundos</span>
+        </div>
+        <div style={{ marginLeft: "auto" }}>
+          <Dropdown placement="left-start" options={[{ text: "Edit", action: () => alert("Foo") }, { text: "Delete" } ]}>
+            <IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>
+          </Dropdown>
         </div>
       </PostCardHeader>
 
