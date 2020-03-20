@@ -23,10 +23,14 @@ const Item = styled(Link)`
   cursor: pointer;
   height: 95px;
   text-decoration:none;
-  &:hover: { backgroundColor: rgba(0,0,0,0.03);}
-  margin-bottom:10px;
+  
+  &:hover { 
+    background-color: rgba(0,0,0,0.03); 
+  }
+  
+  margin-bottom: 10px;
 
-  &:last-child { margin-bottom: 0}
+  &:last-child { margin-bottom: 0 }
 `
 
 const ItemCover = styled.div`
@@ -107,7 +111,7 @@ const LastItemsWidget = props => {
             ))}
           </LastItems>
         </CardBody>
-        <CardFooter link="/" label="Show more" />
+        <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
       </Card>
     </div>
   )
