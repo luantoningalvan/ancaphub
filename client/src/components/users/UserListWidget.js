@@ -7,7 +7,7 @@ import CardBody from "../ui/CardBody";
 import styled from "styled-components";
 import defaultAvatar from '../../assets/default-profile-picture.jpg'
 import { FormattedMessage } from "react-intl";
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 
 const User = styled.li`
   list-style:none;
@@ -97,7 +97,7 @@ const UserListWidget = props => {
             ))}
           </ul>
         </CardBody>
-        <CardFooter link="/" label="Show more" />
+        <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
       </Card>
     </div>
   )
