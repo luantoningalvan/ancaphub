@@ -1,12 +1,17 @@
 import React from "react";
 import Paper from "../ui/Paper";
-import PostActions from "./PostActions";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import styled from "styled-components";
-import { Link } from "react-router-dom" ;
+import { Link } from "react-router-dom";
 import Dropdown from "../../components/ui/Dropdown";
 import IconButton from "../../components/ui/IconButton";
 import MdMore from "react-ionicons/lib/MdMore";
+import CommentBox from '../comments/CommentBox'
+
+// Icons
+import LikeIcon from "react-ionicons/lib/IosThumbsUpOutline";
+import ShareIcon from "react-ionicons/lib/IosShareAltOutline";
+import CommentIcon from "react-ionicons/lib/IosTextOutline";
 
 const ProfilePicture = styled.div`
   height: 44px;
@@ -28,7 +33,7 @@ const PostCardHeader = styled.div`
     display: block; 
     text-decoration: none;
     font-weight: bold;
-    color: ${ props => props.theme.pallete.text.primary };
+    color: ${ props => props.theme.pallete.text.primary};
     line-height: 100%;
     font-size: 1rem;
     margin-bottom: 5px
@@ -36,13 +41,52 @@ const PostCardHeader = styled.div`
 
   span { 
     display: block;
-    color: ${ props => props.theme.pallete.text.secondary };
+    color: ${ props => props.theme.pallete.text.secondary};
     line-height: 100%;
     font-size: 0.8rem
   }
 `;
 
+const PostActions = styled.div`
+  display: flex;
+  border-top: 1px solid #2f3749;
+  background: rgba(0,0,0,.1);
+
+  > button {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > span {
+      display: block;
+      margin-left: 10px;
+      font-size: 1.1em;
+    }
+
+    > svg { 
+      fill: white;
+    }
+
+    &:hover {
+      background: rgba(256,256,256,0.02);
+    }
+  }
+`;
+
 const PostCard = () => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleCommentBox = () => {
+    setExpanded(!expanded)
+  }
+
   return (
     <Paper style={{ marginTop: 15 }}>
       <PostCardHeader>
@@ -50,22 +94,36 @@ const PostCard = () => {
           <img src={defaultProfilePicture} alt="Default profile pic" />
         </ProfilePicture>
         <div>
-        <Link to="/user">Nome do Usuário </Link>
-        <span>há poucos segundos</span>
+          <Link to="/user">Nome do Usuário </Link>
+          <span>há poucos segundos</span>
         </div>
         <div style={{ marginLeft: "auto" }}>
-          <Dropdown placement="left-start" options={[{ text: "Edit", action: () => alert("Foo") }, { text: "Delete" } ]}>
+          <Dropdown placement="left-start" options={[{ text: "Edit", action: () => alert("Foo") }, { text: "Delete" }]}>
             <IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>
           </Dropdown>
         </div>
       </PostCardHeader>
 
-      <div style={{padding:20}}>
+      <div style={{ padding: 20 }}>
         Culpa dolor consectetur mollit est qui aliquip adipisicing velit commodo aliquip culpa non eu veniam. Pariatur ut est et qui fugiat nulla. Sunt laboris excepteur fugiat deserunt et mollit cillum quis duis ea. Cupidatat sint incididunt aliqua non cupidatat commodo irure ad non. Adipisicing elit et magna sit sit sit laboris. Labore veniam ipsum consectetur minim.
         Ad voluptate cupidatat aliqua occaecat. Mollit exercitation est eu est id ipsum excepteur mollit eiusmod incididunt. Et qui qui ut magna laborum duis voluptate proident amet cupidatat duis exercitation mollit. Officia adipisicing cillum magna exercitation. Cupidatat ullamco reprehenderit excepteur ipsum nostrud Lorem culpa nostrud labore dolore.
       </div>
 
-      <PostActions />
+      <PostActions>
+        <button>
+          <LikeIcon />
+          <span>1</span>
+        </button>
+        <button onClick={handleCommentBox}>
+          <CommentIcon />
+          <span>1</span>
+        </button>
+        <button>
+          <ShareIcon />
+          <span>1</span>
+        </button>
+      </PostActions>
+      <CommentBox expanded={expanded} post={1} />
     </Paper>
   );
 };
