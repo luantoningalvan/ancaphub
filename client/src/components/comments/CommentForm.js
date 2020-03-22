@@ -24,7 +24,7 @@ const authUser = {
   avatar: ""
 }
 
-const CommentForm = ({ post }) => {
+const CommentForm = ({ post, placeholder }) => {
   const [commentData, setCommentData] = useState({ content: "" })
 
   const handleChange = (e) => {
@@ -47,7 +47,7 @@ const CommentForm = ({ post }) => {
         type="text"
         size="small"
         variant="filled"
-        placeholder="Faça um comentário"
+        placeholder={placeholder}
         color="secondary"
         onKeyPress={handleKeyPress}
         value={commentData.content}

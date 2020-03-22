@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UserAvatar from '../users/UserAvatar';
 import UserName from '../users/UserName'
 import styled from 'styled-components'
 import Dropdown from "../../components/ui/Dropdown";
 import IconButton from "../../components/ui/IconButton";
+import Collapse from '../ui/Collapse'
 import MdMore from "react-ionicons/lib/MdMore";
+import CommentBox from './CommentBox'
 
 const SingleCommentStyle = styled.div`
-    display: flex;
-    align-items: stretch;
-    margin-bottom: 10px;
+.teste {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+
 
     .comment-content {
       background: rgba(0,0,0,0.05);
@@ -21,7 +26,7 @@ const SingleCommentStyle = styled.div`
       align-items: flex-start;
     }
 
-    .commentText {
+    .comment-text {
       padding-top:3px;
       margin:0;
       text-align: left;
@@ -68,17 +73,24 @@ const SingleCommentStyle = styled.div`
 
 
 const SingleComment = ({ comment }) => {
+  const [ responsesState, setResponsesState ] = useState(false)
+
+  const handleResponse = () => {
+    setResponsesState(!responsesState)
+  }
+
   return (
     <SingleCommentStyle>
+      <div className="teste">
       <UserAvatar avatar={comment.user.avatar} style={{ marginRight: 8 }} />
       <div className="comment-content">
         <UserName user={comment.user} fontSize={1} />
-        <p className="commentText">
+        <p className="comment-text">
           {" " + comment.content}
         </p>
         <ul className="date">
           <li><a href="#">Curtir</a></li>
-          <li><a href="#">Responder</a></li>
+          <li><a onClick={handleResponse}>Responder</a></li>
           <li><a href="#">há poucos segundos</a></li>
         </ul>
       </div>
@@ -87,6 +99,8 @@ const SingleComment = ({ comment }) => {
           <IconButton><MdMore /></IconButton>
         </Dropdown>
       </div>
+      </div>
+      <CommentBox expanded={responsesState} indent />
     </SingleCommentStyle>
   )
 }

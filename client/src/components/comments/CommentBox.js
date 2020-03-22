@@ -26,15 +26,14 @@ const comments = [
 ]
 
 const CommentBoxStyle = styled.div`
-  border-top: 1px solid #2f3749;
-  background: rgba(0,0,0,.1);
+  margin: ${props => props.indent ? "10px 0px 10px 43px" : "none"}
 `
 
-const CommentBox = ({ expanded, post }) => {
+const CommentBox = ({ expanded, post, indent }) => {
   return (
     <Collapse expanded={expanded}>
-      <CommentBoxStyle>
-        <CommentForm post={post} />
+      <CommentBoxStyle indent={indent}>
+        <CommentForm post={post} placeholder={indent ? "Faça uma resposta" : "Faça um comentário"} />
         <div style={{ padding: '0px 16px 16px 16px', textAlign: 'center' }}>
           {comments.map((comment, index) => (
             <Comment comment={comment} key={`comment-${index}`} />
