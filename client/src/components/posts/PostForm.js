@@ -32,14 +32,11 @@ const FormActions = styled.div`
 const TextBox = styled.div`
   padding: 20px;
   min-height: 100px;
-  .public-DraftEditor-content {
-    min-height: 60px;
-  }
 `;
 
 const PreviewImage = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  height:auto;
   object-fit: cover;
   border-radius: 5px;
 `;
@@ -75,18 +72,37 @@ const ImageButtonLabelWrapper = styled.div`
   }
 `;
 
+const MediaPreview = styled.div`
+  width: 100%;  
+  max-height: 400px;
+  border-radius: 16px;
+  overflow:hidden;
+  position: relative;
+  margin-top:20px;
+
+  .close-icon {
+    height:38px;
+    width:38px;
+    background: red;
+    position: absolute;
+    right:16px;
+    top:16px;
+    z-index: 100;
+  }
+`
+
 const listPlugin = createListPlugin();
 const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin];
 
 function PostForm(props) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  const [thumbnail, setThumbnail] = useState(null);
-  const preview = useMemo(() => {
-    return thumbnail ? URL.createObjectURL(thumbnail) : null;
-  }, [thumbnail]);
-
   const contentState = editorState.getCurrentContent();
+  const [media, setMedia] = useState(null);
+
+  const preview = useMemo(() => {
+    return media && media.type == "image" ? URL.createObjectURL(media.data) : null;
+  }, [media]);
+
 
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -103,8 +119,15 @@ function PostForm(props) {
     setEditorState(EditorState.createEmpty());
   }
 
+  const handleAddImage = (e) => {
+    setMedia({
+      type: "image",
+      data: e.target.files[0]
+    })
+  }
+
   const handleRemoveImage = () => {
-    setThumbnail(null);
+    setMedia(null);
     document.getElementById("image-input").value = null;
   };
 
@@ -126,21 +149,23 @@ function PostForm(props) {
               placeholderIsVisible ? (
                 <FormattedMessage id="components.postNewStatus.thinking" />
               ) : (
-                ""
-              )
+                  ""
+                )
             }
             plugins={plugins}
             spellCheck
           />
+          {media && (
+            <MediaPreview>
+              <IconButton onClick={() => handleRemoveImage()} className="close-icon">
+                <CloseIcon />
+              </IconButton>
+              {media.type == "image" && (
+                <PreviewImage src={preview} alt="preview" />
+              )}
+            </MediaPreview>
+          )}
         </TextBox>
-        {thumbnail && (
-          <FormActions>
-            <PreviewImage src={preview} alt="preview" />
-            <IconButton onClick={() => handleRemoveImage()}>
-              <CloseIcon />
-            </IconButton>
-          </FormActions>
-        )}
         <FormActions>
           <ImageButtonLabelWrapper>
             <label>
@@ -148,7 +173,7 @@ function PostForm(props) {
               <input
                 id="image-input"
                 type="file"
-                onChange={event => setThumbnail(event.target.files[0])}
+                onChange={handleAddImage}
               />
             </label>
           </ImageButtonLabelWrapper>
