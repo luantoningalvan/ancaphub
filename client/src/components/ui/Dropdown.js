@@ -20,11 +20,11 @@ const clickAwayListener = (ref, action) => {
 };
 
 const DropdownListContainer = styled.div`
-  background-color: ${props => props.theme.pallete.paper};
+  background-color: #293249;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 12px;
+  font-size: 0.9em;
   z-index: 1000;
+  padding: 10px 0;
   
   & > div:first-child {
     border-top-left-radius: 5px;
@@ -40,11 +40,12 @@ const DropdownListContainer = styled.div`
 const DropdownListItem = styled.div`
   min-width: 100px;
   max-width: 200px;
-  padding: 8px;
+  padding: 8px 16px;
   transition: background-color 150ms ease-in-out;
   cursor: pointer;
+  transition:0.3s;
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    color: ${props => props.theme.pallete.secondary}
   }
 `;
 
