@@ -16,7 +16,7 @@ const CardFooter = styled(Link)`
 `;
 
 export default props => (
-    <CardFooter to={props.link}>
+    <CardFooter to={props.link} onClick={props.action}>
         {props.label}
     </CardFooter>
 )
