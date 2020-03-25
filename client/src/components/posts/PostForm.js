@@ -3,12 +3,18 @@ import styled from "styled-components";
 import Paper from "../ui/Paper";
 import Button from "../ui/Button";
 import IconButton from "../ui/IconButton";
+import Card from "../ui/Card";
+import CardFooter from "../ui/CardFooter";
+import CardBody from "../ui/CardBody";
+import TextField from "../ui/TextField";
+import ReactPlayer from 'react-player'
 
 // Icons
 import ImageIcon from "react-ionicons/lib/IosImageOutline";
-import VideoIcon from "react-ionicons/lib/IosVideocamOutline";
+import EmbedIcon from "react-ionicons/lib/IosCode";
 import PollIcon from "react-ionicons/lib/IosPodiumOutline";
 import CloseIcon from "react-ionicons/lib/IosClose";
+import AddIcon from "react-ionicons/lib/IosAdd";
 
 // Text Editor
 import { EditorState, RichUtils, convertToRaw } from "draft-js";
@@ -74,21 +80,32 @@ const ImageButtonLabelWrapper = styled.div`
 
 const MediaPreview = styled.div`
   width: 100%;  
-  max-height: 400px;
   border-radius: 16px;
   overflow:hidden;
   position: relative;
   margin-top:20px;
+  border: 1px solid #2f3749;
+`
 
-  .close-icon {
-    height:38px;
-    width:38px;
-    background: red;
-    position: absolute;
-    right:16px;
-    top:16px;
-    z-index: 100;
-  }
+const ImageBox = styled.div`
+  max-height:350px;
+.close-icon {
+  height:38px;
+  width:38px;
+  background: red;
+  position: absolute;
+  right:16px;
+  top:16px;
+  z-index: 100;
+}
+`
+
+const PollBox = styled.div`
+  display: flex;
+  padding:15px;
+
+  ul { flex: 1; }
+  li { list-style: none; }
 `
 
 const listPlugin = createListPlugin();
@@ -126,7 +143,32 @@ function PostForm(props) {
     })
   }
 
-  const handleRemoveImage = () => {
+  const handleAddEmbed = (e) => {
+    setMedia({
+      type: "embed",
+      data: {
+        url: ""
+      }
+    })
+  }
+
+  const handleAddPoll = () => {
+    setMedia({
+      type: "poll",
+      data: [
+        { text: "" },
+        { text: "" },
+      ]
+    })
+  }
+
+  const addPollOption = () => {
+    if (media.data.length < 4) {
+      setMedia({ ...media, data: [...media.data, { text: "" }] })
+    }
+  }
+
+  const handleRemoveMedia = () => {
     setMedia(null);
     document.getElementById("image-input").value = null;
   };
@@ -157,11 +199,56 @@ function PostForm(props) {
           />
           {media && (
             <MediaPreview>
-              <IconButton onClick={() => handleRemoveImage()} className="close-icon">
-                <CloseIcon />
-              </IconButton>
               {media.type == "image" && (
-                <PreviewImage src={preview} alt="preview" />
+                <ImageBox>
+                  <IconButton onClick={handleRemoveMedia} className="close-icon">
+                    <CloseIcon />
+                  </IconButton>
+                  <PreviewImage src={preview} alt="preview" />
+                </ImageBox>
+              )}
+              {media.type == "poll" && (
+                <Card>
+                  <PollBox>
+                    <ul>
+                      {media.data.map((option, index) => (
+                        <li>
+                          <TextField 
+                          fullWidth 
+                          type="text" 
+                          placeholder={`Opção ${index + 1} ${index >= 2 ? "(opcional)" : ""}`} 
+                          style={{ marginBottom: 8 }} 
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', minWidth:56, padding: 10 }}>
+                      {media.data.length < 4 && (
+                        <IconButton color="secondary" disableElevation>
+                          <AddIcon onClick={addPollOption} />
+                        </IconButton>
+                      )}
+                    </div>
+                  </PollBox>
+                  <CardFooter label="Remover Enquete" action={handleRemoveMedia} />
+                </Card>
+              )}
+              {media.type == "embed" && (
+                <Card>
+                  <CardBody>
+                    <TextField
+                      fullWidth
+                      placeholder="Link do Vídeo"
+                      value={media.data.url}
+                      onChange={(e) => setMedia({ type: "embed", data: { url: e.target.value } })}
+                    />
+                    {media.data.url !== "" && (
+                      <ReactPlayer url={media.data.url} light style={{ marginTop: 8 }} width="100%" />
+                    )}
+                  </CardBody>
+
+                  <CardFooter label="Remover Incorporação" action={handleRemoveMedia} />
+                </Card>
               )}
             </MediaPreview>
           )}
@@ -177,14 +264,12 @@ function PostForm(props) {
               />
             </label>
           </ImageButtonLabelWrapper>
-          <div>
-            <IconButton size="small" disabled>
-              <VideoIcon />
-            </IconButton>
-            <IconButton size="small" disabled>
-              <PollIcon />
-            </IconButton>
-          </div>
+          <IconButton size="small" onClick={handleAddPoll}>
+            <PollIcon />
+          </IconButton>
+          <IconButton size="small" onClick={handleAddEmbed}>
+            <EmbedIcon />
+          </IconButton>
 
           <Button
             variant="contained"
