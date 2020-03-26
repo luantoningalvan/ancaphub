@@ -12,6 +12,8 @@ import CommentBox from '../comments/CommentBox'
 import LikeIcon from "react-ionicons/lib/IosThumbsUpOutline";
 import ShareIcon from "react-ionicons/lib/IosShareAltOutline";
 import CommentIcon from "react-ionicons/lib/IosTextOutline";
+import DeleteIcon from "react-ionicons/lib/IosRemoveCircleOutline";
+import DocumentIcon from "react-ionicons/lib/IosDocumentOutline";
 
 const ProfilePicture = styled.div`
   height: 44px;
@@ -98,7 +100,7 @@ const PostCard = () => {
           <span>há poucos segundos</span>
         </div>
         <div style={{ marginLeft: "auto" }}>
-          <Dropdown placement="left-start" options={[{ text: "Edit", action: () => alert("Foo") }, { text: "Delete" }]}>
+          <Dropdown toggleOnAction placement="left-start" options={[{ text: "Edit", action: () => alert("Foo"), icon: <DocumentIcon /> }, { text: "Delete", icon: <DeleteIcon /> }]}>
             <IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>
           </Dropdown>
         </div>

@@ -19,13 +19,23 @@ const clickAwayListener = (ref, action) => {
   });
 };
 
+const DropdownTitleContainer = styled.div`
+  background-color: #293249;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 8px 1em;
+  h3 {
+    color: white;
+  }
+`
+
 const DropdownListContainer = styled.div`
   background-color: #293249;
   border-radius: 5px;
   font-size: 0.9em;
   z-index: 1000;
   padding: 10px 0;
-  
+
   & > div:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -37,23 +47,57 @@ const DropdownListContainer = styled.div`
   }
 `;
 
+const DropdownCard = styled.div`
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 1em;
+`;
+
 const DropdownListItem = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   min-width: 100px;
-  max-width: 200px;
-  padding: 8px 16px;
-  transition: background-color 150ms ease-in-out;
+  max-width: 400px;
+  padding: 8px 1em;
   cursor: pointer;
-  transition:0.3s;
-  &:hover {
+  
+  svg {
+    fill: white;
+  }
+  
+  span, span a {
+    transition: color 300ms ease-in-out;
+  }
+
+  span {
+    color: white;
+    margin-left: 0.5em;
+    
+  }
+
+  span a {
+    color: white;
+    text-decoration: none;
+  }
+
+  &:hover > div > span, &:hover > div > span a {
     color: ${props => props.theme.pallete.secondary}
   }
 `;
 
-const Dropdown = ({ options, children, placement }) => {
+const Dropdown = ({ options, children, placement, toggleOnAction, title, showOnEmpty }) => {
     const [showing, setShowing] = React.useState(false);
     const listRef = React.useRef(null);
     const wrappedComponentRef = React.useRef(null);
     const popperModifiers = {
+      offset: {
+        offset: "-3vw, 14"
+      },
       shift: {
         enabled: true,
       },
@@ -99,14 +143,20 @@ const Dropdown = ({ options, children, placement }) => {
             <Popper placement={placement} modifiers={popperModifiers}>
               {({ ref, style, placement }) => (
                 <DropdownListContainer ref={node => setListRef(node, ref)} style={style} data-placement={placement}>
-                  { options.map(option => (
-                    <DropdownListItem key={option.text} onClick={() => {
-                      if (typeof option.action === "function" && option.action !== undefined) {
-                        option.action();
-                      }
-                      toggle();
-                     }}>
-                      {option.text}
+                  {title && <DropdownTitleContainer><h3>{title}</h3></DropdownTitleContainer>}
+                  {(options.length === 0 && showOnEmpty) && <DropdownCard>{showOnEmpty}</DropdownCard>}
+                  { options && options.map(option => (
+                    <DropdownListItem key={options.indexOf(option)}>
+                       <div style={{ display: "flex", alignItems: "center", flexGrow: 1 }} onClick={() => {
+                        if (typeof option.action === "function" && option.action !== undefined) {
+                          option.action();
+                        }
+                          if (toggleOnAction) toggle();
+                        }}>
+                          {option.icon && React.cloneElement(option.icon, { fontSize: "1.5rem" })}
+                          <span>{option.text}</span>
+                       </div>
+                      {option.component && React.cloneElement(option.component, { style: { margin: "0 0.5em" } })}
                     </DropdownListItem>
                   )) }
                 </DropdownListContainer>
@@ -120,7 +170,9 @@ const Dropdown = ({ options, children, placement }) => {
 
 Dropdown.propTypes = {
   children: PropTypes.node.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  showOnEmpty: PropTypes.element,
+  options: PropTypes.arrayOf(PropTypes.shape({ text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]), icon: PropTypes.element, action: PropTypes.func, component: PropTypes.element })).isRequired,
   placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "bottom", "bottom-start", "bottom-end", "right", "right-end", "right-start", "left", "left-end", "left-start", "bottom", "bottom-end", "bottom-start"])
 }
 

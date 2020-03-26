@@ -6,6 +6,27 @@ import { useRouteMatch } from "react-router-dom";
 import NotificationsIcon from "react-ionicons/lib/IosNotifications";
 import MessagesIcon from "react-ionicons/lib/IosChatbubbles";
 import Search from "./Search";
+import Dropdown from "../ui/Dropdown";
+import Switch from "../ui/FlipSwitch";
+import { FormattedMessage } from "react-intl";
+
+// Icons
+import ArrowDownIcon from "react-ionicons/lib/IosArrowDown";
+import ProfileIcon from "react-ionicons/lib/MdPerson";
+import BookIcon from "react-ionicons/lib/MdBook";
+import BookmarkIcon from "react-ionicons/lib/MdBookmark";
+import ContrastIcon from "react-ionicons/lib/MdContrast";
+import SettingsIcon from "react-ionicons/lib/MdSettings";
+import LogoutIcon from "react-ionicons/lib/IosLogOut";
+
+const headerScope = [ 
+  { text: <Link to="/user"><FormattedMessage id="common.profile"/></Link>, icon: <ProfileIcon /> }, 
+  { text: <Link to="/user"><FormattedMessage id="common.contributions"/></Link>, icon: <BookIcon />}, 
+  { text: <Link to="/user"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>, icon: <BookmarkIcon/> },
+  { text: <FormattedMessage id="common.darkMode" />, icon: <ContrastIcon />, component: <Switch />},
+  { text: <FormattedMessage id="common.settings" />, icon: <SettingsIcon />},
+  { text: <FormattedMessage id="common.logout" />, icon: <LogoutIcon />},
+];
 
 const AppBar = styled.header`
   background: ${props => props.theme.pallete.secondary};
@@ -50,7 +71,7 @@ const HeaderMenuItem = styled.li`
     margin-right: 0px;
   }
 
-  > a {
+  > a, > div {
     display: block;
     padding: 10px;
     border-radius: 5px;
@@ -62,10 +83,11 @@ const HeaderMenuItem = styled.li`
     }
   }
 
-  > a svg {
+  > a svg, > div svg {
     fill: rgba(0, 0, 0, 0.5);
   }
 `;
+
 
 const Header = () => {
   const { url } = useRouteMatch();
@@ -80,16 +102,27 @@ const Header = () => {
       <Search />
 
       <HeaderMenu>
+      <Dropdown placement="bottom" title={<FormattedMessage id="common.notifications" />} options={[]} showOnEmpty={<p>Nenhuma nova notificação</p>}>
         <HeaderMenuItem current={url.includes("/notifications")}>
-          <Link to="/notifications">
-            <NotificationsIcon />
-          </Link>
-        </HeaderMenuItem>
+            <div>
+              <NotificationsIcon />
+            </div>
+          </HeaderMenuItem>
+        </Dropdown>
+        <Dropdown placement="bottom" title={<FormattedMessage id="common.messages" />} options={[]} showOnEmpty={<p>Nenhuma nova mensagem</p>}>
         <HeaderMenuItem current={url.includes("/messages")}>
-          <Link to="/messages">
-            <MessagesIcon />
-          </Link>
-        </HeaderMenuItem>
+            <div>
+              <MessagesIcon />
+            </div>
+          </HeaderMenuItem>
+        </Dropdown>
+        <Dropdown placement="bottom" options={headerScope}>
+          <HeaderMenuItem>
+            <div>
+              <ArrowDownIcon />
+            </div>
+          </HeaderMenuItem>
+        </Dropdown>
       </HeaderMenu>
     </AppBar>
     <HeaderWrapper />
