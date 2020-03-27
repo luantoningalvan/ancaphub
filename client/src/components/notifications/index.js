@@ -82,7 +82,7 @@ export default ({ notification }) => {
     <div>
       <span className="message">
         <FormattedMessage
-          id={`componentes.notifications.${notification.type}`}
+          id={`components.notifications.${notification.type}`}
           values={{
             ...notification.data,
             strong: (...chunks) => <strong>{chunks}</strong>,

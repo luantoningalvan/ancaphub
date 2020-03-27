@@ -4,6 +4,8 @@ import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Dropdown from "../../components/ui/Dropdown";
+import DropdownListContainer from "../../components/ui/DropdownListContainer";
+import DropdownListItem from "../../components/ui/DropdownListItem";
 import IconButton from "../../components/ui/IconButton";
 import MdMore from "react-ionicons/lib/MdMore";
 import CommentBox from '../comments/CommentBox'
@@ -100,8 +102,11 @@ const PostCard = () => {
           <span>há poucos segundos</span>
         </div>
         <div style={{ marginLeft: "auto" }}>
-          <Dropdown toggleOnAction placement="left-start" options={[{ text: "Edit", action: () => alert("Foo"), icon: <DocumentIcon /> }, { text: "Delete", icon: <DeleteIcon /> }]}>
-            <IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>
+          <Dropdown offsetX={15} placement="left-start" toggle={<IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>}>
+            <DropdownListContainer>
+              <DropdownListItem icon={<DocumentIcon />} onClick={() => alert("foo")}>Edit</DropdownListItem>
+              <DropdownListItem icon={<DeleteIcon />}>Delete</DropdownListItem>
+            </DropdownListContainer>
           </Dropdown>
         </div>
       </PostCardHeader>

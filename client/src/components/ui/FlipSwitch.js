@@ -61,11 +61,11 @@ const FlipSwitchWrapper = styled.div`
   }
 `;
 
-export default ({ checked }) => {
+export default (props) => {
   const label = `switch-${Math.floor(Math.random() * (1000))}`
   return (
     <FlipSwitchWrapper>
-     <input type="checkbox" className="checkbox" id={label} checked={checked}/>
+     <input type="checkbox" className="checkbox" id={label} {...props} />
      <label for={label}>
         <div className="switch-inner"></div>
         <div className="switch"></div>
