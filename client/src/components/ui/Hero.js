@@ -9,7 +9,8 @@ const HeroWrapper = styled.div`
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
-
+  align-items:center;
+  
   > h2 { 
     font-size: 30px;
     margin-bottom: 5px;
