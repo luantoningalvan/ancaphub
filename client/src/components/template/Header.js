@@ -158,19 +158,19 @@ const Header = () => {
               <Link to="/user"><FormattedMessage id="common.profile"/></Link>
             </DropdownListItem>
             <DropdownListItem icon={<BookIcon />}>
-              <Link to="/user/contributions"><FormattedMessage id="common.contributions"/></Link>
+              <Link to="/contributions"><FormattedMessage id="common.contributions"/></Link>
             </DropdownListItem>
             <DropdownListItem icon={<BookmarkIcon />}>
-              <Link to="/user/lists"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>
+              <Link to="/bookmarks"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>
             </DropdownListItem>
             <DropdownListItem icon={<ContrastIcon />} action={<Switch />}>
               <FormattedMessage id="common.darkMode" />
             </DropdownListItem>
             <DropdownListItem icon={<SettingsIcon />}>
-              <FormattedMessage id="common.settings" />
+            <Link to="/settings"><FormattedMessage id="common.settings" /></Link>
             </DropdownListItem>
             <DropdownListItem icon={<LogoutIcon />}>
-              <FormattedMessage id="common.logout" />
+              <Link to="/logout"><FormattedMessage id="common.logout" /></Link>
             </DropdownListItem>
           </DropdownListContainer>
         </Dropdown>

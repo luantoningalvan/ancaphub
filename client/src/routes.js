@@ -18,6 +18,9 @@ import Projects from "./pages/projects";
 import Profile from "./pages/profiles";
 import Notifications from "./pages/notifications";
 import Messages from "./pages/messages";
+import Contributions from "./pages/account/Contributions";
+import Bookmarks from "./pages/account/Bookmarks";
+import Settings from "./pages/account/Settings";
 
 export default ({ auth }) => {
   const allRoutes = [
@@ -71,6 +74,21 @@ export default ({ auth }) => {
       exact: true,
       path: "/projects",
       component: Projects
+    },
+    {
+      exact: true,
+      path: "/contributions",
+      component: Contributions
+    },
+    {
+      exact: true,
+      path: "/bookmarks",
+      component: Bookmarks
+    },
+    {
+      exact: true,
+      path: "/settings",
+      component: Settings
     },
     {
       exact: true,
