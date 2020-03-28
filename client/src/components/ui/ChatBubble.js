@@ -14,8 +14,8 @@ const BubbleBody = styled.div`
   flex-direction: ${props => (props.sentByUser ? "row-reverse" : "row")};
   background-color: ${props =>
     props.sentByUser
-      ? props.theme.pallete.secondary
-      : props.theme.pallete.background};
+      ? props.theme.palette.secondary
+      : props.theme.palette.background};
   padding: 16px;
   color: ${props => (props.sentByUser ? "black" : "#ccc")};
   border-radius: 5px;

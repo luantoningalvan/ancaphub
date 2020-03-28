@@ -9,7 +9,7 @@ const Tree = styled.ul`
   left: 74px;
   top: 10px;
   border-radius: 10px;
-  background: ${props => props.theme.pallete.paper};
+  background: ${props => props.theme.palette.paper};
   display: none;
   transition: 0.4s;
 
@@ -22,7 +22,7 @@ const Tree = styled.ul`
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
-    border-right: 10px solid ${props => props.theme.pallete.paper};
+    border-right: 10px solid ${props => props.theme.palette.paper};
     border-bottom: 5px solid transparent;
   }
 `;

@@ -11,7 +11,6 @@ const CardCover = styled.div`
   background: url("${props => props.cover}");
   background-position: center;
   background-size: cover;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +42,7 @@ const CardCover = styled.div`
 `;
 
 const Link = styled(RouterLink)`
-  color: ${props => props.theme.pallete.text.primary};
+  color: ${props => props.theme.palette.text.primary};
   text-decoration: none;
 `;
 
@@ -53,24 +52,26 @@ const CardTitle = styled.h2`
   line-height: 1.25rem;
   font-size: 1.25rem;
   margin: 15px 0px 5px;
+  color: ${props => props.theme.palette.text.primary};
 `;
 const CardSubtitle = styled.h3`
   font-weight: lighter;
   margin: 0;
   line-height: 0.9rem;
   font-size: 0.9rem;
+  color: ${props => props.theme.palette.text.secondary};
 `;
 
 const CardType = styled.span`
   position: absolute;
   top: -10px;
-  background: ${props => props.theme.pallete.secondary};
+  background: ${props => props.theme.palette.secondary};
   padding: 5px;
   border-radius: 5px;
   line-height: 100%;
   left: 10px;
   > svg {
-    fill: ${props => props.theme.pallete.text.primary};
+    fill: ${props => props.theme.palette.text.contrast};
   }
 `;
 export default function VideoCard(props) {

@@ -17,13 +17,13 @@ const GroupBanner = styled.div`
   background-position: center;
 
   h2 {
-    color: ${props => props.theme.pallete.text.primary};
+    color: ${props => props.theme.palette.text.contrast};
     font-size: 1.9em;
     margin-bottom: 5px;
   }
 
   span {
-    color: ${props => props.theme.pallete.text.secondary};
+    color: ${props => props.theme.palette.text.contrast};
     font-size: 1.1em;
     font-weight: lighter;
   }

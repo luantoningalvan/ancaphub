@@ -25,7 +25,7 @@ import SettingsIcon from "react-ionicons/lib/MdSettings";
 import LogoutIcon from "react-ionicons/lib/IosLogOut";
 
 const AppBar = styled.header`
-  background: ${props => props.theme.pallete.secondary};
+  background: ${props => props.theme.palette.secondary};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,6 +62,7 @@ const HeaderMenu = styled.ul`
 const HeaderMenuItem = styled.li`
   list-style: none;
   margin-right: 5px;
+  cursor: pointer; 
 
   &:last-child {
     margin-right: 0px;
@@ -71,8 +72,8 @@ const HeaderMenuItem = styled.li`
     display: block;
     padding: 10px;
     border-radius: 5px;
-    background: ${props =>
-      props.current ? "rgba(0,0,0,0.15)" : "transparent"};
+    background: ${props => props.current ? "rgba(0,0,0,0.15)" : "transparent"};
+    transition: background 0.3s;
 
     &:hover {
       background: rgba(0, 0, 0, 0.15);
@@ -80,7 +81,7 @@ const HeaderMenuItem = styled.li`
   }
 
   > a svg, > div svg {
-    fill: rgba(0, 0, 0, 0.5);
+    fill: ${props => props.theme.palette.text.contrast};
   }
 `;
 

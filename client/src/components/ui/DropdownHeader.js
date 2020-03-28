@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const DropdownTitleContainerWrap = styled.div`
-  background-color: ${props => props.theme.pallete.paper};
+  background-color: ${props => props.theme.palette.paper};
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  padding: 8px 1em;
+  padding: 16px 16px 8px;
   h3 {
-    color: white;
+    color: ${props => props.theme.palette.text.primary};
   }
 `
 

@@ -15,7 +15,7 @@ const FlipSwitchWrapper = styled.div`
     display: block;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid ${props => props.theme.palette.border};
     border-radius: 5px;
     & > div.switch-inner {
       width: 200%;
@@ -24,14 +24,14 @@ const FlipSwitchWrapper = styled.div`
       &::before {
         content: "";
         padding-left: 12px;
-        background-color: ${props => props.theme.pallete.secondary};
+        background-color: ${props => props.theme.palette.secondary};
         color: #FFFFFF;
       }
 
       &::after {
         content: "";
         padding-right: 12px;
-        background-color: ${props => props.theme.pallete.secondary};
+        background-color: ${props => props.theme.palette.secondary};
         color: #888888;
         text-align: right;
       }

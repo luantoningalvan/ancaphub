@@ -18,11 +18,12 @@ const LastItems = styled.div`
 const Item = styled(Link)`
   display: flex;
   border-radius: 4px;
-  background: rgba(0,0,0,0.1);
+  background: ${props => props.theme.palette.paperDark};
   overflow: hidden;
   cursor: pointer;
   height: 95px;
   text-decoration:none;
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.08);
   
   &:hover { 
     background-color: rgba(0,0,0,0.03); 
@@ -54,14 +55,14 @@ const ItemContent = styled.div`
     font-size: 1.1em;
     max-height:2.2em;
     margin-bottom:5px;
-    color: ${ props => props.theme.pallete.text.primary};
+    color: ${ props => props.theme.palette.text.primary};
     overflow:hidden;
   }
 
   .author {
     font-weight: lighter;
     font-size: 14px;
-    color: ${ props => props.theme.pallete.text.secondary};
+    color: ${ props => props.theme.palette.text.secondary};
   }
 `
 

@@ -1,17 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-const DropdownListItemWrap = styled.div`
+const DropdownListItemWrap = styled.li`
   display: flex;
-  justify-content: flex-start;
+  alig-items: flex-start;
+  list-style:none;
   align-items: center;
   min-width: 100px;
   max-width: 400px;
-  padding: 8px 1em;
+  padding: 8px 16px;
   cursor: pointer;
+
+  &:hover{
+    a, span {color: ${props => props.theme.palette.primary};}
+
+    svg {
+      fill: ${props => props.theme.palette.primary};
+    }
+  }
   
   svg {
-    fill: white;
+    fill: ${props => props.theme.palette.text.primary};
   }
   
   span, span a {
@@ -19,18 +28,13 @@ const DropdownListItemWrap = styled.div`
   }
 
   span {
-    color: white;
+    color: ${props => props.theme.palette.text.primary};;
     margin-left: 0.5em;
-    
   }
 
   span a {
-    color: white;
+    color: ${props => props.theme.palette.text.primary};;
     text-decoration: none;
-  }
-
-  &:hover > span, &:hover > a, &:hover > span a {
-    color: ${props => props.theme.pallete.secondary}
   }
 `;
 

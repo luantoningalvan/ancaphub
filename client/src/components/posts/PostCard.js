@@ -37,7 +37,7 @@ const PostCardHeader = styled.div`
     display: block; 
     text-decoration: none;
     font-weight: bold;
-    color: ${ props => props.theme.pallete.text.primary};
+    color: ${ props => props.theme.palette.text.primary};
     line-height: 100%;
     font-size: 1rem;
     margin-bottom: 5px
@@ -45,7 +45,7 @@ const PostCardHeader = styled.div`
 
   span { 
     display: block;
-    color: ${ props => props.theme.pallete.text.secondary};
+    color: ${ props => props.theme.palette.text.secondary};
     line-height: 100%;
     font-size: 0.8rem
   }
@@ -53,8 +53,8 @@ const PostCardHeader = styled.div`
 
 const PostActions = styled.div`
   display: flex;
-  border-top: 1px solid #2f3749;
-  background: rgba(0,0,0,.1);
+  border-top: 1px solid ${props => props.theme.palette.border};
+  background: ${props => props.theme.palette.paperDark};
 
   > button {
     flex: 1;
@@ -63,10 +63,11 @@ const PostActions = styled.div`
     outline: none;
     background: transparent;
     cursor: pointer;
-    color: white;
+    color: ${props => props.theme.palette.text.secondary};
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.3s;
 
     > span {
       display: block;
@@ -75,11 +76,15 @@ const PostActions = styled.div`
     }
 
     > svg { 
-      fill: white;
+      fill: ${props => props.theme.palette.text.secondary};
     }
 
     &:hover {
-      background: rgba(256,256,256,0.02);
+      color: ${props => props.theme.palette.primary};
+      
+    > svg { 
+      fill: ${props => props.theme.palette.primary};
+    }
     }
   }
 `;

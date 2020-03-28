@@ -10,7 +10,7 @@ const Nav = styled.aside`
   position: fixed;
   top: 64px;
   left: 0;
-  background: ${props => props.theme.pallete.paper};
+  background: ${props => props.theme.palette.paper};
 `;
 
 const UserMenu = styled.div`

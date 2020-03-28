@@ -15,10 +15,9 @@ const SearchWrapper = styled.div`
   background: rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
-  color: white;
   padding: 0px 10px;
   > i svg {
-    fill: white;
+    fill: ${props => props.theme.palette.text.contrast};
   }
   > input {
     border: none;
@@ -27,8 +26,10 @@ const SearchWrapper = styled.div`
     padding: 10px;
     outline: none;
     flex-grow: 1;
+    color: ${props => props.theme.palette.text.contrast};
+
     &::placeholder {
-      color: #eee;
+      color: ${props => props.theme.palette.text.contrast};
       font-size: 16px;
       font-family: Ubuntu;
     }

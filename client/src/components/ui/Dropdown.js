@@ -22,7 +22,8 @@ const clickAwayListener = (ref, action) => {
 const DropdownCard = styled.div`
   max-width: 400px;
   display: flex;
-  background-color: ${props => props.theme.pallete.paper};
+  background-color: ${props => props.theme.palette.paper};
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
   border-radius: 5px;
   flex-direction: column;
   justify-content: center;

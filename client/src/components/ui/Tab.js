@@ -5,11 +5,11 @@ const Tab = styled.li`
   border-bottom: 3px solid transparent;
 
   &:hover {
-    border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid ${props => props.theme.palette.border};
   }
 
   .current {
-    border-bottom: 3px solid ${props => props.theme.pallete.secondary};
+    border-bottom: 3px solid ${props => props.theme.palette.secondary};
   }
   > a {
     display: block;

@@ -51,7 +51,7 @@ const SingleCommentStyle = styled.div`
       }
       
       a {
-        color: ${ props => props.theme.pallete.text.secondary};
+        color: ${ props => props.theme.palette.text.secondary};
         text-decoration: none;
 
         &:hover { text-decoration: underline; }
@@ -64,7 +64,7 @@ const SingleCommentStyle = styled.div`
      justify-content:center;
 
       svg {
-        fill: ${props => props.theme.pallete.text.secondary};
+        fill: ${props => props.theme.palette.text.secondary};
         height:20px;
         width:20px;
       }

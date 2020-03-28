@@ -31,8 +31,8 @@ const FormActions = styled.div`
   display: flex;
   justify-content: flex-start;
   padding: 15px;
-  border-top: 1px solid #2f3749;
-  background: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid ${props => props.theme.palette.border};
+  background: ${props => props.theme.palette.paperDark};
 `;
 
 const TextBox = styled.div`
@@ -61,7 +61,7 @@ const ImageButtonLabelWrapper = styled.div`
 
   svg {
     cursor: pointer;
-    fill: ${props => props.theme.pallete.text.primary};
+    fill: ${props => props.theme.palette.text.secondary};
     height: 2em;
     width: 2em;
     margin: 2.5px 0;
@@ -84,7 +84,7 @@ const MediaPreview = styled.div`
   overflow:hidden;
   position: relative;
   margin-top:20px;
-  border: 1px solid #2f3749;
+  border: 1px solid ${props => props.theme.palette.border};
 `
 
 const ImageBox = styled.div`

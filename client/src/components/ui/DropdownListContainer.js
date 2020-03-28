@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
-const DropdownListContainer = styled.div`
-  background-color: #293249;
+const DropdownListContainer = styled.ul`
   border-radius: 5px;
   font-size: 0.9em;
   z-index: 1000;
-  padding: 10px 0;
+  padding: 8px 0;
 
   & > div:first-child {
     border-top-left-radius: 5px;

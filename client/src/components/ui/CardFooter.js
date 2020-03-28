@@ -6,12 +6,13 @@ const CardFooter = styled(Link)`
     width: 100%;
     text-align:center;
     padding:15px;
-    color: white;
+    color: ${props => props.theme.palette.text.primary};
     text-decoration:none;
-    border-top:1px solid #2f3749;
+    border-top:1px solid ${props => props.theme.palette.border};
     transition:0.3s;
+    border-radius: 0px 0px 10px 10px;
     &:hover {   
-        background: rgba(0,0,0,0.1)
+        color: ${props => props.theme.palette.text.secondary};
     }
 `;
 
