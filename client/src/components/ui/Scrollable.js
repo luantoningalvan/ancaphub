@@ -35,7 +35,7 @@ const ScrollableWrap = styled.div`
 
   & > div.cover {
     position: absolute;
-    background: ${props => props.theme.pallete.paper};
+    background: ${props => props.theme.palette.paper};
     height: 100%;
     top: 0;
     right: 0;

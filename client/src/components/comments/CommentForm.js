@@ -15,7 +15,7 @@ const CommentInput = styled.input`
   border-radius: 20px;
   background: transparent;
   outline:none;
-  border: 1px solid #2f3749;
+  border: 1px solid ${props => props.theme.palette.border};
   flex-grow: 1;
   color: white;
 `

@@ -10,7 +10,7 @@ const UserNameStyle = styled(Link)`
   font-size: ${props => props.fontSize || 15}em;
 
   .verifiedUser {
-    background: ${props => props.theme.pallete.secondary};
+    background: ${props => props.theme.palette.secondary};
     border-radius: 15px;
     color: white;
     padding: 5px 10px;

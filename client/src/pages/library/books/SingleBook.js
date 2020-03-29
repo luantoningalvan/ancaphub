@@ -15,14 +15,14 @@ import styled from "styled-components";
 function SingleBook({ match, fetchItem, book }) {
   const Title = styled.h2`
     font-weight: bold;
-    color: ${props => props.theme.pallete.text.primary};
+    color: ${props => props.theme.palette.text.contrast};
     font-size: 2.125rem;
     margin-bottom: 5px;
   `;
 
   const Author = styled.h3`
     font-weight: lighter;
-    color: ${props => props.theme.pallete.text.primary};
+    color: ${props => props.theme.palette.text.contrast};
     font-size: 1.25rem;
     margin-bottom: 34px
   `;
@@ -69,10 +69,12 @@ function SingleBook({ match, fetchItem, book }) {
                   <Paper>
                     <BookCover src="https://ancaphub.s3.sa-east-1.amazonaws.com/1580105305533-o-que-deve-ser-feito.jpg" />
                     <div style={{ padding: 10}}>
-                    <Button fullwidth disableElevation color="secondary">Baixar</Button>
-                    <Button fullwidth disableElevation variant="outlined" style={{marginTop: 5}}>Salvar</Button>
-                    <Button fullwidth disableElevation variant="outlined" style={{marginTop: 5}}>Adionar a uma Lista</Button>
-                    <Button fullwidth disableElevation variant="outlined" style={{marginTop: 5}}>Compartilhar</Button>
+                    <Button fullwidth  color="secondary">Baixar</Button>
+                    <div style={{ display: 'flex', marginTop: 8}}>
+                    <Button variant="outlined" color="primary" style={{marginRight: 8, flex:1}}>Salvar</Button>
+                    <Button variant="outlined" color="primary" style={{marginRight: 8, flex:1}}>Lista</Button>
+                    <Button variant="outlined" color="primary" style={{flex:1}}>Compartilhar</Button>
+                    </div>
                     </div>
                   </Paper>
                   {/*<InvitedBy user={user} />*/}

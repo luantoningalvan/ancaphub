@@ -4,6 +4,8 @@ import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Dropdown from "../../components/ui/Dropdown";
+import DropdownListContainer from "../../components/ui/DropdownListContainer";
+import DropdownListItem from "../../components/ui/DropdownListItem";
 import IconButton from "../../components/ui/IconButton";
 import MdMore from "react-ionicons/lib/MdMore";
 import CommentBox from '../comments/CommentBox'
@@ -35,7 +37,7 @@ const PostCardHeader = styled.div`
     display: block; 
     text-decoration: none;
     font-weight: bold;
-    color: ${ props => props.theme.pallete.text.primary};
+    color: ${ props => props.theme.palette.text.primary};
     line-height: 100%;
     font-size: 1rem;
     margin-bottom: 5px
@@ -43,7 +45,7 @@ const PostCardHeader = styled.div`
 
   span { 
     display: block;
-    color: ${ props => props.theme.pallete.text.secondary};
+    color: ${ props => props.theme.palette.text.secondary};
     line-height: 100%;
     font-size: 0.8rem
   }
@@ -51,8 +53,8 @@ const PostCardHeader = styled.div`
 
 const PostActions = styled.div`
   display: flex;
-  border-top: 1px solid #2f3749;
-  background: rgba(0,0,0,.1);
+  border-top: 1px solid ${props => props.theme.palette.border};
+  background: ${props => props.theme.palette.paperDark};
 
   > button {
     flex: 1;
@@ -61,10 +63,11 @@ const PostActions = styled.div`
     outline: none;
     background: transparent;
     cursor: pointer;
-    color: white;
+    color: ${props => props.theme.palette.text.secondary};
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.3s;
 
     > span {
       display: block;
@@ -73,11 +76,15 @@ const PostActions = styled.div`
     }
 
     > svg { 
-      fill: white;
+      fill: ${props => props.theme.palette.text.secondary};
     }
 
     &:hover {
-      background: rgba(256,256,256,0.02);
+      color: ${props => props.theme.palette.primary};
+      
+    > svg { 
+      fill: ${props => props.theme.palette.primary};
+    }
     }
   }
 `;
@@ -100,8 +107,11 @@ const PostCard = () => {
           <span>há poucos segundos</span>
         </div>
         <div style={{ marginLeft: "auto" }}>
-          <Dropdown toggleOnAction placement="left-start" options={[{ text: "Edit", action: () => alert("Foo"), icon: <DocumentIcon /> }, { text: "Delete", icon: <DeleteIcon /> }]}>
-            <IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>
+          <Dropdown offsetX={15} placement="left-start" toggle={<IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>}>
+            <DropdownListContainer>
+              <DropdownListItem icon={<DocumentIcon />} onClick={() => alert("foo")}>Edit</DropdownListItem>
+              <DropdownListItem icon={<DeleteIcon />}>Delete</DropdownListItem>
+            </DropdownListContainer>
           </Dropdown>
         </div>
       </PostCardHeader>

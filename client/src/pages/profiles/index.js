@@ -25,7 +25,7 @@ const Following = lazy(() => import("./Following"));
 
 const ProfileHeader = styled.div`
   width: 100%;
-  background: ${props => props.theme.pallete.paper};
+  background: ${props => props.theme.palette.paper};
   border-radius: 10px;
   margin-top: 15px;
   overflow: hidden;
@@ -81,7 +81,7 @@ const ProfileInfo = styled.div`
           display: block;
           width: 1px;
           height: 20px;
-          background-color: #2f3749;
+          background-color: ${props => props.theme.palette.border};
           position: absolute;
           top: 8px;
           right: 0;
@@ -97,13 +97,13 @@ const ProfileInfo = styled.div`
         }
 
         > span {
-          color: ${props => props.theme.pallete.text.secondary};
+          color: ${props => props.theme.palette.text.secondary};
         }
         > .counter {
           text-decoration: none;
           font-weight: bold;
           font-size: 1.375rem;
-          color: ${props => props.theme.pallete.text.primary};
+          color: ${props => props.theme.palette.text.primary};
           margin-bottom: 8px;
         }
       }
@@ -118,9 +118,12 @@ const ProfileInfo = styled.div`
     > h3 {
       font-size: 1.3rem;
       margin-bottom: 5px;
+      color: ${props => props.theme.palette.text.primary};
+
     }
     > span {
       font-size: 0.9rem;
+      color: ${props => props.theme.palette.text.secondary};
     }
   }
 
@@ -147,11 +150,11 @@ const UserAbout = styled.div`
     margin: 10px 0px;
   }
   > ul li a {
-    color: white;
+    color: ${props => props.theme.palette.text.primary};
   }
   > ul li svg {
     float: left;
-    fill: white;
+    fill: ${props => props.theme.palette.text.primary};
     margin-right: 10px;
   }
 `;
@@ -171,16 +174,16 @@ const Tabs = styled.ul`
     border-bottom: 3px solid transparent;
 
     &:hover {
-      border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 3px solid ${props => props.theme.palette.border};
     }
   }
 
   > li.current {
-    border-bottom: 3px solid ${props => props.theme.pallete.secondary};
+    border-bottom: 3px solid ${props => props.theme.palette.secondary};
   }
   > li a {
     display: block;
-    color: white;
+    color: ${props => props.theme.palette.secondary};
     text-decoration: none;
     padding: 16px 32px;
   }
@@ -235,7 +238,7 @@ export default props => {
             <Button color="secondary">
               <FormattedMessage id="common.follow" description="Seguir" />
             </Button>
-            <Button>
+            <Button color="primary">
               <FormattedMessage
                 id="common.sendMessage"
                 description="Enviar Mensagem"

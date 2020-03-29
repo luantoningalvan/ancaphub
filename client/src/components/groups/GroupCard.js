@@ -18,11 +18,11 @@ const GroupInfo = styled.div`
   h4 { margin-bottom: 5px; }
   a { 
     text-decoration: none; 
-    color: ${props => props.theme.pallete.text.primary};
+    color: ${props => props.theme.palette.text.primary};
   }
   span { 
     text-decoration: none; 
-    color: ${props => props.theme.pallete.text.secondary}; 
+    color: ${props => props.theme.palette.text.secondary}; 
     display: block;
     margin-bottom: 15px;
   }
@@ -39,7 +39,7 @@ const GroupCard = (props) => {
       <GroupInfo>
         <h4><Link to="/groups/id">{name}</Link></h4>
         <span>{membersCounts} membros</span>
-        <Button fullwidth variant="outlined" disableElevation>
+        <Button fullwidth variant="outlined" color="primary">
           {hasEnrolled ? "Sair" : "Entrar"}
         </Button>
       </GroupInfo>

@@ -7,8 +7,13 @@ import NotificationsIcon from "react-ionicons/lib/IosNotifications";
 import MessagesIcon from "react-ionicons/lib/IosChatbubbles";
 import Search from "./Search";
 import Dropdown from "../ui/Dropdown";
+import DropdownListContainer from "../ui/DropdownListContainer"
+import DropdownListItem from "../ui/DropdownListItem"
+import DropdownHeader from "../ui/DropdownHeader"
+import CardFooter from "../ui/CardFooter";
 import Switch from "../ui/FlipSwitch";
 import { FormattedMessage } from "react-intl";
+import Notification from "../notifications";
 
 // Icons
 import ArrowDownIcon from "react-ionicons/lib/IosArrowDown";
@@ -19,17 +24,8 @@ import ContrastIcon from "react-ionicons/lib/MdContrast";
 import SettingsIcon from "react-ionicons/lib/MdSettings";
 import LogoutIcon from "react-ionicons/lib/IosLogOut";
 
-const headerScope = [ 
-  { text: <Link to="/user"><FormattedMessage id="common.profile"/></Link>, icon: <ProfileIcon /> }, 
-  { text: <Link to="/user"><FormattedMessage id="common.contributions"/></Link>, icon: <BookIcon />}, 
-  { text: <Link to="/user"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>, icon: <BookmarkIcon/> },
-  { text: <FormattedMessage id="common.darkMode" />, icon: <ContrastIcon />, component: <Switch />},
-  { text: <FormattedMessage id="common.settings" />, icon: <SettingsIcon />},
-  { text: <FormattedMessage id="common.logout" />, icon: <LogoutIcon />},
-];
-
 const AppBar = styled.header`
-  background: ${props => props.theme.pallete.secondary};
+  background: ${props => props.theme.palette.secondary};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,6 +62,7 @@ const HeaderMenu = styled.ul`
 const HeaderMenuItem = styled.li`
   list-style: none;
   margin-right: 5px;
+  cursor: pointer; 
 
   &:last-child {
     margin-right: 0px;
@@ -75,8 +72,8 @@ const HeaderMenuItem = styled.li`
     display: block;
     padding: 10px;
     border-radius: 5px;
-    background: ${props =>
-      props.current ? "rgba(0,0,0,0.15)" : "transparent"};
+    background: ${props => props.current ? "rgba(0,0,0,0.15)" : "transparent"};
+    transition: background 0.3s;
 
     &:hover {
       background: rgba(0, 0, 0, 0.15);
@@ -84,10 +81,39 @@ const HeaderMenuItem = styled.li`
   }
 
   > a svg, > div svg {
-    fill: rgba(0, 0, 0, 0.5);
+    fill: ${props => props.theme.palette.text.contrast};
   }
 `;
 
+const notifications = [
+  {
+    type: "comment_liked",
+    date: "15 minutes ago",
+    data: {
+      _id: "as89d6as89d",
+      name: "Vinícius de Velotrol",
+      avatar: "https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2"
+    }
+  },
+  {
+    type: "post_commented",
+    date: "15 minutes ago",
+    data: {
+      _id: "as89d6as89d",
+      name: "Vinícius de Velotrol",
+      avatar: "https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2"
+    }
+  },
+  {
+    type: "post_shared",
+    date: "15 minutes ago",
+    data: {
+      _id: "as89d6as89d",
+      name: "Vinícius de Velotrol",
+      avatar: "https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2"
+    }
+  }
+];
 
 const Header = () => {
   const { url } = useRouteMatch();
@@ -102,26 +128,51 @@ const Header = () => {
       <Search />
 
       <HeaderMenu>
-      <Dropdown placement="bottom" title={<FormattedMessage id="common.notifications" />} options={[]} showOnEmpty={<p>Nenhuma nova notificação</p>}>
+      <Dropdown placement="bottom" offsetY={16} offsetX="-8vw" toggle={
         <HeaderMenuItem current={url.includes("/notifications")}>
-            <div>
-              <NotificationsIcon />
-            </div>
-          </HeaderMenuItem>
-        </Dropdown>
-        <Dropdown placement="bottom" title={<FormattedMessage id="common.messages" />} options={[]} showOnEmpty={<p>Nenhuma nova mensagem</p>}>
+          <div><NotificationsIcon /></div>
+        </HeaderMenuItem>
+      }>
+        <DropdownHeader><FormattedMessage id="common.notifications" /></DropdownHeader>
+        <>
+          <ul style={{ maxWidth: 400 }}>
+            {notifications.map((notification, index) => (<Notification notification={notification} key={index} />))}
+          </ul>
+          <CardFooter link="/notifications" label="See all" />
+        </>
+      </Dropdown>
+      <Dropdown placement="bottom" offsetY={16} offsetX="-4vw" toggle={
         <HeaderMenuItem current={url.includes("/messages")}>
-            <div>
-              <MessagesIcon />
-            </div>
-          </HeaderMenuItem>
-        </Dropdown>
-        <Dropdown placement="bottom" options={headerScope}>
-          <HeaderMenuItem>
-            <div>
-              <ArrowDownIcon />
-            </div>
-          </HeaderMenuItem>
+          <div><MessagesIcon /></div>
+        </HeaderMenuItem>
+      }>
+        <p>Messages will appear here...</p>
+      </Dropdown>
+      <Dropdown  offsetY={16} offsetX="-4vw" placement="bottom" toggle={
+        <HeaderMenuItem>
+          <div><ArrowDownIcon /></div>
+        </HeaderMenuItem>
+      }>
+          <DropdownListContainer>
+            <DropdownListItem icon={<ProfileIcon />}>
+              <Link to="/user"><FormattedMessage id="common.profile"/></Link>
+            </DropdownListItem>
+            <DropdownListItem icon={<BookIcon />}>
+              <Link to="/contributions"><FormattedMessage id="common.contributions"/></Link>
+            </DropdownListItem>
+            <DropdownListItem icon={<BookmarkIcon />}>
+              <Link to="/bookmarks"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>
+            </DropdownListItem>
+            <DropdownListItem icon={<ContrastIcon />} action={<Switch />}>
+              <FormattedMessage id="common.darkMode" />
+            </DropdownListItem>
+            <DropdownListItem icon={<SettingsIcon />}>
+            <Link to="/settings"><FormattedMessage id="common.settings" /></Link>
+            </DropdownListItem>
+            <DropdownListItem icon={<LogoutIcon />}>
+              <Link to="/logout"><FormattedMessage id="common.logout" /></Link>
+            </DropdownListItem>
+          </DropdownListContainer>
         </Dropdown>
       </HeaderMenu>
     </AppBar>

@@ -27,7 +27,7 @@ const Notification = styled.li`
   cursor:pointer; 
   
   &:hover {
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
   }
 
   img {
@@ -46,7 +46,8 @@ const Notification = styled.li`
   .icon {
     height: 28px;
     width: 28px;
-    background: ${props => props.theme.pallete.background};
+    background: ${props => props.theme.palette.paper};
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
     border-radius:100%;
     position:absolute;
     bottom: 0px;
@@ -54,7 +55,7 @@ const Notification = styled.li`
     padding:4px;
 
     svg {
-      fill: ${props => props.theme.pallete.secondary};
+      fill: ${props => props.theme.palette.secondary};
       height: 20px;
       width: 20px;
     }
@@ -63,11 +64,12 @@ const Notification = styled.li`
   .message{
     display:block;
     font-size:1.1em;
+    color: ${props => props.theme.palette.text.primary};
   }
 
   .date{
     font-size:0.9em;
-    color: ${props => props.theme.pallete.text.secondary};
+    color: ${props => props.theme.palette.text.secondary};
   }
 `
 
@@ -82,7 +84,7 @@ export default ({ notification }) => {
     <div>
       <span className="message">
         <FormattedMessage
-          id={`componentes.notifications.${notification.type}`}
+          id={`components.notifications.${notification.type}`}
           values={{
             ...notification.data,
             strong: (...chunks) => <strong>{chunks}</strong>,

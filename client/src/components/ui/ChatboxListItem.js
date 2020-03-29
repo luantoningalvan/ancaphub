@@ -34,12 +34,12 @@ const ChatboxListItemWrapper = styled.div`
         }
         line-height: 1em;
         font-size: 0.7em;
-        color: ${props => props.theme.pallete.text.secondary};
+        color: ${props => props.theme.palette.text.secondary};
       }
     }
 
     & > p.lastMessage {
-      color: ${props => props.theme.pallete.text.secondary};
+      color: ${props => props.theme.palette.text.secondary};
       font-size: 0.8em;
       white-space: nowrap;
       overflow: hidden;
@@ -48,8 +48,8 @@ const ChatboxListItemWrapper = styled.div`
   }
 
   &:hover {
-    background: ${props => props.theme.pallete.background};
-    box-shadow: inset 5px 0 0 ${props => props.theme.pallete.secondary};
+    background: ${props => props.theme.palette.background};
+    box-shadow: inset 5px 0 0 ${props => props.theme.palette.secondary};
   }
 `;
 

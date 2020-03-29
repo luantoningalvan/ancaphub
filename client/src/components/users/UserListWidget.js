@@ -15,7 +15,7 @@ const User = styled.li`
   justify-content:space-between;
   align-items:center;
   margin-bottom:15px;
-  border-bottom:1px solid #2f3749;
+  border-bottom:1px solid ${props => props.theme.palette.border};
   padding-bottom:15px;
 
   &:last-child { padding:0;margin:0;border:none}
@@ -26,7 +26,7 @@ const User = styled.li`
     line-height:100%; 
   }
   span {
-    color: ${props => props.theme.pallete.text.secondary};
+    color: ${props => props.theme.palette.text.secondary};
     font-size:0.9em;
     line-height:100%;
     font-weight:lighter;
@@ -88,7 +88,7 @@ const UserListWidget = props => {
                     <span>{user.username}</span>
                   </div>
                 </div>
-                <Button variant="outlined" size="small" disableElevation>
+                <Button variant="outlined" size="small" color="primary">
                   <FormattedMessage
                     id="common.follow"
                   />

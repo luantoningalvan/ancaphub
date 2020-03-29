@@ -57,7 +57,7 @@ export default props => {
           />
         }
         actions={
-          <Button disableElevation variant="outlined">
+          <Button variant="outlined" color="primary">
             Criar Grupo
           </Button>
         }

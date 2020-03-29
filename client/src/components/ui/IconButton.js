@@ -3,7 +3,6 @@ import styled from "styled-components"
 const IconButton = styled.button`
     background: transparent;
     cursor: pointer;
-    color: ${props => props.theme.pallete.text.primary};
     border-radius: 100%;
     text-align: center;
     padding: 5px;
@@ -12,7 +11,7 @@ const IconButton = styled.button`
     outline: none;
 
     > svg { 
-        fill: white;
+        fill: ${props => props.theme.palette.text.secondary};
         height: 2em;
         width: 2em;
      }

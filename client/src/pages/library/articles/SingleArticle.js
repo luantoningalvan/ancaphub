@@ -21,14 +21,14 @@ const Banner = styled.div`
 
 const Title = styled.h2`
   font-weight: bold;
-  color: ${props => props.theme.pallete.text.primary};
+  color: ${props => props.theme.palette.text.contrast};
   font-size: 2.125rem;
   margin-bottom: 5px;
 `;
 
 const Author = styled.h3`
   font-weight: lighter;
-  color: ${props => props.theme.pallete.text.secondary};
+  color: ${props => props.theme.palette.text.contrast};
   font-size: 1.25rem;
 `;
 

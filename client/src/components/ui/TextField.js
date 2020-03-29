@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 const TextField = styled.input`
     background: transparent;
-    border: 1px solid #2f3749;
+    border: 1px solid ${props => props.theme.palette.border};
     padding: 16px;
     border-radius: 8px;
     outline: none;

@@ -14,14 +14,14 @@ const MessageSearchWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid ${props => props.theme.palette.border};
   background: rgba(0,0,0,.1);
 
   & > div.searchInput {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid ${props => props.theme.palette.border};
     border-radius: 5px;
 
     & > i {
