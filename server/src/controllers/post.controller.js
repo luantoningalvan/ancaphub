@@ -1,7 +1,11 @@
-const { postService, userService } = require('../services')
+const { postService, userService, fileService } = require('../services')
 const { getManyPosts, insertPost, removePost, likePost, getPost } = postService
 const { getUser } = userService
 const verifyToken = require('../utils/verifyToken')
+
+const { uploadToS3 } = fileService;
+const fs = require('fs')
+const Jimp = require("jimp");
 
 const getUserFeed = async (req, res, next) => {
   const pageSize = req.query.pageSize ? req.query.pageSize : 10
@@ -44,13 +48,32 @@ const getPostById = async (req, res, next) => {
 };
 
 const insert = async (req, res, next) => {
-  const { content } = req.body;
+  const { content, mediaType, media } = req.body;
   const { id:userId } = req.user;
-
   try {
-    const result = await insertPost({content, user: userId})
-    res.send(result);
-    next()
+
+    if (mediaType === 'image'){
+      try {
+        const image = await Jimp.read(req.file.path)
+        image
+        .quality(70)
+        .write(`/public/uploads/posts/${req.file.name}`, async () => {
+          const fileContent = fs.createReadStream(`/public/uploads/posts/${req.file.name}`);
+          const upload = await uploadToS3(req.file, fileContent);
+          const result = await insertPost({content, mediaType, media: upload.url, user: userId})
+          res.send(result);
+          next()
+        });
+      } catch (err) {
+        throw new Error(err)
+      }
+
+    } else{
+      const result = await insertPost({content, mediaType, media, user: userId})
+      res.send(result);
+      next()
+    }
+
   } catch (e) {
     next(e)
   }
