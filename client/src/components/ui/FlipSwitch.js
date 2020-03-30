@@ -25,7 +25,7 @@ const FlipSwitchWrapper = styled.div`
         content: "";
         padding-left: 12px;
         background-color: ${props => props.theme.palette.secondary};
-        color: #FFFFFF;
+        color: #ffffff;
       }
 
       &::after {
@@ -39,7 +39,7 @@ const FlipSwitchWrapper = styled.div`
     & > div.switch {
       width: 18px;
       margin: 0px;
-      background: #FFFFFF;
+      background: #ffffff;
       border: 2px solid #999999;
       border-radius: 5px;
       position: absolute;
@@ -50,8 +50,6 @@ const FlipSwitchWrapper = styled.div`
     }
   }
 
-
-
   .checkbox:checked + label > div.switch-inner {
     margin-left: 0;
   }
@@ -61,15 +59,15 @@ const FlipSwitchWrapper = styled.div`
   }
 `;
 
-export default (props) => {
-  const label = `switch-${Math.floor(Math.random() * (1000))}`
+export default props => {
+  const label = `switch-${Math.floor(Math.random() * 1000)}`;
   return (
     <FlipSwitchWrapper>
-     <input type="checkbox" className="checkbox" id={label} {...props} />
-     <label for={label}>
+      <input type="checkbox" className="checkbox" id={label} {...props} />
+      <label htmlFor={label}>
         <div className="switch-inner"></div>
         <div className="switch"></div>
       </label>
     </FlipSwitchWrapper>
-  )
-}
+  );
+};
