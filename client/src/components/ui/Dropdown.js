@@ -15,7 +15,7 @@ const clickAwayListener = (ref, action) => {
     document.addEventListener("mousedown", handleTriggerAction);
     return function cleanup() {
       document.removeEventListener("mousedown", handleTriggerAction);
-    }
+    };
   });
 };
 
@@ -23,7 +23,7 @@ const DropdownCard = styled.div`
   max-width: 400px;
   display: flex;
   background-color: ${props => props.theme.palette.paper};
-  box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   flex-direction: column;
   justify-content: center;
@@ -31,64 +31,74 @@ const DropdownCard = styled.div`
 `;
 
 const Dropdown = ({ children, placement, offsetX, offsetY, toggle }) => {
-    const [showing, setShowing] = React.useState(false);
-    const listRef = React.useRef(null);
-    const wrappedComponentRef = React.useRef(null);
-    const popperModifiers = {
-      offset: {
-        offset: `${offsetX ? offsetX : 0}, ${offsetY ? offsetY : 0}`
-      },
-      shift: {
-        enabled: true,
-      },
-      flip: {
-        enabled: true,
-        flipVariationsByContent: true,
-        behavior: "flip",
-      },
-      preventOverflow: {
-        padding: 0,
-      }
-    };
-  
-    const setListRef = React.useCallback((node, ref) => {
-      listRef.current = node;
-      return ref(node);
-    }, []);
-  
-    const setWrappedComponentRef = React.useCallback((node, ref) => {
+  const [showing, setShowing] = React.useState(false);
+  const listRef = React.useRef(null);
+  const wrappedComponentRef = React.useRef(null);
+  const popperModifiers = {
+    offset: {
+      offset: `${offsetX ? offsetX : 0}, ${offsetY ? offsetY : 0}`
+    },
+    shift: {
+      enabled: true
+    },
+    flip: {
+      enabled: true,
+      flipVariationsByContent: true,
+      behavior: "flip"
+    },
+    preventOverflow: {
+      padding: 0
+    }
+  };
+
+  const setListRef = React.useCallback((node, ref) => {
+    listRef.current = node;
+    return ref(node);
+  }, []);
+
+  const setWrappedComponentRef = React.useCallback(
+    (node, ref) => {
       wrappedComponentRef.current = node;
       return ref(node);
-    }, [wrappedComponentRef]);
-  
-    const handleToggle = () => {
-      setShowing(!showing);
-    }
-    
-    clickAwayListener(listRef, handleToggle);
+    },
+    [wrappedComponentRef]
+  );
 
-    return (
-      <Manager>
-        <div>
-          <Reference>
-            {({ ref }) => (
-              <div>
-                { React.cloneElement(toggle, { onClick: () => handleToggle(), ref: node => setWrappedComponentRef(node, ref) }) }
-              </div>
-            )}
-          </Reference>
-          {showing && (
-            <Popper placement={placement} modifiers={popperModifiers}>
-              {({ ref, style, placement }) => (
-                <DropdownCard ref={node => setListRef(node, ref)} style={style} data-placement={placement}>
-                  {children}
-                </DropdownCard>
-              )}
-            </Popper>
+  const handleToggle = () => {
+    setShowing(!showing);
+  };
+
+  clickAwayListener(listRef, handleToggle);
+
+  return (
+    <Manager>
+      <div>
+        <Reference>
+          {({ ref }) => (
+            <div>
+              {React.cloneElement(toggle, {
+                onClick: () => handleToggle(),
+                ref: node => setWrappedComponentRef(node, ref)
+              })}
+            </div>
           )}
-        </div>
-      </Manager>
-    );
+        </Reference>
+        {showing && (
+          <Popper placement={placement} modifiers={popperModifiers}>
+            {({ ref, style, placement }) => (
+              <DropdownCard
+                ref={node => setListRef(node, ref)}
+                style={style}
+                data-placement={placement}
+              >
+                {children}
+              </DropdownCard>
+            )}
+          </Popper>
+        )}
+      </div>
+    </Manager>
+  );
 };
 
 Dropdown.propTypes = {
@@ -97,10 +107,29 @@ Dropdown.propTypes = {
   // This is the anchor element
   toggle: PropTypes.element.isRequired,
   // Offset defines distance from the popper to anchor element
-  offsetX: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  offsetY: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  offsetX: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  offsetY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // Where you want the popper to appear
-  placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "bottom", "bottom-start", "bottom-end", "right", "right-end", "right-start", "left", "left-end", "left-start", "bottom", "bottom-end", "bottom-start"])
-}
+  placement: PropTypes.oneOf([
+    "auto",
+    "auto-start",
+    "auto-end",
+    "top",
+    "top-start",
+    "top-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+    "right",
+    "right-end",
+    "right-start",
+    "left",
+    "left-end",
+    "left-start",
+    "bottom",
+    "bottom-end",
+    "bottom-start"
+  ])
+};
 
 export default Dropdown;
