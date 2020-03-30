@@ -25,9 +25,15 @@ import Settings from "./pages/account/Settings";
 export default ({ auth }) => {
   const allRoutes = [
     {
+      isOpen: true,
       exact: true,
       path: "/",
-      component: true ? Feed : Home
+      component: Home
+    },
+    {
+      exact: true,
+      path: "/home",
+      component: Feed
     },
     {
       exact: true,
@@ -120,7 +126,7 @@ export default ({ auth }) => {
     {
       path: "/:id/following",
       component: Profile
-    }       
+    }
   ];
 
   return (
@@ -133,11 +139,15 @@ export default ({ auth }) => {
               path={route.path}
               exact={route.exact}
               component={props => {
-                return (
-                  <Template {...props}>
-                    <route.component {...props} />
-                  </Template>
-                );
+                if (!route.isOpen) {
+                  return (
+                    <Template {...props}>
+                      <route.component {...props} />
+                    </Template>
+                  );
+                } else {
+                  return <route.component {...props} />
+                }
               }}
             />
           );
