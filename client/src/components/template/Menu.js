@@ -36,7 +36,7 @@ const Menu = () => {
             description="Label do menu - Home"
           />
         }
-        link="/"
+        link="/home"
       />
 
       <MenuTree
