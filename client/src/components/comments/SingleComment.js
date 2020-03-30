@@ -3,10 +3,13 @@ import UserAvatar from '../users/UserAvatar';
 import UserName from '../users/UserName'
 import styled from 'styled-components'
 import Dropdown from "../../components/ui/Dropdown";
+import DropdownListContainer from "../../components/ui/DropdownListContainer";
+import DropdownListItem from "../../components/ui/DropdownListItem";
 import IconButton from "../../components/ui/IconButton";
-import Collapse from '../ui/Collapse'
-import MdMore from "react-ionicons/lib/MdMore";
 import CommentBox from './CommentBox'
+import MdMore from "react-ionicons/lib/MdMore";
+import DeleteIcon from "react-ionicons/lib/IosRemoveCircleOutline";
+import DocumentIcon from "react-ionicons/lib/IosDocumentOutline";
 
 const SingleCommentStyle = styled.div`
 .teste {
@@ -95,8 +98,14 @@ const SingleComment = ({ comment }) => {
         </ul>
       </div>
       <div className="actions">
-        <Dropdown placement="left-start" options={[{ text: "Edit", action: () => alert("Foo") }, { text: "Delete" }]}>
-          <IconButton><MdMore /></IconButton>
+        <Dropdown 
+        placement="left-start" 
+        toggle={<IconButton><MdMore /></IconButton>}
+        >
+            <DropdownListContainer>
+              <DropdownListItem icon={<DocumentIcon />} onClick={() => alert("foo")}>Edit</DropdownListItem>
+              <DropdownListItem icon={<DeleteIcon />}>Delete</DropdownListItem>
+            </DropdownListContainer>
         </Dropdown>
       </div>
       </div>
