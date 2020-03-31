@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import MdMore from 'react-ionicons/lib/MdMore';
 import DeleteIcon from 'react-ionicons/lib/IosRemoveCircleOutline';
@@ -93,7 +94,7 @@ const SingleComment = ({ comment }) => {
           </p>
           <ul className="date">
             <li><a href="#">Curtir</a></li>
-            <li><a onClick={handleResponse}>Responder</a></li>
+            <li><a role="presentation" onClick={handleResponse}>Responder</a></li>
             <li><a href="#">há poucos segundos</a></li>
           </ul>
         </div>
@@ -103,7 +104,7 @@ const SingleComment = ({ comment }) => {
             toggle={<IconButton><MdMore /></IconButton>}
           >
             <DropdownListContainer>
-              <DropdownListItem icon={<DocumentIcon />} onClick={() => alert('foo')}>Edit</DropdownListItem>
+              <DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>
               <DropdownListItem icon={<DeleteIcon />}>Delete</DropdownListItem>
             </DropdownListContainer>
           </Dropdown>

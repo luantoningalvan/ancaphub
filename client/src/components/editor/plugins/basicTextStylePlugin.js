@@ -8,7 +8,7 @@ const basicTextStylePlugin = {
     return getDefaultKeyBinding(event);
   },
 
-  handleKeyCommand(command, editorState, { getEditorState, setEditorState }) {
+  handleKeyCommand(command, editorState, { setEditorState }) {
     const newEditorState = RichUtils.handleKeyCommand(
       editorState, command,
     );

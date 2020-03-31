@@ -6,7 +6,6 @@ import { useRouteMatch } from 'react-router-dom';
 import NewsFeedIcon from 'react-ionicons/lib/IosPaper';
 import LibraryIcon from 'react-ionicons/lib/IosFolderOpen';
 import BookIcon from 'react-ionicons/lib/IosBook';
-import ArticleIcon from 'react-ionicons/lib/IosPaper';
 import VideoIcon from 'react-ionicons/lib/IosPlay';
 import GroupIcon from 'react-ionicons/lib/IosPeople';
 import EventIcon from 'react-ionicons/lib/IosCalendar';
@@ -57,7 +56,7 @@ const Menu = () => {
         />
         <MenuItem
           current={url.includes('/articles')}
-          icon={<ArticleIcon />}
+          icon={<NewsFeedIcon />}
           label="Artigos"
           link="/articles"
         />

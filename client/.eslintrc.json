@@ -31,8 +31,12 @@
         "react/jsx-props-no-spreading": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "consistent-return": "off",
+        "no-underscore-dangle": "off",
+        "max-len": "off",
+        "import/no-cycle": "off",
         "react/prop-types": "off",
         "react/forbid-prop-types": "off",
-        "react/require-default-props": "off"
+        "react/require-default-props": "off",
+        "react/button-has-type": "off"
       }
 }

@@ -26,7 +26,7 @@ const CardFooter = ({ link, action, label }) => (
 CardFooter.propTypes = {
   link: PropTypes.string,
   action: PropTypes.func,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 CardFooter.defaultProps = {

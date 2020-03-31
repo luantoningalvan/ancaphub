@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 import Collapse from '../ui/Collapse';
 import CommentForm from './CommentForm';
+// eslint-disable-next-line import/no-cycle
 import Comment from './SingleComment';
 
 const comments = [

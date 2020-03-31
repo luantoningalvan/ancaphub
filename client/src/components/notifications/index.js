@@ -1,7 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
+// Icons
 import LikeIcon from 'react-ionicons/lib/IosThumbsUp';
 import CommentIcon from 'react-ionicons/lib/IosText';
 import CheckIcon from 'react-ionicons/lib/IosCheckmark';
@@ -20,7 +22,7 @@ const icons = {
   user_followed: () => FollowIcon,
 };
 
-const Notification = styled.li`
+const NotificationWrap = styled.li`
   padding: 8px 16px;
   display: flex;
   align-items:center;
@@ -36,7 +38,7 @@ const Notification = styled.li`
     border-radius:100%
   }
 
-  .thumb{
+  .thumb {
     position: relative;
     height: 64px;
     width:64px;
@@ -73,12 +75,12 @@ const Notification = styled.li`
   }
 `;
 
-export default ({ notification }) => {
+const Notification = ({ notification }) => {
   const Icon = icons[notification.type]();
   return (
-    <Notification>
+    <NotificationWrap>
       <div className="thumb">
-        <img src={notification.data.avatar} />
+        <img src={notification.data.avatar} alt="avatar" />
         <div className="icon"><Icon /></div>
       </div>
       <div>
@@ -93,6 +95,29 @@ export default ({ notification }) => {
         </span>
         <span className="date">{notification.date}</span>
       </div>
-    </Notification>
+    </NotificationWrap>
   );
 };
+
+Notification.propTypes = {
+  notification: PropTypes.shape({
+    type: PropTypes.oneOf([
+      'comment_liked',
+      'comment_replied',
+      'item_approved',
+      'item_rated',
+      'post_commented',
+      'post_liked',
+      'post_shared',
+      'user_followed',
+    ]),
+    data: PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      avatar: PropTypes.string,
+    }),
+    date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+};
+
+export default Notification;

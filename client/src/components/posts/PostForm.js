@@ -115,7 +115,7 @@ const PollBox = styled.div`
 const listPlugin = createListPlugin();
 const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin];
 
-function PostForm(props) {
+function PostForm() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
@@ -124,9 +124,11 @@ function PostForm(props) {
     ? URL.createObjectURL(media.data)
     : null), [media]);
 
+  // eslint-disable-next-line no-shadow
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
+      // eslint-disable-next-line react/no-this-in-sfc
       this.onChange(newState);
       return 'handled';
     }
@@ -146,7 +148,7 @@ function PostForm(props) {
     });
   };
 
-  const handleAddEmbed = (e) => {
+  const handleAddEmbed = () => {
     setMedia({
       type: 'embed',
       data: {

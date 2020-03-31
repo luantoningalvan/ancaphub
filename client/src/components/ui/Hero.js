@@ -37,8 +37,8 @@ const Hero = ({ title, description, actions }) => (
 );
 
 Hero.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  description: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   actions: PropTypes.oneOfType([PropTypes.element, PropTypes.node, PropTypes.func]),
 };
 

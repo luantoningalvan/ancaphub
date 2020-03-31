@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 export const StyledLink = styled(Link)`
   display: block;
@@ -34,10 +35,18 @@ export const Item = styled.li`
   }
 `;
 
-export default ({ link, icon, current }) => (
+const MenuItem = ({ link, icon, current }) => (
   <Item>
     <StyledLink to={link} current={!!current}>
       <i>{icon}</i>
     </StyledLink>
   </Item>
 );
+
+MenuItem.propTypes = {
+  link: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.node, PropTypes.func]),
+  current: PropTypes.bool,
+};
+
+export default MenuItem;

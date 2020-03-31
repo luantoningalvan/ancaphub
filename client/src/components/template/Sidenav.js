@@ -40,7 +40,7 @@ const Sidenav = () => (
   <Nav>
     <UserMenu>
       <Link to="/user">
-        <img src={defaultProfilePicture} />
+        <img src={defaultProfilePicture} alt="profile pic" />
       </Link>
     </UserMenu>
     <Menu />

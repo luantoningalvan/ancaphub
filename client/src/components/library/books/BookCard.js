@@ -74,7 +74,7 @@ const CardType = styled.span`
     fill: ${(props) => props.theme.palette.text.contrast};
   }
 `;
-export default function BookCard(props) {
+export default function BookCard() {
   return (
     <div>
       <Link to="/books/id">

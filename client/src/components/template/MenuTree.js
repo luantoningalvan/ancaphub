@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { StyledLink, Item } from './MenuItem';
 
 const Tree = styled.ul`
@@ -27,7 +28,7 @@ const Tree = styled.ul`
   }
 `;
 
-export default ({ icon, current, children }) => (
+const MenuTree = ({ icon, current, children }) => (
   <Item position="relative">
     <StyledLink to="#" current={current}>
       <i>{icon}</i>
@@ -36,3 +37,10 @@ export default ({ icon, current, children }) => (
     <Tree>{children}</Tree>
   </Item>
 );
+
+MenuTree.propTypes = {
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.node, PropTypes.func]),
+  current: PropTypes.bool,
+};
+
+export default MenuTree;

@@ -46,7 +46,7 @@ const Avatar = styled.div`
   margin-right: 10px;
 `;
 
-const UserListWidget = (props) => {
+const UserListWidget = () => {
   const users = [
     {
       id: 1,
@@ -81,6 +81,7 @@ const UserListWidget = (props) => {
         <CardBody>
           <ul>
             {users.map((user, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <User key={index}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Avatar

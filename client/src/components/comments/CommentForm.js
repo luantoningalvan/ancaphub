@@ -24,6 +24,7 @@ const authUser = {
   avatar: '',
 };
 
+// eslint-disable-next-line no-unused-vars
 const CommentForm = ({ post, placeholder }) => {
   const [commentData, setCommentData] = useState({ content: '' });
 

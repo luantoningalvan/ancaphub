@@ -66,7 +66,7 @@ const ItemContent = styled.div`
   }
 `;
 
-const LastItemsWidget = (props) => {
+const LastItemsWidget = () => {
   const items = {
     loading: false,
     allItems: {

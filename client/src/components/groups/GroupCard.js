@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Paper from '../ui/Paper';
 import Button from '../ui/Button';
 import defaultGroupCover from '../../assets/default-group-cover.png';
@@ -28,10 +29,10 @@ const GroupInfo = styled.div`
   }
 `;
 
-const GroupCard = (props) => {
+const GroupCard = ({ data }) => {
   const {
     _id, name, cover, membersCounts, hasEnrolled,
-  } = props.data;
+  } = data;
   return (
     <div style={{ width: '100%' }}>
       <Paper>
@@ -52,6 +53,16 @@ const GroupCard = (props) => {
       </Paper>
     </div>
   );
+};
+
+GroupCard.propTypes = {
+  data: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    cover: PropTypes.string,
+    membersCounts: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    hasEnrolled: PropTypes.bool,
+  }),
 };
 
 export default GroupCard;

@@ -16,7 +16,7 @@ export default (props) => {
   };
 
   return (
-    <form onSubmit={props.onSubmit}>
+    <form onSubmit={handleSubmit}>
       <TextField
         type="text"
         placeholder="Nome"

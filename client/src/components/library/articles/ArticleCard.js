@@ -74,7 +74,7 @@ const CardType = styled.span`
     fill: ${(props) => props.theme.palette.text.contrast};
   }
 `;
-export default function VideoCard(props) {
+export default function VideoCard() {
   return (
     <div>
       <Link to="/articles/id">

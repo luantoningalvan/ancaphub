@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useRouteMatch } from 'react-router-dom';
@@ -14,9 +15,9 @@ import SettingsIcon from 'react-ionicons/lib/MdSettings';
 import LogoutIcon from 'react-ionicons/lib/IosLogOut';
 import Search from './Search';
 import Dropdown from '../ui/Dropdown';
-import DropdownListContainer from '../ui/DropdownListContainer'
-import DropdownListItem from '../ui/DropdownListItem'
-import DropdownHeader from '../ui/DropdownHeader'
+import DropdownListContainer from '../ui/DropdownListContainer';
+import DropdownListItem from '../ui/DropdownListItem';
+import DropdownHeader from '../ui/DropdownHeader';
 import CardFooter from '../ui/CardFooter';
 import Switch from '../ui/FlipSwitch';
 import Notification from '../notifications';
