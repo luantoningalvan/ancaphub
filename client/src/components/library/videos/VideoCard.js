@@ -1,14 +1,14 @@
-import React from "react";
-import VideoIcon from "react-ionicons/lib/IosVideocam";
-import { Link as RouterLink } from "react-router-dom";
-import styled from "styled-components";
-import defaultVideoCover from "../../../assets/default-video-cover.jpg";
+import React from 'react';
+import VideoIcon from 'react-ionicons/lib/IosVideocam';
+import { Link as RouterLink } from 'react-router-dom';
+import styled from 'styled-components';
+import defaultVideoCover from '../../../assets/default-video-cover.jpg';
 
 const CardCover = styled.div`
   width: 100%;
   border-radius: 16px;
   height: 130px;
-  background: url("${props => props.cover}");
+  background: url("${(props) => props.cover}");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -42,7 +42,7 @@ const CardCover = styled.div`
 `;
 
 const Link = styled(RouterLink)`
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   text-decoration: none;
 `;
 
@@ -52,41 +52,41 @@ const CardTitle = styled.h2`
   line-height: 1.25rem;
   font-size: 1.25rem;
   margin: 15px 0px 5px;
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
 `;
 const CardSubtitle = styled.h3`
   font-weight: lighter;
   margin: 0;
   line-height: 0.9rem;
   font-size: 0.9rem;
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
 `;
 
 const CardType = styled.span`
   position: absolute;
   top: -10px;
-  background: ${props => props.theme.palette.secondary};
+  background: ${(props) => props.theme.palette.secondary};
   padding: 5px;
   border-radius: 5px;
   line-height: 100%;
   left: 10px;
   > svg {
-    fill: ${props => props.theme.palette.text.contrast};
+    fill: ${(props) => props.theme.palette.text.contrast};
   }
 `;
 export default function VideoCard(props) {
   return (
     <div>
-      <Link to={`/videos/id`}>
+      <Link to="/videos/id">
         <CardCover cover={defaultVideoCover}>
           <CardType>
             <VideoIcon />
           </CardType>
-          <div class="card-buttons">Botões</div>
+          <div className="card-buttons">Botões</div>
         </CardCover>
       </Link>
 
-      <Link to={`/videos/id`}>
+      <Link to="/videos/id">
         <CardTitle>Título do Vídeo</CardTitle>
       </Link>
 

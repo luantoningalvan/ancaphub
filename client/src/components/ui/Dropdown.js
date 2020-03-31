@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Reference, Manager, Popper } from "react-popper";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Reference, Manager, Popper } from 'react-popper';
 
 const clickAwayListener = (ref, action) => {
   function handleTriggerAction(event) {
@@ -12,9 +12,9 @@ const clickAwayListener = (ref, action) => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   React.useEffect(() => {
-    document.addEventListener("mousedown", handleTriggerAction);
+    document.addEventListener('mousedown', handleTriggerAction);
     return function cleanup() {
-      document.removeEventListener("mousedown", handleTriggerAction);
+      document.removeEventListener('mousedown', handleTriggerAction);
     };
   });
 };
@@ -22,7 +22,7 @@ const clickAwayListener = (ref, action) => {
 const DropdownCard = styled.div`
   max-width: 400px;
   display: flex;
-  background-color: ${props => props.theme.palette.paper};
+  background-color: ${(props) => props.theme.palette.paper};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   flex-direction: column;
@@ -30,25 +30,27 @@ const DropdownCard = styled.div`
   color: white;
 `;
 
-const Dropdown = ({ children, placement, offsetX, offsetY, toggle }) => {
+const Dropdown = ({
+  children, placement, offsetX, offsetY, toggle,
+}) => {
   const [showing, setShowing] = React.useState(false);
   const listRef = React.useRef(null);
   const wrappedComponentRef = React.useRef(null);
   const popperModifiers = {
     offset: {
-      offset: `${offsetX ? offsetX : 0}, ${offsetY ? offsetY : 0}`
+      offset: `${offsetX || 0}, ${offsetY || 0}`,
     },
     shift: {
-      enabled: true
+      enabled: true,
     },
     flip: {
       enabled: true,
       flipVariationsByContent: true,
-      behavior: "flip"
+      behavior: 'flip',
     },
     preventOverflow: {
-      padding: 0
-    }
+      padding: 0,
+    },
   };
 
   const setListRef = React.useCallback((node, ref) => {
@@ -61,7 +63,7 @@ const Dropdown = ({ children, placement, offsetX, offsetY, toggle }) => {
       wrappedComponentRef.current = node;
       return ref(node);
     },
-    [wrappedComponentRef]
+    [wrappedComponentRef],
   );
 
   const handleToggle = () => {
@@ -78,7 +80,7 @@ const Dropdown = ({ children, placement, offsetX, offsetY, toggle }) => {
             <div>
               {React.cloneElement(toggle, {
                 onClick: () => handleToggle(),
-                ref: node => setWrappedComponentRef(node, ref)
+                ref: (node) => setWrappedComponentRef(node, ref),
               })}
             </div>
           )}
@@ -87,7 +89,7 @@ const Dropdown = ({ children, placement, offsetX, offsetY, toggle }) => {
           <Popper placement={placement} modifiers={popperModifiers}>
             {({ ref, style, placement }) => (
               <DropdownCard
-                ref={node => setListRef(node, ref)}
+                ref={(node) => setListRef(node, ref)}
                 style={style}
                 data-placement={placement}
               >
@@ -111,25 +113,25 @@ Dropdown.propTypes = {
   offsetY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // Where you want the popper to appear
   placement: PropTypes.oneOf([
-    "auto",
-    "auto-start",
-    "auto-end",
-    "top",
-    "top-start",
-    "top-end",
-    "bottom",
-    "bottom-start",
-    "bottom-end",
-    "right",
-    "right-end",
-    "right-start",
-    "left",
-    "left-end",
-    "left-start",
-    "bottom",
-    "bottom-end",
-    "bottom-start"
-  ])
+    'auto',
+    'auto-start',
+    'auto-end',
+    'top',
+    'top-start',
+    'top-end',
+    'bottom',
+    'bottom-start',
+    'bottom-end',
+    'right',
+    'right-end',
+    'right-start',
+    'left',
+    'left-end',
+    'left-start',
+    'bottom',
+    'bottom-end',
+    'bottom-start',
+  ]),
 };
 
 export default Dropdown;

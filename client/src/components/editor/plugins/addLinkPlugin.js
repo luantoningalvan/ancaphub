@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import {
-  KeyBindingUtil
-} from "draft-js";
+  KeyBindingUtil,
+} from 'draft-js';
 
 
 export const linkStrategy = (contentBlock, callback, contentState) => {
@@ -9,16 +9,16 @@ export const linkStrategy = (contentBlock, callback, contentState) => {
     (character) => {
       const entityKey = character.getEntity();
       return (
-        entityKey !== null &&
-        contentState.getEntity(entityKey).getType() === "LINK"
+        entityKey !== null
+        && contentState.getEntity(entityKey).getType() === 'LINK'
       );
     },
-    callback
+    callback,
   );
 };
 
 
-export const Link = (props) => {
+export const Link = ({ children, ...props }) => {
   const { contentState, entityKey } = props;
   const { url } = contentState.getEntity(entityKey).getData();
   return (
@@ -28,7 +28,9 @@ export const Link = (props) => {
       target="_blank"
       aria-label={url}
       href={url}
-    >{props.children}</a>
+    >
+      {children}
+    </a>
   );
 };
 
@@ -40,7 +42,7 @@ const addLinkPlugin = {
       return;
     }
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 75) {
-      return "add-link"
+      return 'add-link';
     }
   },
 

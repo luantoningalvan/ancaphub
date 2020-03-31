@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import TextField from "../../components/ui/TextField";
-import Button from "../../components/ui/Button";
+import React, { useState } from 'react';
+import TextField from '../ui/TextField';
+import Button from '../ui/Button';
 
-export default props => {
-  const INITIAL_STATE = { username: "", password: "" }
-  const [data, setData] = useState(INITIAL_STATE)
+export default (props) => {
+  const INITIAL_STATE = { username: '', password: '' };
+  const [data, setData] = useState(INITIAL_STATE);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    props.handleSubmit(data)
-  }
+    e.preventDefault();
+    props.handleSubmit(data);
+  };
 
   return (
     <form onSubmit={props.onSubmit}>
@@ -64,5 +64,5 @@ export default props => {
 
       <Button type="submit" color="secondary">Cadastrar</Button>
     </form>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import clsx from "clsx";
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 // This file only provides basic functionality that is common to all grid components.
 // It is NOT a component and can be moved to another folder in future.
@@ -14,42 +14,42 @@ import clsx from "clsx";
 const SPACING_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 // For determining grid item sizes
-const SIZING_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, true, "auto"];
+const SIZING_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, true, 'auto'];
 const SIZING_LEVEL_NUMBER = SIZING_LEVELS.length - 2;
 const COMMON_BREAKPOINTS_PROPTYPE = [...SIZING_LEVELS, false];
 
 // Prop types for both container and item components
 export const commonPropTypes = {
   alignContent: PropTypes.oneOf([
-    "stretch",
-    "center",
-    "flex-start",
-    "flex-end",
-    "space-between",
-    "space-around"
+    'stretch',
+    'center',
+    'flex-start',
+    'flex-end',
+    'space-between',
+    'space-around',
   ]),
   alignItems: PropTypes.oneOf([
-    "center",
-    "flex-start",
-    "flex-end",
-    "stretch",
-    "baseline"
+    'center',
+    'flex-start',
+    'flex-end',
+    'stretch',
+    'baseline',
   ]),
   children: PropTypes.node,
   className: PropTypes.string,
   direction: PropTypes.oneOf([
-    "row",
-    "row-reverse",
-    "column",
-    "column-reverse"
+    'row',
+    'row-reverse',
+    'column',
+    'column-reverse',
   ]),
   justifyContent: PropTypes.oneOf([
-    "center",
-    "flex-start",
-    "flex-end",
-    "space-between",
-    "space-around",
-    "space-evenly"
+    'center',
+    'flex-start',
+    'flex-end',
+    'space-between',
+    'space-around',
+    'space-evenly',
   ]),
   xs: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
   sm: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
@@ -58,16 +58,16 @@ export const commonPropTypes = {
   xl: PropTypes.oneOf(COMMON_BREAKPOINTS_PROPTYPE),
   spacing: PropTypes.oneOf(SPACING_LEVELS),
   zeroMinWidth: PropTypes.bool,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
-const makeGrid = breakpoint => {
-  let baseStyles = ``;
-  let jss = ``;
-  SIZING_LEVELS.forEach(sizing => {
+const makeGrid = (breakpoint) => {
+  let baseStyles = '';
+  let jss = '';
+  SIZING_LEVELS.forEach((sizing) => {
     const classKey = `grid-${breakpoint}-${sizing}`;
 
-    if (sizing === true || sizing === "auto") {
+    if (sizing === true || sizing === 'auto') {
       jss += `
       .${classKey} {
         flex-basis: auto;
@@ -79,8 +79,8 @@ const makeGrid = breakpoint => {
     }
 
     // Get element initial width in % relative to parent
-    const initialWidth = `${Math.round((sizing / SIZING_LEVEL_NUMBER) * 10e7) /
-      10e5}%`;
+    const initialWidth = `${Math.round((sizing / SIZING_LEVEL_NUMBER) * 10e7)
+      / 10e5}%`;
 
     jss += `
       .${classKey} {
@@ -90,19 +90,19 @@ const makeGrid = breakpoint => {
       }
     `;
 
-    if (breakpoint === "xs") {
+    if (breakpoint === 'xs') {
       // extra small doesn't need a media query; if it's passed alone, it covers every width
       baseStyles += jss;
-    } else if (breakpoint === "sm") {
+    } else if (breakpoint === 'sm') {
       // small breakpoint is from 600px to 960px
       baseStyles += `@media only screen and (min-width: 600px) and (max-width: 959px) { ${jss} }`;
-    } else if (breakpoint === "md") {
+    } else if (breakpoint === 'md') {
       // medium breakpoint is from 960px to 1280px
       baseStyles += `@media only screen and (min-width: 960px) and (max-width: 1279px) { ${jss} }`;
-    } else if (breakpoint === "lg") {
+    } else if (breakpoint === 'lg') {
       // large is from 961px to 1919px
       baseStyles += `@media only screen and (min-width: 1280px) and (max-width: 1919px) { ${jss} }`;
-    } else if (breakpoint === "xl") {
+    } else if (breakpoint === 'xl') {
       // extra large is from 1920px and above
       baseStyles += `@media only screen and (min-width: 1920px) { ${jss} }`;
     }
@@ -115,20 +115,18 @@ const offset = (val, divideBy = 1) => {
   // parse value from string
   const fl = parseFloat(val);
   // if 'px' is not present, or remove value and keep px
-  const replacement = String(val).replace(String(fl), "");
+  const replacement = String(val).replace(String(fl), '');
 
-  return `${fl / divideBy}${replacement || "px"}`;
+  return `${fl / divideBy}${replacement || 'px'}`;
 };
 
-const getSpacing = multiplier => {
-  return 8 * multiplier;
-};
+const getSpacing = (multiplier) => 8 * multiplier;
 
-export const makeSpacing = prop => {
-  let baseStyles = ``;
-  let jss = ``;
+export const makeSpacing = (prop) => {
+  let baseStyles = '';
+  let jss = '';
 
-  SPACING_LEVELS.forEach(spacing => {
+  SPACING_LEVELS.forEach((spacing) => {
     const currentSpacing = getSpacing(spacing);
     if (!currentSpacing) return;
     if (spacing === prop) {
@@ -145,9 +143,9 @@ export const makeSpacing = prop => {
   return baseStyles;
 };
 
-export const commonStyles = props => `
+export const commonStyles = (props) => `
   /* handle flex direction */
-  ${!props.flexDirection ? "flex-direction: row" : ""};
+  ${!props.flexDirection ? 'flex-direction: row' : ''};
   & > .direction-xs-column { flex-direction: column; }
   & > .direction-xs-column-reverse { flex-direction: column-reverse; }
   & > .direction-xs-row-reverse { flex-direction: row-reverse; }
@@ -181,35 +179,35 @@ export const commonStyles = props => `
   & > .justify-xs-space-evenly { justify-content: space-evenly; }
 
   /* generate grids for each breakpoint */
-  ${makeGrid("xs")}
-  ${makeGrid("sm")}
-  ${makeGrid("md")}
-  ${makeGrid("lg")}
-  ${makeGrid("xl")}
+  ${makeGrid('xs')}
+  ${makeGrid('sm')}
+  ${makeGrid('md')}
+  ${makeGrid('lg')}
+  ${makeGrid('xl')}
 
 `;
 
 export const propertyDefault = (prop, defaultValue) => {
   if (prop === undefined) {
     return defaultValue;
-  } else return prop;
+  } return prop;
 };
 
-export const generateClassNames = props => {
+export const generateClassNames = (props) => {
   const classNames = clsx({
     zeroMinWidth: props.zeroMinWidth,
-    [`direction-xs-${props.flexDirection}`]: props.flexDirection !== "row",
-    [`wrap-xs-${props.flexWrap}`]: props.flexWrap !== "wrap",
-    [`align-items-xs-${props.alignItems}`]: props.alignItems !== "stretch",
+    [`direction-xs-${props.flexDirection}`]: props.flexDirection !== 'row',
+    [`wrap-xs-${props.flexWrap}`]: props.flexWrap !== 'wrap',
+    [`align-items-xs-${props.alignItems}`]: props.alignItems !== 'stretch',
     [`align-content-xs-${props.alignContent}`]:
-      props.alignContent !== "stretch",
+      props.alignContent !== 'stretch',
     [`justify-xs-${props.justifyContent}`]:
-      props.justifyContent !== "flex-start",
+      props.justifyContent !== 'flex-start',
     [`grid-xs-${props.xs}`]: props.xs !== false,
     [`grid-sm-${props.sm}`]: props.sm !== false,
     [`grid-md-${props.md}`]: props.md !== false,
     [`grid-lg-${props.lg}`]: props.lg !== false,
-    [`grid-xl-${props.xl}`]: props.xl !== false
+    [`grid-xl-${props.xl}`]: props.xl !== false,
   });
   return classNames;
 };

@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import Paper from "./Paper";
-import ChatboxMessageList from "./ChatboxMessageList";
-import ChatWindow from "./ChatWindow";
+import React from 'react';
+import styled from 'styled-components';
+import Paper from './Paper';
+import ChatboxMessageList from './ChatboxMessageList';
+import ChatWindow from './ChatWindow';
 
 const ChatboxWrapper = styled.div`
   display: flex;
@@ -17,15 +17,13 @@ const ChatboxWrapper = styled.div`
   }
 `;
 
-const Chatbox = ({ chats, currentChat }) => {
-  return (
-    <ChatboxWrapper>
-      <Paper className="paper">
-        <ChatboxMessageList chats={chats} />
-        <ChatWindow chat={currentChat} />
-      </Paper>
-    </ChatboxWrapper>
-  );
-};
+const Chatbox = ({ chats, currentChat }) => (
+  <ChatboxWrapper>
+    <Paper className="paper">
+      <ChatboxMessageList chats={chats} />
+      <ChatWindow chat={currentChat} />
+    </Paper>
+  </ChatboxWrapper>
+);
 
 export default Chatbox;

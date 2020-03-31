@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
-import Menu from "./Menu";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
+import Menu from './Menu';
 
 const Nav = styled.aside`
   width: 64px;
@@ -10,7 +10,7 @@ const Nav = styled.aside`
   position: fixed;
   top: 64px;
   left: 0;
-  background: ${props => props.theme.palette.paper};
+  background: ${(props) => props.theme.palette.paper};
 `;
 
 const UserMenu = styled.div`
@@ -34,7 +34,7 @@ const UserMenu = styled.div`
      width: 100%;
    }
  }
-`
+`;
 
 const Sidenav = () => (
   <Nav>

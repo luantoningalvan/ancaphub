@@ -1,23 +1,23 @@
-import React from "react";
-import Routes from "./routes";
-
+import React from 'react';
 import { Provider } from 'react-redux';
+import { IntlProvider } from 'react-intl';
+import Routes from './routes';
+
 import store from './store';
 
-import { IntlProvider } from "react-intl";
 
 // i18n JSON base translation files
-import i18n_pt from "./i18n/pt.json";
-import i18n_es from "./i18n/es.json";
-import i18n_en from "./i18n/en.json";
-import i18n_fr from "./i18n/fr.json";
+import i18n_pt from './i18n/pt.json';
+import i18n_es from './i18n/es.json';
+import i18n_en from './i18n/en.json';
+import i18n_fr from './i18n/fr.json';
 
 // messages by language
 const messages = {
   pt: i18n_pt,
   es: i18n_es,
   en: i18n_en,
-  fr: i18n_fr
+  fr: i18n_fr,
 };
 
 // get default browser language without region code as an initial fallback for development

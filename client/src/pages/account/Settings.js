@@ -1,17 +1,17 @@
-import React from "react";
-import _ from "lodash";
-import styled from "styled-components";
-import Container from "../../components/ui/Container";
-import Paper from "../../components/ui/Paper";
-import Hero from "../../components/ui/Hero";
-import TextField from "../../components/ui/TextField";
-import Button from "../../components/ui/Button";
+import React from 'react';
+import _ from 'lodash';
+import styled from 'styled-components';
+import { object, string } from 'yup';
+import { FormattedMessage } from 'react-intl';
+import Container from '../../components/ui/Container';
+import Paper from '../../components/ui/Paper';
+import Hero from '../../components/ui/Hero';
+import TextField from '../../components/ui/TextField';
+import Button from '../../components/ui/Button';
 
 // validation
-import { object, string } from "yup";
 
 // i18n
-import { FormattedMessage } from "react-intl";
 
 // validation schema
 const validator = object({
@@ -21,14 +21,14 @@ const validator = object({
     .nullable(),
   password: object({
     current: string().nullable(),
-    new: string().when("current", {
-      is: val => val && val.length > 0,
+    new: string().when('current', {
+      is: (val) => val && val.length > 0,
       then: string()
         .min(6)
         .required(),
-      otherwise: string().nullable()
-    })
-  }).nullable()
+      otherwise: string().nullable(),
+    }),
+  }).nullable(),
 });
 
 const StyledForm = styled.form`
@@ -60,11 +60,11 @@ const PasswordStrength = styled.progress`
         transparent 66%
       ),
       -webkit-linear-gradient(top, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1)),
-      -webkit-linear-gradient(left, ${props => props.theme.palette.primary}, ${props => props.theme.palette.secondary});
+      -webkit-linear-gradient(left, ${(props) => props.theme.palette.primary}, ${(props) => props.theme.palette.secondary});
   }
 `;
 
-export default props => {
+export default (props) => {
   const [username, setUsername] = React.useState(null);
   const [currentPassword, setCurrentPassword] = React.useState(null);
   const [password, setPassword] = React.useState(null);
@@ -75,7 +75,7 @@ export default props => {
     const regex = /^[a-zA-Z0-9_]+$/;
     if (!username.match(regex)) {
       return <FormattedMessage id="account.settings.validation.regex" />;
-    } else return;
+    }
   }, 500);
 
   const handlePasswordRegex = _.throttle(() => {
@@ -88,20 +88,20 @@ export default props => {
     if (password.match(weakRegex)) return 1;
   }, 500);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     // Prevent page refresh
     e.preventDefault();
 
     // Form is untouched
     if (!username && !password && !email && !currentPassword) {
-      alert("nah");
+      alert('nah');
       return;
     }
 
     // No way to send only the new password, do something
     // This validation is made here to avoid cyclic dependency error in yup schema
     if (password && !currentPassword) {
-      alert("foo");
+      alert('foo');
       return;
     }
 
@@ -110,39 +110,39 @@ export default props => {
       validator.isValidSync({
         username,
         email,
-        password: { current: currentPassword, new: password }
+        password: { current: currentPassword, new: password },
       })
     ) {
       // Input is valid! Do something.
-      alert("Valid! Good!");
+      alert('Valid! Good!');
     } else {
       // Input is invalid. Do something else.
-      alert("Invalid input");
+      alert('Invalid input');
     }
   };
 
   return (
     <Container>
       <Hero
-        title={
+        title={(
           <FormattedMessage
             id="common.settings"
             description="Título da página de configurações"
           />
-        }
+        )}
       />
       <div style={{ marginTop: 15 }}>
         <Paper>
-          <StyledForm onSubmit={e => handleSubmit(e)}>
+          <StyledForm onSubmit={(e) => handleSubmit(e)}>
             <h3>
               <FormattedMessage id="common.username" />
             </h3>
             <FormattedMessage id="account.settings.insertNewUsername">
-              {msg => (
+              {(msg) => (
                 <TextField
                   fullWidth
                   placeholder={msg}
-                  onChange={e => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               )}
             </FormattedMessage>
@@ -153,9 +153,9 @@ export default props => {
               <FormattedMessage id="common.password" />
             </h3>
             <FormattedMessage id="account.settings.typeCurrentPassword">
-              {msg => (
+              {(msg) => (
                 <TextField
-                  onChange={e => setCurrentPassword(e.target.value)}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                   fullWidth
                   type="password"
                   placeholder={msg}
@@ -163,18 +163,19 @@ export default props => {
               )}
             </FormattedMessage>
             <FormattedMessage id="account.settings.insertNewPassword">
-              {msg => (
+              {(msg) => (
                 <TextField
                   fullWidth
                   type="password"
                   placeholder={msg}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               )}
             </FormattedMessage>
             {password && password.length >= 6 && (
               <div>
-                <small>Password strength:</small>{" "}
+                <small>Password strength:</small>
+                {' '}
                 <PasswordStrength max="3" value={handlePasswordRegex()} />
               </div>
             )}
@@ -182,9 +183,9 @@ export default props => {
               <FormattedMessage id="common.email" />
             </h3>
             <FormattedMessage id="account.settings.insertNewEmail">
-              {msg => (
+              {(msg) => (
                 <TextField
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   fullWidth
                   placeholder={msg}
                 />
@@ -192,9 +193,9 @@ export default props => {
             </FormattedMessage>
             <div
               style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: 8
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: 8,
               }}
             >
               <Button type="submit" variant="filled" color="secondary">

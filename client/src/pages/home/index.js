@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import ThemeProvider from '../../components/template/Provider'
-import styled from 'styled-components'
-import Paper from "../../components/ui/Paper";
-import Container from "../../components/ui/Container";
-import SigninForm from '../../components/auth/SigninForm'
-import SignupForm from '../../components/auth/SignupForm'
- 
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import LibraryIcon from 'react-ionicons/lib/IosFolder';
 import GroupIcon from 'react-ionicons/lib/IosPeople';
 import EventIcon from 'react-ionicons/lib/IosCalendar';
 import LocationSearchIcon from 'react-ionicons/lib/IosLocate';
-import logo from '../../assets/logo-type.png'
+import ThemeProvider from '../../components/template/Provider';
+import Paper from '../../components/ui/Paper';
+import Container from '../../components/ui/Container';
+import SigninForm from '../../components/auth/SigninForm';
+import SignupForm from '../../components/auth/SignupForm';
+
+import logo from '../../assets/logo-type.png';
 
 
 const SignupBox = styled(Paper)`
@@ -25,7 +25,7 @@ const SignupBox = styled(Paper)`
   input { margin-bottom: 8px; }
 
   a {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
     text-align:center;
     display:block;
     margin-top:16px;
@@ -35,10 +35,10 @@ const SignupBox = styled(Paper)`
       text-decoration:underline;
     }
   }
-`
+`;
 
 const Features = styled.ul`
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   margin-top:8px;
   li { 
     list-style: none; 
@@ -51,20 +51,23 @@ const Features = styled.ul`
   li > svg { 
     height:32px;
     width:32px;
-    fill: ${props => props.theme.palette.text.primary}; 
+    fill: ${(props) => props.theme.palette.text.primary}; 
     margin-right: 8px;
   }
-`
+`;
 
 const Home = () => {
-  const [activeBox, setActiveBox] = useState("signup");
+  const [activeBox, setActiveBox] = useState('signup');
 
   return (
     <ThemeProvider>
-      <Container style={{ display: 'flex', justifyContent: "space-between", alignItems: 'center', height: '100vh' }}>
+      <Container style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100vh',
+      }}
+      >
         <div>
           <img src={logo} />
-          <h2 style={{ fontWeight: 'bold', marginTop:24 }}>Bem vindo à versão de testes do AncapHub!</h2>
+          <h2 style={{ fontWeight: 'bold', marginTop: 24 }}>Bem vindo à versão de testes do AncapHub!</h2>
           <Features>
             <li>
               <LibraryIcon />
@@ -85,23 +88,33 @@ const Home = () => {
           </Features>
         </div>
         <SignupBox padding>
-          {activeBox == "signin" ? (
+          {activeBox == 'signin' ? (
             <>
-              <h3 style={{ fontWeight: 'bold', marginBottom:16,marginTop:8, textAlign:'center' }}>Entrar</h3>
+              <h3 style={{
+                fontWeight: 'bold', marginBottom: 16, marginTop: 8, textAlign: 'center',
+              }}
+              >
+                Entrar
+              </h3>
               <SigninForm onSubmit={() => {}} />
-              <a onClick={() => setActiveBox("signup")}>Não possui uma conta?</a>
+              <a onClick={() => setActiveBox('signup')}>Não possui uma conta?</a>
             </>
           ) : (
-              <>
-                <h3 style={{ fontWeight: 'bold', marginBottom:16,marginTop:8, textAlign:'center' }}>Cadastro</h3>
-                <SignupForm onSubmit={() => {}} />
-                <a onClick={() => setActiveBox("signin")}>Já tem uma conta?</a>
-              </>
-            )}
+            <>
+              <h3 style={{
+                fontWeight: 'bold', marginBottom: 16, marginTop: 8, textAlign: 'center',
+              }}
+              >
+                Cadastro
+              </h3>
+              <SignupForm onSubmit={() => {}} />
+              <a onClick={() => setActiveBox('signin')}>Já tem uma conta?</a>
+            </>
+          )}
         </SignupBox>
       </Container>
     </ThemeProvider>
   );
-}
+};
 
-export default Home
+export default Home;

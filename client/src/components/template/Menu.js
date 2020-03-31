@@ -1,21 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import MenuItem from "./MenuItem";
-import MenuTree from "./MenuTree";
-import { useRouteMatch } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { useRouteMatch } from 'react-router-dom';
 
 // Icons
-import NewsFeedIcon from "react-ionicons/lib/IosPaper";
-import LibraryIcon from "react-ionicons/lib/IosFolderOpen";
-import BookIcon from "react-ionicons/lib/IosBook";
-import ArticleIcon from "react-ionicons/lib/IosPaper";
-import VideoIcon from "react-ionicons/lib/IosPlay";
-import GroupIcon from "react-ionicons/lib/IosPeople";
-import EventIcon from "react-ionicons/lib/IosCalendar";
-import ProjectIcon from "react-ionicons/lib/IosBrush";
+import NewsFeedIcon from 'react-ionicons/lib/IosPaper';
+import LibraryIcon from 'react-ionicons/lib/IosFolderOpen';
+import BookIcon from 'react-ionicons/lib/IosBook';
+import ArticleIcon from 'react-ionicons/lib/IosPaper';
+import VideoIcon from 'react-ionicons/lib/IosPlay';
+import GroupIcon from 'react-ionicons/lib/IosPeople';
+import EventIcon from 'react-ionicons/lib/IosCalendar';
+import ProjectIcon from 'react-ionicons/lib/IosBrush';
 
 // i18n
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
+import MenuTree from './MenuTree';
+import MenuItem from './MenuItem';
 
 const MenuWrapper = styled.ul`
   display: flex;
@@ -28,41 +28,41 @@ const Menu = () => {
   return (
     <MenuWrapper>
       <MenuItem
-        current={url === "/"}
+        current={url === '/'}
         icon={<NewsFeedIcon />}
-        label={
+        label={(
           <FormattedMessage
             id="common.home"
             description="Label do menu - Home"
           />
-        }
+        )}
         link="/home"
       />
 
       <MenuTree
-        current={url.includes("/books") || url.includes("/articles") || url.includes("/videos")}
+        current={url.includes('/books') || url.includes('/articles') || url.includes('/videos')}
         icon={<LibraryIcon />}
-        label={
+        label={(
           <FormattedMessage
             id="common.library"
             description="Label do menu - Biblioteca"
           />
-        }
+        )}
       >
         <MenuItem
-          current={url.includes("/books")}
+          current={url.includes('/books')}
           icon={<BookIcon />}
           label="Livros"
           link="/books"
         />
         <MenuItem
-          current={url.includes("/articles")}
+          current={url.includes('/articles')}
           icon={<ArticleIcon />}
           label="Artigos"
           link="/articles"
         />
         <MenuItem
-          current={url.includes("/videos")}
+          current={url.includes('/videos')}
           icon={<VideoIcon />}
           label="Vídeos"
           link="/videos"
@@ -70,38 +70,38 @@ const Menu = () => {
       </MenuTree>
 
       <MenuItem
-        current={url.includes("/groups")}
+        current={url.includes('/groups')}
         icon={<GroupIcon />}
-        label={
+        label={(
           <FormattedMessage
             id="common.groups"
             description="Label do menu - Grupos"
           />
-        }
+        )}
         link="/groups"
       />
 
       <MenuItem
-        current={url.includes("/events")}
+        current={url.includes('/events')}
         icon={<EventIcon />}
-        label={
+        label={(
           <FormattedMessage
             id="common.events"
             description="Label do menu - Eventos"
           />
-        }
+        )}
         link="/events"
       />
 
       <MenuItem
-        current={url.includes("/projects")}
+        current={url.includes('/projects')}
         icon={<ProjectIcon />}
-        label={
+        label={(
           <FormattedMessage
             id="common.projects"
             description="Label do menu - Projetos"
           />
-        }
+        )}
         link="/projects"
       />
     </MenuWrapper>

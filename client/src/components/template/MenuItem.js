@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const StyledLink = styled(Link)`
   display: block;
@@ -8,27 +8,25 @@ export const StyledLink = styled(Link)`
   margin: 10px;
   border-radius: 5px;
   text-align: center;
-  background: ${props =>
-    props.current ? props.theme.palette.secondary : "transparent"};
+  background: ${(props) => (props.current ? props.theme.palette.secondary : 'transparent')};
 
   > i svg {
-    fill: ${props =>
-      props.current
-        ? props.theme.palette.text.contrast
-        : props.theme.palette.text.secondary};
+    fill: ${(props) => (props.current
+    ? props.theme.palette.text.contrast
+    : props.theme.palette.text.secondary)};
   }
 
   &:hover {
-    background: ${props => props.theme.palette.secondary};
+    background: ${(props) => props.theme.palette.secondary};
     > i svg {
-      fill: ${props => props.theme.palette.text.contrast};
+      fill: ${(props) => props.theme.palette.text.contrast};
     }
   }
 `;
 
 export const Item = styled.li`
   list-style: none;
-  position: ${props => props.position};
+  position: ${(props) => props.position};
   &:hover {
     ul {
       display: block;
@@ -36,12 +34,10 @@ export const Item = styled.li`
   }
 `;
 
-export default ({ link, icon, current }) => {
-  return (
-    <Item>
-      <StyledLink to={link} current={current ? true : false}>
-        <i>{icon}</i>
-      </StyledLink>
-    </Item>
-  );
-};
+export default ({ link, icon, current }) => (
+  <Item>
+    <StyledLink to={link} current={!!current}>
+      <i>{icon}</i>
+    </StyledLink>
+  </Item>
+);

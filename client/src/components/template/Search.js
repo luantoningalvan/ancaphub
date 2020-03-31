@@ -1,12 +1,12 @@
-import React, {memo} from "react";
-import styled from "styled-components";
+import React, { memo } from 'react';
+import styled from 'styled-components';
 
 // Icons
-import SearchIcon from "react-ionicons/lib/IosSearch";
-import LocateIcon from "react-ionicons/lib/MdLocate";
+import SearchIcon from 'react-ionicons/lib/IosSearch';
+import LocateIcon from 'react-ionicons/lib/MdLocate';
 
 // i18n
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
 
 const SearchWrapper = styled.div`
   height: 50px;
@@ -17,7 +17,7 @@ const SearchWrapper = styled.div`
   align-items: center;
   padding: 0px 10px;
   > i svg {
-    fill: ${props => props.theme.palette.text.contrast};
+    fill: ${(props) => props.theme.palette.text.contrast};
   }
   > input {
     border: none;
@@ -26,10 +26,10 @@ const SearchWrapper = styled.div`
     padding: 10px;
     outline: none;
     flex-grow: 1;
-    color: ${props => props.theme.palette.text.contrast};
+    color: ${(props) => props.theme.palette.text.contrast};
 
     &::placeholder {
-      color: ${props => props.theme.palette.text.contrast};
+      color: ${(props) => props.theme.palette.text.contrast};
       font-size: 16px;
       font-family: Ubuntu;
     }
@@ -45,20 +45,18 @@ const SearchWrapper = styled.div`
   }
 `;
 
-const Search = () => {
-  return (
-    <SearchWrapper>
-      <i>
-        <SearchIcon />
-      </i>
-      <FormattedMessage id="common.search" description="Input de pesquisa">
-        {msg => <input type="text" placeholder={msg} />}
-      </FormattedMessage>
-      <button>
-        <LocateIcon />
-      </button>
-    </SearchWrapper>
-  );
-};
+const Search = () => (
+  <SearchWrapper>
+    <i>
+      <SearchIcon />
+    </i>
+    <FormattedMessage id="common.search" description="Input de pesquisa">
+      {(msg) => <input type="text" placeholder={msg} />}
+    </FormattedMessage>
+    <button>
+      <LocateIcon />
+    </button>
+  </SearchWrapper>
+);
 
 export default memo(Search);

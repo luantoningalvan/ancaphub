@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
-const Contributions = () => {
-  return <p>Contributions</p>;
-};
+const Contributions = () => <p>Contributions</p>;
 
 export default Contributions;

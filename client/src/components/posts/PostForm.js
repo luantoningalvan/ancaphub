@@ -1,38 +1,38 @@
-import React, { useState, useMemo } from "react";
-import styled from "styled-components";
-import Paper from "../ui/Paper";
-import Button from "../ui/Button";
-import IconButton from "../ui/IconButton";
-import Card from "../ui/Card";
-import CardFooter from "../ui/CardFooter";
-import CardBody from "../ui/CardBody";
-import TextField from "../ui/TextField";
-import ReactPlayer from "react-player";
+import React, { useState, useMemo } from 'react';
+import styled from 'styled-components';
+import ReactPlayer from 'react-player';
 
 // Icons
-import ImageIcon from "react-ionicons/lib/IosImageOutline";
-import EmbedIcon from "react-ionicons/lib/IosCode";
-import PollIcon from "react-ionicons/lib/IosPodiumOutline";
-import CloseIcon from "react-ionicons/lib/IosClose";
-import AddIcon from "react-ionicons/lib/IosAdd";
+import ImageIcon from 'react-ionicons/lib/IosImageOutline';
+import EmbedIcon from 'react-ionicons/lib/IosCode';
+import PollIcon from 'react-ionicons/lib/IosPodiumOutline';
+import CloseIcon from 'react-ionicons/lib/IosClose';
+import AddIcon from 'react-ionicons/lib/IosAdd';
 
 // Text Editor
-import { EditorState, RichUtils, convertToRaw } from "draft-js";
-import Editor from "draft-js-plugins-editor";
-import "draft-js/dist/Draft.css";
-import basicTextStylePlugin from "../editor/plugins/basicTextStylePlugin";
-import addLinkPlugin from "../editor/plugins/addLinkPlugin";
-import createListPlugin from "draft-js-list-plugin";
+import { EditorState, RichUtils, convertToRaw } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+import 'draft-js/dist/Draft.css';
+import createListPlugin from 'draft-js-list-plugin';
+import { FormattedMessage } from 'react-intl';
+import basicTextStylePlugin from '../editor/plugins/basicTextStylePlugin';
+import addLinkPlugin from '../editor/plugins/addLinkPlugin';
 
 // i18n
-import { FormattedMessage } from "react-intl";
+import TextField from '../ui/TextField';
+import CardBody from '../ui/CardBody';
+import CardFooter from '../ui/CardFooter';
+import Card from '../ui/Card';
+import Paper from '../ui/Paper';
+import IconButton from '../ui/IconButton';
+import Button from '../ui/Button';
 
 const FormActions = styled.div`
   display: flex;
   justify-content: flex-start;
   padding: 15px;
-  border-top: 1px solid ${props => props.theme.palette.border};
-  background: ${props => props.theme.palette.paperDark};
+  border-top: 1px solid ${(props) => props.theme.palette.border};
+  background: ${(props) => props.theme.palette.paperDark};
 `;
 
 const TextBox = styled.div`
@@ -61,7 +61,7 @@ const ImageButtonLabelWrapper = styled.div`
 
   svg {
     cursor: pointer;
-    fill: ${props => props.theme.palette.text.secondary};
+    fill: ${(props) => props.theme.palette.text.secondary};
     height: 2em;
     width: 2em;
     margin: 2.5px 0;
@@ -84,7 +84,7 @@ const MediaPreview = styled.div`
   overflow: hidden;
   position: relative;
   margin-top: 20px;
-  border: 1px solid ${props => props.theme.palette.border};
+  border: 1px solid ${(props) => props.theme.palette.border};
 `;
 
 const ImageBox = styled.div`
@@ -120,69 +120,67 @@ function PostForm(props) {
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
 
-  const preview = useMemo(() => {
-    return media && media.type === "image"
-      ? URL.createObjectURL(media.data)
-      : null;
-  }, [media]);
+  const preview = useMemo(() => (media && media.type === 'image'
+    ? URL.createObjectURL(media.data)
+    : null), [media]);
 
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
-      return "handled";
+      return 'handled';
     }
-    return "not-handled";
+    return 'not-handled';
   }
 
   function handleSubmit() {
-    let note = { content: convertToRaw(contentState) };
-    note["content"] = JSON.stringify(note.content);
+    const note = { content: convertToRaw(contentState) };
+    note.content = JSON.stringify(note.content);
     setEditorState(EditorState.createEmpty());
   }
 
-  const handleAddImage = e => {
+  const handleAddImage = (e) => {
     setMedia({
-      type: "image",
-      data: e.target.files[0]
+      type: 'image',
+      data: e.target.files[0],
     });
   };
 
-  const handleAddEmbed = e => {
+  const handleAddEmbed = (e) => {
     setMedia({
-      type: "embed",
+      type: 'embed',
       data: {
-        url: ""
-      }
+        url: '',
+      },
     });
   };
 
   const handleAddPoll = () => {
     setMedia({
-      type: "poll",
-      data: [{ text: "" }, { text: "" }]
+      type: 'poll',
+      data: [{ text: '' }, { text: '' }],
     });
   };
 
   const addPollOption = () => {
     if (media.data.length < 4) {
-      setMedia({ ...media, data: [...media.data, { text: "" }] });
+      setMedia({ ...media, data: [...media.data, { text: '' }] });
     }
   };
 
   const handleRemoveMedia = () => {
     setMedia(null);
-    document.getElementById("image-input").value = null;
+    document.getElementById('image-input').value = null;
   };
 
   // Determine whether placeholder should be displayed (to avoid overlap with lists)
   const blockType = RichUtils.getCurrentBlockType(editorState);
-  const isOl = blockType === "ordered-list-item";
-  const isUl = blockType === "unordered-list-item";
+  const isOl = blockType === 'ordered-list-item';
+  const isUl = blockType === 'unordered-list-item';
   const placeholderIsVisible = !isOl && !isUl;
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <Paper>
         <TextBox p={2}>
           <Editor
@@ -193,7 +191,7 @@ function PostForm(props) {
               placeholderIsVisible ? (
                 <FormattedMessage id="components.postNewStatus.thinking" />
               ) : (
-                ""
+                ''
               )
             }
             plugins={plugins}
@@ -201,7 +199,7 @@ function PostForm(props) {
           />
           {media && (
             <MediaPreview>
-              {media.type === "image" && (
+              {media.type === 'image' && (
                 <ImageBox>
                   <IconButton
                     onClick={handleRemoveMedia}
@@ -212,7 +210,7 @@ function PostForm(props) {
                   <PreviewImage src={preview} alt="preview" />
                 </ImageBox>
               )}
-              {media.type === "poll" && (
+              {media.type === 'poll' && (
                 <Card>
                   <PollBox>
                     <ul>
@@ -222,7 +220,7 @@ function PostForm(props) {
                             fullWidth
                             type="text"
                             placeholder={`Opção ${index + 1} ${
-                              index >= 2 ? "(opcional)" : ""
+                              index >= 2 ? '(opcional)' : ''
                             }`}
                             style={{ marginBottom: 8 }}
                           />
@@ -231,10 +229,10 @@ function PostForm(props) {
                     </ul>
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "flex-end",
+                        display: 'flex',
+                        alignItems: 'flex-end',
                         minWidth: 56,
-                        padding: 10
+                        padding: 10,
                       }}
                     >
                       {media.data.length < 4 && (
@@ -250,21 +248,19 @@ function PostForm(props) {
                   />
                 </Card>
               )}
-              {media.type === "embed" && (
+              {media.type === 'embed' && (
                 <Card>
                   <CardBody>
                     <TextField
                       fullWidth
                       placeholder="Link do Vídeo"
                       value={media.data.url}
-                      onChange={e =>
-                        setMedia({
-                          type: "embed",
-                          data: { url: e.target.value }
-                        })
-                      }
+                      onChange={(e) => setMedia({
+                        type: 'embed',
+                        data: { url: e.target.value },
+                      })}
                     />
-                    {media.data.url !== "" && (
+                    {media.data.url !== '' && (
                       <ReactPlayer
                         url={media.data.url}
                         light
@@ -302,7 +298,7 @@ function PostForm(props) {
             disableElevation
             color="secondary"
             size="small"
-            style={{ marginLeft: "auto" }}
+            style={{ marginLeft: 'auto' }}
             disabled={!contentState.hasText()}
             onClick={handleSubmit}
           >

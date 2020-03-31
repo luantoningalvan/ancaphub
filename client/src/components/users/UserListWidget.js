@@ -1,13 +1,13 @@
-import React from "react";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
-import CardFooter from "../ui/CardFooter";
-import CardHeader from "../ui/CardHeader";
-import CardBody from "../ui/CardBody";
-import styled from "styled-components";
-import defaultAvatar from "../../assets/default-profile-picture.jpg";
-import { FormattedMessage } from "react-intl";
-//import { Link } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import Card from '../ui/Card';
+import Button from '../ui/Button';
+import CardFooter from '../ui/CardFooter';
+import CardHeader from '../ui/CardHeader';
+import CardBody from '../ui/CardBody';
+import defaultAvatar from '../../assets/default-profile-picture.jpg';
+// import { Link } from 'react-router-dom'
 
 const User = styled.li`
   list-style: none;
@@ -15,7 +15,7 @@ const User = styled.li`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  border-bottom: 1px solid ${props => props.theme.palette.border};
+  border-bottom: 1px solid ${(props) => props.theme.palette.border};
   padding-bottom: 15px;
 
   &:last-child {
@@ -30,7 +30,7 @@ const User = styled.li`
     line-height: 100%;
   }
   span {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 0.9em;
     line-height: 100%;
     font-weight: lighter;
@@ -41,37 +41,37 @@ const Avatar = styled.div`
   width: 42px;
   overflow: hidden;
   border-radius: 100%;
-  background-image: url(${props => props.src});
+  background-image: url(${(props) => props.src});
   background-size: cover;
   margin-right: 10px;
 `;
 
-const UserListWidget = props => {
+const UserListWidget = (props) => {
   const users = [
     {
       id: 1,
-      name: "Luan",
-      username: "@ltoningalvan",
-      avatar: "",
-      isFollowing: false
+      name: 'Luan',
+      username: '@ltoningalvan',
+      avatar: '',
+      isFollowing: false,
     },
     {
       id: 1,
-      name: "Luan",
-      username: "@ltoningalvan",
-      avatar: "",
-      isFollowing: false
+      name: 'Luan',
+      username: '@ltoningalvan',
+      avatar: '',
+      isFollowing: false,
     },
     {
       id: 1,
-      name: "Luan",
-      username: "@ltoningalvan",
-      avatar: "",
-      isFollowing: false
-    }
+      name: 'Luan',
+      username: '@ltoningalvan',
+      avatar: '',
+      isFollowing: false,
+    },
   ];
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <Card>
         <CardHeader>
           <h3>
@@ -82,9 +82,9 @@ const UserListWidget = props => {
           <ul>
             {users.map((user, index) => (
               <User key={index}>
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Avatar
-                    src={user.avatar !== "" ? user.avatar : defaultAvatar}
+                    src={user.avatar !== '' ? user.avatar : defaultAvatar}
                   />
                   <div>
                     <h4>{user.name}</h4>

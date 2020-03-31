@@ -1,16 +1,16 @@
-import React from "react";
-import Paper from "../../../components/ui/Paper";
-import Container from "../../../components/ui/Container";
-import defaultThumbnail from "../../../assets/default-book-cover.jpg";
-import styled from "styled-components";
-//import parse from "html-react-parser";
-//import Categories from "../../../components/categories/showElementCategories";
-//import LoadContent from "../../../components/loaders/loadContent"
-//import UnavaliableContent from "../../../components/error/unavaliableContent"
-//import InvitedBy from "../../../components/profile/invitedBy"
+import React from 'react';
+import styled from 'styled-components';
+import Paper from '../../../components/ui/Paper';
+import Container from '../../../components/ui/Container';
+import defaultThumbnail from '../../../assets/default-book-cover.jpg';
+// import parse from "html-react-parser";
+// import Categories from "../../../components/categories/showElementCategories";
+// import LoadContent from "../../../components/loaders/loadContent"
+// import UnavaliableContent from "../../../components/error/unavaliableContent"
+// import InvitedBy from "../../../components/profile/invitedBy"
 
 const Banner = styled.div`
-  background: url(${props => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.8);
+  background: url(${(props) => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.8);
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -21,48 +21,46 @@ const Banner = styled.div`
 
 const Title = styled.h2`
   font-weight: bold;
-  color: ${props => props.theme.palette.text.contrast};
+  color: ${(props) => props.theme.palette.text.contrast};
   font-size: 2.125rem;
   margin-bottom: 5px;
 `;
 
 const Author = styled.h3`
   font-weight: lighter;
-  color: ${props => props.theme.palette.text.contrast};
+  color: ${(props) => props.theme.palette.text.contrast};
   font-size: 1.25rem;
 `;
 
-const SingleArticle = () => {
-  return true ? (
-    <>
-      <Banner>
-        <Container>
-          {/*<Categories categories={categories} />*/}
-          Categories
-          <Title>Título</Title>
-          <Author>Autor</Author>
-        </Container>
-      </Banner>
+const SingleArticle = () => (true ? (
+  <>
+    <Banner>
+      <Container>
+        {/* <Categories categories={categories} /> */}
+        Categories
+        <Title>Título</Title>
+        <Author>Autor</Author>
+      </Container>
+    </Banner>
 
-      <div style={{marginTop: -20}}>
+    <div style={{ marginTop: -20 }}>
       <Container>
         <Paper padding>
-          {/*parse(`${content}`)*/}
+          {/* parse(`${content}`) */}
           Conteúdo
         </Paper>
         InvitedBy
-        {/*<InvitedBy user={user} />*/}
+        {/* <InvitedBy user={user} /> */}
       </Container>
-      </div>
-    </>
-  ) : (
-    <Container>
-      <div mt={2}>
-        UnavaliableContent
-        {/*<UnavaliableContent />*/}
-      </div>
-    </Container>
-  );
-};
+    </div>
+  </>
+) : (
+  <Container>
+    <div mt={2}>
+      UnavaliableContent
+      {/* <UnavaliableContent /> */}
+    </div>
+  </Container>
+));
 
 export default SingleArticle;
