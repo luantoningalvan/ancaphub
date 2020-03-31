@@ -40,7 +40,7 @@ const groups = [
   },
 ];
 
-export default (props) => (
+export default () => (
   <Container>
     <Hero
       title={(

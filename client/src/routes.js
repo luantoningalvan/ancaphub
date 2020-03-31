@@ -22,7 +22,7 @@ import Contributions from './pages/account/Contributions';
 import Bookmarks from './pages/account/Bookmarks';
 import Settings from './pages/account/Settings';
 
-export default ({ auth }) => {
+export default () => {
   const allRoutes = [
     {
       isOpen: true,
@@ -132,9 +132,9 @@ export default ({ auth }) => {
   return (
     <Router>
       <Switch>
-        {allRoutes.map((route, index) => (
+        {allRoutes.map((route) => (
           <Route
-            key={index}
+            key={route.path}
             path={route.path}
             exact={route.exact}
             component={(props) => {

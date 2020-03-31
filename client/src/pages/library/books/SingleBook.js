@@ -1,7 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import DownloadIcon from 'react-ionicons/lib/IosDownload';
-import filesize from 'filesize';
-import querystring from 'querystring';
+import React from 'react';
 import styled from 'styled-components';
 import Paper from '../../../components/ui/Paper';
 import Container from '../../../components/ui/Container';
@@ -12,7 +9,7 @@ import defaultThumbnail from '../../../assets/default-book-cover.jpg';
 // import InvitedBy from "../../../components/profile/invitedBy"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
 
-function SingleBook({ match, fetchItem, book }) {
+function SingleBook() {
   const Title = styled.h2`
     font-weight: bold;
     color: ${(props) => props.theme.palette.text.contrast};
@@ -57,9 +54,11 @@ function SingleBook({ match, fetchItem, book }) {
     }
   `;
 
+  const book = true;
+
   return (
     <>
-      {true ? (
+      {book ? (
         <>
           <Banner cover="https://ancaphub.s3.sa-east-1.amazonaws.com/1580105305533-o-que-deve-ser-feito.jpg" />
           <div style={{ marginTop: -137, position: 'absolute', width: 'inherit' }}>

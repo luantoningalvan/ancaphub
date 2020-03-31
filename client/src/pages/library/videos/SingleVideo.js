@@ -36,9 +36,11 @@ const Author = styled.h3`
 `;
 
 function SingleVideo() {
+  const video = true;
+
   return (
     <>
-      {true ? (
+      {video ? (
         <>
           <Banner>
             <Container>

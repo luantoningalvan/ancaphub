@@ -9,10 +9,6 @@ import Hero from '../../components/ui/Hero';
 import TextField from '../../components/ui/TextField';
 import Button from '../../components/ui/Button';
 
-// validation
-
-// i18n
-
 // validation schema
 const validator = object({
   username: string().nullable(),
@@ -64,7 +60,7 @@ const PasswordStrength = styled.progress`
   }
 `;
 
-export default (props) => {
+export default () => {
   const [username, setUsername] = React.useState(null);
   const [currentPassword, setCurrentPassword] = React.useState(null);
   const [password, setPassword] = React.useState(null);
@@ -94,14 +90,14 @@ export default (props) => {
 
     // Form is untouched
     if (!username && !password && !email && !currentPassword) {
-      alert('nah');
+      global.window.alert('nah');
       return;
     }
 
     // No way to send only the new password, do something
     // This validation is made here to avoid cyclic dependency error in yup schema
     if (password && !currentPassword) {
-      alert('foo');
+      global.window.alert('foo');
       return;
     }
 
@@ -114,10 +110,10 @@ export default (props) => {
       })
     ) {
       // Input is valid! Do something.
-      alert('Valid! Good!');
+      global.window.alert('Valid! Good!');
     } else {
       // Input is invalid. Do something else.
-      alert('Invalid input');
+      global.window.alert('Invalid input');
     }
   };
 

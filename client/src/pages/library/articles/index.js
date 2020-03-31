@@ -1,12 +1,9 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import Container from '../../../components/ui/Container';
 import Hero from '../../../components/ui/Hero';
 import ArticleCard from '../../../components/library/articles/ArticleCard';
 
-// i18n
-
-export default (props) => (
+export default () => (
   <Container>
     <Hero
       title="Artigos"

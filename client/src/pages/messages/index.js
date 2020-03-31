@@ -46,7 +46,7 @@ const chats = [
   },
 ];
 
-export default (props) => (
+export default () => (
   <Container>
     <Chatbox chats={chats} currentChat={chats[0]} />
   </Container>

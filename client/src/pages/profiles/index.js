@@ -18,10 +18,10 @@ import Container from '../../components/ui/Container';
 
 // Areas
 const Feed = lazy(() => import('./Feed'));
-const Lists = lazy(() => import('./Lists'));
-const Contributions = lazy(() => import('./Contributions'));
-const Followers = lazy(() => import('./Followers'));
-const Following = lazy(() => import('./Following'));
+// const Lists = lazy(() => import('./Lists'));
+// const Contributions = lazy(() => import('./Contributions'));
+// const Followers = lazy(() => import('./Followers'));
+// const Following = lazy(() => import('./Following'));
 
 const ProfileHeader = styled.div`
   width: 100%;

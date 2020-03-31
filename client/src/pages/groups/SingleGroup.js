@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Container from '../../components/ui/Container';
-import Paper from '../../components/ui/Paper';
 import Tab from '../../components/ui/Tab';
 import Button from '../../components/ui/Button';
 

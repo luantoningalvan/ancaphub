@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import DoneIcon from 'react-ionicons/lib/IosDoneAll';
 import { isEmpty } from 'lodash';
@@ -8,9 +8,10 @@ import Paper from '../../components/ui/Paper';
 import IconButton from '../../components/ui/IconButton';
 import Notification from '../../components/notifications';
 
-export default (props) => {
+export default () => {
   const notifications = [
     {
+      id: '1',
       type: 'comment_liked',
       date: '15 minutes ago',
       data: {
@@ -20,6 +21,7 @@ export default (props) => {
       },
     },
     {
+      id: '2',
       type: 'post_commented',
       date: '15 minutes ago',
       data: {
@@ -29,6 +31,7 @@ export default (props) => {
       },
     },
     {
+      id: '3',
       type: 'post_shared',
       date: '15 minutes ago',
       data: {
@@ -38,6 +41,7 @@ export default (props) => {
       },
     },
     {
+      id: '4',
       type: 'user_followed',
       date: '15 minutes ago',
       data: {
@@ -72,8 +76,8 @@ export default (props) => {
         {!isEmpty(notifications) ? (
           <Paper>
             <ul style={{ padding: '8px 0px' }}>
-              {notifications.map((notification, index) => (
-                <Notification notification={notification} key={index} />
+              {notifications.map((notification) => (
+                <Notification notification={notification} key={notification.id} />
               ))}
             </ul>
           </Paper>

@@ -32,7 +32,9 @@ const Author = styled.h3`
   font-size: 1.25rem;
 `;
 
-const SingleArticle = () => (true ? (
+const article = true;
+
+const SingleArticle = () => (article ? (
   <>
     <Banner>
       <Container>

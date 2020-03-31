@@ -8,7 +8,7 @@ import LastItemsWidget from '../../components/library/LastItemsWidget';
 import UserListWidget from '../../components/users/UserListWidget';
 import TrendingTopicsWidget from '../../components/trends/TrendingTopicsWidget';
 
-export default (props) => (
+export default () => (
   <Container style={{ marginTop: 8 }}>
     <GridContainer spacing={1}>
       <GridItem xs={12} lg={8}>

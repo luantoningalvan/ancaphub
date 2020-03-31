@@ -66,7 +66,7 @@ const Home = () => {
       }}
       >
         <div>
-          <img src={logo} />
+          <img src={logo} alt="Logo do AncapHub" />
           <h2 style={{ fontWeight: 'bold', marginTop: 24 }}>Bem vindo à versão de testes do AncapHub!</h2>
           <Features>
             <li>
@@ -88,7 +88,7 @@ const Home = () => {
           </Features>
         </div>
         <SignupBox padding>
-          {activeBox == 'signin' ? (
+          {activeBox === 'signin' ? (
             <>
               <h3 style={{
                 fontWeight: 'bold', marginBottom: 16, marginTop: 8, textAlign: 'center',
@@ -97,7 +97,14 @@ const Home = () => {
                 Entrar
               </h3>
               <SigninForm onSubmit={() => {}} />
-              <a onClick={() => setActiveBox('signup')}>Não possui uma conta?</a>
+              <span
+                onClick={() => setActiveBox('signup')}
+                role="link"
+                tabIndex={0}
+                onKeyDown={() => {}}
+              >
+                Não possui uma conta?
+              </span>
             </>
           ) : (
             <>
@@ -108,7 +115,14 @@ const Home = () => {
                 Cadastro
               </h3>
               <SignupForm onSubmit={() => {}} />
-              <a onClick={() => setActiveBox('signin')}>Já tem uma conta?</a>
+              <span
+                onClick={() => setActiveBox('signup')}
+                role="link"
+                tabIndex={0}
+                onKeyDown={() => {}}
+              >
+                Já tem uma conta?
+              </span>
             </>
           )}
         </SignupBox>

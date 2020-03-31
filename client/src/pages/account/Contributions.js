@@ -8,10 +8,6 @@ import PointsIcon from 'react-ionicons/lib/IosStar';
 import Container from '../../components/ui/Container';
 import Hero from '../../components/ui/Hero';
 import Button from '../../components/ui/Button';
-import Card from '../../components/ui/Card';
-import CardHeader from '../../components/ui/CardHeader';
-import CardBody from '../../components/ui/CardBody';
-
 
 const InfoList = styled.ul`
   display: grid;
@@ -49,7 +45,7 @@ const InfoCard = styled.li`
   }
 `;
 
-export default (props) => (
+export default () => (
   <Container>
     <Hero
       title={(
