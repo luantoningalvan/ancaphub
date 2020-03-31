@@ -64,8 +64,9 @@ const makeMediaQueries = () => {
   });
 
   // From...to
-  for (let i = 0; i < breakpointBoundaries.length; i++) {
-    for (let j = 1; j < breakpointBoundaries.length; j++) {
+  for (let i = 0; i < breakpointBoundaries.length; i += 1) {
+    for (let j = 1; j < breakpointBoundaries.length; j += 1) {
+      // eslint-disable-next-line no-continue
       if (i === j) continue;
       mediaQueryString += `
             .hide-from-${breakpointBoundaries[i].code}-to-${breakpointBoundaries[j].code} {
@@ -90,15 +91,17 @@ const HiddenWrap = styled.div`
   ${makeMediaQueries()}
 `;
 
-const Hidden = (props) => {
+const Hidden = ({
+  from, only, to, children,
+}) => {
   const cs = clsx({
-    [`hide-only-on-${props.only}`]: props.only !== undefined,
-    [`hide-from-${props.from}-to-${props.to}`]:
-      props.from !== false && props.to !== false && props.only === undefined,
+    [`hide-only-on-${only}`]: only !== undefined,
+    [`hide-from-${from}-to-${to}`]:
+      from !== false && to !== false && only === undefined,
   });
   return (
     <HiddenWrap>
-      <div className={cs}>{props.children}</div>
+      <div className={cs}>{children}</div>
     </HiddenWrap>
   );
 };

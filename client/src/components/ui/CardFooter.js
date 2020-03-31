@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CardFooter = styled(Link)`
+const CardFooterWrap = styled(Link)`
     width: 100%;
     text-align:center;
     padding:15px;
@@ -16,8 +17,22 @@ const CardFooter = styled(Link)`
     }
 `;
 
-export default (props) => (
-  <CardFooter to={props.link} onClick={props.action}>
-    {props.label}
-  </CardFooter>
+const CardFooter = ({ link, action, label }) => (
+  <CardFooterWrap to={link} onClick={action}>
+    {label}
+  </CardFooterWrap>
 );
+
+CardFooter.propTypes = {
+  link: PropTypes.string,
+  action: PropTypes.func,
+  label: PropTypes.string,
+};
+
+CardFooter.defaultProps = {
+  link: '#',
+  action: undefined,
+  label: undefined,
+};
+
+export default CardFooter;

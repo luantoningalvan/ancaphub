@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = styled.button`
     background: ${(props) => (props.variant === 'outlined' ? 'transparent' : props.theme.palette[props.color])};
@@ -18,5 +19,17 @@ const Button = styled.button`
         filter: brightness(90%);
     }
 `;
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(['outlined', 'contained', 'filled']),
+  size: PropTypes.oneOf(['small', 'normal']),
+  fullwidth: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  variant: 'filled',
+  size: 'normal',
+  fullWidth: false,
+};
 
 export default Button;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TextField = styled.input`
     background: transparent;
@@ -9,5 +10,9 @@ const TextField = styled.input`
     color: white;
     width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
 `;
+
+TextField.propTypes = {
+  fullWidth: PropTypes.bool,
+};
 
 export default TextField;

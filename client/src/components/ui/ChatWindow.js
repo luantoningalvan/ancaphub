@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Static
 import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
@@ -108,5 +109,26 @@ const ChatWindow = ({ chat }) => (
     ))}
   />
 );
+
+const UserModelPropTypes = {
+  username: PropTypes.string,
+  email: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  bio: PropTypes.string,
+  isVerified: PropTypes.bool,
+};
+
+const MessagePropTypes = PropTypes.shape({
+  user: UserModelPropTypes,
+  body: PropTypes.string,
+  createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+});
+
+ChatWindow.propTypes = {
+  chat: PropTypes.shape({
+    messages: PropTypes.arrayOf(MessagePropTypes),
+  }),
+};
 
 export default ChatWindow;

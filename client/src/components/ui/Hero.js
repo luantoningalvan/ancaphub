@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const HeroWrapper = styled.div`
   width: 100%;
@@ -34,5 +35,11 @@ const Hero = ({ title, description, actions }) => (
     </div>
   </HeroWrapper>
 );
+
+Hero.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  actions: PropTypes.oneOfType([PropTypes.element, PropTypes.node, PropTypes.func]),
+};
 
 export default Hero;

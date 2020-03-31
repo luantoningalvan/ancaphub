@@ -13,6 +13,7 @@
     "filesize": "^6.1.0",
     "html-react-parser": "^0.10.1",
     "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
     "querystring": "^0.2.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

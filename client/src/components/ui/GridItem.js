@@ -16,24 +16,30 @@ const GridItemWrapper = styled.div`
 
 GridItemWrapper.propTypes = commonPropTypes;
 
-const GridItem = (props) => {
+const GridItem = ({
+  alignContent, alignItems, direction, justifyContent,
+  xs, sm, md, lg, xl,
+  zeroMinWidth, wrap,
+  children,
+  style,
+}) => {
   // default prop values:
   const newProps = {
-    alignContent: propertyDefault(props.alignContent, 'flex-start'),
-    alignItems: propertyDefault(props.alignItems, 'flex-start'),
-    flexDirection: propertyDefault(props.direction, 'row'),
-    justifyContent: propertyDefault(props.justifyContent, 'flex-start'),
-    xs: propertyDefault(props.xs, false),
-    sm: propertyDefault(props.sm, false),
-    md: propertyDefault(props.md, false),
-    lg: propertyDefault(props.lg, false),
-    xl: propertyDefault(props.xl, false),
+    alignContent: propertyDefault(alignContent, 'flex-start'),
+    alignItems: propertyDefault(alignItems, 'flex-start'),
+    flexDirection: propertyDefault(direction, 'row'),
+    justifyContent: propertyDefault(justifyContent, 'flex-start'),
+    xs: propertyDefault(xs, false),
+    sm: propertyDefault(sm, false),
+    md: propertyDefault(md, false),
+    lg: propertyDefault(lg, false),
+    xl: propertyDefault(xl, false),
     /**
      * Using 'nowrap' is not recommended as it can cause flow issues and
      * some weird bugs, but it's up to you
      */
-    flexWrap: propertyDefault(props.wrap, 'wrap'),
-    zeroMinWidth: propertyDefault(props.zeroMinWidth, false),
+    flexWrap: propertyDefault(wrap, 'wrap'),
+    zeroMinWidth: propertyDefault(zeroMinWidth, false),
   };
 
   Object.preventExtensions(newProps);
@@ -41,10 +47,10 @@ const GridItem = (props) => {
   return (
     <GridItemWrapper
       {...newProps}
-      style={props.style}
+      style={style}
       className={`${generateClassNames(newProps)} item`}
     >
-      {props.children}
+      {children}
     </GridItemWrapper>
   );
 };

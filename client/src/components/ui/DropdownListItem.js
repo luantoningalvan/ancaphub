@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const DropdownListItemWrap = styled.li`
   display: flex;
-  alig-items: flex-start;
+  align-items: flex-start;
   list-style:none;
   align-items: center;
   min-width: 100px;
@@ -46,9 +46,7 @@ export default ({
     <span>{children}</span>
     { action && (
     <div>
-      {' '}
       { React.cloneElement(action, { style: { margin: '0 0.5em' } }) }
-      {' '}
     </div>
     ) }
   </DropdownListItemWrap>

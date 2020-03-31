@@ -87,7 +87,7 @@ const Dropdown = ({
         </Reference>
         {showing && (
           <Popper placement={placement} modifiers={popperModifiers}>
-            {({ ref, style, placement }) => (
+            {({ ref, style }) => (
               <DropdownCard
                 ref={(node) => setListRef(node, ref)}
                 style={style}

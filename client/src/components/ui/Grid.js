@@ -5,8 +5,8 @@ import clsx from 'clsx';
 // It is NOT a component and can be moved to another folder in future.
 // This implementation aims to be close to Bootstrap's grid layout implemenation
 // and the structure is very similar to Material UI's one.
-// The main differences are that the grid is split between two components and every class is already
-// defined. Each one is applied conditionally instead of also being generated dynamically on component mount.
+// The main differences are: the grid is split in two components and every class is already defined.
+// Each one is applied conditionally instead of also being generated dynamically on component mount.
 // see https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/Grid/Grid.js Material UI's Grid component implementation
 // see https://github.com/twbs/bootstrap/blob/8fccaa2439e97ec72a4b7dc42ccc1f649790adb0/dist/css/bootstrap-grid.css Bootstrap's CSS grid implementation
 

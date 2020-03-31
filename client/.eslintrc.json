@@ -5,6 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
+        "react-app",
         "airbnb"
     ],
     "globals": {
@@ -30,6 +31,8 @@
         "react/jsx-props-no-spreading": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "consistent-return": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/forbid-prop-types": "off",
+        "react/require-default-props": "off"
       }
 }

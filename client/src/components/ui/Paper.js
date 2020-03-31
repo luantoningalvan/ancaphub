@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Paper = styled.div`
     background: ${(props) => props.theme.palette.paper};
@@ -8,5 +9,9 @@ const Paper = styled.div`
     overflow: hidden;
     
 `;
+
+Paper.propTypes = {
+  padding: PropTypes.bool,
+};
 
 export default Paper;

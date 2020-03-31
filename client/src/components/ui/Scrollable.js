@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ScrollableWrap = styled.div`
   display: flex;
@@ -64,5 +65,12 @@ const Scrollable = ({
     <div className="cover" />
   </ScrollableWrap>
 );
+
+Scrollable.propTypes = {
+  grow: PropTypes.bool,
+  scrollableContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
+  topContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
+  bottomContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
+};
 
 export default Scrollable;

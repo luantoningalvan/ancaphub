@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Paper from './Paper';
 import ChatboxMessageList from './ChatboxMessageList';
 import ChatWindow from './ChatWindow';
@@ -25,5 +26,27 @@ const Chatbox = ({ chats, currentChat }) => (
     </Paper>
   </ChatboxWrapper>
 );
+
+const UserModelPropTypes = {
+  username: PropTypes.string,
+  email: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  bio: PropTypes.string,
+  isVerified: PropTypes.bool,
+};
+
+const MessagePropTypes = PropTypes.shape({
+  user: UserModelPropTypes,
+  body: PropTypes.string,
+  createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+});
+
+Chatbox.propTypes = {
+  chats: PropTypes.arrayOf(PropTypes.shape({
+    messages: PropTypes.arrayOf(MessagePropTypes),
+  })),
+  currentChat: PropTypes.arrayOf(MessagePropTypes),
+};
 
 export default Chatbox;

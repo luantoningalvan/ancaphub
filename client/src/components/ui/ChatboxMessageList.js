@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Components
 import SearchIcon from 'react-ionicons/lib/IosSearch';
@@ -7,6 +8,22 @@ import ChatboxListItem from './ChatboxListItem';
 import Scrollable from './Scrollable';
 
 // Icons
+
+// Validation
+const UserModelPropTypes = {
+  username: PropTypes.string,
+  email: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  bio: PropTypes.string,
+  isVerified: PropTypes.bool,
+};
+
+const MessagePropTypes = PropTypes.shape({
+  user: UserModelPropTypes,
+  body: PropTypes.string,
+  createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+});
 
 const MessageSearchWrap = styled.div`
   padding: 16px;
@@ -64,15 +81,21 @@ const ChatboxMessageList = ({ chats }) => (
   <>
     <Scrollable
       topContent={<MessageSearch />}
-      scrollableContent={chats.map((chat) => (
+      scrollableContent={chats.map((chat, index) => (
         <ChatboxListItem
-          key={chat.name}
-          name={chat.name}
-          lastMessage={chat.lastMessage}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          message={chat.messages[0]}
         />
       ))}
     />
   </>
 );
+
+ChatboxMessageList.propTypes = {
+  chats: PropTypes.arrayOf(PropTypes.shape({
+    messages: PropTypes.arrayOf(MessagePropTypes),
+  })),
+};
 
 export default ChatboxMessageList;
