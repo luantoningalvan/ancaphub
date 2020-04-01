@@ -2,39 +2,40 @@ import React, { useState } from 'react';
 import TextField from '../ui/TextField';
 import Button from '../ui/Button';
 
-export default (props) => {
+export default ({onSubmit}) => {
   const INITIAL_STATE = {
-    name: '', username: '', email: '', password: '', confirmPassword: '',
+    email: '', password: '',
   };
   const [data, setData] = useState(INITIAL_STATE);
 
   const handleChange = (e) => {
+    console.log(data)
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.handleSubmit(data);
+    onSubmit(data);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <TextField
         type="text"
-        placeholder="Usuário"
+        placeholder="E-mail"
         onChange={handleChange}
-        name="username"
-        value={data.username}
-        autoComplete="username"
+        name="email"
+        value={data.email}
+        autoComplete="email"
       />
 
       <TextField
         type="password"
-        placeholder="Confirmar senha"
+        placeholder="Senha"
         onChange={handleChange}
-        name="confirmPassword"
-        autoComplete="confirm-password"
-        value={data.confirmPassword}
+        name="password"
+        autoComplete="password"
+        value={data.password}
       />
 
       <Button type="submit" color="secondary">Entrar</Button>

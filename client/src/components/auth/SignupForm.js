@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import TextField from '../ui/TextField';
 import Button from '../ui/Button';
 
-export default (props) => {
-  const INITIAL_STATE = { username: '', password: '' };
+export default ({onSubmit}) => {
+  const INITIAL_STATE = { name: '', username: '', email: '', password: '', confirmPassword: '' };
   const [data, setData] = useState(INITIAL_STATE);
 
   const handleChange = (e) => {
@@ -12,7 +12,7 @@ export default (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.handleSubmit(data);
+    onSubmit(data);
   };
 
   return (

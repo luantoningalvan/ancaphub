@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import Routes from './routes';
-
+import setAuthToken from './utils/setAuthToken';
 import store from './store';
-
+import { loadUserRequest } from './actions/auth';
 
 // i18n JSON base translation files
 import i18nPt from './i18n/pt.json';
@@ -23,7 +23,15 @@ const messages = {
 // get default browser language without region code as an initial fallback for development
 const language = navigator.language.split(/[-_]/)[0];
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 export default function App() {
+  useEffect(() => {
+    store.dispatch(loadUserRequest());
+  }, []);
+  
   return (
     <Provider store={store}>
       <IntlProvider locale={language} messages={messages[language]}>

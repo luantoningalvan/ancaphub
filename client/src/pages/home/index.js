@@ -9,9 +9,11 @@ import Paper from '../../components/ui/Paper';
 import Container from '../../components/ui/Container';
 import SigninForm from '../../components/auth/SigninForm';
 import SignupForm from '../../components/auth/SignupForm';
-
 import logo from '../../assets/logo-type.png';
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { authUserRequest } from '../../actions/auth'
+import { createUserRequest } from '../../actions/users'
 
 const SignupBox = styled(Paper)`
   width: 100%;
@@ -24,7 +26,7 @@ const SignupBox = styled(Paper)`
 
   input { margin-bottom: 8px; }
 
-  a {
+  span {
     color: ${(props) => props.theme.palette.text.primary};
     text-align:center;
     display:block;
@@ -56,7 +58,7 @@ const Features = styled.ul`
   }
 `;
 
-const Home = () => {
+const Home = ({ authUserRequest:authUserAction, createUserRequest:createUserAction }) => {
   const [activeBox, setActiveBox] = useState('signup');
 
   return (
@@ -96,7 +98,7 @@ const Home = () => {
               >
                 Entrar
               </h3>
-              <SigninForm onSubmit={() => {}} />
+              <SigninForm onSubmit={authUserAction} />
               <span
                 onClick={() => setActiveBox('signup')}
                 role="link"
@@ -114,9 +116,9 @@ const Home = () => {
               >
                 Cadastro
               </h3>
-              <SignupForm onSubmit={() => {}} />
+              <SignupForm onSubmit={createUserAction} />
               <span
-                onClick={() => setActiveBox('signup')}
+                onClick={() => setActiveBox('signin')}
                 role="link"
                 tabIndex={0}
                 onKeyDown={() => {}}
@@ -131,4 +133,5 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapDispatchToProps = dispatch => bindActionCreators({authUserRequest, createUserRequest}, dispatch)
+export default connect(null, mapDispatchToProps)(Home);
