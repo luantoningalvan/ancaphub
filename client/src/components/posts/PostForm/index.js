@@ -1,119 +1,32 @@
 import React, { useState, useMemo } from 'react';
-import styled from 'styled-components';
 import ReactPlayer from 'react-player';
-
-// Icons
 import ImageIcon from 'react-ionicons/lib/IosImageOutline';
 import EmbedIcon from 'react-ionicons/lib/IosCode';
 import PollIcon from 'react-ionicons/lib/IosPodiumOutline';
 import CloseIcon from 'react-ionicons/lib/IosClose';
 import AddIcon from 'react-ionicons/lib/IosAdd';
-
-// Text Editor
+import TextField from '../../ui/TextField';
+import CardBody from '../../ui/CardBody';
+import CardFooter from '../../ui/CardFooter';
+import Card from '../../ui/Card';
+import IconButton from '../../ui/IconButton';
+import Button from '../../ui/Button';
 import { EditorState, RichUtils, convertToRaw } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
-import 'draft-js/dist/Draft.css';
 import createListPlugin from 'draft-js-list-plugin';
 import { FormattedMessage } from 'react-intl';
-import basicTextStylePlugin from '../editor/plugins/basicTextStylePlugin';
-import addLinkPlugin from '../editor/plugins/addLinkPlugin';
+import basicTextStylePlugin from '../../editor/plugins/basicTextStylePlugin';
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+import createHashtagPlugin from 'draft-js-hashtag-plugin';
+import 'draft-js/dist/Draft.css';
+import 'draft-js-linkify-plugin/lib/plugin.css';
+import 'draft-js-hashtag-plugin/lib/plugin.css'
+import PostFormStyle from './styles'
 
-// i18n
-import TextField from '../ui/TextField';
-import CardBody from '../ui/CardBody';
-import CardFooter from '../ui/CardFooter';
-import Card from '../ui/Card';
-import Paper from '../ui/Paper';
-import IconButton from '../ui/IconButton';
-import Button from '../ui/Button';
-
-const FormActions = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding: 15px;
-  border-top: 1px solid ${(props) => props.theme.palette.border};
-  background: ${(props) => props.theme.palette.paperDark};
-`;
-
-const TextBox = styled.div`
-  padding: 20px;
-  min-height: 100px;
-`;
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 5px;
-`;
-
-const ImageButtonLabelWrapper = styled.div`
-  [type="file"] {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-  }
-
-  svg {
-    cursor: pointer;
-    fill: ${(props) => props.theme.palette.text.secondary};
-    height: 2em;
-    width: 2em;
-    margin: 2.5px 0;
-    padding: 2px;
-  }
-
-  label {
-    clear: both;
-  }
-
-  [type="file"] + label {
-    cursor: pointer;
-    display: inline-block;
-  }
-`;
-
-const MediaPreview = styled.div`
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  margin-top: 20px;
-  border: 1px solid ${(props) => props.theme.palette.border};
-`;
-
-const ImageBox = styled.div`
-  max-height: 350px;
-  .close-icon {
-    height: 38px;
-    width: 38px;
-    background: red;
-    position: absolute;
-    right: 16px;
-    top: 16px;
-    z-index: 100;
-  }
-`;
-
-const PollBox = styled.div`
-  display: flex;
-  padding: 15px;
-
-  ul {
-    flex: 1;
-  }
-  li {
-    list-style: none;
-  }
-`;
-
+const linkifyPlugin = createLinkifyPlugin();
 const listPlugin = createListPlugin();
-const plugins = [addLinkPlugin, basicTextStylePlugin, listPlugin];
+const hashtagPlugin = createHashtagPlugin();
+const plugins = [linkifyPlugin, basicTextStylePlugin, listPlugin, hashtagPlugin];
 
 function PostForm() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -183,8 +96,8 @@ function PostForm() {
 
   return (
     <div style={{ width: '100%' }}>
-      <Paper>
-        <TextBox p={2}>
+      <PostFormStyle>
+        <div className="text-box">
           <Editor
             editorState={editorState}
             onChange={setEditorState}
@@ -200,21 +113,21 @@ function PostForm() {
             spellCheck
           />
           {media && (
-            <MediaPreview>
+            <div className="media-preview">
               {media.type === 'image' && (
-                <ImageBox>
+                <div className="image-box">
                   <IconButton
                     onClick={handleRemoveMedia}
                     className="close-icon"
                   >
                     <CloseIcon />
                   </IconButton>
-                  <PreviewImage src={preview} alt="preview" />
-                </ImageBox>
+                  <img src={preview} alt="preview" />
+                </div>
               )}
               {media.type === 'poll' && (
                 <Card>
-                  <PollBox>
+                  <div className="poll-box">
                     <ul>
                       {media.data.map((option, index) => (
                         <li>
@@ -243,7 +156,7 @@ function PostForm() {
                         </IconButton>
                       )}
                     </div>
-                  </PollBox>
+                  </div>
                   <CardFooter
                     label="Remover Enquete"
                     action={handleRemoveMedia}
@@ -278,16 +191,16 @@ function PostForm() {
                   />
                 </Card>
               )}
-            </MediaPreview>
+            </div>
           )}
-        </TextBox>
-        <FormActions>
-          <ImageButtonLabelWrapper>
+        </div>
+        <div className="form-actions">
+          <div className="upload-button">
             <label>
               <ImageIcon />
               <input id="image-input" type="file" onChange={handleAddImage} />
             </label>
-          </ImageButtonLabelWrapper>
+          </div>
           <IconButton size="small" onClick={handleAddPoll}>
             <PollIcon />
           </IconButton>
@@ -306,8 +219,8 @@ function PostForm() {
           >
             Publicar
           </Button>
-        </FormActions>
-      </Paper>
+        </div>
+      </PostFormStyle>
     </div>
   );
 }
