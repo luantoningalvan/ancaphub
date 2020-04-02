@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
-const Collection = () => {
-  return <p>Collection</p>;
-};
+const Collection = () => <p>Collection</p>;
 
 export default Collection;

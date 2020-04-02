@@ -1,12 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Static
-import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
+import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
 
 // Components
-import Scrollable from "./Scrollable";
-import ChatBubble from "./ChatBubble";
+import Scrollable from './Scrollable';
+import ChatBubble from './ChatBubble';
 
 // Wrap div for receiving messages input
 const EnterMessageInputWrapper = styled.div`
@@ -15,14 +16,14 @@ const EnterMessageInputWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid ${props => props.theme.palette.border};
+  border-top: 1px solid ${(props) => props.theme.palette.border};
 
   & > div.messageInput {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    border: 1px solid ${props => props.theme.palette.border};
+    border: 1px solid ${(props) => props.theme.palette.border};
     border-radius: 5px;
 
     & > i {
@@ -57,7 +58,7 @@ const ChatInfoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom:1px solid ${props => props.theme.palette.border};
+  border-bottom:1px solid ${(props) => props.theme.palette.border};
   background: rgba(0,0,0,.1);
   & > .block {
     padding: 16px 8px;
@@ -75,44 +76,59 @@ const ChatInfoWrapper = styled.div`
   }
 `;
 
-const ChatInfo = ({ chat }) => {
-  return (
-    <ChatInfoWrapper>
-      <div className="block">
-        <img src={defaultProfilePicture} alt="Foto do perfil" />
-      </div>
-      <div className="block grow">
-        <p>{chat.name}</p>
-      </div>
-    </ChatInfoWrapper>
-  );
+const ChatInfo = ({ chat }) => (
+  <ChatInfoWrapper>
+    <div className="block">
+      <img src={defaultProfilePicture} alt="Foto do perfil" />
+    </div>
+    <div className="block grow">
+      <p>{chat.name}</p>
+    </div>
+  </ChatInfoWrapper>
+);
+
+const EnterMessageInput = () => (
+  <EnterMessageInputWrapper>
+    <div className="messageInput">
+      <input type="text" placeholder="Digite sua mensagem" />
+    </div>
+  </EnterMessageInputWrapper>
+);
+
+const ChatWindow = ({ chat }) => (
+  <Scrollable
+    grow
+    topContent={<ChatInfo chat={chat} />}
+    bottomContent={<EnterMessageInput />}
+    scrollableContent={chat.messages.map((message) => (
+      <ChatBubble
+        key={message.body}
+        message={message}
+        sentByUser={message.sentByUser}
+      />
+    ))}
+  />
+);
+
+const UserModelPropTypes = {
+  username: PropTypes.string,
+  email: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  bio: PropTypes.string,
+  isVerified: PropTypes.bool,
 };
 
-const EnterMessageInput = () => {
-  return (
-    <EnterMessageInputWrapper>
-      <div className="messageInput">
-        <input type="text" placeholder="Digite sua mensagem" />
-      </div>
-    </EnterMessageInputWrapper>
-  );
-};
+const MessagePropTypes = PropTypes.shape({
+  user: UserModelPropTypes,
+  body: PropTypes.string,
+  createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+});
 
-const ChatWindow = ({ chat }) => {
-  return (
-    <Scrollable
-      grow={true}
-      topContent={<ChatInfo chat={chat} />}
-      bottomContent={<EnterMessageInput />}
-      scrollableContent={chat.messages.map(message => (
-        <ChatBubble
-          key={message.body}
-          message={message}
-          sentByUser={message.sentByUser}
-        />
-      ))}
-    />
-  );
+ChatWindow.propTypes = {
+  chat: PropTypes.shape({
+    messages: PropTypes.arrayOf(MessagePropTypes),
+  }),
 };
 
 export default ChatWindow;

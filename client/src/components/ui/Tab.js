@@ -1,15 +1,15 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 const Tab = styled.li`
   list-style: none;
   border-bottom: 3px solid transparent;
 
   &:hover {
-    border-bottom: 3px solid ${props => props.theme.palette.border};
+    border-bottom: 3px solid ${(props) => props.theme.palette.border};
   }
 
   .current {
-    border-bottom: 3px solid ${props => props.theme.palette.secondary};
+    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
   }
   > a {
     display: block;

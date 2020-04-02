@@ -1,31 +1,31 @@
-import React, { lazy, Suspense } from "react";
-import styled from "styled-components";
-import Container from "../../components/ui/Container";
-import Button from "../../components/ui/Button";
-import Paper from "../../components/ui/Paper";
-import defaultProfileCover from "../../assets/default-profile-cover.jpg";
-import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
-import { Link } from "react-router-dom";
-import { useRouteMatch } from "react-router-dom";
+import React, { lazy, Suspense } from 'react';
+import styled from 'styled-components';
+import { Link, useRouteMatch } from 'react-router-dom';
+
 
 // i18n
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
 
 // Icons
-import LocationIcon from "react-ionicons/lib/IosPinOutline";
-import BirthIcon from "react-ionicons/lib/IosEggOutline";
-import SiteIcon from "react-ionicons/lib/IosLinkOutline";
+import LocationIcon from 'react-ionicons/lib/IosPinOutline';
+import BirthIcon from 'react-ionicons/lib/IosEggOutline';
+import SiteIcon from 'react-ionicons/lib/IosLinkOutline';
+import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
+import defaultProfileCover from '../../assets/default-profile-cover.jpg';
+import Paper from '../../components/ui/Paper';
+import Button from '../../components/ui/Button';
+import Container from '../../components/ui/Container';
 
 // Areas
-const Feed = lazy(() => import("./Feed"));
-const Lists = lazy(() => import("./Lists"));
-const Contributions = lazy(() => import("./Contributions"));
-const Followers = lazy(() => import("./Followers"));
-const Following = lazy(() => import("./Following"));
+const Feed = lazy(() => import('./Feed'));
+// const Lists = lazy(() => import('./Lists'));
+// const Contributions = lazy(() => import('./Contributions'));
+// const Followers = lazy(() => import('./Followers'));
+// const Following = lazy(() => import('./Following'));
 
 const ProfileHeader = styled.div`
   width: 100%;
-  background: ${props => props.theme.palette.paper};
+  background: ${(props) => props.theme.palette.paper};
   border-radius: 10px;
   margin-top: 15px;
   overflow: hidden;
@@ -81,7 +81,7 @@ const ProfileInfo = styled.div`
           display: block;
           width: 1px;
           height: 20px;
-          background-color: ${props => props.theme.palette.border};
+          background-color: ${(props) => props.theme.palette.border};
           position: absolute;
           top: 8px;
           right: 0;
@@ -97,13 +97,13 @@ const ProfileInfo = styled.div`
         }
 
         > span {
-          color: ${props => props.theme.palette.text.secondary};
+          color: ${(props) => props.theme.palette.text.secondary};
         }
         > .counter {
           text-decoration: none;
           font-weight: bold;
           font-size: 1.375rem;
-          color: ${props => props.theme.palette.text.primary};
+          color: ${(props) => props.theme.palette.text.primary};
           margin-bottom: 8px;
         }
       }
@@ -118,12 +118,12 @@ const ProfileInfo = styled.div`
     > h3 {
       font-size: 1.3rem;
       margin-bottom: 5px;
-      color: ${props => props.theme.palette.text.primary};
+      color: ${(props) => props.theme.palette.text.primary};
 
     }
     > span {
       font-size: 0.9rem;
-      color: ${props => props.theme.palette.text.secondary};
+      color: ${(props) => props.theme.palette.text.secondary};
     }
   }
 
@@ -150,11 +150,11 @@ const UserAbout = styled.div`
     margin: 10px 0px;
   }
   > ul li a {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
   }
   > ul li svg {
     float: left;
-    fill: ${props => props.theme.palette.text.primary};
+    fill: ${(props) => props.theme.palette.text.primary};
     margin-right: 10px;
   }
 `;
@@ -174,32 +174,32 @@ const Tabs = styled.ul`
     border-bottom: 3px solid transparent;
 
     &:hover {
-      border-bottom: 3px solid ${props => props.theme.palette.border};
+      border-bottom: 3px solid ${(props) => props.theme.palette.border};
     }
   }
 
   > li.current {
-    border-bottom: 3px solid ${props => props.theme.palette.secondary};
+    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
   }
   > li a {
     display: block;
-    color: ${props => props.theme.palette.secondary};
+    color: ${(props) => props.theme.palette.secondary};
     text-decoration: none;
     padding: 16px 32px;
   }
 `;
 
-export default props => {
+export default () => {
   const { path } = useRouteMatch();
 
   return (
     <Container>
       <ProfileHeader>
         <ProfileCover>
-          <img src={defaultProfileCover} />
+          <img src={defaultProfileCover} alt="default cover pic" />
         </ProfileCover>
         <ProfilePicture>
-          <img src={defaultProfilePicture} />
+          <img src={defaultProfilePicture} alt="default profile pic" />
         </ProfilePicture>
         <ProfileInfo>
           <div className="follower-count">
@@ -283,21 +283,21 @@ export default props => {
         <div>
           <Paper style={{ marginBottom: 15 }}>
             <Tabs>
-              <li className={path === "/:id" ? "current" : ""}>
+              <li className={path === '/:id' ? 'current' : ''}>
                 <Link to="/user">Feed</Link>
               </li>
-              <li className={path.includes("/:id/lists") ? "current" : ""}>
+              <li className={path.includes('/:id/lists') ? 'current' : ''}>
                 <Link to="/user/lists">Coleção</Link>
               </li>
               <li
-                className={path.includes("/:id/contributions") ? "current" : ""}
+                className={path.includes('/:id/contributions') ? 'current' : ''}
               >
                 <Link to="/user/contributions">Contribuições</Link>
               </li>
-              <li className={path.includes("/:id/following") ? "current" : ""}>
+              <li className={path.includes('/:id/following') ? 'current' : ''}>
                 <Link to="/user/following">Seguindo</Link>
               </li>
-              <li className={path.includes("/:id/followers") ? "current" : ""}>
+              <li className={path.includes('/:id/followers') ? 'current' : ''}>
                 <Link to="/user/followers">Seguidores</Link>
               </li>
             </Tabs>

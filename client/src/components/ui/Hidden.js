@@ -1,44 +1,44 @@
-import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import clsx from "clsx";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 const hiddenPropTypes = {
-  from: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-  to: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-  only: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-  children: PropTypes.node
+  from: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  to: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  only: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  children: PropTypes.node,
 };
 
 const breakpointBoundaries = [
   {
-    code: "xs",
-    boundaries: [0, 599]
+    code: 'xs',
+    boundaries: [0, 599],
   },
   {
-    code: "sm",
-    boundaries: [600, 959]
+    code: 'sm',
+    boundaries: [600, 959],
   },
   {
-    code: "md",
-    boundaries: [960, 1279]
+    code: 'md',
+    boundaries: [960, 1279],
   },
   {
-    code: "lg",
-    boundaries: [1280, 1919]
+    code: 'lg',
+    boundaries: [1280, 1919],
   },
   {
-    code: "xl",
-    boundaries: [1920, -1]
-  }
+    code: 'xl',
+    boundaries: [1920, -1],
+  },
 ];
 
 const makeMediaQueries = () => {
-  let mediaQueryString = ``;
+  let mediaQueryString = '';
 
   // For single breakpoints
-  breakpointBoundaries.forEach(breakpoint => {
-    if (breakpoint.code !== "xl") {
+  breakpointBoundaries.forEach((breakpoint) => {
+    if (breakpoint.code !== 'xl') {
       mediaQueryString += `
                 .hide-only-on-${breakpoint.code} {
                     visibility: visible;
@@ -64,8 +64,9 @@ const makeMediaQueries = () => {
   });
 
   // From...to
-  for (let i = 0; i < breakpointBoundaries.length; i++) {
-    for (let j = 1; j < breakpointBoundaries.length; j++) {
+  for (let i = 0; i < breakpointBoundaries.length; i += 1) {
+    for (let j = 1; j < breakpointBoundaries.length; j += 1) {
+      // eslint-disable-next-line no-continue
       if (i === j) continue;
       mediaQueryString += `
             .hide-from-${breakpointBoundaries[i].code}-to-${breakpointBoundaries[j].code} {
@@ -90,15 +91,17 @@ const HiddenWrap = styled.div`
   ${makeMediaQueries()}
 `;
 
-const Hidden = props => {
+const Hidden = ({
+  from, only, to, children,
+}) => {
   const cs = clsx({
-    [`hide-only-on-${props.only}`]: props.only !== undefined,
-    [`hide-from-${props.from}-to-${props.to}`]:
-      props.from !== false && props.to !== false && props.only === undefined
+    [`hide-only-on-${only}`]: only !== undefined,
+    [`hide-from-${from}-to-${to}`]:
+      from !== false && to !== false && only === undefined,
   });
   return (
     <HiddenWrap>
-      <div className={cs}>{props.children}</div>
+      <div className={cs}>{children}</div>
     </HiddenWrap>
   );
 };

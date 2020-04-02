@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const FlipSwitchWrapper = styled.div`
   position: relative;
@@ -15,7 +15,7 @@ const FlipSwitchWrapper = styled.div`
     display: block;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid ${props => props.theme.palette.border};
+    border: 2px solid ${(props) => props.theme.palette.border};
     border-radius: 5px;
     & > div.switch-inner {
       width: 200%;
@@ -24,14 +24,14 @@ const FlipSwitchWrapper = styled.div`
       &::before {
         content: "";
         padding-left: 12px;
-        background-color: ${props => props.theme.palette.secondary};
-        color: #FFFFFF;
+        background-color: ${(props) => props.theme.palette.secondary};
+        color: #ffffff;
       }
 
       &::after {
         content: "";
         padding-right: 12px;
-        background-color: ${props => props.theme.palette.secondary};
+        background-color: ${(props) => props.theme.palette.secondary};
         color: #888888;
         text-align: right;
       }
@@ -39,7 +39,7 @@ const FlipSwitchWrapper = styled.div`
     & > div.switch {
       width: 18px;
       margin: 0px;
-      background: #FFFFFF;
+      background: #ffffff;
       border: 2px solid #999999;
       border-radius: 5px;
       position: absolute;
@@ -49,8 +49,6 @@ const FlipSwitchWrapper = styled.div`
       transition: all 0.3s ease-in 0s;
     }
   }
-
-
 
   .checkbox:checked + label > div.switch-inner {
     margin-left: 0;
@@ -62,14 +60,14 @@ const FlipSwitchWrapper = styled.div`
 `;
 
 export default (props) => {
-  const label = `switch-${Math.floor(Math.random() * (1000))}`
+  const label = `switch-${Math.floor(Math.random() * 1000)}`;
   return (
     <FlipSwitchWrapper>
-     <input type="checkbox" className="checkbox" id={label} {...props} />
-     <label for={label}>
-        <div className="switch-inner"></div>
-        <div className="switch"></div>
+      <input type="checkbox" className="checkbox" id={label} {...props} />
+      <label htmlFor={label}>
+        <div className="switch-inner" />
+        <div className="switch" />
       </label>
     </FlipSwitchWrapper>
-  )
-}
+  );
+};

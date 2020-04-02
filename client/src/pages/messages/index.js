@@ -1,52 +1,52 @@
-import React from "react";
-import Container from "../../components/ui/Container";
-import Chatbox from "../../components/ui/Chatbox";
+import React from 'react';
+import Container from '../../components/ui/Container';
+import Chatbox from '../../components/ui/Chatbox';
 
 // i18n
-//import { FormattedMessage } from "react-intl";
+// import { FormattedMessage } from "react-intl";
 
 // Just for prototyping and design purpose. Components will be properly edited later
 const chats = [
   {
-    name: "Zé Pequeté",
+    name: 'Zé Pequeté',
     lastMessage: {
-      body: "Tô chegando com os refri, rapaziada",
-      time: "agora"
+      body: 'Tô chegando com os refri, rapaziada',
+      time: 'agora',
     },
     messages: [
       {
-        body: "Lorem ipsum dolor sit amet.",
-        time: "2h",
-        sentByUser: false
+        body: 'Lorem ipsum dolor sit amet.',
+        time: '2h',
+        sentByUser: false,
       },
       {
-        body: "Consectetur adipiscing elit :P",
-        time: "1h",
-        sentByUser: true
+        body: 'Consectetur adipiscing elit :P',
+        time: '1h',
+        sentByUser: true,
       },
       {
-        body: "Tô chegando com os refri, rapaziada",
-        time: "agora"
-      }
-    ]
+        body: 'Tô chegando com os refri, rapaziada',
+        time: 'agora',
+      },
+    ],
   },
   {
-    name: "Cosmo",
+    name: 'Cosmo',
     lastMessage: {
-      body: "Ou será que não?",
-      time: "2h"
-    }
+      body: 'Ou será que não?',
+      time: '2h',
+    },
   },
   {
-    name: "Ancapitão",
+    name: 'Ancapitão',
     lastMessage: {
-      body: "É hora de salvar o mundo",
-      time: "5h"
-    }
-  }
+      body: 'É hora de salvar o mundo',
+      time: '5h',
+    },
+  },
 ];
 
-export default props => (
+export default () => (
   <Container>
     <Chatbox chats={chats} currentChat={chats[0]} />
   </Container>

@@ -1,12 +1,12 @@
-import React from "react";
-import Card from "../ui/Card";
-import CardFooter from "../ui/CardFooter";
-import CardHeader from "../ui/CardHeader";
-import CardBody from "../ui/CardBody";
-import styled from "styled-components";
-import defaultCover from '../../assets/default-book-cover.jpg'
-import { FormattedMessage } from "react-intl";
-import { Link } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+import Card from '../ui/Card';
+import CardFooter from '../ui/CardFooter';
+import CardHeader from '../ui/CardHeader';
+import CardBody from '../ui/CardBody';
+import defaultCover from '../../assets/default-book-cover.jpg';
 
 const LastItems = styled.div`
   padding:0;
@@ -14,11 +14,11 @@ const LastItems = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`
+`;
 const Item = styled(Link)`
   display: flex;
   border-radius: 4px;
-  background: ${props => props.theme.palette.paperDark};
+  background: ${(props) => props.theme.palette.paperDark};
   overflow: hidden;
   cursor: pointer;
   height: 95px;
@@ -32,16 +32,16 @@ const Item = styled(Link)`
   margin-bottom: 10px;
 
   &:last-child { margin-bottom: 0 }
-`
+`;
 
 const ItemCover = styled.div`
   width: 70px;
   height: 95px;
   overflow: hidden;
-  background-image: url(${props => props.cover});
+  background-image: url(${(props) => props.cover});
   background-size: cover;
   background-position: center;
-`
+`;
 const ItemContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,55 +55,55 @@ const ItemContent = styled.div`
     font-size: 1.1em;
     max-height:2.2em;
     margin-bottom:5px;
-    color: ${ props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
     overflow:hidden;
   }
 
   .author {
     font-weight: lighter;
     font-size: 14px;
-    color: ${ props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
   }
-`
+`;
 
-const LastItemsWidget = props => {
+const LastItemsWidget = () => {
   const items = {
-    loading:false,
+    loading: false,
     allItems: {
       items: [
         {
           _id: 1,
-          title: "A mão invisível",
+          title: 'A mão invisível',
           author: 'Adam Smith',
           type: 'book',
-          cover: "https://ancaphub.s3.sa-east-1.amazonaws.com/file-1582681861888.jpg"
+          cover: 'https://ancaphub.s3.sa-east-1.amazonaws.com/file-1582681861888.jpg',
         },
         {
           _id: 2,
-          title: "Educação: Livre e obrigatória Livre e obrigatória",
+          title: 'Educação: Livre e obrigatória Livre e obrigatória',
           author: 'Murray N. Rothbard',
           type: 'book',
-          cover: "https://ancaphub.s3.sa-east-1.amazonaws.com/1580346370222-41tADUrw1zL._SX335_BO1%2C204%2C203%2C200_.jpg"
+          cover: 'https://ancaphub.s3.sa-east-1.amazonaws.com/1580346370222-41tADUrw1zL._SX335_BO1%2C204%2C203%2C200_.jpg',
         },
-    ]
-    }
-  }
+      ],
+    },
+  };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <Card>
         <CardHeader>
           <h3>
-          <FormattedMessage
-            id="common.lastItems"
-          />
+            <FormattedMessage
+              id="common.lastItems"
+            />
           </h3>
         </CardHeader>
         <CardBody>
           <LastItems>
-            {items.allItems.items && items.allItems.items.map(item => (
+            {items.allItems.items && items.allItems.items.map((item) => (
               <Item to={`/${item.type}s/${item._id}`} key={item._id}>
-                <ItemCover cover={item.cover !== "" ? item.cover : defaultCover} />
+                <ItemCover cover={item.cover !== '' ? item.cover : defaultCover} />
                 <ItemContent>
                   <h4 className="title">{item.title.substr(0, 49)}</h4>
                   <h5 className="author">{item.author.substr(0, 49)}</h5>
@@ -115,7 +115,7 @@ const LastItemsWidget = props => {
         <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
       </Card>
     </div>
-  )
+  );
 };
 
 export default LastItemsWidget;

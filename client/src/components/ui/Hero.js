@@ -1,10 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const HeroWrapper = styled.div`
   width: 100%;
   border-radius: 5px;
-  background: ${ props => props.theme.palette.paper };
+  background: ${(props) => props.theme.palette.paper};
   padding: 40px 30px;
   margin-top: 15px;
   display: flex;
@@ -14,11 +15,11 @@ const HeroWrapper = styled.div`
   h2 { 
     font-size: 30px;
     margin-bottom: 5px;
-    color: ${ props => props.theme.palette.text.primary };
+    color: ${(props) => props.theme.palette.text.primary};
   }
 
   p {
-    color: ${ props => props.theme.palette.text.secondary };
+    color: ${(props) => props.theme.palette.text.secondary};
   }
 `;
 
@@ -34,5 +35,11 @@ const Hero = ({ title, description, actions }) => (
     </div>
   </HeroWrapper>
 );
+
+Hero.propTypes = {
+  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  description: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  actions: PropTypes.oneOfType([PropTypes.element, PropTypes.node, PropTypes.func]),
+};
 
 export default Hero;

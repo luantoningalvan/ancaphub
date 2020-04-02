@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 const IconButton = styled.button`
     background: transparent;
@@ -11,7 +11,7 @@ const IconButton = styled.button`
     outline: none;
 
     > svg { 
-        fill: ${props => props.theme.palette.text.secondary};
+        fill: ${(props) => props.theme.palette.text.secondary};
         height: 2em;
         width: 2em;
      }

@@ -1,11 +1,19 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Collapse = ({ expanded, children }) => {
   if (expanded) {
-    return children
-  } else {
-    return <></>
+    return children;
   }
-}
+  return <></>;
+};
 
-export default Collapse
+Collapse.propTypes = {
+  expanded: PropTypes.bool,
+};
+
+Collapse.defaultProps = {
+  expanded: false,
+};
+
+export default Collapse;

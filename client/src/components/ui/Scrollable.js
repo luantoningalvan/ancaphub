@@ -1,9 +1,10 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ScrollableWrap = styled.div`
   display: flex;
-  flex-grow: ${props => (props.grow ? 1 : 0)};
+  flex-grow: ${(props) => (props.grow ? 1 : 0)};
   flex-direction: column;
   position: relative;
   border-right: 1px solid #2f3749;
@@ -35,7 +36,7 @@ const ScrollableWrap = styled.div`
 
   & > div.cover {
     position: absolute;
-    background: ${props => props.theme.palette.paper};
+    background: ${(props) => props.theme.palette.paper};
     height: 100%;
     top: 0;
     right: 0;
@@ -52,17 +53,24 @@ const ScrollableWrap = styled.div`
   }
 `;
 
-const Scrollable = ({ scrollableContent, topContent, bottomContent, grow }) => {
-  return (
-    <ScrollableWrap grow={grow}>
-      {topContent}
-      <div className="wrapped">
-        <div className="inner">{scrollableContent}</div>
-      </div>
-      {bottomContent}
-      <div className="cover"></div>
-    </ScrollableWrap>
-  );
+const Scrollable = ({
+  scrollableContent, topContent, bottomContent, grow,
+}) => (
+  <ScrollableWrap grow={grow}>
+    {topContent}
+    <div className="wrapped">
+      <div className="inner">{scrollableContent}</div>
+    </div>
+    {bottomContent}
+    <div className="cover" />
+  </ScrollableWrap>
+);
+
+Scrollable.propTypes = {
+  grow: PropTypes.bool,
+  scrollableContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
+  topContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
+  bottomContent: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]),
 };
 
 export default Scrollable;
