@@ -57,6 +57,7 @@ const insert = async (req, res, next) => {
         const image = await Jimp.read(req.file.path)
         image
         .quality(70)
+        .resize(image.bitmap.width > 900 ? 900 : image.bitmap.width, image.bitmap.height > 900 ? 900 : image.bitmap.height)
         .write(`/public/uploads/posts/${req.file.name}`, async () => {
           const fileContent = fs.createReadStream(`/public/uploads/posts/${req.file.name}`);
           const upload = await uploadToS3(req.file, fileContent);

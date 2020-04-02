@@ -66,7 +66,7 @@ const insertPost = async (data) => {
       return { ...post._doc, hasLiked: false, likeCount: 0 }
     }
 
-    if (mediaType === 'embed'){
+    if (mediaType === 'embed' || mediaType === 'image'){
       postData = {
         ...postData,
         content,
