@@ -16,7 +16,9 @@ const PostSchema = new Schema({
   ],
   comments: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }
-  ]
+  ],
+  media: Object,
+  poll: {type: mongoose.Schema.Types.ObjectId, ref: 'Poll'}
 }, { timestamps: true })
 
 module.exports = mongoose.model('Post', PostSchema);

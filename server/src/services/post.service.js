@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
+
 const Post = require('../models/PostModel');
+const Poll = require('../models/PollModel');
 isEqual = require('lodash.isequal');
 
 const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
@@ -45,10 +48,69 @@ const getPost = async (postId, auth) => {
 
 const insertPost = async (data) => {
   try {
-    const post = new Post(data);
-    await post.save();
-    await post.populate('user', 'name username id avatar isVerified').execPopulate();
-    return { ...post._doc, hasLiked: false, likeCount: 0 }
+
+    const { content, mediaType, media, user } = data;
+    let postData = {
+      user
+    };
+
+    if (!mediaType || mediaType === 'none'){
+      postData = {
+        ...postData,
+        content
+      }
+
+      const post = await Post.create(postData)
+
+      await post.populate('user', 'name username id avatar isVerified').execPopulate();
+      return { ...post._doc, hasLiked: false, likeCount: 0 }
+    }
+
+    if (mediaType === 'embed' || mediaType === 'image'){
+      postData = {
+        ...postData,
+        content,
+        media: {
+          mediaType,
+          data: media
+        }
+      }
+
+      const post = await Post.create(postData);
+
+      await post.populate('user', 'name username id avatar isVerified').execPopulate();
+      return { ...post._doc, hasLiked: false, likeCount: 0 }
+    }
+
+    if (mediaType === 'poll'){
+      let pollData = [];
+      
+      media.map(option =>{
+        pollData = [...pollData, {
+          title: option,
+          votes: 0
+        }]
+      })
+      const poll = await Poll.create({options: pollData})
+      const pollId = mongoose.Types.ObjectId(poll._id)
+
+      postData = {
+        ...postData,
+        content,
+        media: {
+          mediaType,
+          data: pollId
+        },
+        poll: pollId
+      }
+
+      const post = await Post.create(postData)
+      
+      await post.save()
+      await post.populate('user', 'name username id avatar isVerified').populate('poll').execPopulate();
+      return { ...post._doc, hasLiked: false, likeCount: 0 }
+    }
+
   } catch (e) {
     throw new Error(e.message)
   }

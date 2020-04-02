@@ -24,7 +24,7 @@ const getFile = async (id) => {
 
 const uploadToS3 = async(file, fileContent) => {
   const params = {
-    Bucket: 'ancaphub',
+    Bucket: process.env.BUCKET_NAME || 'ancaphub',
     Key: file.name,
     Body: fileContent,
     ContentEncoding: 'base64',
