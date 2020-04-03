@@ -29,7 +29,8 @@ function* getPosts() {
 
 function* getUserPosts(action) {
   try {
-    yield call(api.getUserPosts, action.payload.userId);
+    const posts = yield call(api.getUserPosts, action.payload);
+    yield put(actions.getUserPostsSuccess({ items: posts.data }));
   } catch (e) {
     yield put(actions.getPostsError({ errorMessage: e.message }));
   }
