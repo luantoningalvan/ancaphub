@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FormattedRelativeTime } from 'react-intl';
+import { parseISO, getTime, differenceInSeconds } from 'date-fns';
+
+// Functional stuff
+import ReactPlayer from 'react-player';
 
 // Icons
 import MdMore from 'react-ionicons/lib/MdMore';
@@ -89,22 +94,23 @@ const PostActions = styled.div`
   }
 `;
 
-const PostCard = () => {
+const PostCard = ({ data }) => {
   const [expanded, setExpanded] = React.useState(false);
-
   const handleCommentBox = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Paper style={{ marginTop: 15 }}>
+    <Paper style={{ marginTop: 15, flexGrow: 1 }}>
       <PostCardHeader>
         <ProfilePicture>
           <img src={defaultProfilePicture} alt="Default profile pic" />
         </ProfilePicture>
         <div>
-          <Link to="/user">Nome do Usuário </Link>
-          <span>há poucos segundos</span>
+          <Link to="/user">{data.user.name}</Link>
+          <span>
+            <FormattedRelativeTime value={-differenceInSeconds(Date.now(), getTime(parseISO(data.createdAt)))} updateIntervalInSeconds={30} />
+          </span>
         </div>
         <div style={{ marginLeft: 'auto' }}>
           <Dropdown offsetX={15} placement="left-start" toggle={<IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>}>
@@ -117,27 +123,25 @@ const PostCard = () => {
       </PostCardHeader>
 
       <div style={{ padding: 20 }}>
-        Culpa dolor consectetur mollit est qui aliquip adipisicing velit commodo
-        aliquip culpa non eu veniam. Pariatur ut est et qui fugiat nulla.
-        Sunt laboris excepteur fugiat deserunt et mollit cillum quis duis ea.
-        Cupidatat sint incididunt aliqua non cupidatat commodo irure ad non.
-        Adipisicing elit et magna sit sit sit laboris. Labore veniam ipsum consectetur minim.
-        Ad voluptate cupidatat aliqua occaecat. Mollit exercitation est eu est
-        id ipsum excepteur mollit eiusmod incididunt.
-        Et qui qui ut magna laborum duis voluptate proident amet cupidatat
-        duis exercitation mollit. Officia adipisicing cillum magna exercitation.
-        Cupidatat ullamco reprehenderit excepteur ipsum nostrud Lorem culpa
-        nostrud labore dolore.
+        {data.content}
+        {(data.media && data.media.mediaType) === 'embed' && (
+          <ReactPlayer
+            url={data.media.data}
+            light
+            style={{ marginTop: 15 }}
+            width="100%"
+          />
+        )}
       </div>
 
       <PostActions>
         <button>
           <LikeIcon />
-          <span>1</span>
+          <span>{data.likes.length}</span>
         </button>
         <button onClick={handleCommentBox}>
           <CommentIcon />
-          <span>1</span>
+          <span>{data.comments.length}</span>
         </button>
         <button>
           <ShareIcon />

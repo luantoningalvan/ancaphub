@@ -1,5 +1,4 @@
 import {
-  takeEvery,
   takeLatest,
   call,
   fork,
@@ -12,11 +11,36 @@ import * as api from '../api/posts';
 function* createPost(action) {
   try {
     const data = action.payload;
-    console.log(data)
+    // console.log(data)
     yield call(api.createPost, data);
   } catch (e) {
     yield put(actions.usersError({ errorMessage: e.message }));
   }
+}
+
+function* getPosts() {
+  try {
+    const posts = yield call(api.getFeedPosts);
+    yield put(actions.getPostsSuccess({ items: posts.data }));
+  } catch (e) {
+    yield put(actions.getPostsError({ errorMessage: e.message }));
+  }
+}
+
+function* getUserPosts(action) {
+  try {
+    yield call(api.getUserPosts, action.payload.userId);
+  } catch (e) {
+    yield put(actions.getPostsError({ errorMessage: e.message }));
+  }
+}
+
+function* watchGetUserPostsRequest() {
+  yield takeLatest(actions.Types.GET_USER_POSTS_REQUEST, getUserPosts);
+}
+
+function* watchGetPostsRequest() {
+  yield takeLatest(actions.Types.GET_POSTS_REQUEST, getPosts);
 }
 
 function* watchCreatePostRequest() {
@@ -25,4 +49,6 @@ function* watchCreatePostRequest() {
 
 export default [
   fork(watchCreatePostRequest),
+  fork(watchGetPostsRequest),
+  fork(watchGetUserPostsRequest),
 ];

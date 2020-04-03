@@ -9,7 +9,7 @@ export const Types = {
 
 export const authUserRequest = (data) => ({
   type: Types.AUTH_USER_REQUEST,
-  payload: data
+  payload: data,
 });
 
 export const authUserSuccess = (data) => ({
@@ -21,9 +21,9 @@ export const loadUserRequest = () => ({
   type: Types.LOAD_USER_REQUEST,
 });
 
-export const loadUserSuccess  = (data) => ({
+export const loadUserSuccess = (data) => ({
   type: Types.LOAD_USER_SUCCESS,
-  payload: data
+  payload: data,
 });
 
 export const logout = () => ({
