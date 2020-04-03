@@ -22,13 +22,16 @@ import 'draft-js/dist/Draft.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
 import 'draft-js-hashtag-plugin/lib/plugin.css'
 import PostFormStyle from './styles'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { createPostRequest } from '../../../actions/posts'
 
 const linkifyPlugin = createLinkifyPlugin();
 const listPlugin = createListPlugin();
 const hashtagPlugin = createHashtagPlugin();
 const plugins = [linkifyPlugin, basicTextStylePlugin, listPlugin, hashtagPlugin];
 
-function PostForm() {
+function PostForm({createPostRequest:createPost}) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
@@ -37,7 +40,6 @@ function PostForm() {
     ? URL.createObjectURL(media.data)
     : null), [media]);
 
-  // eslint-disable-next-line no-shadow
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -49,8 +51,28 @@ function PostForm() {
   }
 
   function handleSubmit() {
-    const note = { content: convertToRaw(contentState) };
-    note.content = JSON.stringify(note.content);
+    let data;
+    const content = JSON.stringify(convertToRaw(contentState));
+
+    if(media !== null){
+      if(media.type == 'image') {
+        data = new FormData();
+        data.append('content', content);
+        data.append('mediaType', media.type);
+        data.append('file', media.data);
+      } else {
+        data = {
+          content,
+          mediaType: media.type,
+          media: media.data
+        }
+      }
+    } else {
+      data = { content }
+    }
+    
+    createPost(data);
+    setMedia(null)
     setEditorState(EditorState.createEmpty());
   }
 
@@ -64,23 +86,27 @@ function PostForm() {
   const handleAddEmbed = () => {
     setMedia({
       type: 'embed',
-      data: {
-        url: '',
-      },
+      data: '',
     });
   };
 
   const handleAddPoll = () => {
     setMedia({
       type: 'poll',
-      data: [{ text: '' }, { text: '' }],
+      data: ['', ''],
     });
   };
 
   const addPollOption = () => {
     if (media.data.length < 4) {
-      setMedia({ ...media, data: [...media.data, { text: '' }] });
+      setMedia({ ...media, data: [...media.data, ''] });
     }
+  };
+
+  const handleChangePollOption = (index, e) => {
+    const newArray = [...media.data]
+    newArray[index] = e.target.value
+    setMedia({ ...media, data: newArray})
   };
 
   const handleRemoveMedia = () => {
@@ -137,7 +163,9 @@ function PostForm() {
                             placeholder={`Opção ${index + 1} ${
                               index >= 2 ? '(opcional)' : ''
                             }`}
+                            value={media.data[index]}
                             style={{ marginBottom: 8 }}
+                            onChange={(e) => handleChangePollOption(index, e)}
                           />
                         </li>
                       ))}
@@ -169,15 +197,15 @@ function PostForm() {
                     <TextField
                       fullWidth
                       placeholder="Link do Vídeo"
-                      value={media.data.url}
+                      value={media.data}
                       onChange={(e) => setMedia({
                         type: 'embed',
-                        data: { url: e.target.value },
+                        data: e.target.value,
                       })}
                     />
-                    {media.data.url !== '' && (
+                    {media.data !== '' && (
                       <ReactPlayer
-                        url={media.data.url}
+                        url={media.data}
                         light
                         style={{ marginTop: 8 }}
                         width="100%"
@@ -225,4 +253,5 @@ function PostForm() {
   );
 }
 
-export default PostForm;
+const mapDispatchToProps = dispatch => bindActionCreators({ createPostRequest }, dispatch)
+export default connect(null, mapDispatchToProps)(PostForm);
