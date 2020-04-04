@@ -1,4 +1,5 @@
 import {
+  takeEvery,
   takeLatest,
   call,
   fork,
@@ -30,9 +31,9 @@ function* getPosts() {
 function* getUserPosts(action) {
   try {
     const posts = yield call(api.getUserPosts, action.payload);
-    yield put(actions.getUserPostsSuccess({ items: posts.data }));
+    yield put(actions.getUserPostsSuccess({ userFeedItems: posts.data }));
   } catch (e) {
-    yield put(actions.getPostsError({ errorMessage: e.message }));
+    yield put(actions.getUserPostsError({ errorMessage: e.message }));
   }
 }
 
@@ -41,7 +42,7 @@ function* watchGetUserPostsRequest() {
 }
 
 function* watchGetPostsRequest() {
-  yield takeLatest(actions.Types.GET_POSTS_REQUEST, getPosts);
+  yield takeEvery(actions.Types.GET_POSTS_REQUEST, getPosts);
 }
 
 function* watchCreatePostRequest() {

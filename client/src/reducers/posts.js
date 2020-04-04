@@ -12,9 +12,7 @@ export default (state = INITIAL_STATE, action) => {
     case Types.CREATE_POST_SUCCESS:
       return { ...state, items: [...state.items, payload.items] };
     case Types.GET_POSTS_SUCCESS:
-      return { ...state, items: [...state.items, payload.items] };
-    case Types.GET_USER_POSTS_SUCCESS:
-      return { ...state, items: [...state.items, payload.items] };
+      return { ...state, items: [payload.items][0] };
     case Types.POST_ERROR:
       return { ...state, errorMessage: payload.errorMessage };
     default:

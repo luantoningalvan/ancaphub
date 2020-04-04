@@ -5,6 +5,7 @@ export const Types = {
   GET_POSTS_SUCCESS: 'posts/get_posts_success',
   GET_USER_POSTS_REQUEST: 'posts/get_user_posts_request',
   GET_USER_POSTS_SUCCESS: 'posts/get_user_posts_success',
+  GET_USER_POSTS_ERROR: 'posts/get_user_posts_error',
   POST_ERROR: 'posts/post_error',
 };
 
@@ -33,13 +34,18 @@ export const getUserPostsRequest = ({ userId }) => ({
   payload: userId,
 });
 
-export const getUserPostsSuccess = ({ items }) => ({
+export const getUserPostsSuccess = ({ userFeedItems }) => ({
   type: Types.GET_USER_POSTS_SUCCESS,
-  payload: { items },
+  payload: { userFeedItems },
 });
 
 export const getPostsError = ({ errorMessage }) => ({
   type: Types.POST_ERROR,
+  payload: { errorMessage },
+});
+
+export const getUserPostsError = ({ errorMessage }) => ({
+  type: Types.GET_USER_POSTS_ERROR,
   payload: { errorMessage },
 });
 

@@ -21,14 +21,16 @@ const Feed = ({ getPostsRequest: getPostsAction }) => {
     getPostsAction();
   }, [getPostsAction]);
 
-  const posts = useSelector((state) => state.posts);
+  const { items } = useSelector((state) => state.posts);
 
   return (
     <Container style={{ marginTop: 8 }}>
       <GridContainer spacing={1}>
         <GridItem xs={12} lg={8}>
           <PostForm />
-          {posts.items.map((post) => <PostCard data={post[0]} />)}
+          {items.map((item) => (
+            <PostCard data={{ ...item }} />
+          ))}
         </GridItem>
         <GridItem xs={12} lg={4} xl={3}>
           <TrendingTopicsWidget />

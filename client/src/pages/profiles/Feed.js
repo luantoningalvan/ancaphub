@@ -16,7 +16,7 @@ const Feed = ({ getUserPostsRequest: getUserPostsAction }) => {
   return (
     <>
       <PostForm />
-      {stateObj.posts.items.map((post) => <PostCard data={post[0]} />)}
+      {stateObj.profile.userFeedItems.map((item) => <PostCard data={{ ...item }} />)}
     </>
   );
 };

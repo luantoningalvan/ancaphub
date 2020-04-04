@@ -5,6 +5,7 @@ import { FormattedRelativeTime } from 'react-intl';
 import { parseISO, getTime, differenceInSeconds } from 'date-fns';
 
 // Functional stuff
+import { Editor, EditorState, convertFromRaw } from 'draft-js';
 import ReactPlayer from 'react-player';
 
 // Icons
@@ -100,8 +101,13 @@ const PostCard = ({ data }) => {
     setExpanded(!expanded);
   };
 
+  // For displaying post
+  const contentState = convertFromRaw(JSON.parse(data.content));
+  const editorState = EditorState.createWithContent(contentState);
+
+
   return (
-    <Paper style={{ marginTop: 15, flexGrow: 1 }}>
+    <Paper style={{ marginTop: 15, flexBasis: '100%' }}>
       <PostCardHeader>
         <ProfilePicture>
           <img src={defaultProfilePicture} alt="Default profile pic" />
@@ -123,7 +129,7 @@ const PostCard = ({ data }) => {
       </PostCardHeader>
 
       <div style={{ padding: 20 }}>
-        {data.content}
+        <Editor editorState={editorState} readOnly />
         {(data.media && data.media.mediaType) === 'embed' && (
           <ReactPlayer
             url={data.media.data}
