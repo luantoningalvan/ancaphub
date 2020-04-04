@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { useSelector, connect } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import ImageIcon from 'react-ionicons/lib/IosImageOutline';
 import EmbedIcon from 'react-ionicons/lib/IosCode';
@@ -11,7 +13,7 @@ import createListPlugin from 'draft-js-list-plugin';
 import { FormattedMessage } from 'react-intl';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
-import { connect } from 'react-redux';
+
 import { bindActionCreators } from 'redux';
 import TextField from '../../ui/TextField';
 import CardBody from '../../ui/CardBody';
@@ -23,7 +25,7 @@ import basicTextStylePlugin from '../../editor/plugins/basicTextStylePlugin';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
 import 'draft-js-hashtag-plugin/lib/plugin.css';
-import { createPostRequest } from '../../../actions/posts';
+import { createPostRequest, getPostsRequest, getUserPostsRequest } from '../../../actions/posts';
 import PostFormStyle from './styles';
 
 const linkifyPlugin = createLinkifyPlugin();
@@ -31,10 +33,13 @@ const listPlugin = createListPlugin();
 const hashtagPlugin = createHashtagPlugin();
 const plugins = [linkifyPlugin, basicTextStylePlugin, listPlugin, hashtagPlugin];
 
-function PostForm({ createPostRequest: createPost }) {
+function PostForm({ createPostRequest: createPost, getPostsRequest: getPosts, getUserPostsRequest: getUserPosts }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
+
+  const { user: { _id: id } } = useSelector((state) => state.auth);
+  const { url } = useRouteMatch();
 
   const preview = useMemo(() => (media && media.type === 'image'
     ? URL.createObjectURL(media.data)
@@ -75,7 +80,16 @@ function PostForm({ createPostRequest: createPost }) {
     createPost(data);
     setMedia(null);
     setEditorState(EditorState.createEmpty());
-    window.location.reload();
+
+    // Sync state on post creation
+    if (url.includes('/home')) {
+      getPosts();
+    } else if (url.includes('/user')) {
+      getUserPosts({ userId: id });
+    } else {
+      // Create more conditions to different sections where the post form can be
+      window.location.reload();
+    }
   }
 
   const handleAddImage = (e) => {
@@ -255,5 +269,5 @@ function PostForm({ createPostRequest: createPost }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ createPostRequest }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ createPostRequest, getUserPostsRequest, getPostsRequest }, dispatch);
 export default connect(null, mapDispatchToProps)(PostForm);
