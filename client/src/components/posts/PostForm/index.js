@@ -88,7 +88,7 @@ function PostForm({ createPostRequest: createPost, getPostsRequest: getPosts, ge
       getUserPosts({ userId: id });
     } else {
       // Create more conditions to different sections where the post form can be
-      window.location.reload();
+      getPosts();
     }
   }
 
