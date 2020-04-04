@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { postService, userService, fileService } = require('../services')
 const { getManyPosts, insertPost, removePost, likePost, getPost } = postService
 const { getUser } = userService
@@ -5,6 +6,7 @@ const verifyToken = require('../utils/verifyToken')
 
 const { uploadToS3 } = fileService;
 const fs = require('fs')
+const path = require('path');
 const Jimp = require("jimp");
 
 const getUserFeed = async (req, res, next) => {
@@ -58,12 +60,18 @@ const insert = async (req, res, next) => {
         image
         .quality(70)
         .resize(image.bitmap.width > 900 ? 900 : image.bitmap.width, image.bitmap.height > 900 ? 900 : image.bitmap.height)
-        .write(`/public/uploads/posts/${req.file.name}`, async () => {
-          const fileContent = fs.createReadStream(`/public/uploads/posts/${req.file.name}`);
-          const upload = await uploadToS3(req.file, fileContent);
-          const result = await insertPost({content, mediaType, media: upload.url, user: userId})
-          res.send(result);
-          next()
+        .write(`${path.resolve(__dirname, "..", "..")}/public/uploads/posts/${req.file.name}`, async () => {
+          if (process.env.NODE_ENV === 'production') {
+            const fileContent = fs.createReadStream(`${path.resolve(__dirname, "..", "..")}/public/uploads/posts/${req.file.name}`);
+            const upload = await uploadToS3(req.file, fileContent);
+            const result = await insertPost({content, mediaType, media: upload.url , user: userId});
+            res.send(result);
+            next();
+          } else {
+            const result = await insertPost({content, mediaType, media: `${req.protocol}://${req.headers.host}/public/uploads/posts/${req.file.name}` , user: userId})
+            res.send(result);
+            next();
+          }
         });
       } catch (err) {
         throw new Error(err)

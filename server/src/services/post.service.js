@@ -12,6 +12,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .skip(pageSize * currentPage - pageSize)
       .populate('user', 'name username id avatar isVerified')
       .populate("comments")
+      .populate('poll')
 
     if (auth) {
       posts = posts.map(post => ({
@@ -34,6 +35,7 @@ const getPost = async (postId, auth) => {
     .populate(["likes"])
     .populate('user')
     .populate('comments')
+    .populate('poll')
 
     const likes = post.likes.filter((like) => like._id)
     return auth ? { 
