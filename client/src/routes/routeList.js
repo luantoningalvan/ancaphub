@@ -15,7 +15,7 @@ import Notifications from "../pages/notifications";
 import Messages from "../pages/messages";
 import Contributions from "../pages/account/Contributions";
 import Bookmarks from "../pages/account/Bookmarks";
-import Settings from "../pages/account/Settings";
+import Settings from "../pages/account/settings";
 
 export default [
   {
