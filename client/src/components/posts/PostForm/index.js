@@ -5,33 +5,33 @@ import EmbedIcon from 'react-ionicons/lib/IosCode';
 import PollIcon from 'react-ionicons/lib/IosPodiumOutline';
 import CloseIcon from 'react-ionicons/lib/IosClose';
 import AddIcon from 'react-ionicons/lib/IosAdd';
+import { EditorState, RichUtils, convertToRaw } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+import createListPlugin from 'draft-js-list-plugin';
+import { FormattedMessage } from 'react-intl';
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+import createHashtagPlugin from 'draft-js-hashtag-plugin';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TextField from '../../ui/TextField';
 import CardBody from '../../ui/CardBody';
 import CardFooter from '../../ui/CardFooter';
 import Card from '../../ui/Card';
 import IconButton from '../../ui/IconButton';
 import Button from '../../ui/Button';
-import { EditorState, RichUtils, convertToRaw } from 'draft-js';
-import Editor from 'draft-js-plugins-editor';
-import createListPlugin from 'draft-js-list-plugin';
-import { FormattedMessage } from 'react-intl';
 import basicTextStylePlugin from '../../editor/plugins/basicTextStylePlugin';
-import createLinkifyPlugin from 'draft-js-linkify-plugin';
-import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
-import 'draft-js-hashtag-plugin/lib/plugin.css'
-import PostFormStyle from './styles'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { createPostRequest } from '../../../actions/posts'
+import 'draft-js-hashtag-plugin/lib/plugin.css';
+import { createPostRequest } from '../../../actions/posts';
+import PostFormStyle from './styles';
 
 const linkifyPlugin = createLinkifyPlugin();
 const listPlugin = createListPlugin();
 const hashtagPlugin = createHashtagPlugin();
 const plugins = [linkifyPlugin, basicTextStylePlugin, listPlugin, hashtagPlugin];
 
-function PostForm({createPostRequest:createPost}) {
+function PostForm({ createPostRequest: createPost }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
@@ -40,6 +40,7 @@ function PostForm({createPostRequest:createPost}) {
     ? URL.createObjectURL(media.data)
     : null), [media]);
 
+  // eslint-disable-next-line no-shadow
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -54,8 +55,8 @@ function PostForm({createPostRequest:createPost}) {
     let data;
     const content = JSON.stringify(convertToRaw(contentState));
 
-    if(media !== null){
-      if(media.type == 'image') {
+    if (media !== null) {
+      if (media.type === 'image') {
         data = new FormData();
         data.append('content', content);
         data.append('mediaType', media.type);
@@ -64,16 +65,17 @@ function PostForm({createPostRequest:createPost}) {
         data = {
           content,
           mediaType: media.type,
-          media: media.data
-        }
+          media: media.data,
+        };
       }
     } else {
-      data = { content }
+      data = { content };
     }
-    
+
     createPost(data);
-    setMedia(null)
+    setMedia(null);
     setEditorState(EditorState.createEmpty());
+    window.location.reload();
   }
 
   const handleAddImage = (e) => {
@@ -104,9 +106,9 @@ function PostForm({createPostRequest:createPost}) {
   };
 
   const handleChangePollOption = (index, e) => {
-    const newArray = [...media.data]
-    newArray[index] = e.target.value
-    setMedia({ ...media, data: newArray})
+    const newArray = [...media.data];
+    newArray[index] = e.target.value;
+    setMedia({ ...media, data: newArray });
   };
 
   const handleRemoveMedia = () => {
@@ -226,7 +228,7 @@ function PostForm({createPostRequest:createPost}) {
           <div className="upload-button">
             <label>
               <ImageIcon />
-              <input id="image-input" type="file" onChange={handleAddImage} />
+              <input id="image-input" type="file" onChange={(e) => handleAddImage(e)} />
             </label>
           </div>
           <IconButton size="small" onClick={handleAddPoll}>
@@ -253,5 +255,5 @@ function PostForm({createPostRequest:createPost}) {
   );
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ createPostRequest }, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ createPostRequest }, dispatch);
 export default connect(null, mapDispatchToProps)(PostForm);

@@ -129,7 +129,9 @@ const PostCard = ({ data }) => {
       </PostCardHeader>
 
       <div style={{ padding: 20 }}>
+        { /* Show post content  */ }
         <Editor editorState={editorState} readOnly />
+        { /* If post has embed media type */ }
         {(data.media && data.media.mediaType) === 'embed' && (
           <ReactPlayer
             url={data.media.data}
@@ -137,6 +139,22 @@ const PostCard = ({ data }) => {
             style={{ marginTop: 15 }}
             width="100%"
           />
+        )}
+
+        { /* If post has image media type */ }
+        {(data.media && data.media.mediaType === 'image') && (
+          <div style={{
+            marginTop: 15,
+          }}
+          >
+            <img
+              src={data.media.data}
+              style={{
+                width: '100%', height: 'auto', display: 'block', objectFit: 'cover',
+              }}
+              alt={data.media.data}
+            />
+          </div>
         )}
       </div>
 

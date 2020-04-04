@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { Link, useRouteMatch } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 // i18n
 import { FormattedMessage } from 'react-intl';
@@ -191,6 +191,7 @@ const Tabs = styled.ul`
 
 export default () => {
   const { path } = useRouteMatch();
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <Container>
@@ -206,7 +207,7 @@ export default () => {
             <ul>
               <li>
                 <Link to="/user/followers" className="counter">
-                  500
+                  {user.followersCount}
                 </Link>
                 <span>
                   <FormattedMessage
@@ -217,7 +218,7 @@ export default () => {
               </li>
               <li>
                 <Link to="/user/following" className="counter">
-                  500
+                  {user.followingCount}
                 </Link>
                 <span>
                   <FormattedMessage
@@ -230,8 +231,11 @@ export default () => {
           </div>
 
           <div className="user-name">
-            <h3>Nome da Criatura</h3>
-            <span>@arroba</span>
+            <h3>{user.name}</h3>
+            <span>
+              @
+              {user.username}
+            </span>
           </div>
 
           <div className="user-action-buttons">
