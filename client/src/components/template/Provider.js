@@ -50,6 +50,9 @@ const GlobalStyle = createGlobalStyle`
     background: ${theme.palette.background};
     color: ${theme.palette.text.primary};
   }
+
+  li { list-style: none; }
+  a { text-decoration: none; }
 `;
 
 const Template = ({ children }) => (
