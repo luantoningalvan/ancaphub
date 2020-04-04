@@ -11,9 +11,8 @@ import * as api from '../api/posts';
 
 function* createPost(action) {
   try {
-    const data = action.payload;
-    // console.log(data)
-    yield call(api.createPost, data);
+    const post = yield call(api.createPost, action.payload);
+    yield put(actions.createPostSuccess(post.data));
   } catch (e) {
     yield put(actions.usersError({ errorMessage: e.message }));
   }

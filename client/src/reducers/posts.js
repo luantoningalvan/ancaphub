@@ -10,7 +10,9 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case Types.CREATE_POST_SUCCESS:
-      return { ...state, items: [...state.items, payload.items] };
+      return { 
+        ...state, 
+        items: [ payload, ...state.items ] };
     case Types.GET_POSTS_SUCCESS:
       return { ...state, items: [payload.items][0] };
     case Types.POST_ERROR:

@@ -14,9 +14,9 @@ export const createPostRequest = (data) => ({
   payload: data,
 });
 
-export const createPostSuccess = ({ items }) => ({
+export const createPostSuccess = (data) => ({
   type: Types.CREATE_POST_SUCCESS,
-  payload: { items },
+  payload: data,
 });
 
 export const getPostsRequest = (data) => ({

@@ -80,16 +80,6 @@ function PostForm({ createPostRequest: createPost, getPostsRequest: getPosts, ge
     createPost(data);
     setMedia(null);
     setEditorState(EditorState.createEmpty());
-
-    // Sync state on post creation
-    if (url.includes('/home')) {
-      getPosts();
-    } else if (url.includes('/user')) {
-      getUserPosts({ userId: id });
-    } else {
-      // Create more conditions to different sections where the post form can be
-      getPosts();
-    }
   }
 
   const handleAddImage = (e) => {
