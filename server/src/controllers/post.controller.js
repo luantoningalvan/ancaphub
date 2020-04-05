@@ -69,7 +69,6 @@ const insert = async (req, res, next) => {
           height = (height * resize) / 100;
           width = (width * resize) / 100;
         }
-        console.log(width, height)
         image
         .quality(70)
         .resize(width, height)
