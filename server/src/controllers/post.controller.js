@@ -57,9 +57,22 @@ const insert = async (req, res, next) => {
     if (mediaType === 'image'){
       try {
         const image = await Jimp.read(req.file.path)
+        let width = image.bitmap.width;
+        let height = image.bitmap.height;
+        if (width >= 1000 || height >= 1000 && width >= height){
+          let resize = 1000 * 100 / width;
+          width = (width * resize) / 100;
+          height = (height * resize) / 100;
+        }
+        if (width >= 1000 || height >= 1000 && height >= width){
+          let resize = 1000 * 100 / height;
+          height = (height * resize) / 100;
+          width = (width * resize) / 100;
+        }
+        console.log(width, height)
         image
         .quality(70)
-        .resize(image.bitmap.width > 900 ? 900 : image.bitmap.width, image.bitmap.height > 900 ? 900 : image.bitmap.height)
+        .resize(width, height)
         .write(`${path.resolve(__dirname, "..", "..")}/public/uploads/posts/${req.file.name}`, async () => {
           if (process.env.NODE_ENV === 'production') {
             const fileContent = fs.createReadStream(`${path.resolve(__dirname, "..", "..")}/public/uploads/posts/${req.file.name}`);
