@@ -11,7 +11,7 @@ import ReactPlayer from 'react-player';
 // Icons
 import MdMore from 'react-ionicons/lib/MdMore';
 import LikeIcon from 'react-ionicons/lib/IosThumbsUpOutline';
-import ShareIcon from 'react-ionicons/lib/IosShareAltOutline';
+//import ShareIcon from 'react-ionicons/lib/IosShareAltOutline';
 import CommentIcon from 'react-ionicons/lib/IosTextOutline';
 import DeleteIcon from 'react-ionicons/lib/IosRemoveCircleOutline';
 import CommentBox from '../comments/CommentBox';
@@ -173,12 +173,14 @@ const PostCard = ({ data }) => {
           <span>Comentar</span>
         </button>
         </div>
+          {/* 
         <div>
         <button disabled>
           <ShareIcon />
           <span>Compartilhar</span>
         </button>
         </div>
+        */}
       </PostActions>
       <CommentBox expanded={commentBoxState} post={1} />
     </Paper>

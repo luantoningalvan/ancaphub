@@ -2,11 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-// i18n
 import { FormattedMessage } from 'react-intl';
-
-// Icons
 import LocationIcon from 'react-ionicons/lib/IosPinOutline';
 import BirthIcon from 'react-ionicons/lib/IosEggOutline';
 import SiteIcon from 'react-ionicons/lib/IosLinkOutline';
@@ -15,13 +11,13 @@ import defaultProfileCover from '../../assets/default-profile-cover.jpg';
 import Paper from '../../components/ui/Paper';
 import Button from '../../components/ui/Button';
 import Container from '../../components/ui/Container';
-
-// Areas
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
 const Feed = lazy(() => import('./Feed'));
-// const Lists = lazy(() => import('./Lists'));
-// const Contributions = lazy(() => import('./Contributions'));
-// const Followers = lazy(() => import('./Followers'));
-// const Following = lazy(() => import('./Following'));
+const Lists = lazy(() => import('./Lists'));
+const Contributions = lazy(() => import('./Contributions'));
+const Followers = lazy(() => import('./Followers'));
+const Following = lazy(() => import('./Following'));
 
 const ProfileHeader = styled.div`
   width: 100%;
@@ -159,13 +155,6 @@ const UserAbout = styled.div`
   }
 `;
 
-const ProfileContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 1em;
-  margin: 1em 0;
-`;
-
 const Tabs = styled.ul`
   display: flex;
 
@@ -183,7 +172,7 @@ const Tabs = styled.ul`
   }
   > li a {
     display: block;
-    color: ${(props) => props.theme.palette.secondary};
+    color: ${(props) => props.theme.palette.text.primary};
     text-decoration: none;
     padding: 16px 32px;
   }
@@ -242,17 +231,18 @@ export default () => {
             <Button color="secondary">
               <FormattedMessage id="common.follow" description="Seguir" />
             </Button>
+            {/* 
             <Button color="primary">
               <FormattedMessage
                 id="common.sendMessage"
                 description="Enviar Mensagem"
               />
-            </Button>
+            </Button>*/}
           </div>
         </ProfileInfo>
       </ProfileHeader>
-      <ProfileContent>
-        <div>
+      <GridContainer style={{marginTop: 16}}>
+        <GridItem xs={4} style={{paddingRight: 16}}>
           <Paper padding>
             <UserAbout>
               <h3>
@@ -283,9 +273,9 @@ export default () => {
               </ul>
             </UserAbout>
           </Paper>
-        </div>
-        <div>
-          <Paper style={{ marginBottom: 15 }}>
+        </GridItem>
+        <GridItem xs={8}>
+          <Paper style={{ marginBottom: 16, width: '100%' }}>
             <Tabs>
               <li className={path === '/:id' ? 'current' : ''}>
                 <Link to="/user">Feed</Link>
@@ -310,8 +300,8 @@ export default () => {
           <Suspense fallback={<p>Carregando</p>}>
             <Feed />
           </Suspense>
-        </div>
-      </ProfileContent>
+        </GridItem>
+      </GridContainer>
     </Container>
   );
 };
