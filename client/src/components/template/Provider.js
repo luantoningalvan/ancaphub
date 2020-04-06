@@ -38,21 +38,10 @@ const themes = {
 const theme = themes.dark;
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    outline:none;
-    box-sizing: border-box;
-  }
-
   body {
-    font-family: Ubuntu;
     background: ${theme.palette.background};
     color: ${theme.palette.text.primary};
   }
-
-  li { list-style: none; }
-  a { text-decoration: none; }
 `;
 
 const Template = ({ children }) => (
