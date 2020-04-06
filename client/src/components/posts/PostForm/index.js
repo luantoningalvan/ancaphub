@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useSelector, connect } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
 import ImageIcon from 'react-ionicons/lib/IosImageOutline';
 import EmbedIcon from 'react-ionicons/lib/IosCode';
@@ -33,13 +32,10 @@ const listPlugin = createListPlugin();
 const hashtagPlugin = createHashtagPlugin();
 const plugins = [linkifyPlugin, basicTextStylePlugin, listPlugin, hashtagPlugin];
 
-function PostForm({ createPostRequest: createPost, getPostsRequest: getPosts, getUserPostsRequest: getUserPosts }) {
+function PostForm({ createPostRequest: createPost }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const [media, setMedia] = useState(null);
-
-  const { user: { _id: id } } = useSelector((state) => state.auth);
-  const { url } = useRouteMatch();
 
   const preview = useMemo(() => (media && media.type === 'image'
     ? URL.createObjectURL(media.data)
