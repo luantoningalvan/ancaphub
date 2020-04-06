@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FormattedRelativeTime } from 'react-intl';
@@ -14,7 +14,6 @@ import LikeIcon from 'react-ionicons/lib/IosThumbsUpOutline';
 import ShareIcon from 'react-ionicons/lib/IosShareAltOutline';
 import CommentIcon from 'react-ionicons/lib/IosTextOutline';
 import DeleteIcon from 'react-ionicons/lib/IosRemoveCircleOutline';
-import DocumentIcon from 'react-ionicons/lib/IosDocumentOutline';
 import CommentBox from '../comments/CommentBox';
 import IconButton from '../ui/IconButton';
 import DropdownListItem from '../ui/DropdownListItem';
@@ -22,6 +21,8 @@ import DropdownListContainer from '../ui/DropdownListContainer';
 import Dropdown from '../ui/Dropdown';
 import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
 import Paper from '../ui/Paper';
+import ImageBox from '../../components/ui/ImageBox';
+import Confirm from '../../components/ui/Confirm';
 
 const ProfilePicture = styled.div`
   height: 44px;
@@ -62,58 +63,72 @@ const PostActions = styled.div`
   border-top: 1px solid ${(props) => props.theme.palette.border};
   background: ${(props) => props.theme.palette.paperDark};
 
-  > button {
-    flex: 1;
-    padding: 15px;
+  div { 
+    align-items: center;
+    display: flex;
+    flex: 1 0 0px;
+    justify-content: center;
+  }
+
+  button {
+    margin: 8px;
+    padding: 8px;
     border: none;
     outline: none;
+    display:block;
+    border-radius: 4px;
     background: transparent;
     cursor: pointer;
-    color: ${(props) => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.primary};
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 0.3s;
-
+    width: 100%;
+    
     > span {
-      display: block;
-      margin-left: 10px;
       font-size: 1.1em;
     }
 
     > svg { 
-      fill: ${(props) => props.theme.palette.text.secondary};
+      fill: ${(props) => props.theme.palette.text.primary};
+      margin-right: 8px;
     }
 
     &:hover {
-      color: ${(props) => props.theme.palette.primary};
-      
-    > svg { 
-      fill: ${(props) => props.theme.palette.primary};
-    }
+      background: rgba(0,0,0,0.1);
     }
   }
 `;
 
 const PostCard = ({ data }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const handleCommentBox = () => {
-    setExpanded(!expanded);
-  };
+  const [commentBoxState, setCommenteBoxState] = useState(false);
+  const [deleteDialogState, setDeleteDialogState] = useState(false);
+
+  const handleCommentBox = () => setCommenteBoxState(!commentBoxState);
+  const handleDelete = () => setDeleteDialogState(!deleteDialogState)
 
   // For displaying post
   const contentState = convertFromRaw(JSON.parse(data.content));
   const editorState = EditorState.createWithContent(contentState);
 
-
   return (
+    <>
+    <Confirm 
+      show={deleteDialogState} 
+      onClose={handleDelete} 
+      onConfirm={() => {}} 
+      title="Deletar postagem?"
+      message="Você tem certeza que deseja deletar a postagem?"
+    />
+
     <Paper style={{ marginTop: 15, flexBasis: '100%' }}>
       <PostCardHeader>
         <ProfilePicture>
-          <img src={defaultProfilePicture} alt="Default profile pic" />
+          <img src={data.user.avatar ? data.user.avatar : defaultProfilePicture} alt="Default profile pic" />
         </ProfilePicture>
         <div>
-          <Link to="/user">{data.user.name}</Link>
+          <Link to={`/${data.user._id}`}>{data.user.name}</Link>
           <span>
             <FormattedRelativeTime value={-differenceInSeconds(Date.now(), getTime(parseISO(data.createdAt)))} updateIntervalInSeconds={30} />
           </span>
@@ -121,8 +136,7 @@ const PostCard = ({ data }) => {
         <div style={{ marginLeft: 'auto' }}>
           <Dropdown offsetX={15} placement="left-start" toggle={<IconButton><MdMore color="#fff" fontSize="24px" /></IconButton>}>
             <DropdownListContainer>
-              <DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>
-              <DropdownListItem icon={<DeleteIcon />}>Delete</DropdownListItem>
+              <DropdownListItem icon={<DeleteIcon />} onClick={handleDelete}>Deletar</DropdownListItem>
             </DropdownListContainer>
           </Dropdown>
         </div>
@@ -136,44 +150,39 @@ const PostCard = ({ data }) => {
           <ReactPlayer
             url={data.media.data}
             light
-            style={{ marginTop: 15 }}
+            style={{ marginTop: 16 }}
             width="100%"
           />
         )}
 
-        { /* If post has image media type */ }
         {(data.media && data.media.mediaType === 'image') && (
-          <div style={{
-            marginTop: 15,
-          }}
-          >
-            <img
-              src={data.media.data}
-              style={{
-                width: '100%', height: 'auto', display: 'block', objectFit: 'cover',
-              }}
-              alt={data.media.data}
-            />
-          </div>
+          <ImageBox src={data.media.data} />
         )}
       </div>
 
       <PostActions>
+        <div>
         <button>
           <LikeIcon />
-          <span>{data.likes.length}</span>
+          <span>Curtir</span>
         </button>
+        </div>
+        <div>
         <button onClick={handleCommentBox}>
           <CommentIcon />
-          <span>{data.comments.length}</span>
+          <span>Comentar</span>
         </button>
-        <button>
+        </div>
+        <div>
+        <button disabled>
           <ShareIcon />
-          <span>1</span>
+          <span>Compartilhar</span>
         </button>
+        </div>
       </PostActions>
-      <CommentBox expanded={expanded} post={1} />
+      <CommentBox expanded={commentBoxState} post={1} />
     </Paper>
+    </>
   );
 };
 
