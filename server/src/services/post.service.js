@@ -11,14 +11,14 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
       .populate('user', 'name username id avatar isVerified')
-      .populate("comments")
       .populate('poll')
 
     if (auth) {
       posts = posts.map(post => ({
         ...post._doc,
         hasLiked: post.likes.includes(auth.id),
-        likeCount: post.likes.length
+        likeCount: post.likes.length,
+        commentCount: post.comments.length
       }))
     }
 
