@@ -14,7 +14,7 @@ import PostCard from '../../components/posts/PostCard';
 import LastItemsWidget from '../../components/library/LastItemsWidget';
 import UserListWidget from '../../components/users/UserListWidget';
 import TrendingTopicsWidget from '../../components/trends/TrendingTopicsWidget';
-
+import ShowPosts from '../../components/posts/ShowPosts'
 
 const Feed = ({ getPostsRequest: getPostsAction }) => {
   React.useEffect(() => {
@@ -22,15 +22,13 @@ const Feed = ({ getPostsRequest: getPostsAction }) => {
   }, [getPostsAction]);
 
   const { items } = useSelector((state) => state.posts);
-
+  
   return (
     <Container style={{ marginTop: 8 }}>
       <GridContainer spacing={1}>
         <GridItem xs={12} lg={8}>
           <PostForm />
-          {items.map((item) => (
-            <PostCard data={{ ...item }} />
-          ))}
+          <ShowPosts posts={items}/>
         </GridItem>
         <GridItem xs={12} lg={4} xl={3}>
           {/*<TrendingTopicsWidget />*/}
