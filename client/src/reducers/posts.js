@@ -1,9 +1,9 @@
-import { Types } from "../actions/posts";
-import arrayToObject from "../utils/arrayToObject";
+import { Types } from '../actions/posts';
+import arrayToObject from '../utils/arrayToObject';
 
 const INITIAL_STATE = {
   items: [],
-  errorMessage: "",
+  errorMessage: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,9 +15,10 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         items: [payload, ...state.items],
       };
-    case Types.GET_POSTS_SUCCESS:
-      const items = arrayToObject(payload.items, "_id");
+    case Types.GET_POSTS_SUCCESS: {
+      const items = arrayToObject(payload.items, '_id');
       return { ...state, items };
+    }
     case Types.LIKE_POST_REQUEST:
       return {
         ...state,
@@ -36,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.items,
           [payload._id]: {
             ...state.items[payload._id],
-            ...payload
+            ...payload,
           },
         },
       };

@@ -1,82 +1,45 @@
 
 export const Types = {
-  SEND_ARTICLE_REQUEST: 'library/send_article_request',
-  SEND_ARTICLE_SUCCESS: 'library/send_article_success',
-  GET_ARTICLES_REQUEST: 'library/get_articles_request',
-  GET_ARTICLES_SUCCESS: 'library/get_articles_success',
-  SEND_BOOK_REQUEST: 'library/send_book_request',
-  SEND_BOOK_SUCCESS: 'library/send_book_success',
-  GET_BOOKS_REQUEST: 'library/get_books_request',
-  GET_BOOKS_SUCCESS: 'library/get_books_success',
-  SEND_VIDEO_REQUEST: 'library/send_video_request',
-  SEND_VIDEO_SUCCESS: 'library/send_video_success',
-  GET_VIDEOS_REQUEST: 'library/get_videos_request',
-  GET_VIDEOS_SUCCESS: 'library/get_videos_success',
+  CREATE_ITEM_REQUEST: 'library/create_item_request',
+  CREATE_ITEM_SUCCESS: 'library/create_item_success',
+  GET_ITEMS_REQUEST: 'library/get_items_request',
+  GET_ITEMS_SUCCESS: 'library/get_items_success',
+  GET_SINGLE_ITEM_REQUEST: 'library/get_single_item_request',
+  GET_SINGLE_ITEM_SUCCESS: 'library/get_single_item_success',
   LIBRARY_ERROR: 'library/library_error',
 };
 
-// Write requests
-
-export const sendArticleRequest = (data) => ({
-  type: Types.SEND_ARTICLE_REQUEST,
+export const createItemRequest = (data) => ({
+  type: Types.CREATE_ITEM_REQUEST,
   payload: data,
 });
 
-export const sendBookRequest = (data) => ({
-  type: Types.SEND_BOOK_REQUEST,
+export const createItemSuccess = (data) => ({
+  type: Types.CREATE_ITEM_SUCCESS,
   payload: data,
 });
 
-export const sendVideoRequest = (data) => ({
-  type: Types.SEND_VIDEO_REQUEST,
+export const getItemsRequest = (data) => ({
+  type: Types.GET_ITEMS_REQUEST,
   payload: data,
 });
 
-// Read requests
-
-export const getArticles = (data) => ({
-  type: Types.GET_ARTICLES_REQUEST,
+export const getItemsSuccess = (data) => ({
+  type: Types.GET_ITEMS_SUCCESS,
   payload: data,
 });
 
-export const getBooks = (data) => ({
-  type: Types.GET_BOOKS_REQUEST,
+export const getSingleItemRequest = (data) => ({
+  type: Types.GET_SINGLE_ITEM_REQUEST,
   payload: data,
 });
 
-export const getVideos = (data) => ({
-  type: Types.GET_VIDEOS_REQUEST,
+export const getSingleItemSuccess = (data) => ({
+  type: Types.GET_SINGLE_ITEM_SUCCESS,
   payload: data,
 });
 
-// Request success
-
-export const sendArticleSuccess = (data) => ({
-  type: Types.SEND_ARTICLE_SUCCESS,
-  payload: data,
-});
-
-export const getArtiiclesSuccess = (data) => ({
-  type: Types.GET_ARTICLES_SUCCESS,
-  payload: data,
-});
-
-export const sendBookSuccess = (data) => ({
-  type: Types.SEND_BOOK_SUCCESS,
-  payload: data,
-});
-
-export const getBooksSuccess = (data) => ({
-  type: Types.GET_BOOKS_SUCCESS,
-  payload: data,
-});
-
-export const sendVideoSuccess = (data) => ({
-  type: Types.SEND_VIDEO_SUCCESS,
-  payload: data,
-});
-
-export const getVideosSuccess = (data) => ({
-  type: Types.GET_VIDEOS_SUCCESS,
+export const libraryError = (data) => ({
+  type: Types.LIBRARY_ERROR,
   payload: data,
 });

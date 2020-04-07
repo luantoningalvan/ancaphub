@@ -66,5 +66,5 @@ export default [
   fork(watchCreatePostRequest),
   fork(watchGetPostsRequest),
   fork(watchGetUserPostsRequest),
-  fork(watchLikePostRequest)
+  fork(watchLikePostRequest),
 ];
