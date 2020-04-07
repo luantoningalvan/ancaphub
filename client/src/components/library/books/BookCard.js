@@ -74,23 +74,23 @@ const CardType = styled.span`
     fill: ${(props) => props.theme.palette.text.contrast};
   }
 `;
-export default function BookCard() {
-  return (
-    <div>
-      <Link to="/books/id">
-        <CardCover cover={defaultBookCover}>
-          <CardType>
-            <BookIcon />
-          </CardType>
-          <div className="card-buttons">Botões</div>
-        </CardCover>
-      </Link>
+const BookCard = ({ book }) => (
+  <div>
+    <Link to={`/books/${book._id}`}>
+      <CardCover cover={defaultBookCover}>
+        <CardType>
+          <BookIcon />
+        </CardType>
+        <div className="card-buttons">Botões</div>
+      </CardCover>
+    </Link>
 
-      <Link to="/books/id">
-        <CardTitle>Título do Livro</CardTitle>
-      </Link>
+    <Link to={`/books/${book._id}`}>
+      <CardTitle>{book.title}</CardTitle>
+    </Link>
 
-      <CardSubtitle variant="subtitle1">Autor do Livro</CardSubtitle>
-    </div>
-  );
-}
+    <CardSubtitle variant="subtitle1">{book.author}</CardSubtitle>
+  </div>
+);
+
+export default BookCard;

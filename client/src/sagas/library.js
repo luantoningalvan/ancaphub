@@ -1,5 +1,4 @@
 import {
-  takeEvery,
   takeLatest,
   call,
   fork,
@@ -20,7 +19,7 @@ function* createItem(action) {
 
 function* getItems() {
   try {
-    const items = yield call(api.getLibraryItems());
+    const items = yield call(api.getLibraryItems);
     yield put(actions.getItemsSuccess({ items: items.data }));
   } catch (e) {
     yield put(actions.libraryError({ errorMessage: e.message }));
@@ -47,7 +46,7 @@ function* watchGetLibraryItemsRequest() {
 }
 
 function* watchGetSingleLibraryItemRequest() {
-  yield takeEvery(actions.Types.GET_SINGLE_ITEM_REQUEST, getSingleItem);
+  yield takeLatest(actions.Types.GET_SINGLE_ITEM_REQUEST, getSingleItem);
 }
 
 export default [

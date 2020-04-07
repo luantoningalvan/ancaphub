@@ -1,13 +1,19 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import parse from 'html-react-parser';
 import Paper from '../../../components/ui/Paper';
 import Container from '../../../components/ui/Container';
 import defaultThumbnail from '../../../assets/default-book-cover.jpg';
-// import parse from "html-react-parser";
 // import Categories from "../../../components/categories/showElementCategories";
 // import LoadContent from "../../../components/loaders/loadContent"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
+
+// Redux
+import { getSingleItemRequest } from '../../../actions/library';
 
 const Banner = styled.div`
   background: url(${(props) => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.8);
@@ -32,37 +38,46 @@ const Author = styled.h3`
   font-size: 1.25rem;
 `;
 
-const article = true;
+const SingleArticle = ({ getSingleItemRequest: getSingleItem }) => {
+  const { id } = useParams();
 
-const SingleArticle = () => (article ? (
-  <>
-    <Banner>
-      <Container>
-        {/* <Categories categories={categories} /> */}
-        Categories
-        <Title>Título</Title>
-        <Author>Autor</Author>
+  React.useEffect(() => {
+    getSingleItem({ itemId: id });
+  }, [getSingleItem, id]);
+
+  const { singleItem } = useSelector((state) => state.library);
+
+  if (!singleItem) {
+    return (
+      <Container mt={2}>
+        Unavailable content
       </Container>
-    </Banner>
+    );
+  }
 
-    <div style={{ marginTop: -20 }}>
-      <Container>
-        <Paper padding>
-          {/* parse(`${content}`) */}
-          Conteúdo
-        </Paper>
-        InvitedBy
-        {/* <InvitedBy user={user} /> */}
-      </Container>
-    </div>
-  </>
-) : (
-  <Container>
-    <div mt={2}>
-      UnavaliableContent
-      {/* <UnavaliableContent /> */}
-    </div>
-  </Container>
-));
+  return singleItem && (
+    <>
+      <Banner>
+        <Container>
+          {/* <Categories categories={categories} /> */}
+          Categories
+          <Title>{singleItem && singleItem.title}</Title>
+          <Author>{singleItem && singleItem.title}</Author>
+        </Container>
+      </Banner>
 
-export default SingleArticle;
+      <div style={{ marginTop: -20 }}>
+        <Container>
+          <Paper padding>
+            {parse(`${singleItem && singleItem.content}`)}
+          </Paper>
+          InvitedBy
+          {/* <InvitedBy user={user} /> */}
+        </Container>
+      </div>
+    </>
+  );
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getSingleItemRequest }, dispatch);
+export default connect(null, mapDispatchToProps)(SingleArticle);

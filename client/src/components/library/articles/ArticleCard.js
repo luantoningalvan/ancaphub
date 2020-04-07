@@ -74,11 +74,11 @@ const CardType = styled.span`
     fill: ${(props) => props.theme.palette.text.contrast};
   }
 `;
-export default function VideoCard() {
+export default function ArticleCard({ article }) {
   return (
     <div>
-      <Link to="/articles/id">
-        <CardCover cover={defaultArticleCover}>
+      <Link to={`/articles/${article._id}`}>
+        <CardCover cover={article.cover ? article.cover : defaultArticleCover}>
           <CardType>
             <ArticleIcon />
           </CardType>
@@ -86,11 +86,11 @@ export default function VideoCard() {
         </CardCover>
       </Link>
 
-      <Link to="/articles/id">
-        <CardTitle>Título do Artigo</CardTitle>
+      <Link to={`/articles/${article._id}`}>
+        <CardTitle>{article.title}</CardTitle>
       </Link>
 
-      <CardSubtitle variant="subtitle1">Autor do Artigo</CardSubtitle>
+      <CardSubtitle variant="subtitle1">{article.author}</CardSubtitle>
     </div>
   );
 }
