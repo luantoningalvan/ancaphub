@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { postService, userService, fileService } = require('../services')
-const { getManyPosts, insertPost, removePost, likePost, getPost } = postService
+const { getManyPosts, insertPost, removePost, likePost, getPost, getPostComments, getPostLikes } = postService
 const { getUser } = userService
 const verifyToken = require('../utils/verifyToken')
 
@@ -126,4 +126,32 @@ const like = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserFeed, getUserPosts, getPostById, insert, remove, like };
+const getComments = async (req, res, next) => {
+  const { postId } = req.params
+
+  try {
+    const isAuthenticaded = verifyToken(req)
+    const result = await getPostComments(postId, isAuthenticaded)
+
+    res.send(result)
+    next()
+  } catch (e) {
+    next(e)
+  }
+};
+
+const getLikes = async (req, res, next) => {
+  const { postId } = req.params
+
+  try {
+    const isAuthenticaded = verifyToken(req)
+    const result = await getPostLikes(postId, isAuthenticaded)
+
+    res.send(result)
+    next()
+  } catch (e) {
+    next(e)
+  }
+};
+
+module.exports = { getUserFeed, getUserPosts, getPostById, insert, remove, like, getComments, getLikes };

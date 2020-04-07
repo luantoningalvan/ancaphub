@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
-import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
+// import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
 import { FormattedMessage } from 'react-intl';
 import ArrowDownIcon from 'react-ionicons/lib/IosArrowDown';
 import ProfileIcon from 'react-ionicons/lib/MdPerson';
-import BookIcon from 'react-ionicons/lib/MdBook';
+//import BookIcon from 'react-ionicons/lib/MdBook';
 import BookmarkIcon from 'react-ionicons/lib/MdBookmark';
 import ContrastIcon from 'react-ionicons/lib/MdContrast';
 import SettingsIcon from 'react-ionicons/lib/MdSettings';
@@ -147,6 +147,7 @@ const Header = () => {
               <CardFooter link="/notifications" label="See all" />
             </>
           </Dropdown>
+          {/*
           <Dropdown
             placement="bottom"
             offsetY={16}
@@ -159,6 +160,7 @@ const Header = () => {
           >
             <p>Messages will appear here...</p>
           </Dropdown>
+          */}
           <Dropdown
             offsetY={16}
             offsetX="-4vw"
@@ -173,9 +175,10 @@ const Header = () => {
               <DropdownListItem icon={<ProfileIcon />}>
                 <Link to="/user"><FormattedMessage id="common.profile" /></Link>
               </DropdownListItem>
+              {/* 
               <DropdownListItem icon={<BookIcon />}>
                 <Link to="/contributions"><FormattedMessage id="common.contributions" /></Link>
-              </DropdownListItem>
+              </DropdownListItem>*/}
               <DropdownListItem icon={<BookmarkIcon />}>
                 <Link to="/bookmarks"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>
               </DropdownListItem>

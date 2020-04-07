@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import Paper from './Paper'
-import Button from './Button'
-import IconButton from './IconButton'
-import CloseIcon from 'react-ionicons/lib/MdClose'
 
 const Dialog = styled.div`
   width: 100vw;
-  height: calc(100vh - 64px);
-  top:64px;
+  height: 100vh;
+  top:0;
   left:0;
   position:fixed;
   display:flex;
@@ -16,6 +14,13 @@ const Dialog = styled.div`
   justify-content:center;
   background: rgba(0,0,0,.8);
   z-index:9999;
+  overflow: hidden;
+
+  img {
+    max-height: 95vh;
+    height: 100%;
+    width: auto;
+  }
 
   .dialog-header {
     display:flex;
@@ -38,30 +43,24 @@ const Dialog = styled.div`
   }
 `
 
-export default ({show, onClose, onConfirm}) => {
-  if(!show) {
-    return null;
-  }
+export default ({show, children}) => {
+  useEffect(() => {
+    if(!show) {
+      document.body.classList.remove('modal-open')
+    } else {
+      document.body.classList.add('modal-open')
+    }
+  }, [show])
+ 
+  if(!show) return null;
 
-  return (
-    <>
+  const modalRoot = document.getElementById("modal-root");
+
+  return ReactDOM.createPortal(
     <Dialog>
       <Paper className="content">
-      <div className="dialog-header">
-        <h4>Deletar postagem?</h4>
-        <IconButton onClick={onClose}><CloseIcon /></IconButton>
-      </div>
-      
-      <div className="dialog-message">
-        <p>Você tem certeza que deseja deletar a postagem?</p>
-      </div>
-      
-      <div className="dialog-actions">
-        <Button onClick={onConfirm} size="small" color="primary" variant="outlined">Cancelar</Button>
-        <Button onClick={onClose} size="small" color="secondary">Deletar</Button>
-      </div>
-    </Paper>
+        {children}
+      </Paper>
     </Dialog>
-    </>
-  )
+  , modalRoot)
 }

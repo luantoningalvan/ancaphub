@@ -27,6 +27,16 @@ function* getPosts() {
   }
 }
 
+function* likePost(action) {
+  try {
+    const likedPost = yield call(() => api.likePost(action.payload));
+    yield put(actions.likePostSuccess(likedPost.data));
+  } catch (e) {
+    yield put(actions.getPostsError({ errorMessage: e.message }));
+  }
+}
+
+
 function* getUserPosts(action) {
   try {
     const posts = yield call(api.getUserPosts, action.payload);
@@ -48,8 +58,13 @@ function* watchCreatePostRequest() {
   yield takeLatest(actions.Types.CREATE_POST_REQUEST, createPost);
 }
 
+function* watchLikePostRequest() {
+  yield takeLatest(actions.Types.LIKE_POST_REQUEST, likePost);
+}
+
 export default [
   fork(watchCreatePostRequest),
   fork(watchGetPostsRequest),
   fork(watchGetUserPostsRequest),
+  fork(watchLikePostRequest)
 ];
