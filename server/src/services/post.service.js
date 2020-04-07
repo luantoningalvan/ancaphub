@@ -149,4 +149,52 @@ const likePost = async (postId, userId) => {
   }
 }
 
-module.exports = { getManyPosts, getPost, insertPost, removePost, likePost };
+const getPostComments = async(postId, isAuthenticaded) => {
+  try {
+    let { comments } = await Post.findById(postId)
+      .select('comments')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          select: 'isVerified name username email followers following'
+        }
+      })
+
+      if (isAuthenticaded) {
+        comments = comments.map((comment) => ({
+          ...comment._doc,
+          following: comment.user.followers.includes(isAuthenticaded.id),
+          followed_by: comment.user.following.includes(isAuthenticaded.id)
+        }))
+      }
+
+    return comments
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+const getPostLikes = async(postId, isAuthenticaded) => {
+  try {
+    let { likes } = await Post.findById(postId)
+      .select('likes')
+      .populate('likes', 'isVerified name username email followers following')
+
+      likes = likes.map((like) => ({ user: { ...like._doc } }))
+
+      if (isAuthenticaded) {
+        likes = likes.map((like) => ({
+          ...like,
+          following: like.user.followers.includes(isAuthenticaded.id),
+          followed_by: like.user.following.includes(isAuthenticaded.id)
+        }))
+      }
+
+    return likes
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+module.exports = { getManyPosts, getPost, insertPost, removePost, likePost, getPostComments, getPostLikes };
