@@ -4,11 +4,13 @@ import auth from './auth';
 import posts from './posts';
 import profile from './profile';
 import comments from './comments';
+import library from './library';
 
 export default combineReducers({
   users,
   auth,
   posts,
   profile,
-  comments
+  comments,
+  library,
 });

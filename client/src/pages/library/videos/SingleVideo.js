@@ -1,10 +1,16 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 import Container from '../../../components/ui/Container';
 // import Categories from "../../../components/categories/showElementCategories";
 // import LoadContent from "../../../components/loaders/loadContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
+
+// Redux
+import { getSingleItemRequest } from '../../../actions/library';
 
 const PlayerWrapper = styled.div`
   position: relative;
@@ -19,7 +25,7 @@ const PlayerWrapper = styled.div`
 `;
 
 const Banner = styled.div`
-  background: #111111;
+  background: ${(props) => props.theme.palette.paperDark};
   width: 100%;
   padding-top: 32px;
   padding-bottom: 32px;
@@ -35,43 +41,43 @@ const Author = styled.h3`
   color: ${(props) => props.theme.palette.text.contrast};
 `;
 
-function SingleVideo() {
-  const video = true;
+const SingleVideo = ({ getSingleItemRequest: getSingleItem }) => {
+  const { id } = useParams();
 
-  return (
+  React.useEffect(() => {
+    getSingleItem({ itemId: id });
+  }, [getSingleItem, id]);
+
+  const { singleItem } = useSelector((state) => state.library);
+
+  return singleItem && (
     <>
-      {video ? (
-        <>
-          <Banner>
-            <Container>
-              <PlayerWrapper>
-                <ReactPlayer className="videoPlayer" width="100%" height="100%" url="https://www.youtube.com/watch?v=_GrKWkD6Htg" />
-              </PlayerWrapper>
-              <div style={{ marginTop: 32 }}>
-                {/* <Categories categories={categories} /> */}
-                Categories
-                <Title>Título do Vídeo</Title>
-                <Author>Participantes: Autor do Vídeo</Author>
-              </div>
-            </Container>
-          </Banner>
-          <Container>
-            <div style={{ marginTop: 16 }}>
-              Descrição do vídeo
-              {/* <InvitedBy user={user} /> */}
-            </div>
-          </Container>
-        </>
-      ) : (
+      <Banner>
         <Container>
-          <div>
-            {/* <UnavaliableContent /> */}
-            Conteúdo Indisponível
+          <PlayerWrapper>
+            <ReactPlayer className="videoPlayer" width="100%" height="100%" url={singleItem.extraFields.videoUrl} />
+          </PlayerWrapper>
+          <div style={{ marginTop: 32 }}>
+            {/* <Categories categories={categories} /> */}
+            Categories
+            <Title>{singleItem.title}</Title>
+            <Author>
+              Participantes:
+              {' '}
+              {singleItem.author}
+            </Author>
           </div>
         </Container>
-      )}
+      </Banner>
+      <Container>
+        <div style={{ marginTop: 16 }}>
+          {singleItem.content}
+          {/* <InvitedBy user={user} /> */}
+        </div>
+      </Container>
     </>
   );
-}
+};
 
-export default SingleVideo;
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getSingleItemRequest }, dispatch);
+export default connect(null, mapDispatchToProps)(SingleVideo);
