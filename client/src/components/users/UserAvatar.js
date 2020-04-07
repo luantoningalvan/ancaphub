@@ -20,7 +20,7 @@ const UserAvatar = ({
 }) => (
   <Avatar size={size || 35} style={{ ...style }} {...props}>
     <img
-      src={avatar === '' ? defaultAvatar : avatar}
+      src={avatar && avatar !== '' ? avatar : defaultAvatar}
       alt={`Foto de perfil de${username}`}
     />
   </Avatar>

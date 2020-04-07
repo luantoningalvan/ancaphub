@@ -141,7 +141,7 @@ const PostCard = ({ data }) => {
         </div>
         */}
         </div>
-        <CommentBox expanded={commentBoxState} post={1} />
+        <CommentBox expanded={commentBoxState} post={data._id} />
       </PostContainer>
     </>
   );

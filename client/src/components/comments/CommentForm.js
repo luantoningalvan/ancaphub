@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import UserAvatar from '../users/UserAvatar';
+import { useDispatch } from 'react-redux'
+import { addCommentRequest } from '../../actions/comments'
 
 const CommentFormStyle = styled.div`
   width: 100%;
@@ -24,9 +26,9 @@ const authUser = {
   avatar: '',
 };
 
-// eslint-disable-next-line no-unused-vars
 const CommentForm = ({ post, placeholder }) => {
   const [commentData, setCommentData] = useState({ content: '' });
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setCommentData({ content: e.target.value });
@@ -35,7 +37,7 @@ const CommentForm = ({ post, placeholder }) => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       if (commentData.content !== '') {
-        // addComment(post, commentData)
+        dispatch(addCommentRequest(commentData, post));
         setCommentData({ content: '' });
       }
     }
