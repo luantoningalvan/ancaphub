@@ -16,6 +16,8 @@ import Messages from "../pages/messages";
 import Contributions from "../pages/account/Contributions";
 import Bookmarks from "../pages/account/Bookmarks";
 import Settings from "../pages/account/settings";
+import SearchData from "../pages/search/SearchData";
+import NearbyUsers from "../pages/search/SearchNearbyUsers";
 
 export default [
   {
@@ -99,6 +101,16 @@ export default [
     exact: true,
     path: "/messages",
     component: Messages
+  },
+  {
+    exact: true,
+    path: "/search",
+    component: SearchData
+  },
+  {
+    exact: true,
+    path: "/nearby",
+    component: NearbyUsers
   },
   {
     exact: true,
