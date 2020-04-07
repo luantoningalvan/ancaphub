@@ -7,6 +7,7 @@ const profileService = require('./profile.service')
 const userService = require('./user.service')
 const commentService = require('./comment.service')
 const postService = require('./post.service')
+const accesscodeService = require('./accesscode.service')
 
 module.exports = {
   notificationService,
@@ -17,5 +18,6 @@ module.exports = {
   profileService,
   userService,
   postService,
-  commentService
+  commentService,
+  accesscodeService
 }

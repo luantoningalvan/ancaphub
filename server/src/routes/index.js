@@ -23,7 +23,8 @@ const {
   Search,
   User,
   Bookmark,
-  Comment
+  Comment,
+  AccessCode
 } = require('../controllers')
 
 // Routes
@@ -32,6 +33,10 @@ const {
 // Auth
 router.get('/auth', auth, Auth.get)
 router.post('/auth', Auth.login)
+
+// Access Code
+router.post('/code', auth, admin, AccessCode.generate)
+router.get('/code', auth, admin, AccessCode.getAll)
 
 // Category
 router.get('/categories', Category.getAll)
@@ -75,6 +80,8 @@ router.put('/posts/:postId/comment/:commentId', auth, Comment.update)
 router.delete('/posts/:postId/comment/:commentId', auth, Comment.remove)
 router.post('/posts/:postId/comment/:commentId', auth, Comment.like)
 router.post('/comment/:commentId/reply', auth, Comment.reply)
+router.get('/posts/:postId/comments', Post.getComments)
+router.get('/posts/:postId/likes', Post.getLikes)
 
 
 // Profile

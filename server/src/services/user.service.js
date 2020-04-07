@@ -1,4 +1,5 @@
 const User = require('../models/UserModel')
+const { verifyCode, updateUserCode } = require('../services/accesscode.service')
 const bcrypt = require('bcryptjs');
 
 const getManyUsers = async ({ filter }) => {
@@ -38,14 +39,24 @@ const verifyUser = async(cond) => {
 
 const insertUser = async (data) => {
   try {
+    
     let user = await User.findOne({ email: data.email });
     if (user) throw new Error("Este e-mail já está sendo utilizado.") 
-
+    
     user = new User(data);
 
+    console.log(process.env.CODE_TO_SIGNUP)
+    if(process.env.CODE_TO_SIGNUP == 1){
+      await verifyCode(data.code)
+    }
+    
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(data.password, salt);
     await user.save();
+
+    if (process.env.CODE_TO_SIGNUP == 1){
+      await updateUserCode(data.code, user.id)
+    }
 
     return {
       user: {
