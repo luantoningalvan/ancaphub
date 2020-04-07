@@ -78,7 +78,7 @@ export default function ArticleCard({ article }) {
   return (
     <div>
       <Link to={`/articles/${article._id}`}>
-        <CardCover cover={article.cover ? article.cover : defaultArticleCover}>
+        <CardCover cover={article.cover && article.cover !== "" ? article.cover : defaultArticleCover}>
           <CardType>
             <ArticleIcon />
           </CardType>

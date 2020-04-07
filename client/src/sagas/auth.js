@@ -1,5 +1,4 @@
 import { takeLatest, call, fork, put } from "redux-saga/effects";
-
 import * as actions from "../actions/auth";
 import * as api from "../api/auth";
 
@@ -10,21 +9,22 @@ function* authUser(action) {
     localStorage.setItem("token", response.data.token);
     yield put(actions.authUserSuccess(response.data));
   } catch (e) {
-    yield put(actions.usersError({ errorMessage: e.message }));
+    yield put(actions.authError({ errorMessage: e.message }));
   }
 }
 
-function* loadUser(action) {
+function* loadUser() {
   try {
     const response = yield call(api.loadUser);
     yield put(actions.loadUserSuccess(response.data));
   } catch (e) {
-    yield put(actions.usersError({ errorMessage: e.message }));
+    yield put(actions.authError({ errorMessage: e.message }));
   }
 }
 
 function* logout() {
-  yield put(actions.logout());
+  localStorage.removeItem('token')
+  yield put(actions.logoutSuccess());
 }
 
 function* watchAuthUserRequest() {
@@ -36,7 +36,7 @@ function* watchLoadUserRequest() {
 }
 
 function* watchLogout() {
-  yield takeLatest(actions.Types.LOGOUT, logout);
+  yield takeLatest(actions.Types.LOGOUT_REQUEST, logout);
 }
 
 export default [

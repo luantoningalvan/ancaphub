@@ -1,8 +1,6 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useRouteMatch } from 'react-router-dom';
-
 import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
 // import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
 import { FormattedMessage } from 'react-intl';
@@ -21,8 +19,8 @@ import DropdownHeader from '../ui/DropdownHeader';
 import CardFooter from '../ui/CardFooter';
 import Switch from '../ui/FlipSwitch';
 import Notification from '../notifications';
-
-// Icons
+import { useDispatch } from 'react-redux'
+import { logoutRequest as logout } from '../../actions/auth'
 import logo from '../../assets/logo-prov.png';
 
 const AppBar = styled.header`
@@ -118,6 +116,11 @@ const notifications = [
 
 const Header = () => {
   const { url } = useRouteMatch();
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   return (
     <>
@@ -189,7 +192,7 @@ const Header = () => {
                 <Link to="/settings"><FormattedMessage id="common.settings" /></Link>
               </DropdownListItem>
               <DropdownListItem icon={<LogoutIcon />}>
-                <Link to="/logout"><FormattedMessage id="common.logout" /></Link>
+                <Link onClick={handleLogout}><FormattedMessage id="common.logout" /></Link>
               </DropdownListItem>
             </DropdownListContainer>
           </Dropdown>

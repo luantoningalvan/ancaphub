@@ -3,7 +3,8 @@ export const Types = {
   AUTH_USER_REQUEST: 'auth/auth_user_request',
   LOAD_USER_SUCCESS: 'auth/load_user_success',
   LOAD_USER_REQUEST: 'auth/load_user_request',
-  LOGOUT: 'auth/logout',
+  LOGOUT_REQUEST: 'auth/logout_request',
+  LOGOUT_SUCCESS: 'auth/logout_success',
   AUTH_ERROR: 'auth/auth_error',
 };
 
@@ -26,11 +27,10 @@ export const loadUserSuccess = (data) => ({
   payload: data,
 });
 
-export const logout = () => ({
-  type: Types.LOGOUT,
-});
+export const logoutRequest = () => ({ type: Types.LOGOUT_REQUEST,});
+export const logoutSuccess = () => ({ type: Types.LOGOUT_SUCCESS,});
 
-export const usersError = ({ errorMessage }) => ({
+export const authError = ({ errorMessage }) => ({
   type: Types.AUTH_ERROR,
   payload: { errorMessage },
 });
