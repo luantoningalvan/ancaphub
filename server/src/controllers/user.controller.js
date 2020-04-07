@@ -52,10 +52,10 @@ const get = async (req, res, next) => {
 };
 
 const insert = async (req, res, next) => {
-  const { name, username, email, password } = req.body;
+  const { name, username, email, password, code } = req.body;
 
   try {
-    const payload = await insertUser({ name, username, email, password });
+    const payload = await insertUser({ name, username, email, password, code });
 
     jwt.sign(payload, keys.jwtSecret, { expiresIn: 86400 }, (err, token) => {
       if (err) throw new Error();

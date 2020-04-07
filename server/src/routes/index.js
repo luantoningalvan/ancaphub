@@ -23,7 +23,8 @@ const {
   Search,
   User,
   Bookmark,
-  Comment
+  Comment,
+  AccessCode
 } = require('../controllers')
 
 // Routes
@@ -32,6 +33,10 @@ const {
 // Auth
 router.get('/auth', auth, Auth.get)
 router.post('/auth', Auth.login)
+
+// Access Code
+router.post('/code', auth, admin, AccessCode.generate)
+router.get('/code', auth, admin, AccessCode.getAll)
 
 // Category
 router.get('/categories', Category.getAll)
