@@ -9,7 +9,7 @@ import CardBody from '../ui/CardBody';
 import defaultAvatar from '../../assets/default-profile-picture.jpg';
 // import { Link } from 'react-router-dom'
 
-const User = styled.li`
+export const User = styled.li`
   list-style: none;
   display: flex;
   justify-content: space-between;

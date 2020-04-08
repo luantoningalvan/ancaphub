@@ -93,5 +93,11 @@ export const PostContainer = styled(Paper)`
   .post-counts {
     color: ${(props) => props.theme.palette.text.secondary};
     margin-top: 16px;
+
+    span {
+      cursor: pointer;
+
+      &:hover { text-decoration: underline; }
+    }
   }
 `;

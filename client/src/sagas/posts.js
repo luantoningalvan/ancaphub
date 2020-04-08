@@ -8,6 +8,7 @@ import {
 
 import * as actions from '../actions/posts';
 import * as api from '../api/posts';
+import { getUsersCount } from '../actions/users'
 
 function* createPost(action) {
   try {
@@ -31,6 +32,16 @@ function* likePost(action) {
   try {
     const likedPost = yield call(() => api.likePost(action.payload));
     yield put(actions.likePostSuccess(likedPost.data));
+  } catch (e) {
+    yield put(actions.getPostsError({ errorMessage: e.message }));
+  }
+}
+
+function* getPostLikes(action) {
+  try {
+    const post = yield call(() => api.getLikes(action.payload));
+    yield put(getUsersCount(post.data.likes));
+    yield put(actions.getPostLikesSuccess(post.data));
   } catch (e) {
     yield put(actions.getPostsError({ errorMessage: e.message }));
   }
@@ -62,9 +73,14 @@ function* watchLikePostRequest() {
   yield takeLatest(actions.Types.LIKE_POST_REQUEST, likePost);
 }
 
+function* watchGetLikesRequest() {
+  yield takeLatest(actions.Types.GET_POST_LIKE_REQUEST, getPostLikes);
+}
+
 export default [
   fork(watchCreatePostRequest),
   fork(watchGetPostsRequest),
   fork(watchGetUserPostsRequest),
   fork(watchLikePostRequest),
+  fork(watchGetLikesRequest)
 ];

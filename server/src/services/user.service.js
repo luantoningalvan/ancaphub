@@ -4,10 +4,22 @@ const bcrypt = require('bcryptjs');
 
 const getManyUsers = async ({ filter }) => {
   try {
-    return await User
+    const users = await User
       .find(filter)
       .select('-email -password -geoLocation -__v -saved -library -role')
       .limit(20)
+
+    return users.map(user => ({
+      _id: user._id, 
+      name: user.name, 
+      avatar: user.avatar || "", 
+      username: user.username, 
+      bio: user.bio || "", 
+      isVerified: user.isVerified,
+      followingCount: user.following.length,
+      followersCount: user.followers.length,
+    }));
+
   } catch (e) {
     throw new Error(e.message)
   }

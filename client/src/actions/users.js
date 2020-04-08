@@ -4,6 +4,7 @@ export const Types = {
   CREATE_USER_REQUEST: 'users/create_user_request',
   CREATE_USER_SUCCESS: 'users/create_user_success',
   CREATE_USER_ERROR: 'users/create_user_error',
+  GET_USERS_COUNT: 'users/get_users_count'
 };
 
 export const getUsersRequest = () => ({
@@ -27,5 +28,10 @@ export const createUserSuccess = (data) => ({
 
 export const createUserError = (data) => ({
   type: Types.CREATE_USER_ERROR,
+  payload: data,
+});
+
+export const getUsersCount = (data) => ({
+  type: Types.GET_USERS_COUNT,
   payload: data,
 });

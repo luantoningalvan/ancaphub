@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const Post = require('../models/PostModel');
 const Poll = require('../models/PollModel');
-isEqual = require('lodash.isequal');
+const isEqual = require('lodash.isequal');
+const userObject = require('../utils/userObject');
 
 const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
   try {
@@ -10,17 +11,16 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .sort({ createdAt: 'desc' })
       .limit(parseInt(pageSize))
       .skip(pageSize * currentPage - pageSize)
-      .populate('user', 'name username id avatar isVerified')
+      .populate('user')
       .populate('poll')
-
-    if (auth) {
+      
       posts = posts.map(post => ({
         ...post._doc,
-        hasLiked: post.likes.includes(auth.id),
+        user: userObject(post.user, auth),
+        commentCount: post.comments.length || 0,
         likeCount: post.likes.length,
-        commentCount: post.comments.length
-      }))
-    }
+        ...(auth && {hasLiked: post.likes.includes(auth.id)}),
+      }));
 
     return posts
   } catch (e) {
@@ -37,12 +37,13 @@ const getPost = async (postId, auth) => {
     .populate('comments')
     .populate('poll')
 
-    const likes = post.likes.filter((like) => like._id)
-    return auth ? { 
-      ...post._doc, 
-      hasLiked: likes.includes(auth.id),
-      likeCount: post.likes.length
-    } : post
+    return { 
+      ...post._doc,
+      user: userObject(post.user, auth),
+      commentCount: post.comments.length || 0,
+      likeCount: post.likes.length,
+      ...(auth && {hasLiked: post.likes.includes(auth.id)}),
+    }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -157,41 +158,34 @@ const getPostComments = async(postId, isAuthenticaded) => {
         path: 'comments',
         populate: {
           path: 'user',
-          select: 'isVerified name username email followers following'
+          select: 'isVerified name username avatar bio followers following'
         }
       })
 
-      if (isAuthenticaded) {
-        comments = comments.map((comment) => ({
-          ...comment._doc,
-          following: comment.user.followers.includes(isAuthenticaded.id),
-          followed_by: comment.user.following.includes(isAuthenticaded.id)
-        }))
-      }
-
+      comments = comments.map((comment) => ({
+        ...comment._doc,
+        user: userObject(comment.user, isAuthenticaded)
+      }))
     return comments
   } catch (e) {
+    console.log(e)
     throw new Error(e.message)
   }
 }
 
 const getPostLikes = async(postId, isAuthenticaded) => {
   try {
-    let { likes } = await Post.findById(postId)
+    let {likes} = await Post.findById(postId)
       .select('likes')
-      .populate('likes', 'isVerified name username email followers following')
+      .populate('likes', 'isVerified name username bio avatar followers following')
 
-      likes = likes.map((like) => ({ user: { ...like._doc } }))
+    if(!likes) throw new Error("Essa postagem não existe")
+    
+    likes = likes.map((like) => ({
+      user: userObject(like, isAuthenticaded),
+    }))
 
-      if (isAuthenticaded) {
-        likes = likes.map((like) => ({
-          ...like,
-          following: like.user.followers.includes(isAuthenticaded.id),
-          followed_by: like.user.following.includes(isAuthenticaded.id)
-        }))
-      }
-
-    return likes
+    return { _id: postId, likes}
   } catch (e) {
     throw new Error(e.message)
   }

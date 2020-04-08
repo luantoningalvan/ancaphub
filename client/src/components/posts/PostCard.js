@@ -18,6 +18,7 @@ import Dropdown from "../ui/Dropdown";
 import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
 import Paper from "../ui/Paper";
 import ImageBox from "../../components/ui/ImageBox";
+import LikeBox from "./LikeBox";
 import Confirm from "../../components/ui/Confirm";
 import { PostContainer } from "./styles.css";
 import { useDispatch } from "react-redux";
@@ -27,6 +28,7 @@ const PostCard = ({ data }) => {
   const dispatch = useDispatch();
 
   const [commentBoxState, setCommenteBoxState] = useState(false);
+  const [likeBoxState, setLikeBoxState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
 
   const handleCommentBox = () => setCommenteBoxState(!commentBoxState);
@@ -110,7 +112,14 @@ const PostCard = ({ data }) => {
 
           {data.likeCount > 0 && (
             <div className="post-counts">
-              {data.likeCount + (data.likeCount > 2 ? " curtidas" : " curtida")}
+              <span onClick={() => setLikeBoxState(true)}>
+                {data.likeCount + (data.likeCount > 1 ? " curtidas" : " curtida")}
+              </span>
+              <LikeBox 
+                open={likeBoxState}
+                onClose={() => setLikeBoxState(false)}
+                postId={data._id}
+              />
             </div>
           )}
         </div>

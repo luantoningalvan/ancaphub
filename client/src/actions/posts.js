@@ -8,6 +8,8 @@ export const Types = {
   GET_USER_POSTS_ERROR: 'posts/get_user_posts_error',
   LIKE_POST_REQUEST: 'posts/like_post_request',
   LIKE_POST_SUCCESS: 'posts/like_post_success',
+  GET_POST_LIKE_REQUEST: "posts/get_post_like_request",
+  GET_POST_LIKE_SUCCESS: "posts/get_post_like_success",
   POST_ERROR: 'posts/post_error',
 };
 
@@ -48,6 +50,16 @@ export const likePostRequest = (postId) => ({
 
 export const likePostSuccess = (data) => ({
   type: Types.LIKE_POST_SUCCESS,
+  payload: data,
+});
+
+export const getPostLikesRequest = (postId) => ({
+  type: Types.GET_POST_LIKE_REQUEST,
+  payload: postId,
+});
+
+export const getPostLikesSuccess = (data) => ({
+  type: Types.GET_POST_LIKE_SUCCESS,
   payload: data,
 });
 
