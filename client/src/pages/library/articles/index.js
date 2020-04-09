@@ -1,19 +1,20 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Container from '../../../components/ui/Container';
 import Hero from '../../../components/ui/Hero';
 import ArticleCard from '../../../components/library/articles/ArticleCard';
 
 // Redux
-import { getItemsRequest } from '../../../actions/library';
+import { getArticlesRequest as getArticlesAction } from '../../../actions/library';
 
-const Articles = ({ getItemsRequest: getItems }) => {
+const Articles = () => {
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    getItems();
-  }, [getItems]);
+    dispatch(getArticlesAction({ currentPage: 1 }));
+  }, [dispatch]);
 
-  const { items } = useSelector((state) => state.library);
+  const { articles } = useSelector((state) => state.library);
   return (
     <Container>
       <Hero
@@ -24,12 +25,11 @@ const Articles = ({ getItemsRequest: getItems }) => {
         display: 'grid', gap: '1em', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', marginTop: 25,
       }}
       >
-        { items && items.length > 0 && items.map((item) => item.type === 'article' && <ArticleCard article={item} />) }
+        { articles && articles.length > 0 && articles.map((item) => <ArticleCard article={item} />) }
       </div>
 
     </Container>
   );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getItemsRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(Articles);
+export default Articles;

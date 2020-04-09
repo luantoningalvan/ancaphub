@@ -1,19 +1,20 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/ui/Container';
 import Hero from '../../../components/ui/Hero';
 import VideoCard from '../../../components/library/videos/VideoCard';
 
 // Redux
-import { getItemsRequest } from '../../../actions/library';
+import { getVideosRequest as getVideosAction } from '../../../actions/library';
 
-const Videos = ({ getItemsRequest: getItems }) => {
+const Videos = () => {
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    getItems();
-  }, [getItems]);
+    dispatch(getVideosAction({ currentPage: 1 }));
+  }, [dispatch]);
 
-  const { items } = useSelector((state) => state.library);
+  const { videos } = useSelector((state) => state.library);
 
   return (
     <Container>
@@ -25,12 +26,11 @@ const Videos = ({ getItemsRequest: getItems }) => {
         display: 'grid', gap: '1em', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', marginTop: 25,
       }}
       >
-        { items && items.length > 0 && items.map((item) => item.type === 'video' && <VideoCard video={item} />) }
+        { videos && videos.length > 0 && videos.map((item) => <VideoCard video={item} />) }
       </div>
 
     </Container>
   );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getItemsRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(Videos);
+export default Videos;

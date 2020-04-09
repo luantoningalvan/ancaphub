@@ -1,6 +1,5 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Paper from '../../../components/ui/Paper';
@@ -13,7 +12,7 @@ import defaultThumbnail from '../../../assets/default-book-cover.jpg';
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
 
 // Redux
-import { getSingleItemRequest } from '../../../actions/library';
+import { getSingleItemRequest as getSingleItem } from '../../../actions/library';
 
 const Title = styled.h2`
     font-weight: bold;
@@ -59,24 +58,24 @@ const Banner = styled.div`
     }
   `;
 
-function SingleBook({ getSingleItemRequest: getSingleItem }) {
+function SingleBook() {
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    getSingleItem({ itemId: id });
-  }, [getSingleItem, id]);
+    dispatch(getSingleItem({ itemId: id }));
+  }, [dispatch, id]);
 
   const { singleItem } = useSelector((state) => state.library);
 
   return (
     <>
-      <Banner cover={defaultThumbnail} />
+      <Banner cover={singleItem && singleItem.cover.url ? singleItem.cover.url : defaultThumbnail} />
       <div style={{ marginTop: -137, position: 'absolute', width: 'inherit' }}>
         <Container>
           <div style={{ display: 'grid', gridTemplateColumns: '33.3333% auto', gap: '1.4em' }}>
             <div>
               <Paper>
-                <BookCover src={defaultThumbnail} />
+                <BookCover src={singleItem && singleItem.cover.url ? singleItem.cover.url : defaultThumbnail} />
                 <div style={{ padding: 10 }}>
                   <Button fullwidth color="secondary">Baixar</Button>
                   <div style={{ display: 'flex', marginTop: 8 }}>
@@ -108,6 +107,4 @@ function SingleBook({ getSingleItemRequest: getSingleItem }) {
   );
 }
 
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getSingleItemRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(SingleBook);
+export default SingleBook;

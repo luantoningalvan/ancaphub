@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 import Container from '../../../components/ui/Container';
@@ -10,7 +9,7 @@ import Container from '../../../components/ui/Container';
 // import InvitedBy from "../../../components/profile/invitedBy"
 
 // Redux
-import { getSingleItemRequest } from '../../../actions/library';
+import { getSingleItemRequest as getSingleItem } from '../../../actions/library';
 
 const PlayerWrapper = styled.div`
   position: relative;
@@ -41,12 +40,13 @@ const Author = styled.h3`
   color: ${(props) => props.theme.palette.text.contrast};
 `;
 
-const SingleVideo = ({ getSingleItemRequest: getSingleItem }) => {
+const SingleVideo = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getSingleItem({ itemId: id });
-  }, [getSingleItem, id]);
+    dispatch(getSingleItem({ itemId: id }));
+  }, [dispatch, id]);
 
   const { singleItem } = useSelector((state) => state.library);
 
@@ -79,5 +79,4 @@ const SingleVideo = ({ getSingleItemRequest: getSingleItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getSingleItemRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(SingleVideo);
+export default SingleVideo;

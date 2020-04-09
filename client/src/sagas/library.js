@@ -17,10 +17,28 @@ function* createItem(action) {
   }
 }
 
-function* getItems() {
+function* getBooks(action) {
   try {
-    const items = yield call(api.getLibraryItems);
-    yield put(actions.getItemsSuccess({ items: items.data }));
+    const items = yield call(api.getAllBooks, action.payload);
+    yield put(actions.getBooksSuccess({ items: items.data }));
+  } catch (e) {
+    yield put(actions.libraryError({ errorMessage: e.message }));
+  }
+}
+
+function* getArticles(action) {
+  try {
+    const items = yield call(api.getAllArticles, action.payload);
+    yield put(actions.getArticlesSuccess({ items: items.data }));
+  } catch (e) {
+    yield put(actions.libraryError({ errorMessage: e.message }));
+  }
+}
+
+function* getVideos(action) {
+  try {
+    const items = yield call(api.getAllVideos, action.payload);
+    yield put(actions.getVideosSuccess({ items: items.data }));
   } catch (e) {
     yield put(actions.libraryError({ errorMessage: e.message }));
   }
@@ -41,8 +59,16 @@ function* watchCreateLibraryItemRequest() {
   yield takeLatest(actions.Types.CREATE_ITEM_REQUEST, createItem);
 }
 
-function* watchGetLibraryItemsRequest() {
-  yield takeLatest(actions.Types.GET_ITEMS_REQUEST, getItems);
+function* watchGetLibraryBooks() {
+  yield takeLatest(actions.Types.GET_BOOKS_REQUEST, getBooks);
+}
+
+function* watchGetLibraryVideos() {
+  yield takeLatest(actions.Types.GET_VIDEOS_REQUEST, getVideos);
+}
+
+function* watchGetLibraryArticles() {
+  yield takeLatest(actions.Types.GET_ARTICLES_REQUEST, getArticles);
 }
 
 function* watchGetSingleLibraryItemRequest() {
@@ -51,6 +77,8 @@ function* watchGetSingleLibraryItemRequest() {
 
 export default [
   fork(watchCreateLibraryItemRequest),
-  fork(watchGetLibraryItemsRequest),
+  fork(watchGetLibraryBooks),
+  fork(watchGetLibraryVideos),
+  fork(watchGetLibraryArticles),
   fork(watchGetSingleLibraryItemRequest),
 ];

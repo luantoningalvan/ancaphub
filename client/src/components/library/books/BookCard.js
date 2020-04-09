@@ -77,7 +77,7 @@ const CardType = styled.span`
 const BookCard = ({ book }) => (
   <div>
     <Link to={`/books/${book._id}`}>
-      <CardCover cover={defaultBookCover}>
+      <CardCover cover={book.cover && book.cover.url ? book.cover.url : defaultBookCover}>
         <CardType>
           <BookIcon />
         </CardType>
