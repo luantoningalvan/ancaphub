@@ -33,7 +33,7 @@ export const getPostsSuccess = ({ items }) => ({
   payload: { items },
 });
 
-export const getUserPostsRequest = ({ userId }) => ({
+export const getUserPostsRequest = (userId) => ({
   type: Types.GET_USER_POSTS_REQUEST,
   payload: userId,
 });
@@ -42,6 +42,17 @@ export const getUserPostsSuccess = ({ userFeedItems }) => ({
   type: Types.GET_USER_POSTS_SUCCESS,
   payload: { userFeedItems },
 });
+
+export const getUserFollowersRequest = (userId) => ({
+  type: Types.GET_USER_FOLLOWERS_REQUEST,
+  payload: userId,
+});
+
+export const getUserFollowersSuccess = (data) => ({
+  type: Types.GET_USER_FOLLOWERS_SUCCESS,
+  payload: data,
+});
+
 
 export const likePostRequest = (postId) => ({
   type: Types.LIKE_POST_REQUEST,
