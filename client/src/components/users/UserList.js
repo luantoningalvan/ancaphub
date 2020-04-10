@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { FormattedMessage } from "react-intl";
-import Button from "../ui/Button";
+import FollowButton from './FollowButton'
 import defaultAvatar from "../../assets/default-profile-picture.jpg";
 import { Link } from 'react-router-dom'
+import { isEmpty } from 'lodash'
 
 export const User = styled.li`
   list-style: none;
@@ -43,10 +43,11 @@ const Avatar = styled.div`
 `;
 
 const UserList = ({ users }) => {
+  console.log(users)
   return (
     <div style={{ width: "100%" }}>
       <ul>
-        {users.map(user => (
+        {!isEmpty(users) && users.map(user => (
           <User key={user.user._id}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <Link to={`/${user.user._id}`}>
@@ -57,9 +58,7 @@ const UserList = ({ users }) => {
                 <span>{user.user.username}</span>
               </div>
             </div>
-            <Button variant="outlined" size="small" color="primary">
-              <FormattedMessage id="common.follow" />
-            </Button>
+            <FollowButton user={user.user._id}/>
           </User>
         ))}
       </ul>
