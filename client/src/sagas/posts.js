@@ -1,5 +1,6 @@
 import {
   takeEvery,
+  putResolve,
   takeLatest,
   call,
   fork,
@@ -9,6 +10,7 @@ import {
 import * as actions from '../actions/posts';
 import * as api from '../api/posts';
 import { getUsersCount } from '../actions/users'
+import { getUsersRelationsips } from '../actions/relationships'
 
 function* createPost(action) {
   try {
@@ -40,7 +42,8 @@ function* likePost(action) {
 function* getPostLikes(action) {
   try {
     const post = yield call(() => api.getLikes(action.payload));
-    yield put(getUsersCount(post.data.likes));
+    yield putResolve(getUsersCount(post.data.likes));
+    yield putResolve(getUsersRelationsips(post.data.likes));
     yield put(actions.getPostLikesSuccess(post.data));
   } catch (e) {
     yield put(actions.getPostsError({ errorMessage: e.message }));
