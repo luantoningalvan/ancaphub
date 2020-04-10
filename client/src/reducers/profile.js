@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
         loadingPosts: true,
       };
     case PostTypes.GET_USER_POSTS_SUCCESS:
-      return { ...state, posts: [payload.posts][0], loadingPosts: false };
+      return { ...state, posts: payload, loadingPosts: false };
     case PostTypes.GET_USER_POSTS_ERROR:
       return { ...state, errorMessage: payload.errorMessage };
     case UserTypes.GET_SINGLE_USER_REQUEST:

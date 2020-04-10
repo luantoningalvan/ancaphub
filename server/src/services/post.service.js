@@ -15,12 +15,19 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
       .populate('poll')
       
       posts = posts.map(post => ({
-        ...post._doc,
+        _id: post._id,
+        content: post.content,
+        type: post.type,
+        extraFields: post.extraFields,
+        media: post.media,
+        poll: post.poll,
         user: userObject(post.user, auth),
         commentCount: post.comments.length || 0,
         likeCount: post.likes.length,
         ...(auth && {hasLiked: post.likes.includes(auth.id)}),
       }));
+
+      console.log(posts)
 
     return posts
   } catch (e) {
@@ -32,9 +39,7 @@ const getPost = async (postId, auth) => {
   try {
     const post = await Post
     .findById(postId)
-    .populate(["likes"])
     .populate('user')
-    .populate('comments')
     .populate('poll')
 
     return { 
@@ -158,7 +163,6 @@ const getPostComments = async(postId, isAuthenticaded) => {
         path: 'comments',
         populate: {
           path: 'user',
-          select: 'isVerified name username avatar bio followers following'
         }
       })
 

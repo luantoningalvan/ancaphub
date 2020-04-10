@@ -9,7 +9,8 @@ const getFollowers = async (req, res, next) => {
   const { id } = req.params
 
   try {
-    const result = await getUserFollowers(id)
+    const isAuthenticaded = verifyToken(req)
+    const result = await getUserFollowers(id, isAuthenticaded)
     res.send(result);
     next()
   } catch (e) {
@@ -21,7 +22,8 @@ const getFollowing = async (req, res, next) => {
   const { id } = req.params
 
   try {
-    const result = await getFollowedUsers(id)
+    const isAuthenticaded = verifyToken(req)
+    const result = await getFollowedUsers(id, isAuthenticaded)
     res.send(result);
     next()
   } catch (e) {

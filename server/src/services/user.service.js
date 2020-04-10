@@ -4,21 +4,10 @@ const bcrypt = require('bcryptjs');
 
 const getManyUsers = async ({ filter }) => {
   try {
-    const users = await User
+    return await User
       .find(filter)
       .select('-email -password -geoLocation -__v -saved -library -role')
       .limit(20)
-
-    return users.map(user => ({
-      _id: user._id, 
-      name: user.name, 
-      avatar: user.avatar || "", 
-      username: user.username, 
-      bio: user.bio || "", 
-      isVerified: user.isVerified,
-      followingCount: user.following.length,
-      followersCount: user.followers.length,
-    }));
 
   } catch (e) {
     throw new Error(e.message)
@@ -27,14 +16,10 @@ const getManyUsers = async ({ filter }) => {
 
 const getUser = async (id, extraFields) => {
   try {
-    const user = await User
+    return await User
       .findById(id, `_id name username avatar bio birthday currentCity site following followers isVerified ${extraFields}`);
   
-      return {
-        ...user._doc,
-        followersCount: user.followers.length,
-        followingCount: user.following.length
-    }
+  
   } catch (e) {
     throw new Error(e.message)
   }

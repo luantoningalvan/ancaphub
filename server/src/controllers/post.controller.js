@@ -13,14 +13,16 @@ const getUserFeed = async (req, res, next) => {
   const pageSize = req.query.pageSize ? req.query.pageSize : 10
   const currentPage = req.query.currentPage ? req.query.currentPage : 1
   const { id:userId } = req.user 
+  const auth = verifyToken(req)
 
   try {
     const userFollowing = await getUser(userId);
     const filterQuery = { user: [...userFollowing.following, userId] }
-    const result = await getManyPosts({filter: filterQuery, pageSize, currentPage}, req.user)
+    const result = await getManyPosts({filter: filterQuery, pageSize, currentPage}, auth)
     res.send(result);
     next()
   } catch (e) {
+    console.log(e)
     next(e)
   }
 };

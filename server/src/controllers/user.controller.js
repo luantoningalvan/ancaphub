@@ -13,12 +13,15 @@ const keys = require("../config/keys");
 const fs = require('fs')
 const jwt = require("jsonwebtoken");
 const Jimp = require("jimp");
+const verifyToken = require('../utils/verifyToken')
+const userObject = require('../utils/userObject');
 
 
 const getAll = async (req, res, next) => {
   const filter = req.query.filter || "";
   const filterOn = req.query.filterOn || "";
   let filterQuery = {};
+  const isAuthenticaded = verifyToken(req)
 
   if (filter.length > 0) {
     const regx = new RegExp(filter, "i");
@@ -31,7 +34,11 @@ const getAll = async (req, res, next) => {
   }
 
   try {
-    const result = await getManyUsers({ filter: filterQuery });
+    const users = await getManyUsers({ filter: filterQuery });
+    
+    const result = users.map(user => ({
+      user: userObject(user, isAuthenticaded)
+    }))
     res.status(200).send(result);
     next();
   } catch (e) {
@@ -41,9 +48,11 @@ const getAll = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   const { id } = req.params;
+  const isAuthenticaded = verifyToken(req)
 
   try {
-    const result = await getUser(id);
+    const user = await getUser(id);
+    const result = { ...userObject(user, isAuthenticaded) }
     res.status(200).send(result);
     next();
   } catch (e) {
