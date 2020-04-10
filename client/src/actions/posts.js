@@ -38,9 +38,9 @@ export const getUserPostsRequest = (userId) => ({
   payload: userId,
 });
 
-export const getUserPostsSuccess = ({ userFeedItems }) => ({
+export const getUserPostsSuccess = (data) => ({
   type: Types.GET_USER_POSTS_SUCCESS,
-  payload: { userFeedItems },
+  payload: data,
 });
 
 export const getUserFollowersRequest = (userId) => ({

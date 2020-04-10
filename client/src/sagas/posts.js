@@ -54,7 +54,7 @@ function* getPostLikes(action) {
 function* getUserPosts(action) {
   try {
     const posts = yield call(api.getUserPosts, action.payload);
-    yield put(actions.getUserPostsSuccess({ userFeedItems: posts.data }));
+    yield put(actions.getUserPostsSuccess(posts.data));
   } catch (e) {
     yield put(actions.getUserPostsError({ errorMessage: e.message }));
   }
