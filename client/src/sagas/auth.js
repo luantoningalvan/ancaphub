@@ -7,7 +7,7 @@ function* authUser(action) {
     const data = action.payload;
     const response = yield call(api.authUser, data);
     localStorage.setItem("token", response.data.token);
-    yield put(actions.authUserSuccess(response.data));
+    document.location.reload()
   } catch (e) {
     yield put(actions.authError({ errorMessage: e.message }));
   }
@@ -24,7 +24,7 @@ function* loadUser() {
 
 function* logout() {
   localStorage.removeItem('token')
-  yield put(actions.logoutSuccess());
+  document.location.reload()
 }
 
 function* watchAuthUserRequest() {

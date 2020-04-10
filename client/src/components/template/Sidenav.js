@@ -36,11 +36,11 @@ const UserMenu = styled.div`
  }
 `;
 
-const Sidenav = () => (
+const Sidenav = ({user}) => (
   <Nav>
     <UserMenu>
-      <Link to="/user">
-        <img src={defaultProfilePicture} alt="profile pic" />
+      <Link to={`/${user._id}`}>
+        <img src={user.avatar && user.avatar !== "" ? user.avatar : defaultProfilePicture} alt="profile pic" />
       </Link>
     </UserMenu>
     <Menu />

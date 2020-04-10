@@ -2,7 +2,7 @@ import { Types } from "../actions/auth";
 import { Types as UserTypes } from "../actions/users";
 
 const INITIAL_STATE = {
-  user: [],
+  user: {},
   isAuthenticated: null,
   token: localStorage.getItem("token"),
   errorMessage: "",
@@ -13,6 +13,11 @@ export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case Types.AUTH_USER_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
     case UserTypes.CREATE_USER_SUCCESS:
     case Types.AUTH_USER_SUCCESS:
       return {
@@ -31,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
     case Types.LOGOUT:
       return {
         ...state,
-        user: null,
+        user: {},
         isAuthenticated: false,
         token: null,
       };
@@ -44,7 +49,7 @@ export default (state = INITIAL_STATE, action) => {
         token: null,
         isAuthenticated: false,
         loading: false,
-        user: null,
+        user: {},
       };
     default:
       return state;

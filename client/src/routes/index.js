@@ -7,11 +7,11 @@ import routeList from './routeList'
 import LoadScreen from "../components/template/LoadScreen";
 
 export default () => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const {isAuthenticated, loading} = useSelector(state => state.auth);
 
   return (
     <>
-      {isAuthenticated !== null ? (
+      {isAuthenticated !== null && !loading ? (
         <Router>
           <Switch>
             {routeList.map(route => (
