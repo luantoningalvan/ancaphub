@@ -114,23 +114,7 @@ export default [
   },
   {
     exact: true,
-    path: "/:id",
+    path: "/:id/:page?",
     component: Profile
   },
-  {
-    path: "/:id/contributions",
-    component: Profile
-  },
-  {
-    path: "/:id/collection",
-    component: Profile
-  },
-  {
-    path: "/:id/followers",
-    component: Profile
-  },
-  {
-    path: "/:id/following",
-    component: Profile
-  }
 ];
