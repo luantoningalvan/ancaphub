@@ -6,6 +6,13 @@ export const getUsers = () => axios.get('/users', {
   },
 });
 
+export const getSingleUser = (payload) => axios.get(`users/${payload}`);
+
+export const followUser = (payload) => axios.post(`users/${payload}/follow`);
+export const unfollowUser = (payload) => axios.post(`users/${payload}/unfollow`);
+export const getUserFollowers = (payload) => axios.get(`users/${payload}/followers`);
+export const getUserFollowing = (payload) => axios.get(`users/${payload}/following`);
+
 export const createUser = ({
   name, username, email, password,
 }) => axios.post('/users', {
