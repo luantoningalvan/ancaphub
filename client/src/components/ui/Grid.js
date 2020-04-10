@@ -132,9 +132,9 @@ export const makeSpacing = (prop) => {
     if (spacing === prop) {
       jss += `
         margin: -${offset(currentSpacing, 2)};
-        width: calc(100% + ${offset(currentSpacing)});
+        width: calc(100% + ${offset(currentSpacing, 2)});
         & > .item {
-          padding: ${offset(currentSpacing)};
+          padding: ${offset(currentSpacing, 2)};
         }
     `;
     }
