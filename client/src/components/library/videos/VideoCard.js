@@ -78,7 +78,7 @@ export default function VideoCard({ video }) {
   return (
     <div>
       <Link to={`/videos/${video._id}`}>
-        <CardCover cover={defaultVideoCover}>
+        <CardCover cover={video.cover && video.cover.url ? video.cover.url : defaultVideoCover}>
           <CardType>
             <VideoIcon />
           </CardType>

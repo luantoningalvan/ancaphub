@@ -1,20 +1,20 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/ui/Container';
 import Hero from '../../../components/ui/Hero';
 import BookCard from '../../../components/library/books/BookCard';
 
 // Redux
-import { getItemsRequest } from '../../../actions/library';
+import { getBooksRequest as getBooksAction } from '../../../actions/library';
 
 
-const Books = ({ getItemsRequest: getItems }) => {
+const Books = () => {
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    getItems();
-  }, [getItems]);
+    dispatch(getBooksAction({ currentPage: 1 }));
+  }, [dispatch]);
 
-  const { items } = useSelector((state) => state.library);
+  const { books } = useSelector((state) => state.library);
 
   return (
     <Container>
@@ -26,12 +26,11 @@ const Books = ({ getItemsRequest: getItems }) => {
         display: 'grid', gap: '1em', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', marginTop: 25,
       }}
       >
-        { items && items.length > 0 && items.map((item) => item.type === 'book' && <BookCard book={item} />) }
+        { books && books.length > 0 && books.map((item) => <BookCard book={item} />) }
       </div>
 
     </Container>
   );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getItemsRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(Books);
+export default Books;

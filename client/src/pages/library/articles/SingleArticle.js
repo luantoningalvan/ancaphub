@@ -1,6 +1,5 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import parse from 'html-react-parser';
@@ -13,7 +12,7 @@ import defaultThumbnail from '../../../assets/default-book-cover.jpg';
 // import InvitedBy from "../../../components/profile/invitedBy"
 
 // Redux
-import { getSingleItemRequest } from '../../../actions/library';
+import { getSingleItemRequest as getSingleItem } from '../../../actions/library';
 
 const Banner = styled.div`
   background: url(${(props) => (props.cover ? props.cover : defaultThumbnail)}) rgba(0, 0, 0, 0.8);
@@ -38,12 +37,13 @@ const Author = styled.h3`
   font-size: 1.25rem;
 `;
 
-const SingleArticle = ({ getSingleItemRequest: getSingleItem }) => {
+const SingleArticle = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getSingleItem({ itemId: id });
-  }, [getSingleItem, id]);
+    dispatch(getSingleItem({ itemId: id }));
+  }, [dispatch, id]);
 
   const { singleItem } = useSelector((state) => state.library);
 
@@ -57,7 +57,7 @@ const SingleArticle = ({ getSingleItemRequest: getSingleItem }) => {
 
   return singleItem && (
     <>
-      <Banner>
+      <Banner cover={singleItem.cover && singleItem.cover.url}>
         <Container>
           {/* <Categories categories={categories} /> */}
           Categories
@@ -79,5 +79,4 @@ const SingleArticle = ({ getSingleItemRequest: getSingleItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getSingleItemRequest }, dispatch);
-export default connect(null, mapDispatchToProps)(SingleArticle);
+export default SingleArticle;
