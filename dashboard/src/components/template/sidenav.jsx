@@ -9,7 +9,8 @@ import {
  Person as PersonIcon,
  ViewList as ViewListIcon,
  Folder as FolderIcon,
- Settings as SettingsIcon
+ Settings as SettingsIcon,
+ CardGiftcard as InvitesIcon
 } from '@material-ui/icons'
 import MenuItem from '../template/menuItem';
 import { withRouter } from 'react-router';
@@ -65,6 +66,12 @@ const SideNav = props => {
           icon={<PersonIcon />}
           link="/users"
           label="Usuários"
+        />
+        <MenuItem
+          selected={url.includes('/invites')}
+          icon={<InvitesIcon />}
+          link="/invites"
+          label="Convites"
         />
         <MenuItem
           selected={url.includes('/settings')}
