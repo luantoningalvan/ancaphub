@@ -5,6 +5,8 @@ export const Types = {
   UPDATE_USERNAME_SUCCESS: "settings/update_username_success",
   UPDATE_PASSWORD_REQUEST: "settings/update_password_request",
   UPDATE_PASSWORD_SUCCESS: "settings/update_password_success",
+  UPDATE_GEOLOCATION_REQUEST: "settings/update_geolocation_request",
+  UPDATE_GEOLOCATION_SUCCESS: "settings/update_geolocation_success",
   SETTINGS_ERROR: "settings/settings_error",
 };
 
@@ -36,6 +38,17 @@ export const updatePasswordRequest = ({ currentPassword, newPassword }) => ({
 export const updatePasswordSuccess = () => ({
   type: Types.UPDATE_PASSWORD_SUCCESS,
 });
+
+export const updateGeoLocationsRequest = (option) => ({
+  type: Types.UPDATE_GEOLOCATION_REQUEST,
+  payload: option
+});
+
+export const updateGeoLocationsSuccess = (data) => ({
+  type: Types.UPDATE_GEOLOCATION_SUCCESS,
+  payload: data
+});
+
 
 export const settingsError = ({ errorMessage }) => ({
   type: Types.SETTINGS_ERROR,

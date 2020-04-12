@@ -95,20 +95,13 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
-const updateLocation = async (req, res, next) => {
+const updateGeoLocation = async (req, res, next) => {
   const { id } = req.user;
-  const coordinates = [req.body.longitude, req.body.latitude];
+  const { option } = req.body;
 
   try {
-    const userUpdated = await updateUser(id, {
-      lastLocation: { type: "Point", coordinates },
-      geoLocation: true
-    });
-    const result = {
-      lastLocation: userUpdated.lastLocation,
-      geoLocation: userUpdated.geoLocation
-    };
-    res.status(200).send(result);
+    const result = await updateUser(id, { geoLocation: option });
+    res.status(200).send({ geoLocation: result.geoLocation });
     next();
   } catch (e) {
     next(e);
@@ -185,7 +178,7 @@ module.exports = {
   insert,
   updateProfile,
   updateAvatar,
-  updateLocation,
+  updateGeoLocation,
   updateUsername,
   updateEmail,
   updatePassword

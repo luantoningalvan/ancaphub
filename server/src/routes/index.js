@@ -100,13 +100,13 @@ router.post('/rates', auth, Rate.insert)
 
 // Search
 router.post('/search', Search.searchTerm)
-router.get('/search/nearby', auth, Search.searchNearbyUsers)
+router.post('/search/nearby', auth, Search.searchNearbyUsers)
 
 // User
 router.get('/users', User.getAll)
 router.get('/users/:id', User.get)
 router.post('/users', User.insert)
-router.patch('/users/setlocation', auth, User.updateLocation)
+router.patch('/users/geolocation', auth, User.updateGeoLocation)
 router.patch('/users/username', auth, User.updateUsername)
 router.patch('/users/email', auth, User.updateEmail)
 router.patch('/users/password', auth, User.updatePassword)

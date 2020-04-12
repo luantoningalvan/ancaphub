@@ -8,6 +8,7 @@ import CommentSagas from './comments';
 import LibrarySagas from './library';
 import RelationshipsSagas from './relationships';
 import NotificationsSagas from './notifications';
+import SearchSagas from './search';
 
 export default function* rootSaga() {
   yield all([
@@ -18,6 +19,7 @@ export default function* rootSaga() {
     ...CommentSagas,
     ...LibrarySagas,
     ...RelationshipsSagas,
-    ...NotificationsSagas
+    ...NotificationsSagas,
+    ...SearchSagas
   ]);
 }

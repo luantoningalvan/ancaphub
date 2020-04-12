@@ -30,6 +30,15 @@ function* updatePassword(action) {
   }
 }
 
+function* updateGeolocation(action) {
+  try {
+    const response = yield call(api.updateGeoLocation, action.payload);
+    yield put(actions.updateGeoLocationsSuccess(response.data));
+  } catch (e) {
+    yield put(actions.settingsError({ errorMessage: e.message }));
+  }
+}
+
 function* watchUpdateUsername() {
   yield takeLatest(actions.Types.UPDATE_USERNAME_REQUEST, updateUsername);
 }
@@ -42,8 +51,13 @@ function* watchUpdatePassword() {
   yield takeLatest(actions.Types.UPDATE_PASSWORD_REQUEST, updatePassword);
 }
 
+function* watchUpdateGeolocation() {
+  yield takeLatest(actions.Types.UPDATE_GEOLOCATION_REQUEST, updateGeolocation);
+}
+
 export default [
   fork(watchUpdateUsername),
   fork(watchUpdateEmail),
-  fork(watchUpdatePassword)
+  fork(watchUpdatePassword),
+  fork(watchUpdateGeolocation)
 ];
