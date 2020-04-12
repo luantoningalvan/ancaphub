@@ -1,5 +1,5 @@
 import {
-  takeEvery,
+  select,
   takeLatest,
   call,
   fork,
@@ -22,7 +22,15 @@ function* loadComments({payload}) {
 function* addComment({payload}) {
   try {
     const comment = yield call(api.createComment, payload);
-    yield put(actions.addCommentSuccess(comment.data));
+    const state = yield select()
+    
+    const data = {
+      postId: payload.postId,
+      user: state.auth.user,
+      data: comment.data,
+      content: payload.comment.content
+    }
+    yield put(actions.addCommentSuccess(data));
   } catch (e) {
     yield put(addAlert('error', e.message ));
   }

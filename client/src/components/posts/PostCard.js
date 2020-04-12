@@ -57,7 +57,6 @@ const PostCard = ({ data }) => {
           <div className="profile-picture">
             <img
               src={data.user.avatar ? data.user.avatar : defaultProfilePicture}
-              alt="Default profile pic"
             />
           </div>
           <div>

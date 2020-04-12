@@ -108,6 +108,7 @@ const SingleComment = ({ comment, post }) => {
           <UserName user={comment.user} fontSize={1} />
           <p className="comment-text">{` ${comment.content}`}</p>
           <ul className="date">
+            {/* 
             <li>
               <a href="#" onClick={handleLikeComment}>Curtir</a>
             </li>
@@ -116,8 +117,9 @@ const SingleComment = ({ comment, post }) => {
                 Responder
               </a>
             </li>
+            */}
             <li>
-              <a href="#">há poucos segundos</a>
+              <a>{comment.date}</a>
             </li>
           </ul>
         </div>
@@ -132,7 +134,7 @@ const SingleComment = ({ comment, post }) => {
           }
         >
           <DropdownListContainer>
-            <DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>
+            {/*<DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>*/}
             <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>Delete</DropdownListItem>
           </DropdownListContainer>
         </Dropdown>
