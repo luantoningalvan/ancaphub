@@ -18,11 +18,59 @@ export const ProfilePicture = styled.div`
   margin-top: -100px;
   display: flex;
   justify-content: center;
-  > img {
+
+  .avatar {
+    position:relative;
     height: 128px;
     width: 128px;
     border-radius: 100%;
+    overflow:hidden;
+    cursor:pointer;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    ${props => props.isOwn && `
+    &:before {
+      content: "";
+      transition: all 0.3s;
+    }
+
+    .edit-profile-picture {
+      display:none;
+      position: absolute;
+      height:64px;
+      width:64px;
+      top: 32px;
+      left: 32px;
+      align-items:center;
+      justify-content:center;
+
+      svg {
+        fill: ${props.theme.palette.text.contrast};
+        height:32px;
+        width:32px;
+      }
+    }
+
+    &:hover {
+      .edit-profile-picture {
+        display:flex;
+      }
+
+      &:before {
+        content: "";
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.6);
+        position:absolute
+      }
+    }
+    `}
   }
+
 `;
 
 export const ProfileInfo = styled.div`
