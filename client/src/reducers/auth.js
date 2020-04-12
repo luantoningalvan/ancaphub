@@ -1,5 +1,6 @@
 import { Types } from "../actions/auth";
 import { Types as UserTypes } from "../actions/users";
+import { Types as SettingsTypes } from "../actions/settings";
 
 const INITIAL_STATE = {
   user: {},
@@ -40,6 +41,14 @@ export default (state = INITIAL_STATE, action) => {
         isAuthenticated: false,
         token: null,
       };
+    case SettingsTypes.UPDATE_GEOLOCATION_SUCCESS: 
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...payload
+        }
+      }  
     case UserTypes.CREATE_USER_ERROR:
     case Types.AUTH_ERROR:
     case Types.LOGOUT_SUCCESS:

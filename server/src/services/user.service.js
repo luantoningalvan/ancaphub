@@ -14,12 +14,29 @@ const getManyUsers = async ({ filter }) => {
   }
 }
 
+const getUsersByDistance = async (user, radius, coordinates) => {
+  try {
+    return await User.aggregate([
+      {
+        $geoNear: {
+           near: { type: "Point", coordinates },
+           distanceField: "dist",
+           maxDistance: radius,
+           query: { geoLocation: true, _id: { $ne: user } },
+           spherical: true
+        }
+      }
+   ])
+
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
 const getUser = async (id, extraFields) => {
   try {
     return await User
       .findById(id, `_id name username avatar bio birthday currentCity site following followers isVerified ${extraFields}`);
-  
-  
   } catch (e) {
     throw new Error(e.message)
   }
@@ -109,4 +126,4 @@ const authenticateUser = async ({email, password, level = "user"}) => {
   }
 }
 
-module.exports = { getManyUsers, getUser, verifyUser, insertUser, updateUser, updateUserPassword, authenticateUser }
+module.exports = { getManyUsers, getUsersByDistance, getUser, verifyUser, insertUser, updateUser, updateUserPassword, authenticateUser }
