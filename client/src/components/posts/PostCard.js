@@ -34,10 +34,23 @@ const PostCard = ({ data }) => {
   const handleCommentBox = () => setCommenteBoxState(!commentBoxState);
   const handleDelete = () => setDeleteDialogState(!deleteDialogState);
 
-  // For displaying post
-  const contentState = convertFromRaw(JSON.parse(data.content));
-  const editorState = EditorState.createWithContent(contentState);
+  const showPostContent = () => {
+    try {
+      const contentState = convertFromRaw(JSON.parse(data.content));
+      const editorState = EditorState.createWithContent(contentState);
 
+      return (
+        <Editor editorState={editorState} readOnly />
+      )
+    } catch (error) {
+      return (
+        <p>
+        {data.content}
+        </p>  
+      )
+    }
+  }
+  
   const handleLikePost = (id) => {
     dispatch(likePostRequest(id));
   };
@@ -96,7 +109,7 @@ const PostCard = ({ data }) => {
 
         <div style={{ padding: 20 }}>
           {/* Show post content  */}
-          <Editor editorState={editorState} readOnly />
+          { showPostContent() }
           {/* If post has embed media type */}
           {(data.media && data.media.mediaType) === 'embed' && (
             <ReactPlayer
