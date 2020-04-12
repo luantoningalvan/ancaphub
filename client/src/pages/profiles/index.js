@@ -1,22 +1,25 @@
-import React, { lazy, Suspense, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import LocationIcon from "react-ionicons/lib/IosPinOutline";
-import BirthIcon from "react-ionicons/lib/IosEggOutline";
-import SiteIcon from "react-ionicons/lib/IosLinkOutline";
-import EditIcon from "react-ionicons/lib/IosCreate";
-import defaultProfilePicture from "../../assets/default-profile-picture.jpg";
-import defaultProfileCover from "../../assets/default-profile-cover.jpg";
-import Paper from "../../components/ui/Paper";
-import Button from "../../components/ui/Button";
-import Container from "../../components/ui/Container";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import FollowButton from "../../components/users/FollowButton";
-import EditProfile from "../../components/users/EditProfile";
-import EditAvatar from "../../components/users/EditAvatar";
-import { getSingleUserRequest } from "../../actions/users";
+import React, {
+  lazy, Suspense, useEffect, useState,
+} from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import LocationIcon from 'react-ionicons/lib/IosPinOutline';
+import BirthIcon from 'react-ionicons/lib/IosEggOutline';
+import SiteIcon from 'react-ionicons/lib/IosLinkOutline';
+import EditIcon from 'react-ionicons/lib/IosCreate';
+import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
+import defaultProfileCover from '../../assets/default-profile-cover.jpg';
+import Paper from '../../components/ui/Paper';
+import Button from '../../components/ui/Button';
+import Loader from '../../components/ui/Loader';
+import Container from '../../components/ui/Container';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import FollowButton from '../../components/users/FollowButton';
+import EditProfile from '../../components/users/EditProfile';
+import EditAvatar from '../../components/users/EditAvatar';
+import { getSingleUserRequest } from '../../actions/users';
 import {
   ProfileHeader,
   ProfileCover,
@@ -24,14 +27,14 @@ import {
   ProfileInfo,
   UserAbout,
   Tabs,
-} from "./styles.css";
-import { useState } from "react";
+} from './styles.css';
 
-const Feed = lazy(() => import("./Feed"));
-const Lists = lazy(() => import("./Lists"));
-const Contributions = lazy(() => import("./Contributions"));
-const Followers = lazy(() => import("./Followers"));
-const Following = lazy(() => import("./Following"));
+
+const Feed = lazy(() => import('./Feed'));
+const Lists = lazy(() => import('./Lists'));
+const Contributions = lazy(() => import('./Contributions'));
+const Followers = lazy(() => import('./Followers'));
+const Following = lazy(() => import('./Following'));
 
 export default () => {
   const { user, loading } = useSelector((state) => state.profile);
@@ -66,12 +69,17 @@ export default () => {
   return (
     <Container>
       {loading ? (
-        <p>Carregando</p>
+        <div style={{
+          display: 'flex', flexBasis: '100%', flexGrow: 1, justifyContent: 'center', alignItems: 'center',
+        }}
+        >
+          <Loader size={128} />
+        </div>
       ) : (
         <>
-        {verifyIfIsOwnProfile && (
+          {verifyIfIsOwnProfile && (
           <EditAvatar open={editAvatar} onClose={() => setEditAvatar(false)} />
-        )}
+          )}
 
           <ProfileHeader>
             <ProfileCover>
@@ -81,7 +89,7 @@ export default () => {
               <div className="avatar">
                 <img
                   src={
-                    user.avatar && user.avatar !== ""
+                    user.avatar && user.avatar !== ''
                       ? user.avatar
                       : defaultProfilePicture
                   }
@@ -126,14 +134,17 @@ export default () => {
 
               <div className="user-name">
                 <h3>{user.name}</h3>
-                <span>@{user.username}</span>
+                <span>
+                  @
+                  {user.username}
+                </span>
               </div>
 
               <div className="user-action-buttons">
                 <FollowButton user={userId} />
                 {verifyIfIsOwnProfile && <EditProfile open={editProfile} />}
 
-                {/* 
+                {/*
                 <Button color="primary">
                   <FormattedMessage
                     id="common.sendMessage"
@@ -146,7 +157,7 @@ export default () => {
           </ProfileHeader>
           <GridContainer style={{ marginTop: 16 }} spacing={2}>
             <GridItem xs={4}>
-              <Paper padding style={{ width: "100%" }}>
+              <Paper padding style={{ width: '100%' }}>
                 <UserAbout>
                   <h3>
                     <FormattedMessage id="common.about" description="Sobre" />
@@ -183,28 +194,31 @@ export default () => {
               </Paper>
             </GridItem>
             <GridItem xs={8}>
-              <Paper style={{ width: "100%" }}>
+              <Paper style={{ width: '100%' }}>
                 <Tabs>
-                  <li className={pageParam == undefined ? "current" : ""}>
+                  <li className={pageParam == undefined ? 'current' : ''}>
                     <Link to={`/${userId}`}>Feed</Link>
                   </li>
-                  <li className={pageParam == "lists" ? "current" : ""}>
+                  <li className={pageParam == 'lists' ? 'current' : ''}>
                     <Link to={`/${userId}/lists`}>Listas</Link>
                   </li>
-                  <li className={pageParam == "contributions" ? "current" : ""}>
+                  <li className={pageParam == 'contributions' ? 'current' : ''}>
                     <Link to={`/${userId}/contributions`}>Contribuições</Link>
                   </li>
-                  <li className={pageParam == "following" ? "current" : ""}>
+                  <li className={pageParam == 'following' ? 'current' : ''}>
                     <Link to={`/${userId}/following`}>Seguindo</Link>
                   </li>
-                  <li className={pageParam == "followers" ? "current" : ""}>
+                  <li className={pageParam == 'followers' ? 'current' : ''}>
                     <Link to={`/${userId}/followers`}>Seguidores</Link>
                   </li>
                 </Tabs>
               </Paper>
 
-              <div style={{ width: "100%", margin: "16px 0px" }}>
-                <Suspense fallback={<p>Carregando</p>}>{Page}</Suspense>
+              <div style={{
+                width: '100%', margin: '16px 0',
+              }}
+              >
+                <Suspense fallback={<Loader size={96} />}>{Page}</Suspense>
               </div>
             </GridItem>
           </GridContainer>

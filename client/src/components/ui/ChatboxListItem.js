@@ -57,7 +57,7 @@ const ChatboxListItemWrapper = styled.div`
 const ChatboxListItem = ({ message }) => (
   <ChatboxListItemWrapper>
     <div className="block">
-      <img src={message.user.avatar ? message.user.avatar : defaultProfilePicture} alt="Foto do perfil" />
+      <img src={defaultProfilePicture} alt="Foto do perfil" />
     </div>
     <div className="block">
       <p className="chatUserName">

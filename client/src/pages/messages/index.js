@@ -30,20 +30,6 @@ const chats = [
       },
     ],
   },
-  {
-    name: 'Cosmo',
-    lastMessage: {
-      body: 'Ou será que não?',
-      time: '2h',
-    },
-  },
-  {
-    name: 'Ancapitão',
-    lastMessage: {
-      body: 'É hora de salvar o mundo',
-      time: '5h',
-    },
-  },
 ];
 
 export default () => (

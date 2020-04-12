@@ -1,7 +1,8 @@
 import React from 'react';
-import ThemeProvider from './Provider'
-import styled from 'styled-components'
-import logo from '../../assets/logo-type.png'
+import styled from 'styled-components';
+import ThemeProvider from './Provider';
+import logo from '../../assets/logo-type.png';
+import Loader from '../ui/Loader';
 
 const LoadScreen = styled.div`
   height:100vh;
@@ -16,13 +17,13 @@ const LoadScreen = styled.div`
   }
 
   span { margin-top: 16px; }
-`
+`;
 
-export default props => (
+export default () => (
   <ThemeProvider>
     <LoadScreen>
-      <img src={logo} />
-      <span>Carregando...</span>
+      <img src={logo} alt="AncapHub Logo" />
+      <Loader size={96} />
     </LoadScreen>
   </ThemeProvider>
-)
+);
