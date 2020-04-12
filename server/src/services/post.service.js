@@ -199,28 +199,8 @@ const votePoll = async (pollId, userId, optionVote) => {
 
     if (poll.allVotes.includes(userId)) throw new Error('Você já votou')
 
-    const index = poll.options.findIndex((option => option.title === optionVote))
-
-    poll.options[index].votes.push(userId)
-    poll.allVotes.push(userId)
-    poll.options[index].votesCount = poll.options[index].votes.length
-    
-    await poll.markModified("options")
-    await poll.save()
-
-    return poll
-  } catch (e) {
-    throw new Error(e.message)
-  }
-}
-
-const votePoll = async (pollId, userId, optionVote) => {
-  try {
-    const poll = await Poll.findById(pollId)
-
-    if (poll.allVotes.includes(userId)) throw new Error('Você já votou')
-
-    const index = poll.options.findIndex((option => option.title === optionVote))
+    const index = poll.options.findIndex((option => option.title === optionVote))    
+    if (index === -1) throw new Error('Opção não encontrada')
 
     poll.options[index].votes.push(userId)
     poll.allVotes.push(userId)
