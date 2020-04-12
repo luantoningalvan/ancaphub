@@ -7,6 +7,7 @@ import SettingsSagas from './settings';
 import CommentSagas from './comments';
 import LibrarySagas from './library';
 import RelationshipsSagas from './relationships';
+import NotificationsSagas from './notifications';
 
 export default function* rootSaga() {
   yield all([
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     ...SettingsSagas,
     ...CommentSagas,
     ...LibrarySagas,
-    ...RelationshipsSagas
+    ...RelationshipsSagas,
+    ...NotificationsSagas
   ]);
 }
