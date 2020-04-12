@@ -7,6 +7,7 @@ import profile from './profile';
 import comments from './comments';
 import library from './library';
 import relationships from './relationships';
+import notifications from './notifications';
 
 export default combineReducers({
   users,
@@ -16,5 +17,6 @@ export default combineReducers({
   profile,
   comments,
   library,
-  relationships
+  relationships,
+  notifications
 });

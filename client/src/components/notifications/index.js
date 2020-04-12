@@ -80,7 +80,7 @@ const Notification = ({ notification }) => {
   return (
     <NotificationWrap>
       <div className="thumb">
-        <img src={notification.data.avatar} alt="avatar" />
+        <img src={notification.sender.avatar} alt="avatar" />
         <div className="icon"><Icon /></div>
       </div>
       <div>
@@ -88,7 +88,7 @@ const Notification = ({ notification }) => {
           <FormattedMessage
             id={`components.notifications.${notification.type}`}
             values={{
-              ...notification.data,
+              ...notification.sender,
               strong: (...chunks) => <strong>{chunks}</strong>,
             }}
           />
