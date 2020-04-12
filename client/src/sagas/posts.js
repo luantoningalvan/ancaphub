@@ -9,8 +9,8 @@ import {
 
 import * as actions from '../actions/posts';
 import * as api from '../api/posts';
-import { getUsersCount } from '../actions/users'
-import { getUsersRelationsips } from '../actions/relationships'
+import { getUsersCount } from '../actions/users';
+import { getUsersRelationsips } from '../actions/relationships';
 
 function* createPost(action) {
   try {
@@ -50,6 +50,15 @@ function* getPostLikes(action) {
   }
 }
 
+function* votePostPoll(action) {
+  try {
+    const { postId, pollId, vote } = action.payload;
+    const data = yield call(api.votePostPoll, { pollId, option: vote });
+    yield put(actions.votePostPollSuccess({ postId, data: data.data }));
+  } catch (e) {
+    yield put(actions.pollError({ errorMessage: e.message }));
+  }
+}
 
 function* getUserPosts(action) {
   try {
@@ -80,10 +89,15 @@ function* watchGetLikesRequest() {
   yield takeLatest(actions.Types.GET_POST_LIKE_REQUEST, getPostLikes);
 }
 
+function* watchVotePostPollRequest() {
+  yield takeLatest(actions.Types.VOTE_POST_POLL_REQUEST, votePostPoll);
+}
+
 export default [
   fork(watchCreatePostRequest),
   fork(watchGetPostsRequest),
   fork(watchGetUserPostsRequest),
   fork(watchLikePostRequest),
-  fork(watchGetLikesRequest)
+  fork(watchGetLikesRequest),
+  fork(watchVotePostPollRequest),
 ];

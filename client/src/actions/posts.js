@@ -8,8 +8,10 @@ export const Types = {
   GET_USER_POSTS_ERROR: 'posts/get_user_posts_error',
   LIKE_POST_REQUEST: 'posts/like_post_request',
   LIKE_POST_SUCCESS: 'posts/like_post_success',
-  GET_POST_LIKE_REQUEST: "posts/get_post_like_request",
-  GET_POST_LIKE_SUCCESS: "posts/get_post_like_success",
+  VOTE_POST_POLL_REQUEST: 'posts/vote_post_poll_request',
+  VOTE_POST_POLL_SUCCESS: 'posts/vote_post_poll_success',
+  GET_POST_LIKE_REQUEST: 'posts/get_post_like_request',
+  GET_POST_LIKE_SUCCESS: 'posts/get_post_like_success',
   POST_ERROR: 'posts/post_error',
 };
 
@@ -84,7 +86,22 @@ export const getUserPostsError = ({ errorMessage }) => ({
   payload: { errorMessage },
 });
 
+export const votePostPollRequest = (data) => ({
+  type: Types.VOTE_POST_POLL_REQUEST,
+  payload: data,
+});
+
+export const votePostPollSuccess = (data) => ({
+  type: Types.VOTE_POST_POLL_SUCCESS,
+  payload: data,
+});
+
 export const usersError = ({ errorMessage }) => ({
+  type: Types.POST_ERROR,
+  payload: { errorMessage },
+});
+
+export const pollError = ({ errorMessage }) => ({
   type: Types.POST_ERROR,
   payload: { errorMessage },
 });

@@ -4,7 +4,7 @@ import arrayToObject from '../utils/arrayToObject';
 const INITIAL_STATE = {
   items: [],
   errorMessage: '',
-  postLikesLoading: true
+  postLikesLoading: true,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,8 +15,9 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         items: {
-          [payload._id]: payload, 
-          ...state.items},
+          [payload._id]: payload,
+          ...state.items,
+        },
       };
     case Types.GET_POSTS_SUCCESS: {
       const items = arrayToObject(payload.items, '_id');
@@ -45,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
         },
       };
     case Types.GET_POST_LIKE_REQUEST:
-      return { ...state, postLikesLoading: true }
+      return { ...state, postLikesLoading: true };
     case Types.GET_POST_LIKE_SUCCESS:
       return {
         ...state,
@@ -53,11 +54,22 @@ export default (state = INITIAL_STATE, action) => {
           ...state.items,
           [payload._id]: {
             ...state.items[payload._id],
-            likes: payload.likes
-          }
+            likes: payload.likes,
+          },
         },
-        postLikesLoading: false
-      }
+        postLikesLoading: false,
+      };
+    case Types.VOTE_POST_POLL_SUCCESS:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [payload.postId]: {
+            ...state.items[payload.postId],
+            poll: { ...payload.data, allVotesCount: payload.data.allVotes.length },
+          },
+        },
+      };
     case Types.POST_ERROR:
       return { ...state, errorMessage: payload.errorMessage };
     default:

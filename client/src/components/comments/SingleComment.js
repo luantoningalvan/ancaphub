@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import MdMore from "react-ionicons/lib/MdMore";
-import DeleteIcon from "react-ionicons/lib/IosRemoveCircleOutline";
-import DocumentIcon from "react-ionicons/lib/IosDocumentOutline";
-import UserAvatar from "../users/UserAvatar";
-import UserName from "../users/UserName";
-import Dropdown from "../ui/Dropdown";
-import DropdownListContainer from "../ui/DropdownListContainer";
-import DropdownListItem from "../ui/DropdownListItem";
-import IconButton from "../ui/IconButton";
-import CommentBox from "./CommentBox";
-import { useDispatch, useSelector } from 'react-redux'
-import { deleteCommentRequest, likeCommentRequest } from '../../actions/comments'
-import Confirm from '../ui/Confirm'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import MdMore from 'react-ionicons/lib/MdMore';
+import DeleteIcon from 'react-ionicons/lib/IosRemoveCircleOutline';
+import DocumentIcon from 'react-ionicons/lib/IosDocumentOutline';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormattedRelativeTime } from 'react-intl';
+import { differenceInSeconds, parseISO, getTime } from 'date-fns';
+import UserAvatar from '../users/UserAvatar';
+import UserName from '../users/UserName';
+import Dropdown from '../ui/Dropdown';
+import DropdownListContainer from '../ui/DropdownListContainer';
+import DropdownListItem from '../ui/DropdownListItem';
+import IconButton from '../ui/IconButton';
+import CommentBox from './CommentBox';
+import { deleteCommentRequest, likeCommentRequest } from '../../actions/comments';
+import Confirm from '../ui/Confirm';
 
 const SingleCommentStyle = styled.div`
   .teste {
@@ -84,21 +86,21 @@ const SingleCommentStyle = styled.div`
 const SingleComment = ({ comment, post }) => {
   const [responsesState, setResponsesState] = useState(false);
   const [deleteBox, setDeleteBox] = useState(false);
-  const dispatch = useDispatch()
-  const auth = useSelector(state => state.auth.user._id)
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.user._id);
 
   const handleResponse = () => {
     setResponsesState(!responsesState);
   };
 
   const handleDelete = () => {
-    dispatch(deleteCommentRequest(post, comment._id))
-    setDeleteBox(false)
-  }
+    dispatch(deleteCommentRequest(post, comment._id));
+    setDeleteBox(false);
+  };
 
   const handleLikeComment = () => {
-    dispatch(likeCommentRequest(comment._id))
-  }
+    dispatch(likeCommentRequest(comment._id));
+  };
 
   return (
     <SingleCommentStyle>
@@ -108,7 +110,7 @@ const SingleComment = ({ comment, post }) => {
           <UserName user={comment.user} fontSize={1} />
           <p className="comment-text">{` ${comment.content}`}</p>
           <ul className="date">
-            {/* 
+            {/*
             <li>
               <a href="#" onClick={handleLikeComment}>Curtir</a>
             </li>
@@ -119,38 +121,49 @@ const SingleComment = ({ comment, post }) => {
             </li>
             */}
             <li>
-              <a>{comment.date}</a>
+              <a>
+                <FormattedRelativeTime
+                  numeric="auto"
+                  value={
+                  -differenceInSeconds(
+                    Date.now(),
+                    getTime(parseISO(comment.date)),
+                  )
+                }
+                  updateIntervalInSeconds={30}
+                />
+              </a>
             </li>
           </ul>
         </div>
         {auth && auth === comment.user._id && (
         <div className="actions">
-        <Dropdown
-          placement="left-start"
-          toggle={
-            <IconButton>
-              <MdMore />
-            </IconButton>
-          }
-        >
-          <DropdownListContainer>
-            {/*<DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>*/}
-            <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>Delete</DropdownListItem>
-          </DropdownListContainer>
-        </Dropdown>
-        <Confirm 
-          show={deleteBox}
-          onClose={() => setDeleteBox(false)}
-          onConfirm={handleDelete}
-          title="Deletar comentário?"
-          message="Realmente deseja deletar seu comentário?"
-        />
-      </div>
+          <Dropdown
+            placement="left-start"
+            toggle={(
+              <IconButton>
+                <MdMore />
+              </IconButton>
+          )}
+          >
+            <DropdownListContainer>
+              {/* <DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem> */}
+              <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>Delete</DropdownListItem>
+            </DropdownListContainer>
+          </Dropdown>
+          <Confirm
+            show={deleteBox}
+            onClose={() => setDeleteBox(false)}
+            onConfirm={handleDelete}
+            title="Deletar comentário?"
+            message="Realmente deseja deletar seu comentário?"
+          />
+        </div>
         )}
 
       </div>
       <CommentBox expanded={responsesState} indent />
-      
+
     </SingleCommentStyle>
   );
 };

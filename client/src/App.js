@@ -31,7 +31,7 @@ export default function App() {
   useEffect(() => {
     store.dispatch(loadUserRequest());
   }, []);
-  
+
   return (
     <Provider store={store}>
       <IntlProvider locale={language} messages={messages[language]}>
