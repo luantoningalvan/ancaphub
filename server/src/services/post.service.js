@@ -27,8 +27,6 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
         ...(auth && {hasLiked: post.likes.includes(auth.id)}),
       }));
 
-      console.log(posts)
-
     return posts
   } catch (e) {
     throw new Error(e.message)
@@ -172,7 +170,6 @@ const getPostComments = async(postId, isAuthenticaded) => {
       }))
     return comments
   } catch (e) {
-    console.log(e)
     throw new Error(e.message)
   }
 }

@@ -42,7 +42,6 @@ const insertUser = async (data) => {
     
     user = new User(data);
 
-    console.log(process.env.CODE_TO_SIGNUP)
     if(process.env.CODE_TO_SIGNUP == 1){
       await verifyCode(data.code)
     }

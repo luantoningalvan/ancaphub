@@ -19,12 +19,7 @@ const generateCode = async (numCodes) => {
 }
 
 const getCodes = async (filter) =>{
-    console.log(filter);
-    
     const codes = await AccessCode.find(filter ? { used: filter } : {})
-    console.log(codes);
-    
-
     return codes
 }
 
