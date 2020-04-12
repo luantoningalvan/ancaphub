@@ -1,6 +1,6 @@
 const Notification = require('../models/NotificationModel');
 
-const getManyNotifications = async ({ filter, limit, skip }, user) => {
+const getManyNotifications = async ({ filter, limit = 20, skip }, user) => {
   try {
     const notifications = await Notification
       .find(filter)

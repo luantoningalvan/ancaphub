@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import UserAvatar from '../users/UserAvatar'
 // Icons
 import LikeIcon from 'react-ionicons/lib/IosThumbsUp';
 import CommentIcon from 'react-ionicons/lib/IosText';
@@ -80,7 +80,7 @@ const Notification = ({ notification }) => {
   return (
     <NotificationWrap>
       <div className="thumb">
-        <img src={notification.sender.avatar} alt="avatar" />
+        <UserAvatar user={notification.sender} size={56}/>
         <div className="icon"><Icon /></div>
       </div>
       <div>
