@@ -29,7 +29,7 @@ function FullTable({ fields, data, actions }) {
             <TableRow key={index}>
               {fields.map((field, index) => (
                 <TableCell key={index} align={field.align}>
-                  {data[field.key]}
+                  {field.map ? field.map[data[field.key]] : data[field.key]}
                 </TableCell>
               ))}
               <TableCell key={`action-${index}`} align="right">

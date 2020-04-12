@@ -1,27 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link, useRouteMatch } from 'react-router-dom';
-import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
+import React from "react";
+import styled from "styled-components";
+import { Link, useRouteMatch } from "react-router-dom";
+import NotificationsIcon from "react-ionicons/lib/IosNotifications";
 // import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
-import { FormattedMessage } from 'react-intl';
-import ArrowDownIcon from 'react-ionicons/lib/IosArrowDown';
-import ProfileIcon from 'react-ionicons/lib/MdPerson';
+import { FormattedMessage } from "react-intl";
+import ArrowDownIcon from "react-ionicons/lib/IosArrowDown";
+import ProfileIcon from "react-ionicons/lib/MdPerson";
 //import BookIcon from 'react-ionicons/lib/MdBook';
-import BookmarkIcon from 'react-ionicons/lib/MdBookmark';
-import ContrastIcon from 'react-ionicons/lib/MdContrast';
-import SettingsIcon from 'react-ionicons/lib/MdSettings';
-import LogoutIcon from 'react-ionicons/lib/IosLogOut';
-import Search from './Search';
-import Dropdown from '../ui/Dropdown';
-import DropdownListContainer from '../ui/DropdownListContainer';
-import DropdownListItem from '../ui/DropdownListItem';
-import DropdownHeader from '../ui/DropdownHeader';
-import CardFooter from '../ui/CardFooter';
-import Switch from '../ui/FlipSwitch';
-import Notification from '../notifications';
-import { useDispatch } from 'react-redux'
-import { logoutRequest as logout } from '../../actions/auth'
-import logo from '../../assets/logo-prov.png';
+import BookmarkIcon from "react-ionicons/lib/MdBookmark";
+import ContrastIcon from "react-ionicons/lib/MdContrast";
+import SettingsIcon from "react-ionicons/lib/MdSettings";
+import LogoutIcon from "react-ionicons/lib/IosLogOut";
+import Search from "./Search";
+import Dropdown from "../ui/Dropdown";
+import DropdownListContainer from "../ui/DropdownListContainer";
+import DropdownListItem from "../ui/DropdownListItem";
+import DropdownHeader from "../ui/DropdownHeader";
+import CardBody from "../ui/CardBody";
+import CardFooter from "../ui/CardFooter";
+import Switch from "../ui/FlipSwitch";
+import Notification from "../notifications";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutRequest as logout } from "../../actions/auth";
+import logo from "../../assets/logo-prov.png";
 
 const AppBar = styled.header`
   background: ${(props) => props.theme.palette.secondary};
@@ -33,7 +34,7 @@ const AppBar = styled.header`
   position: fixed;
   z-index: 100;
   top: 0;
-  left: 0
+  left: 0;
 `;
 
 const HeaderWrapper = styled.div`
@@ -61,17 +62,20 @@ const HeaderMenu = styled.ul`
 const HeaderMenuItem = styled.li`
   list-style: none;
   margin-right: 5px;
-  cursor: pointer; 
+  cursor: pointer;
 
   &:last-child {
     margin-right: 0px;
   }
 
-  > a, > div {
+  > a,
+  > div {
     display: block;
+    position: relative;
     padding: 10px;
     border-radius: 5px;
-    background: ${(props) => (props.current ? 'rgba(0,0,0,0.15)' : 'transparent')};
+    background: ${(props) =>
+      props.current ? "rgba(0,0,0,0.15)" : "transparent"};
     transition: background 0.3s;
 
     &:hover {
@@ -79,54 +83,40 @@ const HeaderMenuItem = styled.li`
     }
   }
 
-  > a svg, > div svg {
+  > a svg,
+  > div svg {
     fill: ${(props) => props.theme.palette.text.contrast};
+  }
+
+  .badge {
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    top: 8px;
+    right: 8px;
+    border-radius: 4px;
+    background: red;
   }
 `;
 
-const notifications = [
-  {
-    type: 'comment_liked',
-    date: '15 minutes ago',
-    data: {
-      _id: 'as89d6as89d',
-      name: 'Vinícius de Velotrol',
-      avatar: 'https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2',
-    },
-  },
-  {
-    type: 'post_commented',
-    date: '15 minutes ago',
-    data: {
-      _id: 'as89d6as89d',
-      name: 'Vinícius de Velotrol',
-      avatar: 'https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2',
-    },
-  },
-  {
-    type: 'post_shared',
-    date: '15 minutes ago',
-    data: {
-      _id: 'as89d6as89d',
-      name: 'Vinícius de Velotrol',
-      avatar: 'https://scontent.fplu8-1.fna.fbcdn.net/v/t1.0-9/54516855_2104962562924459_2209947479099572224_n.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_oc=AQmm5SssRkHd18c8_lbKmR7cGi1hKGDXJKfdv3Zdk_4OQoOOjS_X3eTf-csV3hgxuNo&_nc_ht=scontent.fplu8-1.fna&oh=95b8e192f32807e1f23cf5eb839de947&oe=5EA45CB2',
-    },
-  },
-];
-
 const Header = () => {
   const { url } = useRouteMatch();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { notifications, notReadCount } = useSelector(
+    (state) => state.notifications
+  );
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   return (
     <>
       <AppBar>
         <Logo>
-          <Link to="/"><img src={logo} alt="Logo AncapHub" /></Link>
+          <Link to="/">
+            <img src={logo} alt="Logo AncapHub" />
+          </Link>
         </Logo>
 
         <Search />
@@ -136,19 +126,38 @@ const Header = () => {
             placement="bottom"
             offsetY={16}
             offsetX="-8vw"
-            toggle={(
-              <HeaderMenuItem current={url.includes('/notifications')}>
-                <div><NotificationsIcon /></div>
+            toggle={
+              <HeaderMenuItem current={url.includes("/notifications")}>
+                <div>
+                  <NotificationsIcon />
+                  {notReadCount > 0 && (
+                  <span className="badge"></span>
+                  )}
+                </div>
               </HeaderMenuItem>
-      )}
+            }
           >
-            <DropdownHeader><FormattedMessage id="common.notifications" /></DropdownHeader>
-            <>
-              <ul style={{ maxWidth: 400 }}>
-                {notifications.map((notification, index) => (<Notification notification={notification} key={index} />))}
-              </ul>
-              <CardFooter link="/notifications" label="See all" />
-            </>
+            <DropdownHeader>
+              <FormattedMessage id="common.notifications" />
+            </DropdownHeader>
+              {notifications.length > 0 ? (
+                <>
+                <ul
+                  style={{
+                    maxWidth: 400,
+                    maxHeight: 400,
+                    overflowY: "scroll",
+                  }}
+                >
+                  {notifications.map((notification, index) => (
+                    <Notification notification={notification} key={index} />
+                  ))}
+                </ul>
+                <CardFooter link="/notifications" label="See all" />
+                </>
+              ) : (
+                <CardBody>Nenhuma notificação disponível</CardBody>
+              )}
           </Dropdown>
           {/*
           <Dropdown
@@ -168,31 +177,41 @@ const Header = () => {
             offsetY={16}
             offsetX="-4vw"
             placement="bottom"
-            toggle={(
+            toggle={
               <HeaderMenuItem>
-                <div><ArrowDownIcon /></div>
+                <div>
+                  <ArrowDownIcon />
+                </div>
               </HeaderMenuItem>
-      )}
+            }
           >
             <DropdownListContainer>
               <DropdownListItem icon={<ProfileIcon />}>
-                <Link to="/user"><FormattedMessage id="common.profile" /></Link>
+                <Link to="/user">
+                  <FormattedMessage id="common.profile" />
+                </Link>
               </DropdownListItem>
               {/* 
               <DropdownListItem icon={<BookIcon />}>
                 <Link to="/contributions"><FormattedMessage id="common.contributions" /></Link>
               </DropdownListItem>*/}
               <DropdownListItem icon={<BookmarkIcon />}>
-                <Link to="/bookmarks"><FormattedMessage id="account.bookmarks.savedItemsHeading" /></Link>
+                <Link to="/bookmarks">
+                  <FormattedMessage id="account.bookmarks.savedItemsHeading" />
+                </Link>
               </DropdownListItem>
               <DropdownListItem icon={<ContrastIcon />} action={<Switch />}>
                 <FormattedMessage id="common.darkMode" />
               </DropdownListItem>
               <DropdownListItem icon={<SettingsIcon />}>
-                <Link to="/settings"><FormattedMessage id="common.settings" /></Link>
+                <Link to="/settings">
+                  <FormattedMessage id="common.settings" />
+                </Link>
               </DropdownListItem>
               <DropdownListItem icon={<LogoutIcon />}>
-                <Link onClick={handleLogout}><FormattedMessage id="common.logout" /></Link>
+                <Link onClick={handleLogout}>
+                  <FormattedMessage id="common.logout" />
+                </Link>
               </DropdownListItem>
             </DropdownListContainer>
           </Dropdown>

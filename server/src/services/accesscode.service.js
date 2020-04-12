@@ -12,7 +12,7 @@ const generateCode = async (numCodes) => {
         }
 
         const accessCode = await AccessCode.create({ code });
-        codes = [...codes, accessCode.code]
+        codes = [...codes, accessCode]
     }
 
     return codes

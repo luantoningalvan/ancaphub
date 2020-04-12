@@ -1,5 +1,6 @@
 import { takeLatest, call, fork, put } from "redux-saga/effects";
 import * as actions from "../actions/auth";
+import { getNotificationsRequest } from '../actions/notifications'
 import * as api from "../api/auth";
 
 function* authUser(action) {
@@ -17,6 +18,7 @@ function* loadUser() {
   try {
     const response = yield call(api.loadUser);
     yield put(actions.loadUserSuccess(response.data));
+    yield put(getNotificationsRequest());
   } catch (e) {
     yield put(actions.authError({ errorMessage: e.message }));
   }
