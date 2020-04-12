@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { postService, userService, fileService } = require('../services')
-const { getManyPosts, insertPost, removePost, likePost, getPost, getPostComments, getPostLikes } = postService
+const { getManyPosts, insertPost, removePost, likePost, getPost, getPostComments, getPostLikes, votePoll } = postService
 const { getUser } = userService
 const verifyToken = require('../utils/verifyToken')
 
@@ -155,4 +155,19 @@ const getLikes = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserFeed, getUserPosts, getPostById, insert, remove, like, getComments, getLikes };
+const vote = async (req, res, next) => {
+  const { pollId } = req.params
+  const { id:userId } = req.user
+  const { vote } = req.body
+
+  try {
+    const optionVote = await votePoll(pollId, userId, vote)
+
+    res.send(optionVote)
+    next()
+  } catch (e) {
+    next(e)
+  }
+}
+
+module.exports = { getUserFeed, getUserPosts, getPostById, insert, remove, like, getComments, getLikes, vote };

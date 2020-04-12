@@ -82,6 +82,7 @@ router.post('/posts/:postId/comment/:commentId', auth, Comment.like)
 router.post('/comment/:commentId/reply', auth, Comment.reply)
 router.get('/posts/:postId/comments', Post.getComments)
 router.get('/posts/:postId/likes', Post.getLikes)
+router.post('/posts/:pollId/vote', auth, Post.vote)
 
 
 // Profile

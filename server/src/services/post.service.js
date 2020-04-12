@@ -20,7 +20,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
         type: post.type,
         extraFields: post.extraFields,
         media: post.media,
-        poll: post.poll,
+        poll: post.poll ? { ...post.poll._doc, allVotesCount: post.poll.allVotes.length } : post.poll,
         user: userObject(post.user, auth),
         commentCount: post.comments.length || 0,
         likeCount: post.likes.length,
@@ -94,10 +94,11 @@ const insertPost = async (data) => {
       media.map(option =>{
         pollData = [...pollData, {
           title: option,
-          votes: 0
+          votes: [],
+          votesCount: 0
         }]
       })
-      const poll = await Poll.create({options: pollData})
+      const poll = await Poll.create({options: pollData, allVotes: []})
       const pollId = mongoose.Types.ObjectId(poll._id)
 
       postData = {
@@ -192,4 +193,46 @@ const getPostLikes = async(postId, isAuthenticaded) => {
   }
 }
 
-module.exports = { getManyPosts, getPost, insertPost, removePost, likePost, getPostComments, getPostLikes };
+const votePoll = async (pollId, userId, optionVote) => {
+  try {
+    const poll = await Poll.findById(pollId)
+
+    if (poll.allVotes.includes(userId)) throw new Error('Você já votou')
+
+    const index = poll.options.findIndex((option => option.title === optionVote))
+
+    poll.options[index].votes.push(userId)
+    poll.allVotes.push(userId)
+    poll.options[index].votesCount = poll.options[index].votes.length
+    
+    await poll.markModified("options")
+    await poll.save()
+
+    return poll
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+const votePoll = async (pollId, userId, optionVote) => {
+  try {
+    const poll = await Poll.findById(pollId)
+
+    if (poll.allVotes.includes(userId)) throw new Error('Você já votou')
+
+    const index = poll.options.findIndex((option => option.title === optionVote))
+
+    poll.options[index].votes.push(userId)
+    poll.allVotes.push(userId)
+    poll.options[index].votesCount = poll.options[index].votes.length
+    
+    await poll.markModified("options")
+    await poll.save()
+
+    return poll
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+module.exports = { getManyPosts, getPost, insertPost, removePost, likePost, getPostComments, getPostLikes, votePoll };
