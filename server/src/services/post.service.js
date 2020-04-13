@@ -24,6 +24,7 @@ const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
         user: userObject(post.user, auth),
         commentCount: post.comments.length || 0,
         likeCount: post.likes.length,
+        createdAt: post.createdAt,
         ...(auth && {hasLiked: post.likes.includes(auth.id)}),
       }));
 
