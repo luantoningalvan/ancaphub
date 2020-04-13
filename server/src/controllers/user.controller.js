@@ -52,7 +52,12 @@ const get = async (req, res, next) => {
 
   try {
     const user = await getUser(id);
-    const result = { ...userObject(user, isAuthenticaded) }
+    const result = { 
+      ...userObject(user, isAuthenticaded),
+      birthday: user.birthday,
+      currentCity: user.currentCity,
+      site: user.site
+    }
     res.status(200).send(result);
     next();
   } catch (e) {

@@ -165,10 +165,10 @@ export default () => {
                   {user.bio && <p>{user.bio}</p>}
 
                   <ul>
-                    {user.location && (
+                    {user.currentCity && (
                       <li>
                         <LocationIcon />
-                        <span>{user.location}</span>
+                        <span>{user.currentCity}</span>
                       </li>
                     )}
 
@@ -199,12 +199,14 @@ export default () => {
                   <li className={pageParam == undefined ? 'current' : ''}>
                     <Link to={`/${userId}`}>Feed</Link>
                   </li>
+                  {/* 
                   <li className={pageParam == 'lists' ? 'current' : ''}>
                     <Link to={`/${userId}/lists`}>Listas</Link>
                   </li>
                   <li className={pageParam == 'contributions' ? 'current' : ''}>
                     <Link to={`/${userId}/contributions`}>Contribuições</Link>
                   </li>
+                  */}
                   <li className={pageParam == 'following' ? 'current' : ''}>
                     <Link to={`/${userId}/following`}>Seguindo</Link>
                   </li>
