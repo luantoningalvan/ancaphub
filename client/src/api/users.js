@@ -24,9 +24,9 @@ export const createUser = ({
 });
 
 export const updateUserInfo = ({
-  bio, birthday, city, site
-}) => axios.post('/users', {
-  bio, birthday, city, site
+  name, bio, birthday, currentCity, site
+}) => axios.put('/users/profile', {
+  name, bio, birthday, currentCity, site
 });
 
 export const updateUserAvatar = (data) => axios.post('/users/avatar', data);

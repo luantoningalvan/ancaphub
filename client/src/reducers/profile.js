@@ -18,18 +18,13 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: true,
       };
-    case UserTypes.UPDATE_PROFILE_PICTURE_REQUEST:
-      return {
-        ...state,
-        loadingAvatar: true
-      }
     case UserTypes.UPDATE_PROFILE_PICTURE_SUCCESS:
+    case UserTypes.UPDATE_PROFILE_INFO_SUCCESS:
       return {
         ...state,
         user: {
           ...state.user,
           ...payload,
-          loadingAvatar: false
         }
       }  
     case UserTypes.GET_SINGLE_USER_SUCCESS:

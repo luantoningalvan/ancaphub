@@ -110,7 +110,7 @@ function* watchGetUserFollowing() {
 }
 
 function* watchUpdateUserInfo() {
-  yield takeLatest(actions.Types.UPDATE_PROFILE_INFO_SUCCESS, updateUserInfo);
+  yield takeLatest(actions.Types.UPDATE_PROFILE_INFO_REQUEST, updateUserInfo);
 }
 
 function* watchUpdateUserAvatar() {

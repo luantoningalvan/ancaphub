@@ -19,6 +19,8 @@ import GridItem from '../../components/ui/GridItem';
 import FollowButton from '../../components/users/FollowButton';
 import EditProfile from '../../components/users/EditProfile';
 import EditAvatar from '../../components/users/EditAvatar';
+import moment from 'moment';
+
 import { getSingleUserRequest } from '../../actions/users';
 import {
   ProfileHeader,
@@ -29,7 +31,7 @@ import {
   Tabs,
 } from './styles.css';
 
-
+import format from 'date-fns/format'
 const Feed = lazy(() => import('./Feed'));
 const Lists = lazy(() => import('./Lists'));
 const Contributions = lazy(() => import('./Contributions'));
@@ -175,7 +177,7 @@ export default () => {
                     {user.birthday && (
                       <li>
                         <BirthIcon />
-                        <span>{user.birthday}</span>
+                        <span>{moment.utc(user.birthday).format('L')}</span>
                       </li>
                     )}
 
