@@ -5,7 +5,6 @@ const INITIAL_STATE = {
   user: {},
   followers: [],
   following: [],
-  posts: [],
   errorMessage: "",
   loading: true,
 };
@@ -14,15 +13,6 @@ export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case PostTypes.GET_USER_POSTS_REQUEST:
-      return {
-        ...state,
-        loadingPosts: true,
-      };
-    case PostTypes.GET_USER_POSTS_SUCCESS:
-      return { ...state, posts: payload, loadingPosts: false };
-    case PostTypes.GET_USER_POSTS_ERROR:
-      return { ...state, errorMessage: payload.errorMessage };
     case UserTypes.GET_SINGLE_USER_REQUEST:
       return {
         ...state,

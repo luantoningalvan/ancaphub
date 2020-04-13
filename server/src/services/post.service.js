@@ -138,7 +138,7 @@ const removePost = async (postId, userId) => {
 
 const likePost = async (postId, userId) => {
   try {
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId, "likes");
 
     if (!post) throw new Error('Este post não existe.')
 
@@ -148,7 +148,11 @@ const likePost = async (postId, userId) => {
       post.likes.push(userId);
     }
     await post.save();
-    return { _id: post._id, likes: post.likes, likeCount: post.likes.length, hasLiked: post.likes.includes(userId)}
+    return { 
+      _id: post._id, 
+      likeCount: post.likes.length, 
+      hasLiked: post.likes.includes(userId)
+    }
   } catch (e) {
     throw new Error(e.message)
   }

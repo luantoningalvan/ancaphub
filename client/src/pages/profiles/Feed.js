@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUserPostsRequest } from '../../actions/posts';
 import PostForm from '../../components/posts/PostForm';
 import PostCard from '../../components/posts/PostCard';
+import ShowPosts from '../../components/posts/ShowPosts';
 import { isEmpty } from 'lodash'
 
 const Feed = ({user:userId}) => {
   const dipatch = useDispatch()
-  const {posts,loadingPosts} = useSelector(state => state.profile);
+  const {items:posts,loading} = useSelector(state => state.posts);
   const auth = useSelector(state => state.auth);
   const verifyIfIsOwnProfile = auth.isAuthenticated && auth.user._id === userId
 
@@ -21,15 +22,9 @@ const Feed = ({user:userId}) => {
       <PostForm />
     )}
 
-    {!loadingPosts ? (
-      <div>
-        {!isEmpty(posts) && posts.map(post => (
-          <PostCard data={post}/>
-        ))}
-      </div>
-    ) : (
-      <p>Carregando</p>
-    )}
+    <div style={{width: '100%', marginTop:16}}>
+      <ShowPosts posts={posts} loading={loading} />
+    </div>
     </>
   );
 };

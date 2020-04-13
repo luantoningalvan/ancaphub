@@ -21,11 +21,15 @@ export default (state = INITIAL_STATE, action) => {
         },
       };
     case Types.GET_POSTS_REQUEST:
+    case Types.GET_USER_POSTS_REQUEST:
       return { ...state, loading: true }
-    case Types.GET_POSTS_SUCCESS: {
-      const items = arrayToObject(payload.items, '_id');
-      return { ...state, items, loading: false };
-    }
+    case Types.GET_POSTS_SUCCESS: 
+    case Types.GET_USER_POSTS_SUCCESS: 
+      return { 
+        ...state, 
+        items: arrayToObject(payload.items, '_id'), 
+        loading: false 
+      };
     case Types.LIKE_POST_REQUEST:
       return {
         ...state,

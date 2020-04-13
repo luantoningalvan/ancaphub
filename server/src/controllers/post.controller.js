@@ -123,6 +123,7 @@ const like = async (req, res, next) => {
     res.send(result);
     next()
   } catch (e) {
+    console.log(e)
     next(e)
   }
 };

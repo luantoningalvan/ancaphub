@@ -72,7 +72,7 @@ function* votePostPoll(action) {
 function* getUserPosts(action) {
   try {
     const posts = yield call(api.getUserPosts, action.payload);
-    yield put(actions.getUserPostsSuccess(posts.data));
+    yield put(actions.getUserPostsSuccess({ items: posts.data }));
   } catch (e) {
     yield put(actions.getUserPostsError({ errorMessage: e.message }));
   }
