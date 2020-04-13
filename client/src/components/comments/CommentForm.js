@@ -41,7 +41,7 @@ const CommentForm = ({ post, placeholder }) => {
 
   return (
     <CommentFormStyle>
-      <UserAvatar avatar={authUser.avatar} style={{ marginRight: 10 }} />
+      <UserAvatar user={authUser} style={{ marginRight: 10 }} />
       <CommentInput
         type="text"
         size="small"

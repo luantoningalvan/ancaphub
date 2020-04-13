@@ -21,6 +21,15 @@ function* createPost(action) {
   }
 }
 
+function* deletePost(action) {
+  try {
+    yield call(api.deletePost, action.payload);
+    yield put(actions.deletePostSuccess(action.payload));
+  } catch (e) {
+    yield put(actions.usersError({ errorMessage: e.message }));
+  }
+}
+
 function* getPosts() {
   try {
     const posts = yield call(api.getFeedPosts);
@@ -93,6 +102,10 @@ function* watchVotePostPollRequest() {
   yield takeLatest(actions.Types.VOTE_POST_POLL_REQUEST, votePostPoll);
 }
 
+function* watchDeletePostRequest() {
+  yield takeLatest(actions.Types.DELETE_POST_REQUEST, deletePost);
+}
+
 export default [
   fork(watchCreatePostRequest),
   fork(watchGetPostsRequest),
@@ -100,4 +113,5 @@ export default [
   fork(watchLikePostRequest),
   fork(watchGetLikesRequest),
   fork(watchVotePostPollRequest),
+  fork(watchDeletePostRequest),
 ];

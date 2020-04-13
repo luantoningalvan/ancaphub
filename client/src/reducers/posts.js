@@ -34,6 +34,16 @@ export default (state = INITIAL_STATE, action) => {
           },
         },
       };
+      case Types.DELETE_POST_SUCCESS: {
+        const newObj = {...state.items}
+        delete newObj[payload]
+
+        return {
+          ...state,
+          items: newObj
+        }  
+      }
+
     case Types.LIKE_POST_SUCCESS:
       return {
         ...state,

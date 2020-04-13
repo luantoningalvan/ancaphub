@@ -8,6 +8,8 @@ export const Types = {
   GET_USER_POSTS_ERROR: 'posts/get_user_posts_error',
   LIKE_POST_REQUEST: 'posts/like_post_request',
   LIKE_POST_SUCCESS: 'posts/like_post_success',
+  DELETE_POST_REQUEST: 'posts/delete_post_request',
+  DELETE_POST_SUCCESS: 'posts/delete_post_success',
   VOTE_POST_POLL_REQUEST: 'posts/vote_post_poll_request',
   VOTE_POST_POLL_SUCCESS: 'posts/vote_post_poll_success',
   GET_POST_LIKE_REQUEST: 'posts/get_post_like_request',
@@ -55,7 +57,6 @@ export const getUserFollowersSuccess = (data) => ({
   payload: data,
 });
 
-
 export const likePostRequest = (postId) => ({
   type: Types.LIKE_POST_REQUEST,
   payload: postId,
@@ -65,6 +66,17 @@ export const likePostSuccess = (data) => ({
   type: Types.LIKE_POST_SUCCESS,
   payload: data,
 });
+
+export const deletePostRequest = (postId) => ({
+  type: Types.DELETE_POST_REQUEST,
+  payload: postId,
+});
+
+export const deletePostSuccess = (postId) => ({
+  type: Types.DELETE_POST_SUCCESS,
+  payload: postId,
+});
+
 
 export const getPostLikesRequest = (postId) => ({
   type: Types.GET_POST_LIKE_REQUEST,

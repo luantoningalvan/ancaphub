@@ -105,7 +105,7 @@ const SingleComment = ({ comment, post }) => {
   return (
     <SingleCommentStyle>
       <div className="teste">
-        <UserAvatar avatar={comment.user.avatar} style={{ marginRight: 8 }} />
+        <UserAvatar user={comment.user} style={{ marginRight: 8 }} />
         <div className="comment-content">
           <UserName user={comment.user} fontSize={1} />
           <p className="comment-text">{` ${comment.content}`}</p>
