@@ -24,6 +24,7 @@ const ItemSchema = new Schema(
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     extraFields: Object,
+    files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     collectedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     rateCount: { type: Number, default: 0 },
