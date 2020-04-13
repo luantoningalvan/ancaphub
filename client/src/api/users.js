@@ -22,3 +22,11 @@ export const createUser = ({
   password,
   code
 });
+
+export const updateUserInfo = ({
+  bio, birthday, city, site
+}) => axios.post('/users', {
+  bio, birthday, city, site
+});
+
+export const updateUserAvatar = (data) => axios.post('/users/avatar', data);

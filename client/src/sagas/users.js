@@ -67,6 +67,28 @@ function* createUser({payload}) {
   }
 }
 
+
+function* updateUserInfo({payload}) {
+  try {
+    const result = yield call(api.updateUserInfo, payload);
+    yield put(actions.updateProfileInfoSuccess(result.data));
+
+  } catch (e) {
+    yield put(alerts.addAlert('error', e.message));
+  }
+}
+
+
+function* updateUserAvatar({payload}) {
+  try {
+    const result = yield call(api.updateUserAvatar, payload);
+    yield put(actions.updateProfilePictureSuccess(result.data));
+
+  } catch (e) {
+    yield put(alerts.addAlert('error', e.message));
+  }
+}
+
 function* watchGetUsersRequest() {
   yield takeEvery(actions.Types.GET_USERS_REQUEST, getUsers);
 }
@@ -87,10 +109,20 @@ function* watchGetUserFollowing() {
   yield takeLatest(actions.Types.GET_USER_FOLLOWING_REQUEST, getUserFollowing);
 }
 
+function* watchUpdateUserInfo() {
+  yield takeLatest(actions.Types.UPDATE_PROFILE_INFO_SUCCESS, updateUserInfo);
+}
+
+function* watchUpdateUserAvatar() {
+  yield takeLatest(actions.Types.UPDATE_PROFILE_PICTURE_REQUEST, updateUserAvatar);
+}
+
 export default [
   fork(watchGetUsersRequest),
   fork(watchCreateUserRequest),
   fork(whatchGetSingleUser),
   fork(watchGetUserFollowers),
+  fork(watchUpdateUserInfo),
+  fork(watchUpdateUserAvatar),
   fork(watchGetUserFollowing)
 ];
