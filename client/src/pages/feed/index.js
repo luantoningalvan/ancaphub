@@ -22,14 +22,16 @@ const Feed = () => {
     dispatch(getPostsAction());
   }, [dispatch]);
 
-  const { items } = useSelector((state) => state.posts);
+  const { items, loading } = useSelector((state) => state.posts);
 
   return (
-    <Container style={{ marginTop: 8 }}>
-      <GridContainer spacing={1}>
+    <Container style={{ marginTop: 16 }}>
+      <GridContainer spacing={2}>
         <GridItem xs={12} lg={8}>
           <PostForm />
-          <ShowPosts posts={items} />
+          <div  style={{ marginTop: 16, width: '100%' }}>
+          <ShowPosts posts={items} loading={loading} />
+          </div>
         </GridItem>
         <GridItem xs={12} lg={4} xl={3}>
           {/* <TrendingTopicsWidget /> */}

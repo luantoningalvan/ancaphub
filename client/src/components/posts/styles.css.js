@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Paper from '../../components/ui/Paper'
 
 export const PostContainer = styled(Paper)`
-  margin-top: 16px; 
+  margin-bottom: 16px; 
   flex-basis: 100%;
 
   .profile-picture {

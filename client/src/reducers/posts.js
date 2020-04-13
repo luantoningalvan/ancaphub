@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   items: [],
   errorMessage: '',
   postLikesLoading: true,
+  loading: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,9 +20,11 @@ export default (state = INITIAL_STATE, action) => {
           ...state.items,
         },
       };
+    case Types.GET_POSTS_REQUEST:
+      return { ...state, loading: true }
     case Types.GET_POSTS_SUCCESS: {
       const items = arrayToObject(payload.items, '_id');
-      return { ...state, items };
+      return { ...state, items, loading: false };
     }
     case Types.LIKE_POST_REQUEST:
       return {

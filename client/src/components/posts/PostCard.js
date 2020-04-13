@@ -106,7 +106,7 @@ const PostCard = ({ data }) => {
         )}
       </div>
 
-      <div style={{ padding: 20 }}>
+      <div style={{ padding: 16 }}>
         {/* Show post content  */}
         {showPostContent()}
         {/* If post has embed media type */}
