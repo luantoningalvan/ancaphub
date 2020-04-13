@@ -5,6 +5,7 @@ import UserCard from "../../components/users/UserCard";
 import GridContainer from "../../components/ui/GridContainer";
 import GridItem from "../../components/ui/GridItem";
 import Paper from "../../components/ui/Paper";
+import LoadContent from "../../components/ui/LoadContent";
 
 const Feed = ({ user: userId }) => {
   const dipatch = useDispatch();
@@ -15,26 +16,19 @@ const Feed = ({ user: userId }) => {
   }, []);
 
   return (
-    <>
-      {loadingFollowers ? (
-        <p>Carregando</p>
+    <LoadContent loading={loadingFollowers}>
+      {followers.length === 0 ? (
+        <Paper padding>Esse usuário não é seguido por ninguém.</Paper>
       ) : (
-        <>
-        {followers.length === 0 ? (
-          <Paper padding>Esse usuário não é seguido por ninguém.</Paper>
-        ) : (
-          <GridContainer spacing={1}>
-          {followers.map(user => (
+        <GridContainer spacing={1}>
+          {followers.map((user) => (
             <GridItem xs={4}>
               <UserCard user={user.user} />
             </GridItem>
           ))}
         </GridContainer>
-        )}
-
-        </>
       )}
-    </>
+    </LoadContent>
   );
 };
 
