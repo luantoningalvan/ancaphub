@@ -6,6 +6,7 @@ import ItemCard from "../../../components/library/LibraryCard";
 import Paper from "../../../components/ui/Paper";
 import { isEmpty } from "lodash";
 import { getBooksRequest as getBooksAction } from "../../../actions/library";
+import LoadContent from '../../../components/ui/LoadContent'
 
 const Books = () => {
   const dispatch = useDispatch();
@@ -13,29 +14,32 @@ const Books = () => {
     dispatch(getBooksAction({ currentPage: 1 }));
   }, [dispatch]);
 
-  const { books } = useSelector((state) => state.library);
+  const { books, loading } = useSelector((state) => state.library);
 
   return (
     <Container>
       <Hero title="Livros" description="Baixe diversos livros disponíveis nos principais formatos" />
-      {books && !isEmpty(books) ? (
-        <div
-          style={{
-            display: "grid",
-            gap: "1em",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            marginTop: 16,
-          }}
-        >
-          {books.map((book) => (
-            <ItemCard item={book} />
-          ))}
-        </div>
-      ) : (
-        <Paper padding>
-          <p>Nenhum livro encontrado.</p>
-        </Paper>
-      )}
+      <div style={{ marginTop: 16 }}>
+        <LoadContent loading={loading}>
+          {books && !isEmpty(books) ? (
+            <div
+              style={{
+                display: "grid",
+                gap: "1em",
+                gridTemplateColumns: "repeat(5, 1fr)",
+              }}
+            >
+              {books.map((book) => (
+                <ItemCard item={book} />
+              ))}
+            </div>
+          ) : (
+            <Paper padding>
+              <p>Nenhum livro encontrado.</p>
+            </Paper>
+          )}
+        </LoadContent>
+      </div>
     </Container>
   );
 };
