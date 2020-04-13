@@ -10,10 +10,6 @@ import Container from '../../components/ui/Container';
 import SigninForm from '../../components/auth/SigninForm';
 import SignupForm from '../../components/auth/SignupForm';
 import logo from '../../assets/logo-type.png';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { authUserRequest } from '../../actions/auth'
-import { createUserRequest } from '../../actions/users'
 
 const SignupBox = styled(Paper)`
   width: 100%;
@@ -24,9 +20,7 @@ const SignupBox = styled(Paper)`
     flex-direction: column;
   }
 
-  input { margin-bottom: 8px; }
-
-  span {
+  .switch-form {
     color: ${(props) => props.theme.palette.text.primary};
     text-align:center;
     display:block;
@@ -58,7 +52,7 @@ const Features = styled.ul`
   }
 `;
 
-const Home = ({ authUserRequest:authUserAction, createUserRequest:createUserAction }) => {
+export default props => {
   const [activeBox, setActiveBox] = useState('signup');
 
   return (
@@ -98,8 +92,9 @@ const Home = ({ authUserRequest:authUserAction, createUserRequest:createUserActi
               >
                 Entrar
               </h3>
-              <SigninForm onSubmit={authUserAction} />
+              <SigninForm />
               <span
+                className="switch-form"
                 onClick={() => setActiveBox('signup')}
                 role="link"
                 tabIndex={0}
@@ -116,8 +111,9 @@ const Home = ({ authUserRequest:authUserAction, createUserRequest:createUserActi
               >
                 Cadastro
               </h3>
-              <SignupForm onSubmit={createUserAction} />
+              <SignupForm />
               <span
+                className="switch-form"
                 onClick={() => setActiveBox('signin')}
                 role="link"
                 tabIndex={0}
@@ -132,6 +128,3 @@ const Home = ({ authUserRequest:authUserAction, createUserRequest:createUserActi
     </ThemeProvider>
   );
 };
-
-const mapDispatchToProps = dispatch => bindActionCreators({authUserRequest, createUserRequest}, dispatch)
-export default connect(null, mapDispatchToProps)(Home);

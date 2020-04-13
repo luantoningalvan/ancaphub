@@ -14,10 +14,11 @@ export const getUserFollowers = (payload) => axios.get(`users/${payload}/followe
 export const getUserFollowing = (payload) => axios.get(`users/${payload}/following`);
 
 export const createUser = ({
-  name, username, email, password,
+  name, username, email, password,code
 }) => axios.post('/users', {
   name,
   username,
   email,
   password,
+  code
 });

@@ -1,44 +1,66 @@
-import React, { useState } from 'react';
-import TextField from '../ui/TextField';
-import Button from '../ui/Button';
+import React, { useRef } from "react";
+import Input from "../form/Input";
+import { Form } from "@unform/web";
+import Button from "../ui/Button";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { authUserRequest } from "../../actions/auth";
+import GridContainer from "../ui/GridContainer";
+import GridItem from "../ui/GridItem";
 
-export default ({onSubmit}) => {
-  const INITIAL_STATE = {
-    email: '', password: '',
-  };
-  const [data, setData] = useState(INITIAL_STATE);
+export default () => {
+  const dispatch = useDispatch();
+  const signupFormRef = useRef(null);
 
-  const handleChange = (e) => {
-    console.log(data)
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(data);
-  };
+  async function handleSubmit(data) {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("E-mail inválido")
+          .required("O campo e-mail é obrigatório!"),
+        password: Yup.string().required("O campo senha é obrigatório!"),
+      });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+      dispatch(authUserRequest(data));
+    } catch (err) {
+      const validationErrors = {};
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationErrors[error.path] = error.message;
+        });
+        signupFormRef.current.setErrors(validationErrors);
+      }
+    }
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        type="text"
-        placeholder="E-mail"
-        onChange={handleChange}
-        name="email"
-        value={data.email}
-        autoComplete="email"
-      />
+    <Form onSubmit={handleSubmit} ref={signupFormRef}>
+      <GridContainer spacing={1}>
+        <GridItem xs={12}>
+          <Input
+            type="email"
+            placeholder="E-mail"
+            name="email"
+            autoComplete="email"
+          />
+        </GridItem>
 
-      <TextField
-        type="password"
-        placeholder="Senha"
-        onChange={handleChange}
-        name="password"
-        autoComplete="password"
-        value={data.password}
-      />
-
-      <Button type="submit" color="secondary">Entrar</Button>
-    </form>
+        <GridItem xs={12}>
+          <Input
+            type="password"
+            placeholder="Senha"
+            name="password"
+            autoComplete="password"
+          />
+        </GridItem>
+        <GridItem xs={12}>
+          <Button type="submit" color="secondary" style={{ width: "100%" }}>
+            Entrar
+          </Button>
+        </GridItem>
+      </GridContainer>
+    </Form>
   );
 };

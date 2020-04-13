@@ -58,6 +58,7 @@ function* createUser({payload}) {
   try {
     const result = yield call(api.createUser, payload);
     localStorage.setItem("token", result.data.token);
+    document.location.reload()
     yield put(actions.createUserSuccess(result.data));
 
   } catch (e) {
