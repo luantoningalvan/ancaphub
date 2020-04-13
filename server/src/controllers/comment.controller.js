@@ -1,5 +1,5 @@
 const { commentService } = require('../services')
-const { insertComment, removeComment, editComment, likeComment } = commentService
+const { insertComment, removeComment, editComment, likeComment, replyComment } = commentService
 
 const insert = async (req, res, next) => {
   const { postId } = req.params
@@ -21,11 +21,11 @@ const insert = async (req, res, next) => {
 };
 
 const remove = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
 
   try {
-    const result = await removeComment(postId,commentId,userId)
+    const result = await removeComment(commentId,userId)
     res.send(result);
     next()
   } catch (e) {
@@ -34,12 +34,12 @@ const remove = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
   const { content } = req.body
 
   try {
-    const result = await editComment(postId,commentId,userId,content)
+    const result = await editComment(commentId,userId,content)
     res.send(result);
     next()
   } catch (e) {
@@ -48,11 +48,11 @@ const update = async (req, res, next) => {
 };
 
 const like = async (req, res, next) => {
-  const { postId, commentId } = req.params
+  const { commentId } = req.params
   const { id:userId } = req.user
 
   try {
-    const result = await likeComment(postId, commentId, userId)
+    const result = await likeComment(commentId, userId)
     res.send(result)
     next()
   } catch (e) {
@@ -60,4 +60,20 @@ const like = async (req, res, next) => {
   }
 }
 
-module.exports = { insert, remove, update , like};
+const reply = async (req, res, next) => {
+  const { commentId } = req.params
+  const data = {
+    user: req.user.id,
+    content: req.body.content,
+  }
+
+  try {
+    const result = await replyComment(commentId, data)
+    res.send(result)
+    next()
+  } catch (e) {
+    next(e)
+  }
+}
+
+module.exports = { insert, remove, update , like, reply};

@@ -13,12 +13,15 @@ const keys = require("../config/keys");
 const fs = require('fs')
 const jwt = require("jsonwebtoken");
 const Jimp = require("jimp");
+const verifyToken = require('../utils/verifyToken')
+const userObject = require('../utils/userObject');
 
 
 const getAll = async (req, res, next) => {
   const filter = req.query.filter || "";
   const filterOn = req.query.filterOn || "";
   let filterQuery = {};
+  const isAuthenticaded = verifyToken(req)
 
   if (filter.length > 0) {
     const regx = new RegExp(filter, "i");
@@ -31,7 +34,11 @@ const getAll = async (req, res, next) => {
   }
 
   try {
-    const result = await getManyUsers({ filter: filterQuery });
+    const users = await getManyUsers({ filter: filterQuery });
+    
+    const result = users.map(user => ({
+      user: userObject(user, isAuthenticaded)
+    }))
     res.status(200).send(result);
     next();
   } catch (e) {
@@ -41,9 +48,16 @@ const getAll = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   const { id } = req.params;
+  const isAuthenticaded = verifyToken(req)
 
   try {
-    const result = await getUser(id);
+    const user = await getUser(id);
+    const result = { 
+      ...userObject(user, isAuthenticaded),
+      birthday: user.birthday,
+      currentCity: user.currentCity,
+      site: user.site
+    }
     res.status(200).send(result);
     next();
   } catch (e) {
@@ -52,10 +66,10 @@ const get = async (req, res, next) => {
 };
 
 const insert = async (req, res, next) => {
-  const { name, username, email, password } = req.body;
+  const { name, username, email, password, code } = req.body;
 
   try {
-    const payload = await insertUser({ name, username, email, password });
+    const payload = await insertUser({ name, username, email, password, code });
 
     jwt.sign(payload, keys.jwtSecret, { expiresIn: 86400 }, (err, token) => {
       if (err) throw new Error();
@@ -86,20 +100,13 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
-const updateLocation = async (req, res, next) => {
+const updateGeoLocation = async (req, res, next) => {
   const { id } = req.user;
-  const coordinates = [req.body.longitude, req.body.latitude];
+  const { option } = req.body;
 
   try {
-    const userUpdated = await updateUser(id, {
-      lastLocation: { type: "Point", coordinates },
-      geoLocation: true
-    });
-    const result = {
-      lastLocation: userUpdated.lastLocation,
-      geoLocation: userUpdated.geoLocation
-    };
-    res.status(200).send(result);
+    const result = await updateUser(id, { geoLocation: option });
+    res.status(200).send({ geoLocation: result.geoLocation });
     next();
   } catch (e) {
     next(e);
@@ -176,7 +183,7 @@ module.exports = {
   insert,
   updateProfile,
   updateAvatar,
-  updateLocation,
+  updateGeoLocation,
   updateUsername,
   updateEmail,
   updatePassword

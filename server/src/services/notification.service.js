@@ -1,13 +1,13 @@
 const Notification = require('../models/NotificationModel');
 
-const getManyNotifications = async ({ filter, limit, skip }, user) => {
+const getManyNotifications = async ({ filter, limit = 20, skip }, user) => {
   try {
     const notifications = await Notification
       .find(filter)
       .limit(limit)
       .skip(skip)
       .sort({ created_at: 'desc' })
-      .populate("sender", "username avatar _id isVerified")
+      .populate("sender", "name username avatar _id isVerified")
 
     const notReadCount = notifications.filter((n) => { 
       return n.read_by.length == 0 || n.read_by.includes({ readerId: user.id }) 

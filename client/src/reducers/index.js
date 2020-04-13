@@ -1,24 +1,24 @@
-import alertReducers from './alertReducers';
-import itemReducers from './itemReducers';
-import authReducer from './authReducer';
-import userReducers from './userReducers';
-import postReducers from './postReducers';
-import notificationReducers from './notificationReducers'
-import templateReducers from './templateReducers'
-import categoryReducer from './categoryReducer';
-import searchReducer from './searchReducer';
 import { combineReducers } from 'redux';
+import users from './users';
+import usersCount from './usersCount';
+import auth from './auth';
+import posts from './posts';
+import profile from './profile';
+import comments from './comments';
+import library from './library';
+import relationships from './relationships';
+import notifications from './notifications';
+import search from './search';
 
-const rootReducer = combineReducers({
-  alerts: alertReducers,
-  auth: authReducer,
-  users: userReducers,
-  items: itemReducers,
-  categories: categoryReducer,
-  posts: postReducers,
-  notifications: notificationReducers,
-  search: searchReducer,
-  template: templateReducers
+export default combineReducers({
+  users,
+  usersCount,
+  auth,
+  posts,
+  profile,
+  comments,
+  library,
+  relationships,
+  notifications,
+  search
 });
-
-export default rootReducer;

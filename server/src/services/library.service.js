@@ -43,7 +43,9 @@ const getItem = async (id, config) => {
       return await Item.findById(id)
       .populate('user', 'name username avatar _id isVerified')
       .populate('categories')
-      .populate('cover');
+      .populate('cover')
+      .populate('files')
+
     } else {
       return await Item.findById(id)
     }

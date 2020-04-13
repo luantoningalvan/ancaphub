@@ -1,20 +1,29 @@
 const User = require('../models/UserModel')
+const userObject = require('../utils/userObject');
 
-const getUserFollowers = async (id) => {
+const getUserFollowers = async (id, isAuthenticated) => {
   try {
-    return await User
+    const users = await User
       .findById(id, 'followers')
-      .populate('followers', 'name username avatar _id isVerified');
+      .populate('followers');
+
+    return users.followers.map(user => ({
+      user: userObject(user, isAuthenticated)
+    }))  
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
-const getFollowedUsers = async (id) => {
+const getFollowedUsers = async (id, isAuthenticated) => {
   try {
-    return await User
+    const users = await User
       .findById(id, 'following')
-      .populate('following', 'name username avatar _id isVerified');
+      .populate('following');
+
+      return users.following.map(user => ({
+        user: userObject(user, isAuthenticated)
+      }))  
   } catch (e) {
     throw new Error(e.message)
   }
@@ -35,8 +44,12 @@ const followUser = async (followedId, followerId) => {
     follower.following.push(followedId);
 
     await followed.save();
-    const result = await follower.save()
-    return result.following
+    await follower.save()
+
+    return {
+      _id: followedId,
+      following: true
+    }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -58,8 +71,12 @@ const unfollowUser = async (followedId, followerId) => {
 
 
     await followed.save();
-    const result = await follower.save()
-    return result.following
+    await follower.save();
+
+    return {
+      _id: followedId,
+      following: false
+    }
   } catch (e) {
     throw new Error(e.message)
   }

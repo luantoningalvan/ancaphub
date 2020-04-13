@@ -1,0 +1,111 @@
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+
+const hiddenPropTypes = {
+  from: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  to: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  only: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  children: PropTypes.node,
+};
+
+const breakpointBoundaries = [
+  {
+    code: 'xs',
+    boundaries: [0, 599],
+  },
+  {
+    code: 'sm',
+    boundaries: [600, 959],
+  },
+  {
+    code: 'md',
+    boundaries: [960, 1279],
+  },
+  {
+    code: 'lg',
+    boundaries: [1280, 1919],
+  },
+  {
+    code: 'xl',
+    boundaries: [1920, -1],
+  },
+];
+
+const makeMediaQueries = () => {
+  let mediaQueryString = '';
+
+  // For single breakpoints
+  breakpointBoundaries.forEach((breakpoint) => {
+    if (breakpoint.code !== 'xl') {
+      mediaQueryString += `
+                .hide-only-on-${breakpoint.code} {
+                    visibility: visible;
+                }
+                @media only screen and (min-width: ${breakpoint.boundaries[0]}px) and (max-width: ${breakpoint.boundaries[1]}px) {
+                    .hide-only-on-${breakpoint.code} {
+                        visibility: hidden;
+                    }
+                }
+            `;
+    } else {
+      mediaQueryString += `
+            .hide-only-on-xl {
+                visiblity: visible;
+            }
+                @media only screen and (min-width: ${breakpoint.boundaries[0]}px) {
+                .hide-only-on-xl {
+                       visiblity: hidden;
+                   }
+                }
+            `;
+    }
+  });
+
+  // From...to
+  for (let i = 0; i < breakpointBoundaries.length; i += 1) {
+    for (let j = 1; j < breakpointBoundaries.length; j += 1) {
+      // eslint-disable-next-line no-continue
+      if (i === j) continue;
+      mediaQueryString += `
+            .hide-from-${breakpointBoundaries[i].code}-to-${breakpointBoundaries[j].code} {
+                visibility: visible;
+            }
+            
+            @media only screen and (min-width: ${breakpointBoundaries[i].boundaries[0]}px) and (max-width: ${breakpointBoundaries[j].boundaries[1]}px) {
+                    .hide-from-${breakpointBoundaries[i].code}-to-${breakpointBoundaries[j].code} {
+                        visibility: hidden;
+                    }
+                }
+            `;
+    }
+  }
+
+  return mediaQueryString;
+};
+
+const HiddenWrap = styled.div`
+  /* Handle hidden/visible */
+
+  ${makeMediaQueries()}
+`;
+
+const Hidden = ({
+  from, only, to, children,
+}) => {
+  const cs = clsx({
+    [`hide-only-on-${only}`]: only !== undefined,
+    [`hide-from-${from}-to-${to}`]:
+      from !== false && to !== false && only === undefined,
+  });
+  return (
+    <HiddenWrap>
+      <div className={cs}>{children}</div>
+    </HiddenWrap>
+  );
+};
+
+Hidden.propTypes = hiddenPropTypes;
+
+export default Hidden;

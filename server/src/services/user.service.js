@@ -1,4 +1,5 @@
 const User = require('../models/UserModel')
+const { verifyCode, updateUserCode } = require('../services/accesscode.service')
 const bcrypt = require('bcryptjs');
 
 const getManyUsers = async ({ filter }) => {
@@ -7,6 +8,26 @@ const getManyUsers = async ({ filter }) => {
       .find(filter)
       .select('-email -password -geoLocation -__v -saved -library -role')
       .limit(20)
+
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+const getUsersByDistance = async (user, radius, coordinates) => {
+  try {
+    return await User.aggregate([
+      {
+        $geoNear: {
+           near: { type: "Point", coordinates },
+           distanceField: "dist",
+           maxDistance: radius,
+           query: { geoLocation: true, _id: { $ne: user } },
+           spherical: true
+        }
+      }
+   ])
+
   } catch (e) {
     throw new Error(e.message)
   }
@@ -14,14 +35,8 @@ const getManyUsers = async ({ filter }) => {
 
 const getUser = async (id, extraFields) => {
   try {
-    const user = await User
+    return await User
       .findById(id, `_id name username avatar bio birthday currentCity site following followers isVerified ${extraFields}`);
-  
-      return {
-        ...user._doc,
-        followersCount: user.followers.length,
-        followingCount: user.following.length
-    }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -38,14 +53,23 @@ const verifyUser = async(cond) => {
 
 const insertUser = async (data) => {
   try {
+    
     let user = await User.findOne({ email: data.email });
     if (user) throw new Error("Este e-mail já está sendo utilizado.") 
-
+    
     user = new User(data);
 
+    if(process.env.CODE_TO_SIGNUP == 1){
+      await verifyCode(data.code)
+    }
+    
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(data.password, salt);
     await user.save();
+
+    if (process.env.CODE_TO_SIGNUP == 1){
+      await updateUserCode(data.code, user.id)
+    }
 
     return {
       user: {
@@ -102,4 +126,4 @@ const authenticateUser = async ({email, password, level = "user"}) => {
   }
 }
 
-module.exports = { getManyUsers, getUser, verifyUser, insertUser, updateUser, updateUserPassword, authenticateUser }
+module.exports = { getManyUsers, getUsersByDistance, getUser, verifyUser, insertUser, updateUser, updateUserPassword, authenticateUser }

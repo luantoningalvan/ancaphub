@@ -1,0 +1,42 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "react-app",
+        "airbnb"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "jsx-a11y", "import"],
+    "rules": {
+        "react/jsx-filename-extension": [
+          "error",
+          {
+            "extensions": [".js", ".jsx"]
+          }
+        ],
+        "import/prefer-default-export": "off",
+        "react/jsx-props-no-spreading": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "consistent-return": "off",
+        "no-underscore-dangle": "off",
+        "max-len": "off",
+        "import/no-cycle": "off",
+        "react/prop-types": "off",
+        "react/forbid-prop-types": "off",
+        "react/require-default-props": "off",
+        "react/button-has-type": "off"
+      }
+}
