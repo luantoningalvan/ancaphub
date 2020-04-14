@@ -9,7 +9,6 @@ const {
   updateUserPassword
 } = userService;
 const { uploadToS3 } = fileService;
-const keys = require("../config/keys");
 const fs = require('fs')
 const jwt = require("jsonwebtoken");
 const Jimp = require("jimp");
@@ -71,7 +70,7 @@ const insert = async (req, res, next) => {
   try {
     const payload = await insertUser({ name, username, email, password, code });
 
-    jwt.sign(payload, keys.jwtSecret, { expiresIn: 86400 }, (err, token) => {
+    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 }, (err, token) => {
       if (err) throw new Error();
       res.status(201).json({ token });
       next();
