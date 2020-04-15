@@ -53,6 +53,15 @@ function* getSingleItem(action) {
   }
 }
 
+function* getRecentItems() {
+  try {
+    const d = yield call(api.getRecentLibraryItems);
+    yield put(actions.getRecentItemsSuccess(d.data.items));
+  } catch (e) {
+    yield put(actions.libraryError({ errorMessage: e.message }));
+  }
+}
+
 // Watchers
 
 function* watchCreateLibraryItemRequest() {
@@ -75,10 +84,15 @@ function* watchGetSingleLibraryItemRequest() {
   yield takeLatest(actions.Types.GET_SINGLE_ITEM_REQUEST, getSingleItem);
 }
 
+function* watchGetRecentLibraryItemsRequest() {
+  yield takeLatest(actions.Types.GET_RECENT_ITEMS_REQUEST, getRecentItems);
+}
+
 export default [
   fork(watchCreateLibraryItemRequest),
   fork(watchGetLibraryBooks),
   fork(watchGetLibraryVideos),
   fork(watchGetLibraryArticles),
   fork(watchGetSingleLibraryItemRequest),
+  fork(watchGetRecentLibraryItemsRequest),
 ];

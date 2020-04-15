@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,9 @@ import CardFooter from '../ui/CardFooter';
 import CardHeader from '../ui/CardHeader';
 import CardBody from '../ui/CardBody';
 import defaultCover from '../../assets/default-book-cover.jpg';
+
+// Redux actions
+import { getRecentItemsRequest } from '../../actions/library';
 
 const LastItems = styled.div`
   padding:0;
@@ -67,27 +71,12 @@ const ItemContent = styled.div`
 `;
 
 const LastItemsWidget = () => {
-  const items = {
-    loading: false,
-    allItems: {
-      items: [
-        {
-          _id: 1,
-          title: 'A mão invisível',
-          author: 'Adam Smith',
-          type: 'book',
-          cover: 'https://ancaphub.s3.sa-east-1.amazonaws.com/file-1582681861888.jpg',
-        },
-        {
-          _id: 2,
-          title: 'Educação: Livre e obrigatória Livre e obrigatória',
-          author: 'Murray N. Rothbard',
-          type: 'book',
-          cover: 'https://ancaphub.s3.sa-east-1.amazonaws.com/1580346370222-41tADUrw1zL._SX335_BO1%2C204%2C203%2C200_.jpg',
-        },
-      ],
-    },
-  };
+  const dispatch = useDispatch();
+  const { recentItems: items } = useSelector((state) => state.library);
+
+  React.useEffect(() => {
+    dispatch(getRecentItemsRequest());
+  }, [dispatch]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -101,9 +90,9 @@ const LastItemsWidget = () => {
         </CardHeader>
         <CardBody>
           <LastItems>
-            {items.allItems.items && items.allItems.items.map((item) => (
+            {items && items.map((item) => (
               <Item to={`/${item.type}s/${item._id}`} key={item._id}>
-                <ItemCover cover={item.cover !== '' ? item.cover : defaultCover} />
+                <ItemCover cover={item.cover !== '' ? item.cover.url : defaultCover} />
                 <ItemContent>
                   <h4 className="title">{item.title.substr(0, 49)}</h4>
                   <h5 className="author">{item.author.substr(0, 49)}</h5>

@@ -12,6 +12,8 @@ export const Types = {
   GET_VIDEOS_SUCCESS: 'library/get_videos_success',
   GET_SINGLE_ITEM_REQUEST: 'library/get_single_item_request',
   GET_SINGLE_ITEM_SUCCESS: 'library/get_single_item_success',
+  GET_RECENT_ITEMS_REQUEST: 'library/get_recent_items_request',
+  GET_RECENT_ITEMS_SUCCESS: 'library/get_recent_items_success',
   LIBRARY_ERROR: 'library/library_error',
 };
 
@@ -72,6 +74,16 @@ export const getSingleItemRequest = (data) => ({
 
 export const getSingleItemSuccess = (data) => ({
   type: Types.GET_SINGLE_ITEM_SUCCESS,
+  payload: data,
+});
+
+export const getRecentItemsRequest = (data) => ({
+  type: Types.GET_RECENT_ITEMS_REQUEST,
+  payload: data,
+});
+
+export const getRecentItemsSuccess = (data) => ({
+  type: Types.GET_RECENT_ITEMS_SUCCESS,
   payload: data,
 });
 
