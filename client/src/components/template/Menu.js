@@ -7,6 +7,7 @@ import NewsFeedIcon from 'react-ionicons/lib/IosPaper';
 import LibraryIcon from 'react-ionicons/lib/IosFolderOpen';
 import BookIcon from 'react-ionicons/lib/IosBook';
 import VideoIcon from 'react-ionicons/lib/IosPlay';
+import UsersIcon from 'react-ionicons/lib/IosPerson';
 //import GroupIcon from 'react-ionicons/lib/IosPeople';
 //import EventIcon from 'react-ionicons/lib/IosCalendar';
 //import ProjectIcon from 'react-ionicons/lib/IosBrush';
@@ -67,6 +68,12 @@ const Menu = () => {
           link="/videos"
         />
       </MenuTree>
+      <MenuItem
+        current={url.includes('/users')}
+        icon={<UsersIcon />}
+        label="Usuários"
+        link="/users"
+      />
 {/* 
       <MenuItem
         current={url.includes('/groups')}

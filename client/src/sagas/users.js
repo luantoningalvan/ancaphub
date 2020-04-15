@@ -15,7 +15,9 @@ import { getUsersRelationsips } from '../actions/relationships'
 function* getUsers() {
   try {
     const result = yield call(api.getUsers);
-    yield put(actions.getUsersSuccess({ items: result.data.data }));
+    yield put(getUsersCount(result.data));
+    yield put(getUsersRelationsips(result.data));
+    yield put(actions.getUsersSuccess({ items: result.data }));
   } catch (e) {
     yield put(alerts.addAlert('error', e.message ));
   }
