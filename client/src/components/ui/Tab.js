@@ -1,22 +1,33 @@
-import styled from 'styled-components';
+import React from 'react'
 
-const Tab = styled.li`
+import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+
+const TabStyle = styled.li`
   list-style: none;
-  border-bottom: 3px solid transparent;
+  border-bottom: ${props => props.current 
+    ? `3px solid ${(props) => props.theme.palette.border}`
+    : '3px solid transparent;'
+  };
 
   &:hover {
     border-bottom: 3px solid ${(props) => props.theme.palette.border};
   }
 
-  .current {
-    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
-  }
   > a {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 16px 32px;
+    padding: 16px;
   }
 `;
 
-export default Tab;
+const Tab = ({label, link, current }) => {
+  return (
+    <TabStyle current={current}>
+      <Link to={link}>{label}</Link>
+    </TabStyle>
+  )
+}
+
+export default Tab

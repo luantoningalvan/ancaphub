@@ -35,9 +35,7 @@ const Feed = () => {
         </GridItem>
         <GridItem xs={12} lg={4} xl={3}>
           {/* <TrendingTopicsWidget /> */}
-          <div>
             <LastItemsWidget />
-          </div>
           {/* <div style={{ marginTop: 16, width: '100%' }}>
             <UserListWidget />
           </div> */}
