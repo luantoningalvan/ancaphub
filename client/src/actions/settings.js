@@ -1,13 +1,14 @@
 export const Types = {
-  UPDATE_EMAIL_REQUEST: "settings/update_email_request",
-  UPDATE_EMAIL_SUCCESS: "settings/update_email_success",
-  UPDATE_USERNAME_REQUEST: "settings/update_username_request",
-  UPDATE_USERNAME_SUCCESS: "settings/update_username_success",
-  UPDATE_PASSWORD_REQUEST: "settings/update_password_request",
-  UPDATE_PASSWORD_SUCCESS: "settings/update_password_success",
-  UPDATE_GEOLOCATION_REQUEST: "settings/update_geolocation_request",
-  UPDATE_GEOLOCATION_SUCCESS: "settings/update_geolocation_success",
-  SETTINGS_ERROR: "settings/settings_error",
+  UPDATE_EMAIL_REQUEST: 'settings/update_email_request',
+  UPDATE_EMAIL_SUCCESS: 'settings/update_email_success',
+  UPDATE_USERNAME_REQUEST: 'settings/update_username_request',
+  UPDATE_USERNAME_SUCCESS: 'settings/update_username_success',
+  UPDATE_PASSWORD_REQUEST: 'settings/update_password_request',
+  UPDATE_PASSWORD_SUCCESS: 'settings/update_password_success',
+  UPDATE_GEOLOCATION_REQUEST: 'settings/update_geolocation_request',
+  UPDATE_GEOLOCATION_SUCCESS: 'settings/update_geolocation_success',
+  SWITCH_COLOR_MODE: 'settings/switch_color_mode',
+  SETTINGS_ERROR: 'settings/settings_error',
 };
 
 export const updateEmailRequest = ({ email }) => ({
@@ -41,14 +42,19 @@ export const updatePasswordSuccess = () => ({
 
 export const updateGeoLocationsRequest = (option) => ({
   type: Types.UPDATE_GEOLOCATION_REQUEST,
-  payload: option
+  payload: option,
 });
 
 export const updateGeoLocationsSuccess = (data) => ({
   type: Types.UPDATE_GEOLOCATION_SUCCESS,
-  payload: data
+  payload: data,
 });
 
+
+export const switchColorMode = (data) => ({
+  type: Types.SWITCH_COLOR_MODE,
+  payload: data,
+});
 
 export const settingsError = ({ errorMessage }) => ({
   type: Types.SETTINGS_ERROR,

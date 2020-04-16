@@ -9,6 +9,7 @@ import library from './library';
 import relationships from './relationships';
 import notifications from './notifications';
 import search from './search';
+import settings from './settings';
 
 export default combineReducers({
   users,
@@ -20,5 +21,6 @@ export default combineReducers({
   library,
   relationships,
   notifications,
-  search
+  search,
+  settings,
 });

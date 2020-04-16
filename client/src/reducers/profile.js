@@ -1,11 +1,11 @@
-import { Types as PostTypes } from "../actions/posts";
-import { Types as UserTypes } from "../actions/users";
+// import { Types as PostTypes } from '../actions/posts';
+import { Types as UserTypes } from '../actions/users';
 
 const INITIAL_STATE = {
   user: {},
   followers: [],
   following: [],
-  errorMessage: "",
+  errorMessage: '',
   loading: true,
 };
 
@@ -25,8 +25,8 @@ export default (state = INITIAL_STATE, action) => {
         user: {
           ...state.user,
           ...payload,
-        }
-      }  
+        },
+      };
     case UserTypes.GET_SINGLE_USER_SUCCESS:
       return {
         ...state,
