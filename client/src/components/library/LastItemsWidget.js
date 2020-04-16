@@ -92,7 +92,7 @@ const LastItemsWidget = () => {
           <LastItems>
             {items && items.map((item) => (
               <Item to={`/${item.type}s/${item._id}`} key={item._id}>
-                <ItemCover cover={item.cover !== '' ? item.cover.url : defaultCover} />
+                <ItemCover cover={item.cover !== '' && item.cover !== null ? item.cover.url : defaultCover} />
                 <ItemContent>
                   <h4 className="title">{item.title.substr(0, 49)}</h4>
                   <h5 className="author">{item.author.substr(0, 49)}</h5>
