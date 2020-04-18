@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import BookmarkButton from './BookmarkButton.js'
 
 import BookIcon from "react-ionicons/lib/IosBook";
 import VideoIcon from "react-ionicons/lib/IosVideocam";
@@ -132,16 +133,16 @@ const ItemCard = ({ item }) => (
       <div className="card-type">
         {types[item.type].icon}
       </div>
-      <Link to={`/${item.type}s/${item._id}`} className="card-image">
+      <Link to={`/library/${item.type}s/${item._id}`} className="card-image">
         <img
           src={item.cover && item.cover.url ? item.cover.url : types[item.type].defaulCover}
         />
       </Link>
 
-      <div className="card-buttons">Botões</div>
+      <div className="card-buttons"><BookmarkButton /></div>
     </div>
 
-    <Link to={`/${item.type}s/${item._id}`} className="link">
+    <Link to={`/library/${item.type}s/${item._id}`} className="link">
       <h2 className="card-title">{item.title}</h2>
     </Link>
 
