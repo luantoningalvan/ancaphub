@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom'
 const TabStyle = styled.li`
   list-style: none;
   border-bottom: ${props => props.current 
-    ? `3px solid ${(props) => props.theme.palette.border}`
-    : '3px solid transparent;'
+    ? `3px solid ${props.theme.palette.secondary}`
+    : '3px solid transparent'
   };
 
   &:hover {
-    border-bottom: 3px solid ${(props) => props.theme.palette.border};
+    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
   }
 
   > a {

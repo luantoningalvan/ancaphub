@@ -25,8 +25,8 @@ const MenuItem = styled.li`
   }
 `
 
-export default ({link, label, icon, current}) => (
-  <MenuItem current={current}>
+export default ({link, label, icon, current, ...rest}) => (
+  <MenuItem current={current} {...rest}>
     <Link to={link}>
       {icon}
       <span>{label}</span>

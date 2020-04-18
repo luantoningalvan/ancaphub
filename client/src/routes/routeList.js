@@ -1,11 +1,9 @@
 import Home from "../pages/home";
 import Feed from "../pages/feed";
-import BooksOverview from "../pages/library/books";
-import SingeBook from "../pages/library/books/SingleBook";
-import ArticlesOverview from "../pages/library/articles";
-import SingleArticle from "../pages/library/articles/SingleArticle";
-import VideosOverview from "../pages/library/videos";
-import SingleVideo from "../pages/library/videos/SingleVideo";
+import Library from "../pages/library";
+import SingeBook from "../pages/library/SingleBook";
+import SingleArticle from "../pages/library/SingleArticle";
+import SingleVideo from "../pages/library/SingleVideo";
 import Groups from "../pages/groups";
 import Users from "../pages/users";
 import SingleGroup from "../pages/groups/SingleGroup";
@@ -34,29 +32,19 @@ export default [
   },
   {
     exact: true,
-    path: "/books",
-    component: BooksOverview
+    path: "/library/:type?",
+    component: Library
   },
   {
-    path: "/books/:id",
+    path: "/library/books/:id",
     component: SingeBook
   },
   {
-    exact: true,
-    path: "/articles",
-    component: ArticlesOverview
-  },
-  {
-    path: "/articles/:id",
+    path: "/library/articles/:id",
     component: SingleArticle
   },
   {
-    exact: true,
-    path: "/videos",
-    component: VideosOverview
-  },
-  {
-    path: "/videos/:id",
+    path: "/library/videos/:id",
     component: SingleVideo
   },
   {
