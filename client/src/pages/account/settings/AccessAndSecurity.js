@@ -21,7 +21,6 @@ export default (props) => {
   const dispatch = useDispatch()
   const currentData = useSelector(state => state.auth.user)
 
-  console.log(currentData)
   const handleUsernameSubmit = async (data) => {
     try {
       const schema = Yup.object().shape({

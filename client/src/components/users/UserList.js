@@ -43,7 +43,6 @@ const Avatar = styled.div`
 `;
 
 const UserList = ({ users }) => {
-  console.log(users)
   return (
     <div style={{ width: "100%" }}>
       <ul>
