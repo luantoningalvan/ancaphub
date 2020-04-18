@@ -1,12 +1,7 @@
-import {
-  takeLatest,
-  call,
-  fork,
-  put,
-} from 'redux-saga/effects';
+import { takeLatest, call, fork, put } from "redux-saga/effects";
 
-import * as actions from '../actions/library';
-import * as api from '../api/library';
+import * as actions from "../actions/library";
+import * as api from "../api/library";
 
 function* createItem(action) {
   try {
@@ -17,28 +12,15 @@ function* createItem(action) {
   }
 }
 
-function* getBooks(action) {
+function* getItems({ payload }) {
   try {
-    const items = yield call(api.getAllBooks, action.payload);
-    yield put(actions.getBooksSuccess({ items: items.data }));
-  } catch (e) {
-    yield put(actions.libraryError({ errorMessage: e.message }));
-  }
-}
+    const filter = {
+      ...(payload.category && payload.category !== "" && { category: payload.category }),
+      ...(payload.type && payload.type !== "" && { type: payload.type }),
+    };
 
-function* getArticles(action) {
-  try {
-    const items = yield call(api.getAllArticles, action.payload);
-    yield put(actions.getArticlesSuccess({ items: items.data }));
-  } catch (e) {
-    yield put(actions.libraryError({ errorMessage: e.message }));
-  }
-}
-
-function* getVideos(action) {
-  try {
-    const items = yield call(api.getAllVideos, action.payload);
-    yield put(actions.getVideosSuccess({ items: items.data }));
+    const items = yield call(api.getLibraryItems, filter);
+    yield put(actions.getItemsSuccess(items.data));
   } catch (e) {
     yield put(actions.libraryError({ errorMessage: e.message }));
   }
@@ -68,18 +50,6 @@ function* watchCreateLibraryItemRequest() {
   yield takeLatest(actions.Types.CREATE_ITEM_REQUEST, createItem);
 }
 
-function* watchGetLibraryBooks() {
-  yield takeLatest(actions.Types.GET_BOOKS_REQUEST, getBooks);
-}
-
-function* watchGetLibraryVideos() {
-  yield takeLatest(actions.Types.GET_VIDEOS_REQUEST, getVideos);
-}
-
-function* watchGetLibraryArticles() {
-  yield takeLatest(actions.Types.GET_ARTICLES_REQUEST, getArticles);
-}
-
 function* watchGetSingleLibraryItemRequest() {
   yield takeLatest(actions.Types.GET_SINGLE_ITEM_REQUEST, getSingleItem);
 }
@@ -88,11 +58,13 @@ function* watchGetRecentLibraryItemsRequest() {
   yield takeLatest(actions.Types.GET_RECENT_ITEMS_REQUEST, getRecentItems);
 }
 
+function* watchGetItemsRequest() {
+  yield takeLatest(actions.Types.GET_ITEMS_REQUEST, getItems);
+}
+
 export default [
   fork(watchCreateLibraryItemRequest),
-  fork(watchGetLibraryBooks),
-  fork(watchGetLibraryVideos),
-  fork(watchGetLibraryArticles),
   fork(watchGetSingleLibraryItemRequest),
   fork(watchGetRecentLibraryItemsRequest),
+  fork(watchGetItemsRequest),
 ];

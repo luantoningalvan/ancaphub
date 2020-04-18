@@ -26,12 +26,7 @@ const getManyItems = async (query, type, auth) => {
       }))
     }
   
-    return {
-      items,
-      type,
-      total: itemCount,
-      pageSize: pageSize
-    }
+    return items
   } catch (e) {
     throw new Error(e.message)
   }

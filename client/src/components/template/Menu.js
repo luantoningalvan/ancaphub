@@ -5,12 +5,10 @@ import { useRouteMatch } from 'react-router-dom';
 // Icons
 import NewsFeedIcon from 'react-ionicons/lib/IosPaper';
 import LibraryIcon from 'react-ionicons/lib/IosFolderOpen';
-import BookIcon from 'react-ionicons/lib/IosBook';
-import VideoIcon from 'react-ionicons/lib/IosPlay';
 import UsersIcon from 'react-ionicons/lib/IosPerson';
-//import GroupIcon from 'react-ionicons/lib/IosPeople';
-//import EventIcon from 'react-ionicons/lib/IosCalendar';
-//import ProjectIcon from 'react-ionicons/lib/IosBrush';
+import GroupIcon from 'react-ionicons/lib/IosPeople';
+import EventIcon from 'react-ionicons/lib/IosCalendar';
+import ProjectIcon from 'react-ionicons/lib/IosBulb';
 
 // i18n
 import { FormattedMessage } from 'react-intl';
@@ -38,36 +36,12 @@ const Menu = () => {
         )}
         link="/home"
       />
-
-      <MenuTree
-        current={url.includes('/books') || url.includes('/articles') || url.includes('/videos')}
+      <MenuItem
+        current={url.includes('/library')}
         icon={<LibraryIcon />}
-        label={(
-          <FormattedMessage
-            id="common.library"
-            description="Label do menu - Biblioteca"
-          />
-        )}
-      >
-        <MenuItem
-          current={url.includes('/books')}
-          icon={<BookIcon />}
-          label="Livros"
-          link="/books"
-        />
-        <MenuItem
-          current={url.includes('/articles')}
-          icon={<NewsFeedIcon />}
-          label="Artigos"
-          link="/articles"
-        />
-        <MenuItem
-          current={url.includes('/videos')}
-          icon={<VideoIcon />}
-          label="Vídeos"
-          link="/videos"
-        />
-      </MenuTree>
+        label="Biblioteca"
+        link="/library"
+      />
       <MenuItem
         current={url.includes('/users')}
         icon={<UsersIcon />}

@@ -2,22 +2,22 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Paper from "../../../components/ui/Paper";
-import Container from "../../../components/ui/Container";
-import Button from "../../../components/ui/Button";
-import LoadContent from "../../../components/ui/LoadContent";
-import Dropdown from "../../../components/ui/Dropdown";
+import Paper from "../../components/ui/Paper";
+import Container from "../../components/ui/Container";
+import Button from "../../components/ui/Button";
+import LoadContent from "../../components/ui/LoadContent";
+import Dropdown from "../../components/ui/Dropdown";
 import { Link } from "react-router-dom";
-import DropdownListContainer from "../../../components/ui/DropdownListContainer";
-import DropdownListItem from "../../../components/ui/DropdownListItem";
-import defaultThumbnail from "../../../assets/default-book-cover.jpg";
+import DropdownListContainer from "../../components/ui/DropdownListContainer";
+import DropdownListItem from "../../components/ui/DropdownListItem";
+import defaultThumbnail from "../../assets/default-book-cover.jpg";
 // import Categories from "../../../components/categories/showElementCategories";
 // import Ratings from "../../../components/library/ratings";
 // import InvitedBy from "../../../components/profile/invitedBy"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
 import DownloadIcon from "react-ionicons/lib/IosDownload";
 // Redux
-import { getSingleItemRequest as getSingleItem } from "../../../actions/library";
+import { getSingleItemRequest as getSingleItem } from "../../actions/library";
 
 const Title = styled.h2`
   font-weight: bold;
