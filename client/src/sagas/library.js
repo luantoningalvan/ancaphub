@@ -38,7 +38,7 @@ function* getSingleItem(action) {
 function* getRecentItems() {
   try {
     const d = yield call(api.getRecentLibraryItems);
-    yield put(actions.getRecentItemsSuccess(d.data.items));
+    yield put(actions.getRecentItemsSuccess(d.data));
   } catch (e) {
     yield put(actions.libraryError({ errorMessage: e.message }));
   }

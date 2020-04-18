@@ -24,8 +24,10 @@ function library(state = INITIAL_STATE, action) {
       };
     case Types.GET_SINGLE_ITEM_SUCCESS:
       return { ...state, singleItem: { ...payload }, loading: false };
+    case Types.GET_RECENT_ITEMS_REQUEST:
+      return { ...state, loading: true}
     case Types.GET_RECENT_ITEMS_SUCCESS:
-      return { ...state, recentItems: payload };
+      return { ...state, recentItems: payload, loading:false };
     case Types.LIBRARY_ERROR:
       return { ...state, errorMessage: payload.errorMessage };
     default:
