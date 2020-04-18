@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const FlipSwitchWrapper = styled.div`
   position: relative;
@@ -58,19 +58,19 @@ const FlipSwitchWrapper = styled.div`
   }
 `;
 
-export default ({onChange = () => {}, value, ...props}) => {
+export default ({ onChange = () => {}, value, ...props }) => {
   const label = `switch-${Math.floor(Math.random() * 1000)}`;
-  const [state,setState] = useState(value)
-  
-  const handleChange = (e) =>{
-    setState(state => !state)
-    onChange(!state)
-  }
+  const [state, setState] = useState(value);
+
+  const handleChange = () => {
+    setState((prev) => !prev);
+    onChange(!state);
+  };
 
   return (
     <FlipSwitchWrapper>
       <input type="checkbox" checked={state} className="checkbox" id={label} onChange={handleChange} {...props} />
-      
+
       <label htmlFor={label}>
         <div className="switch-inner" />
         <div className="switch" />

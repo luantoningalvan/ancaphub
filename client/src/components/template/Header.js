@@ -1,28 +1,29 @@
-import React from "react";
-import styled from "styled-components";
-import { Link, useRouteMatch } from "react-router-dom";
-import NotificationsIcon from "react-ionicons/lib/IosNotifications";
+import React from 'react';
+import styled from 'styled-components';
+import { Link, useRouteMatch } from 'react-router-dom';
+import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
 // import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
-import { FormattedMessage } from "react-intl";
-import ArrowDownIcon from "react-ionicons/lib/IosArrowDown";
-import ProfileIcon from "react-ionicons/lib/MdPerson";
-//import BookIcon from 'react-ionicons/lib/MdBook';
-import BookmarkIcon from "react-ionicons/lib/MdBookmark";
-import ContrastIcon from "react-ionicons/lib/MdContrast";
-import SettingsIcon from "react-ionicons/lib/MdSettings";
-import LogoutIcon from "react-ionicons/lib/IosLogOut";
-import Search from "./Search";
-import Dropdown from "../ui/Dropdown";
-import DropdownListContainer from "../ui/DropdownListContainer";
-import DropdownListItem from "../ui/DropdownListItem";
-import DropdownHeader from "../ui/DropdownHeader";
-import CardBody from "../ui/CardBody";
-import CardFooter from "../ui/CardFooter";
-import Switch from "../ui/FlipSwitch";
-import Notification from "../notifications";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutRequest as logout } from "../../actions/auth";
-import logo from "../../assets/logo-prov.png";
+import { FormattedMessage } from 'react-intl';
+import ArrowDownIcon from 'react-ionicons/lib/IosArrowDown';
+import ProfileIcon from 'react-ionicons/lib/MdPerson';
+// import BookIcon from 'react-ionicons/lib/MdBook';
+import BookmarkIcon from 'react-ionicons/lib/MdBookmark';
+import ContrastIcon from 'react-ionicons/lib/MdContrast';
+import SettingsIcon from 'react-ionicons/lib/MdSettings';
+import LogoutIcon from 'react-ionicons/lib/IosLogOut';
+import { useDispatch, useSelector } from 'react-redux';
+import Search from './Search';
+import Dropdown from '../ui/Dropdown';
+import DropdownListContainer from '../ui/DropdownListContainer';
+import DropdownListItem from '../ui/DropdownListItem';
+import DropdownHeader from '../ui/DropdownHeader';
+import CardBody from '../ui/CardBody';
+import CardFooter from '../ui/CardFooter';
+import Switch from '../ui/FlipSwitch';
+import Notification from '../notifications';
+import { logoutRequest as logout } from '../../actions/auth';
+import { switchColorMode as changeTheme } from '../../actions/settings';
+import logo from '../../assets/logo-prov.png';
 
 const AppBar = styled.header`
   background: ${(props) => props.theme.palette.secondary};
@@ -74,8 +75,7 @@ const HeaderMenuItem = styled.li`
     position: relative;
     padding: 10px;
     border-radius: 5px;
-    background: ${(props) =>
-      props.current ? "rgba(0,0,0,0.15)" : "transparent"};
+    background: ${(props) => (props.current ? 'rgba(0,0,0,0.15)' : 'transparent')};
     transition: background 0.3s;
 
     &:hover {
@@ -103,11 +103,18 @@ const Header = () => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const { notifications, notReadCount } = useSelector(
-    (state) => state.notifications
+    (state) => state.notifications,
   );
+
+  const { colorMode } = useSelector((state) => state.settings);
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleChangeTheme = () => {
+    if (colorMode === 'dark') dispatch(changeTheme('light'));
+    if (colorMode === 'light') dispatch(changeTheme('dark'));
   };
 
   return (
@@ -126,27 +133,27 @@ const Header = () => {
             placement="bottom"
             offsetY={16}
             offsetX="-8vw"
-            toggle={
-              <HeaderMenuItem current={url.includes("/notifications")}>
+            toggle={(
+              <HeaderMenuItem current={url.includes('/notifications')}>
                 <div>
                   <NotificationsIcon />
                   {notReadCount > 0 && (
-                  <span className="badge"></span>
+                  <span className="badge" />
                   )}
                 </div>
               </HeaderMenuItem>
-            }
+            )}
           >
             <DropdownHeader>
               <FormattedMessage id="common.notifications" />
             </DropdownHeader>
-              {notifications.length > 0 ? (
-                <>
+            {notifications.length > 0 ? (
+              <>
                 <ul
                   style={{
                     maxWidth: 400,
                     maxHeight: 400,
-                    overflowY: "scroll",
+                    overflowY: 'scroll',
                   }}
                 >
                   {notifications.map((notification, index) => (
@@ -154,10 +161,10 @@ const Header = () => {
                   ))}
                 </ul>
                 <CardFooter link="/notifications" label="See all" />
-                </>
-              ) : (
-                <CardBody>Nenhuma notificação disponível</CardBody>
-              )}
+              </>
+            ) : (
+              <CardBody>Nenhuma notificação disponível</CardBody>
+            )}
           </Dropdown>
           {/*
           <Dropdown
@@ -177,13 +184,13 @@ const Header = () => {
             offsetY={16}
             offsetX="-4vw"
             placement="bottom"
-            toggle={
+            toggle={(
               <HeaderMenuItem>
                 <div>
                   <ArrowDownIcon />
                 </div>
               </HeaderMenuItem>
-            }
+            )}
           >
             <DropdownListContainer>
               <DropdownListItem icon={<ProfileIcon />}>
@@ -191,16 +198,16 @@ const Header = () => {
                   <FormattedMessage id="common.profile" />
                 </Link>
               </DropdownListItem>
-              {/* 
+              {/*
               <DropdownListItem icon={<BookIcon />}>
                 <Link to="/contributions"><FormattedMessage id="common.contributions" /></Link>
-              </DropdownListItem>*/}
+              </DropdownListItem> */}
               <DropdownListItem icon={<BookmarkIcon />}>
                 <Link to="/bookmarks">
                   <FormattedMessage id="account.bookmarks.savedItemsHeading" />
                 </Link>
               </DropdownListItem>
-              <DropdownListItem icon={<ContrastIcon />} action={<Switch />}>
+              <DropdownListItem icon={<ContrastIcon />} action={<Switch value={colorMode === 'dark'} onChange={() => handleChangeTheme()} />}>
                 <FormattedMessage id="common.darkMode" />
               </DropdownListItem>
               <DropdownListItem icon={<SettingsIcon />}>

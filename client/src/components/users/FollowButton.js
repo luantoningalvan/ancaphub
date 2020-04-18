@@ -6,7 +6,6 @@ import { followUserRequest, unfollowUserRequest } from '../../actions/relationsh
 export default ({user}) => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.relationships[user])
-  console.log(state)
   const relationship = state || {}
   const auth = useSelector(state => state.auth)
   const verifyIfIsOwnProfile = auth.isAuthenticated && auth.user._id === user
