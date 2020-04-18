@@ -10,6 +10,7 @@ import relationships from './relationships';
 import notifications from './notifications';
 import search from './search';
 import settings from './settings';
+import categories from './categories';
 
 export default combineReducers({
   users,
@@ -23,4 +24,5 @@ export default combineReducers({
   notifications,
   search,
   settings,
+  categories
 });
