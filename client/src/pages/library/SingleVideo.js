@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
-import Container from '../../../components/ui/Container';
+import Container from '../../components/ui/Container';
 // import Categories from "../../../components/categories/showElementCategories";
 // import LoadContent from "../../../components/loaders/loadContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
 
 // Redux
-import { getSingleItemRequest as getSingleItem } from '../../../actions/library';
+import { getSingleItemRequest as getSingleItem } from '../../actions/library';
 
 const PlayerWrapper = styled.div`
   position: relative;
@@ -55,7 +55,7 @@ const SingleVideo = () => {
       <Banner>
         <Container>
           <PlayerWrapper>
-            <ReactPlayer className="videoPlayer" width="100%" height="100%" url={singleItem.extraFields.videoUrl} />
+            <ReactPlayer className="videoPlayer" width="100%" height="100%" url={singleItem.extraFields && singleItem.extraFields.videoUrl} />
           </PlayerWrapper>
           <div style={{ marginTop: 32 }}>
             {/* <Categories categories={categories} /> */}
