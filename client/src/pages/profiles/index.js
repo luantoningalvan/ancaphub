@@ -8,6 +8,7 @@ import LocationIcon from 'react-ionicons/lib/IosPinOutline';
 import BirthIcon from 'react-ionicons/lib/IosEggOutline';
 import SiteIcon from 'react-ionicons/lib/IosLinkOutline';
 import EditIcon from 'react-ionicons/lib/IosCreate';
+import moment from 'moment';
 import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
 import defaultProfileCover from '../../assets/default-profile-cover.jpg';
 import Paper from '../../components/ui/Paper';
@@ -19,7 +20,6 @@ import GridItem from '../../components/ui/GridItem';
 import FollowButton from '../../components/users/FollowButton';
 import EditProfile from '../../components/users/EditProfile';
 import EditAvatar from '../../components/users/EditAvatar';
-import moment from 'moment';
 
 import { getSingleUserRequest } from '../../actions/users';
 import {
@@ -31,7 +31,6 @@ import {
   Tabs,
 } from './styles.css';
 
-import format from 'date-fns/format'
 const Feed = lazy(() => import('./Feed'));
 const Lists = lazy(() => import('./Lists'));
 const Contributions = lazy(() => import('./Contributions'));
@@ -201,14 +200,14 @@ export default () => {
                   <li className={pageParam == undefined ? 'current' : ''}>
                     <Link to={`/${userId}`}>Feed</Link>
                   </li>
-                  
+
                   <li className={pageParam == 'lists' ? 'current' : ''}>
                     <Link to={`/${userId}/lists`}>Listas</Link>
                   </li>
                   <li className={pageParam == 'contributions' ? 'current' : ''}>
                     <Link to={`/${userId}/contributions`}>Contribuições</Link>
                   </li>
-                  
+
                   <li className={pageParam == 'following' ? 'current' : ''}>
                     <Link to={`/${userId}/following`}>Seguindo</Link>
                   </li>
