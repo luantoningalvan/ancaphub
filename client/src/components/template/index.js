@@ -8,7 +8,7 @@ const Template = ({ children }) => {
   const auth = useSelector(state => state.auth)
   return (
     <ThemeProvider>
-      <Header />
+      <Header user={auth.user} />
       <Sidenav user={auth.user} />
       <Main>{children}</Main>
     </ThemeProvider>
