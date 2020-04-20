@@ -99,7 +99,7 @@ const HeaderMenuItem = styled.li`
   }
 `;
 
-const Header = () => {
+const Header = ({user}) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const { notifications, notReadCount } = useSelector(
@@ -194,7 +194,7 @@ const Header = () => {
           >
             <DropdownListContainer>
               <DropdownListItem icon={<ProfileIcon />}>
-                <Link to="/user">
+                <Link to={`/${user._id}`}>
                   <FormattedMessage id="common.profile" />
                 </Link>
               </DropdownListItem>

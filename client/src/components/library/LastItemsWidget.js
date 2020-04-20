@@ -8,8 +8,7 @@ import CardFooter from '../ui/CardFooter';
 import CardHeader from '../ui/CardHeader';
 import CardBody from '../ui/CardBody';
 import defaultCover from '../../assets/default-book-cover.jpg';
-
-// Redux actions
+import LoadContent from '../ui/LoadContent'
 import { getRecentItemsRequest } from '../../actions/library';
 
 const LastItems = styled.div`
@@ -72,7 +71,7 @@ const ItemContent = styled.div`
 
 const LastItemsWidget = () => {
   const dispatch = useDispatch();
-  const { recentItems: items } = useSelector((state) => state.library);
+  const { recentItems: items, loading } = useSelector((state) => state.library);
 
   React.useEffect(() => {
     dispatch(getRecentItemsRequest());
@@ -89,9 +88,10 @@ const LastItemsWidget = () => {
           </h3>
         </CardHeader>
         <CardBody>
+          <LoadContent loading={loading}>
           <LastItems>
             {items && items.map((item) => (
-              <Item to={`/${item.type}s/${item._id}`} key={item._id}>
+              <Item to={`/library/${item.type}s/${item._id}`} key={item._id}>
                 <ItemCover cover={item.cover !== '' && item.cover !== null ? item.cover.url : defaultCover} />
                 <ItemContent>
                   <h4 className="title">{item.title.substr(0, 49)}</h4>
@@ -100,6 +100,7 @@ const LastItemsWidget = () => {
               </Item>
             ))}
           </LastItems>
+          </LoadContent>
         </CardBody>
         <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
       </Card>
