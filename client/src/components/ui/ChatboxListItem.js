@@ -61,7 +61,7 @@ const ChatboxListItem = ({ message }) => (
     </div>
     <div className="block">
       <p className="chatUserName">
-        {message.body}
+        {message.user.name}
         {' '}
         <span className="messageTime">{message.createdAt}</span>
       </p>

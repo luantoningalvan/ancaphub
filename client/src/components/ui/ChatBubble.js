@@ -17,7 +17,7 @@ const BubbleWrap = styled.div`
 
 const BubbleBody = styled.div`
   display: flex;
-  flex-direction: ${(props) => (props.mine ? 'row-reverse' : 'row')};
+  flex-direction: column;
   background-color: ${(props) => (props.mine
     ? props.theme.palette.secondary
     : props.theme.palette.background)};
@@ -27,28 +27,46 @@ const BubbleBody = styled.div`
   border-bottom-right-radius: ${(props) => (props.mine ? '0px' : '5px')};
   border-top-left-radius: ${(props) => (!props.mine ? '0px' : '5px')};
   justify-content: flex-end;
-  align-items: center;
   & > span.messageBody {
     display: inline-block;
     font-size: 0.9em;
     line-height: 1em;
   }
 
-  & > span.messageTime {
-    display: inline-block;
-    font-size: 0.6em;
-    line-height: 1em;
-    margin: 0 1em;
-    vertical-align: center;
+  & > span.messageSenderName {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.5em;
   }
+
+  & > div.messageContent {
+    & > span.messageTime {
+      display: inline-block;
+      font-size: 0.6em;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1em;
+      margin: 0 1em;
+      vertical-align: center;
+    }
+    & > div.messageContent {
+      display: flex;
+      flex-direction: ${(props) => (props.mine ? 'row-reverse' : 'row')};
+    }
+  }
+
 `;
 
 // Message properties will be changed to match actual API response. This is only for prototyping
-const ChatBubble = ({ message, mine }) => (
+const ChatBubble = ({ message, mine, showName }) => (
   <BubbleWrap mine={mine}>
     <BubbleBody mine={mine}>
-      <span className="messageBody">{message.body}</span>
-      <span className="messageTime">{message.createdAt}</span>
+      { showName && <span className="messageSenderName">{message.user.name}</span> }
+      <div className="messageContent">
+        <span className="messageBody">{message.body}</span>
+        <span className="messageTime">{message.createdAt}</span>
+      </div>
     </BubbleBody>
   </BubbleWrap>
 );
