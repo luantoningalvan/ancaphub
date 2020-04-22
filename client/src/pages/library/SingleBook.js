@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import DropdownListContainer from "../../components/ui/DropdownListContainer";
 import DropdownListItem from "../../components/ui/DropdownListItem";
 import defaultThumbnail from "../../assets/default-book-cover.jpg";
-// import Categories from "../../../components/categories/showElementCategories";
+import Categories from "../../components/categories/ShowCategories";
 // import Ratings from "../../../components/library/ratings";
 // import InvitedBy from "../../../components/profile/invitedBy"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
@@ -82,7 +82,7 @@ function SingleBook() {
             : defaultThumbnail
         }
       />
-      <div style={{ marginTop: -137, position: "absolute", width: "inherit" }}>
+      <div style={{ marginTop: -137, marginBottom: 16, position: "absolute", width: "inherit" }}>
         <Container>
           <div
             style={{
@@ -103,7 +103,7 @@ function SingleBook() {
                 <div style={{ padding: 10 }}>
                   <Dropdown
                     toggle={
-                      <Button fullwidth color="secondary">
+                      <Button fullwidth componente={<a></a>} color="secondary">
                         Baixar
                       </Button>
                     }
@@ -120,11 +120,13 @@ function SingleBook() {
                 </div>
               </Paper>
               {/* <InvitedBy user={user} /> */}
-              InvitedBy
             </div>
             <div>
-              {/* <Categories categories={categories} /> */}
-              <div style={{ padding: "15px 0px" }}>Categories</div>
+        
+              <div style={{ marginBottom: 8 }}>
+              <Categories categories={singleItem.categories} />
+              </div>
+
               <Title>{singleItem && singleItem.title}</Title>
               <Author>{singleItem && singleItem.author}</Author>
               <div>{singleItem && singleItem.content}</div>
