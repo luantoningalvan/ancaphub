@@ -10,6 +10,7 @@ import Users from '../pages/users';
 import SingleGroup from '../pages/groups/SingleGroup';
 import Events from '../pages/events';
 import Projects from '../pages/projects';
+import SingleProject from '../pages/projects/SingleProject';
 import Profile from '../pages/profiles';
 import Notifications from '../pages/notifications';
 import Messages from '../pages/messages';
@@ -76,6 +77,11 @@ export default [
     exact: true,
     path: '/projects',
     component: Projects,
+  },
+  {
+    exact: true,
+    path: '/projects/:projectId/:page?',
+    component: SingleProject,
   },
   {
     exact: true,
