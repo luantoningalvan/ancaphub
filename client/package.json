@@ -23,6 +23,7 @@
     "querystring": "^0.2.0",
     "rc-slider": "^9.2.4",
     "react": "^16.13.0",
+    "react-big-calendar": "^0.24.4",
     "react-dom": "^16.13.0",
     "react-easy-crop": "^2.1.1",
     "react-intl": "^3.12.0",
