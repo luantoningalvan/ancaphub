@@ -9,6 +9,7 @@ import Groups from '../pages/groups';
 import Users from '../pages/users';
 import SingleGroup from '../pages/groups/SingleGroup';
 import Events from '../pages/events';
+import SingleEvent from '../pages/events/SingleEvent';
 import Projects from '../pages/projects';
 import Profile from '../pages/profiles';
 import Notifications from '../pages/notifications';
@@ -71,6 +72,11 @@ export default [
     exact: true,
     path: '/events',
     component: Events,
+  },
+  {
+    exact: true,
+    path: '/events/:id',
+    component: SingleEvent,
   },
   {
     exact: true,
