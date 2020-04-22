@@ -42,13 +42,14 @@ const Menu = () => {
         label="Biblioteca"
         link="/library"
       />
+      {/*
       <MenuItem
         current={url.includes('/users')}
         icon={<UsersIcon />}
         label="Usuários"
         link="/users"
-      />
-{/* 
+      />*/}
+
       <MenuItem
         current={url.includes('/groups')}
         icon={<GroupIcon />}
@@ -84,7 +85,7 @@ const Menu = () => {
         )}
         link="/projects"
       />
-      */}
+      
     </MenuWrapper>
   );
 };

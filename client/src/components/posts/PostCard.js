@@ -7,7 +7,7 @@ import ReactPlayer from "react-player";
 import MdMore from "react-ionicons/lib/MdMore";
 import LikeIcon from "react-ionicons/lib/IosThumbsUpOutline";
 import LikeIconFull from "react-ionicons/lib/IosThumbsUp";
-// import ShareIcon from 'react-ionicons/lib/IosShareAltOutline';
+import ShareIcon from 'react-ionicons/lib/IosShareAltOutline';
 import CommentIcon from "react-ionicons/lib/IosTextOutline";
 import DeleteIcon from "react-ionicons/lib/IosRemoveCircleOutline";
 import { useDispatch, useSelector } from "react-redux";
@@ -157,14 +157,14 @@ const PostCard = ({ data }) => {
             <span>Comentar</span>
           </button>
         </div>
-        {/*
+        
         <div>
         <button disabled>
           <ShareIcon />
           <span>Compartilhar</span>
         </button>
         </div>
-        */}
+        
       </div>
       <CommentBox expanded={commentBoxState} post={data._id} />
     </PostContainer>

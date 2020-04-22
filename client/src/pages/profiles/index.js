@@ -146,14 +146,14 @@ export default () => {
                 <FollowButton user={userId} />
                 {verifyIfIsOwnProfile && <EditProfile open={editProfile} />}
 
-                {/*
+                {!verifyIfIsOwnProfile && (
                 <Button color="primary">
                   <FormattedMessage
                     id="common.sendMessage"
                     description="Enviar Mensagem"
                   />
                 </Button>
-                */}
+                )}
               </div>
             </ProfileInfo>
           </ProfileHeader>
@@ -201,14 +201,14 @@ export default () => {
                   <li className={pageParam == undefined ? 'current' : ''}>
                     <Link to={`/${userId}`}>Feed</Link>
                   </li>
-                  {/* 
+                  
                   <li className={pageParam == 'lists' ? 'current' : ''}>
                     <Link to={`/${userId}/lists`}>Listas</Link>
                   </li>
                   <li className={pageParam == 'contributions' ? 'current' : ''}>
                     <Link to={`/${userId}/contributions`}>Contribuições</Link>
                   </li>
-                  */}
+                  
                   <li className={pageParam == 'following' ? 'current' : ''}>
                     <Link to={`/${userId}/following`}>Seguindo</Link>
                   </li>
