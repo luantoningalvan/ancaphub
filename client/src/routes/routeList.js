@@ -1,6 +1,7 @@
 import Home from '../pages/home';
 import Feed from '../pages/feed';
 import Library from '../pages/library';
+import Contribute from '../pages/library/Contribute';
 import SingeBook from '../pages/library/SingleBook';
 import SingleArticle from '../pages/library/SingleArticle';
 import SingleVideo from '../pages/library/SingleVideo';
@@ -29,6 +30,11 @@ export default [
     exact: true,
     path: '/home',
     component: Feed,
+  },
+  {
+    exact: true,
+    path: '/library/contribute',
+    component: Contribute,
   },
   {
     exact: true,
