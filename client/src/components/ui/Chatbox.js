@@ -18,11 +18,13 @@ const ChatboxWrapper = styled.div`
   }
 `;
 
-const Chatbox = ({ chats, currentChat }) => (
+const Chatbox = ({
+  chats, currentChat, showName, showList, showAvatar,
+}) => (
   <ChatboxWrapper>
     <Paper className="paper">
-      <ChatboxMessageList chats={chats} />
-      <ChatWindow chat={currentChat} />
+      { showList && <ChatboxMessageList chats={chats} /> }
+      <ChatWindow chat={currentChat} showName={showName} showAvatar={showAvatar} />
     </Paper>
   </ChatboxWrapper>
 );
