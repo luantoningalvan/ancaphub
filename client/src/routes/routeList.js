@@ -1,6 +1,7 @@
 import Home from '../pages/home';
 import Feed from '../pages/feed';
 import Library from '../pages/library';
+import Contribute from '../pages/library/Contribute';
 import SingeBook from '../pages/library/SingleBook';
 import SingleArticle from '../pages/library/SingleArticle';
 import SingleVideo from '../pages/library/SingleVideo';
@@ -9,6 +10,7 @@ import Users from '../pages/users';
 import SingleGroup from '../pages/groups/SingleGroup';
 import Events from '../pages/events';
 import Projects from '../pages/projects';
+import SingleProject from '../pages/projects/SingleProject';
 import Profile from '../pages/profiles';
 import Notifications from '../pages/notifications';
 import Messages from '../pages/messages';
@@ -29,6 +31,11 @@ export default [
     exact: true,
     path: '/home',
     component: Feed,
+  },
+  {
+    exact: true,
+    path: '/library/contribute',
+    component: Contribute,
   },
   {
     exact: true,
@@ -70,6 +77,11 @@ export default [
     exact: true,
     path: '/projects',
     component: Projects,
+  },
+  {
+    exact: true,
+    path: '/projects/:projectId/:page?',
+    component: SingleProject,
   },
   {
     exact: true,

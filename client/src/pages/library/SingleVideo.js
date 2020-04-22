@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 import Container from '../../components/ui/Container';
-// import Categories from "../../../components/categories/showElementCategories";
+import Categories from "../../components/categories/ShowCategories";
+
 // import LoadContent from "../../../components/loaders/loadContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
 
@@ -58,8 +59,8 @@ const SingleVideo = () => {
             <ReactPlayer className="videoPlayer" width="100%" height="100%" url={singleItem.extraFields && singleItem.extraFields.videoUrl} />
           </PlayerWrapper>
           <div style={{ marginTop: 32 }}>
-            {/* <Categories categories={categories} /> */}
-            Categories
+            <Categories categories={singleItem.categories} />
+            
             <Title>{singleItem.title}</Title>
             <Author>
               Participantes:
@@ -72,7 +73,6 @@ const SingleVideo = () => {
       <Container>
         <div style={{ marginTop: 16 }}>
           {singleItem.content}
-          {/* <InvitedBy user={user} /> */}
         </div>
       </Container>
     </>

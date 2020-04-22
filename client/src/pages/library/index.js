@@ -19,6 +19,7 @@ import { loadCategoriesRequest } from "../../actions/categories";
 import { getItemsRequest } from "../../actions/library";
 import LoadContent from "../../components/ui/LoadContent";
 import Paper from "../../components/ui/Paper";
+import { Link } from 'react-router-dom'
 
 export default () => {
   const [type, setType] = useState("");
@@ -53,10 +54,12 @@ export default () => {
         title="Biblioteca"
         description="Confira materiais de estudo libertários enviados pela comunidade"
         actions={
-          <Button color="primary">
+          <Link to="/library/contribute">
+          <Button color="primary" to="/library/contribute">
             <UploadButton />
             <span>Contribuir</span>
           </Button>
+          </Link>
         }
       />
 

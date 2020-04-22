@@ -29,7 +29,8 @@ const getAll = async (req, res, next) => {
   }
 
   if (category != '') {
-    filterQuery = { ...filterQuery, 'categories.category': category };
+    console.log('TOP')
+    filterQuery = { ...filterQuery, 'categories': category };
   }
 
   if (type != '') {
