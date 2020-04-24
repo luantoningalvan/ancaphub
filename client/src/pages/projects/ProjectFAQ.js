@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import ArrowIcon from 'react-ionicons/lib/IosArrowDown';
-import Paper from '../../components/ui/Paper';
+import Card from '../../components/ui/Card';
+import CardBody from '../../components/ui/CardBody';
+import CardHeader from '../../components/ui/CardHeader';
 import Collapse from '../../components/ui/Collapse';
 
 const FAQQuestion = styled.div`
@@ -18,30 +20,30 @@ export default () => {
   return (
     <>
       <FAQQuestion open={openQuestions[0]}>
-        <Paper padding style={{ display: 'flex', width: '100%' }}>
-          <h3>Você é soça?</h3>
-          <div style={{ marginLeft: 'auto' }}>
+        <Card>
+          <CardHeader style={{padding: 16}}>
+            <h3>A plataforma será gratuita?</h3>
             <ArrowIcon onClick={() => setOpenQuestions({ ...openQuestions, 0: !openQuestions[0] })} color="white" style={{ marginLeft: 'auto' }} />
-          </div>
-        </Paper>
-        <Collapse expanded={openQuestions[0]}>
-          <Paper padding style={{ marginTop: 16 }}>
-            <p>Eu sou totalmente contra esse negócio de estado</p>
-          </Paper>
-        </Collapse>
+          </CardHeader>
+          <Collapse expanded={openQuestions[0]}>
+            <CardBody>
+            <p>Sim, será gratuita. É possível que no futuro haja um plano PRO, mas este traria funções que nunca sequer foram anunciadas.</p>
+            </CardBody>
+          </Collapse>
+        </Card>
       </FAQQuestion>
       <FAQQuestion open={openQuestions[1]}>
-        <Paper padding style={{ display: 'flex', width: '100%' }}>
-          <h3>CHT dá pau em AP?</h3>
-          <div style={{ marginLeft: 'auto' }}>
+        <Card>
+          <CardHeader style={{padding: 16}}>
+            <h3>Vai ter aplicativo?</h3>
             <ArrowIcon onClick={() => setOpenQuestions({ ...openQuestions, 1: !openQuestions[1] })} color="white" style={{ marginLeft: 'auto' }} />
-          </div>
-        </Paper>
-        <Collapse expanded={openQuestions[1]}>
-          <Paper padding style={{ marginTop: 16 }}>
-            <p>Há controvérsias</p>
-          </Paper>
-        </Collapse>
+          </CardHeader>
+          <Collapse expanded={openQuestions[1]}>
+            <CardBody>
+            <p>Sim, além do nosso site ser 100% compatível com dispositivos móveis teremos também aplicativos nativos para Android e iOS.</p>
+            </CardBody>
+          </Collapse>
+        </Card>
       </FAQQuestion>
     </>
   );

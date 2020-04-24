@@ -11,9 +11,9 @@ import ProjectCard from '../../components/projects/ProjectCard';
 
 const projects = [
   {
-    name: 'Escorts Ancap',
-    cover: '',
-    peopleWatching: 9999,
+    name: 'AncapHub',
+    cover: 'https://pbs.twimg.com/profile_banners/1085703204141260800/1585659841/1500x500',
+    peopleWatching: 1245,
     hasEnrolled: true,
     _id: 1,
   },
