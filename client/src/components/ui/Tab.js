@@ -16,9 +16,16 @@ const TabStyle = styled.li`
 
   > a {
     display: block;
-    color: white;
+    color: ${props => props.theme.palette.text.primary};
     text-decoration: none;
-    padding: 16px;
+    padding:  0px 16px;
+    height:100%;
+    display:flex;
+    align-items:center;
+
+    svg {
+      fill: ${props => props.theme.palette.text.primary}
+    }
   }
 `;
 
