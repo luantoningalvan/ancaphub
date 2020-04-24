@@ -1,86 +1,38 @@
-import React, { Suspense, lazy } from 'react';
-import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
-import Container from '../../components/ui/Container';
-import Button from '../../components/ui/Button';
-import Paper from '../../components/ui/Paper';
-import GridContainer from '../../components/ui/GridContainer';
-import GridItem from '../../components/ui/GridItem';
-import Loader from '../../components/ui/Loader';
+import React, { Suspense, lazy } from "react";
+import styled from "styled-components";
+import { Link, useParams } from "react-router-dom";
+import Container from "../../components/ui/Container";
+import Tabs from "../../components/ui/Tabs";
+import Tab from "../../components/ui/Tab";
+import Paper from "../../components/ui/Paper";
+import GridContainer from "../../components/ui/GridContainer";
+import GridItem from "../../components/ui/GridItem";
+import Loader from "../../components/ui/Loader";
+import SettingIcon from 'react-ionicons/lib/IosSettings'
 
-const GroupBoard = lazy(() => import('./GroupBoard'));
-const GroupChat = lazy(() => import('./GroupChat'));
-const GroupFiles = lazy(() => import('./GroupFiles'));
-const GroupMembers = lazy(() => import('./GroupMembers'));
+const GroupBoard = lazy(() => import("./GroupBoard"));
+const GroupChat = lazy(() => import("./GroupChat"));
+const GroupFiles = lazy(() => import("./GroupFiles"));
+const GroupMembers = lazy(() => import("./GroupMembers"));
+const GroupManage = lazy(() => import("./GroupManage"));
 
-const Tabs = styled.ul`
-  display: flex;
-
-  > li {
-    list-style: none;
-    border-bottom: 3px solid transparent;
-
-    &:hover {
-      border-bottom: 3px solid ${(props) => props.theme.palette.border};
-    }
-  }
-
-  > li.current {
-    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
-  }
-  > li a {
-    display: block;
-    color: ${(props) => props.theme.palette.text.primary};
-    text-decoration: none;
-    padding: 16px 32px;
-  }
-`;
-
-const GroupBanner = styled.div`
-  height: 200px;
-  background: url("${(props) => props.cover}") rgba(0,0,0,.5);
-  background-size: cover;
-  background-blend-mode: overlay;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-position: center;
+const GroupHeader = styled.div`
+  height: 64px;
+  width: 100%;
+  background: ${props => props.theme.palette.paperDark};
+  border-bottom: 1px solid ${props => props.theme.palette.border};
 
   h2 {
-    color: ${(props) => props.theme.palette.text.contrast};
-    font-size: 1.9em;
-    margin-bottom: 5px;
-  }
-
-  span {
-    color: ${(props) => props.theme.palette.text.contrast};
-    font-size: 1.1em;
-    font-weight: lighter;
-  }
-`;
-
-
-const GroupAbout = styled.div`
-  width: 100%;
-  > p {
-    margin: 10px 0px;
-  }
-  > ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  > ul li {
-    list-style: none;
-    margin: 10px 0px;
-  }
-  > ul li a {
     color: ${(props) => props.theme.palette.text.primary};
+    font-size: 1.3em;
   }
-  > ul li svg {
-    float: left;
-    fill: ${(props) => props.theme.palette.text.primary};
-    margin-right: 10px;
+
+  .group-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    width: 100%;
   }
 `;
 
@@ -93,65 +45,61 @@ const SingleGroup = () => {
     chat: <GroupChat />,
     files: <GroupFiles />,
     members: <GroupMembers />,
+    manage: <GroupManage />,
   };
 
   React.useEffect(() => {
     setPage(pages[groupPage]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupPage]);
 
   return (
     <>
-      <GroupBanner cover="https://www.outraestacao.com/wp-content/uploads/2019/04/significado_bandeira_rio_grande_do_sul.jpg">
+      <GroupHeader>
         <Container>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h2>Anarco Bagualismo</h2>
-              <span>Grupo Público - 120 membros</span>
-            </div>
-            <div>
-              <Button color="secondary">SAIR</Button>
-            </div>
+          <div className="group-header-wrapper">
+            <h2>Anarco Bagualismo</h2>
+
+            <Tabs style={{height: 64}}>
+              <Tab
+                current={groupPage === undefined}
+                link={`/groups/${groupId}`}
+                label="Quadro"
+              />
+              <Tab
+                current={groupPage === "chat"}
+                link={`/groups/${groupId}/chat`}
+                label="Chat"
+              />
+              <Tab
+                current={groupPage === "files"}
+                link={`/groups/${groupId}/files`}
+                label="Arquivos"
+              />
+              <Tab
+                current={groupPage === "members"}
+                link={`/groups/${groupId}/members`}
+                label="Membros"
+              />
+               <Tab
+                current={groupPage === "manage"}
+                link={`/groups/${groupId}/manage`}
+                label={<SettingIcon />}
+              />
+            </Tabs>
           </div>
         </Container>
-      </GroupBanner>
+      </GroupHeader>
       <Container>
-        <GridContainer style={{ marginTop: 16 }} spacing={2}>
-          <GridItem xs={4}>
-            <Paper padding style={{ width: '100%' }}>
-              <GroupAbout>
-                <h3>Sobre Anarco Bagualismo</h3>
-                <p>Lorem ipsum dolor sit amet.</p>
-              </GroupAbout>
-            </Paper>
-          </GridItem>
-          <GridItem xs={8}>
-            <Paper style={{ width: '100%' }}>
-              <Tabs>
-                <li className={groupPage === undefined ? 'current' : ''}>
-                  <Link to={`/groups/${groupId}`}>Quadro</Link>
-                </li>
-                <li className={groupPage === 'chat' ? 'current' : ''}>
-                  <Link to={`/groups/${groupId}/chat`}>Chat</Link>
-                </li>
-                <li className={groupPage === 'files' ? 'current' : ''}>
-                  <Link to={`/groups/${groupId}/files`}>Arquivos</Link>
-                </li>
-                <li className={groupPage === 'members' ? 'current' : ''}>
-                  <Link to={`/groups/${groupId}/members`}>Membros</Link>
-                </li>
-              </Tabs>
-            </Paper>
-            <div style={{
-              width: '100%', margin: '16px 0',
-            }}
-            >
-              <Suspense fallback={<Loader size={96} />}>
-                {Page}
-              </Suspense>
-            </div>
-          </GridItem>
-        </GridContainer>
+        <Paper style={{ width: "100%" }}></Paper>
+        <div
+          style={{
+            width: "100%",
+            margin: "16px 0",
+          }}
+        >
+          <Suspense fallback={<Loader size={96} />}>{Page}</Suspense>
+        </div>
       </Container>
     </>
   );
