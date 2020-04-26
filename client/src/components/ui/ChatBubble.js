@@ -11,8 +11,7 @@ const BubbleWrap = styled.div`
   display: flex;
   justify-content: ${(props) => (props.mine ? 'flex-end' : 'flex-start')};
   align-items: center;
-  width: calc(100% - 1em);
-  padding: 16px 30px;
+  width: 100%;
 `;
 
 const BubbleBody = styled.div`
@@ -20,7 +19,7 @@ const BubbleBody = styled.div`
   flex-direction: column;
   background-color: ${(props) => (props.mine
     ? props.theme.palette.secondary
-    : props.theme.palette.background)};
+    : props.theme.palette.paperDark)};
   padding: 16px;
   color: ${(props) => (props.mine ? 'black' : '#ccc')};
   border-radius: 5px;
