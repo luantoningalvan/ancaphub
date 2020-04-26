@@ -7,7 +7,7 @@ import CardFooter from '../ui/CardFooter';
 import CardHeader from '../ui/CardHeader';
 import CardBody from '../ui/CardBody';
 import defaultAvatar from '../../assets/default-profile-picture.jpg';
-// import { Link } from 'react-router-dom'
+import MiniUserCard from './MiniUserCard'
 
 export const User = styled.li`
   list-style: none;
@@ -81,21 +81,7 @@ const UserListWidget = () => {
         <CardBody>
           <ul>
             {users.map((user, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <User key={index}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar
-                    src={user.avatar !== '' ? user.avatar : defaultAvatar}
-                  />
-                  <div>
-                    <h4>{user.name}</h4>
-                    <span>{user.username}</span>
-                  </div>
-                </div>
-                <Button variant="outlined" size="small" color="primary">
-                  <FormattedMessage id="common.follow" />
-                </Button>
-              </User>
+              <MiniUserCard key={index} user={user}/>
             ))}
           </ul>
         </CardBody>

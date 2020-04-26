@@ -10,6 +10,7 @@ import CardBody from '../ui/CardBody';
 import defaultCover from '../../assets/default-book-cover.jpg';
 import LoadContent from '../ui/LoadContent'
 import { getRecentItemsRequest } from '../../actions/library';
+import MiniLibraryCard from './MiniLibraryCard'
 
 const LastItems = styled.div`
   padding:0;
@@ -91,13 +92,7 @@ const LastItemsWidget = () => {
           <LoadContent loading={loading}>
           <LastItems>
             {items && items.map((item) => (
-              <Item to={`/library/${item.type}s/${item._id}`} key={item._id}>
-                <ItemCover cover={item.cover !== '' && item.cover !== null ? item.cover.url : defaultCover} />
-                <ItemContent>
-                  <h4 className="title">{item.title.substr(0, 49)}</h4>
-                  <h5 className="author">{item.author.substr(0, 49)}</h5>
-                </ItemContent>
-              </Item>
+              <MiniLibraryCard item={item} />
             ))}
           </LastItems>
           </LoadContent>
