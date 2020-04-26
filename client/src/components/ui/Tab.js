@@ -29,9 +29,9 @@ const TabStyle = styled.li`
   }
 `;
 
-const Tab = ({label, link, current }) => {
+const Tab = ({label, link, current, ...props }) => {
   return (
-    <TabStyle current={current}>
+    <TabStyle current={current} {...props }>
       <Link to={link}>{label}</Link>
     </TabStyle>
   )
