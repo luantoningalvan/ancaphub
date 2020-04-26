@@ -91,15 +91,7 @@ const SingleGroup = () => {
         </Container>
       </GroupHeader>
       <Container>
-        <Paper style={{ width: "100%" }}></Paper>
-        <div
-          style={{
-            width: "100%",
-            margin: "16px 0",
-          }}
-        >
-          <Suspense fallback={<Loader size={96} />}>{Page}</Suspense>
-        </div>
+        <Suspense fallback={<Loader size={96} />}>{Page}</Suspense>
       </Container>
     </>
   );
