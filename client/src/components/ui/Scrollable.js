@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 
 const ScrollableWrap = styled.div`
   display: flex;
+  height: 100%;
   flex-grow: ${(props) => (props.grow ? 1 : 0)};
   flex-direction: column;
   position: relative;
   border-right: 1px solid #2f3749;
   & > div.wrapped {
+  padding: 16px;
+
     width: 100%;
     overflow-y: scroll;
     flex: 1;
