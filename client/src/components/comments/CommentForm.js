@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import UserAvatar from '../users/UserAvatar';
-import { useDispatch, useSelector } from 'react-redux'
-import { addCommentRequest } from '../../actions/comments'
+import { addCommentRequest } from '../../actions/comments';
 
 const CommentFormStyle = styled.div`
   width: 100%;
@@ -25,7 +25,7 @@ const CommentInput = styled.input`
 const CommentForm = ({ post, placeholder }) => {
   const [commentData, setCommentData] = useState({ content: '' });
   const dispatch = useDispatch();
-  const authUser = useSelector(state => state.auth.user)
+  const authUser = useSelector((state) => state.auth.user);
   const handleChange = (e) => {
     setCommentData({ content: e.target.value });
   };

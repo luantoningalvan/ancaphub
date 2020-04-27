@@ -1,10 +1,11 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 import Container from '../../components/ui/Container';
-import Categories from "../../components/categories/ShowCategories";
+import Categories from '../../components/categories/ShowCategories';
 
 // import LoadContent from "../../../components/loaders/loadContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
@@ -60,12 +61,10 @@ const SingleVideo = () => {
           </PlayerWrapper>
           <div style={{ marginTop: 32 }}>
             <Categories categories={singleItem.categories} />
-            
+
             <Title>{singleItem.title}</Title>
             <Author>
-              Participantes:
-              {' '}
-              {singleItem.author}
+              <FormattedMessage id="library.videos.participants" values={{ participants: singleItem.author }} />
             </Author>
           </div>
         </Container>

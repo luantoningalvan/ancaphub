@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
-import styled from "styled-components";
-import Container from "../../components/ui/Container";
-import Hero from "../../components/ui/Hero";
-import Button from "../../components/ui/Button";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import IconButton from "../../components/ui/IconButton";
-import { Calendar as RCBC, momentLocalizer } from "react-big-calendar";
-import BackButton from "react-ionicons/lib/IosArrowBack";
-import NextButton from "react-ionicons/lib/IosArrowForward";
-import EventCard from '../../components/events/EventCard'
-import moment from "moment";
-import "moment/locale/pt-br";
-import CreateEvent from '../../components/events/CreateEvent'
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import { Calendar as RCBC, momentLocalizer } from 'react-big-calendar';
+import BackButton from 'react-ionicons/lib/IosArrowBack';
+import NextButton from 'react-ionicons/lib/IosArrowForward';
+import moment from 'moment';
+import Container from '../../components/ui/Container';
+import Hero from '../../components/ui/Hero';
+import Button from '../../components/ui/Button';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import IconButton from '../../components/ui/IconButton';
+import EventCard from '../../components/events/EventCard';
+import 'moment/locale/pt-br';
+import CreateEvent from '../../components/events/CreateEvent';
 
 const Calendar = styled(RCBC)`
   background: ${(props) => props.theme.palette.paperDark};
@@ -124,12 +124,12 @@ const Calendar = styled(RCBC)`
 
 const Toolbar = (toolbar) => {
   const goToBack = () => {
-    toolbar.onNavigate("PREV");
+    toolbar.onNavigate('PREV');
   };
   const goToNext = () => {
-    toolbar.onNavigate("NEXT");
+    toolbar.onNavigate('NEXT');
   };
-  console.log(toolbar);
+
   return (
     <div className="rbc-toolbar">
       <div className="month-switch">
@@ -138,19 +138,26 @@ const Toolbar = (toolbar) => {
         </IconButton>
         <span>{toolbar.label}</span>
         <IconButton onClick={goToNext}>
-          {" "}
-          <NextButton />{" "}
+          {' '}
+          <NextButton />
+          {' '}
         </IconButton>
       </div>
       <ul className="view-switch">
         <li>
-          <button>Mês</button>
+          <button>
+            <FormattedMessage id="events.month" />
+          </button>
         </li>
         <li>
-          <button>Semana</button>
+          <button>
+            <FormattedMessage id="events.week" />
+          </button>
         </li>
         <li>
-          <button>Dia</button>
+          <button>
+            <FormattedMessage id="events.day" />
+          </button>
         </li>
       </ul>
     </div>
@@ -159,47 +166,47 @@ const Toolbar = (toolbar) => {
 
 
 export default () => {
-  const [ createEventState, setCreateEventState] = useState(false)
-  moment.locale("pt-br");
+  const [createEventState, setCreateEventState] = useState(false);
+  moment.locale('pt-br');
   const localizer = momentLocalizer(moment);
   const events = [
     {
       _id: 1,
       start: moment().toDate(),
       end: moment().toDate(),
-      title: "AncapHub Week",
-      cover: "https://ancaphub.com/wp-content/uploads/2020/04/maxresdefault-360x240.jpg",
-      location: "Online",
+      title: 'AncapHub Week',
+      cover: 'https://ancaphub.com/wp-content/uploads/2020/04/maxresdefault-360x240.jpg',
+      location: 'Online',
     },
   ];
 
-  let formats = {
-    dateFormat: "DD",
-    weekdayFormat: "dddd",
+  const formats = {
+    dateFormat: 'DD',
+    weekdayFormat: 'dddd',
   };
 
   return (
     <Container>
       <Hero
-        title={
+        title={(
           <FormattedMessage
             id="common.events"
             description="Título da página de eventos"
           />
-        }
-        description={
+        )}
+        description={(
           <FormattedMessage
             id="home.features.2"
             description="Descrição da página de eventos"
           />
-        }
+        )}
         actions={<Button color="primary" onClick={() => setCreateEventState(true)}>Criar Evento</Button>}
       />
-      
-      <CreateEvent open={createEventState} onClose={() => setCreateEventState(false)}/>
+
+      <CreateEvent open={createEventState} onClose={() => setCreateEventState(false)} />
 
       <div style={{ marginTop: 16 }}>
-        
+
         <Calendar
           localizer={localizer}
           events={events}
@@ -213,10 +220,10 @@ export default () => {
             day: true,
           }}
           formats={formats}
-        /> 
+        />
 
-        <h3 style={{marginTop: 24, fontSize: '1.7em'}}>Eventos Próximos</h3>
-        <GridContainer style={{margin: '16px 0px'}}>
+        <h3 style={{ marginTop: 24, fontSize: '1.7em' }}>Eventos Próximos</h3>
+        <GridContainer style={{ margin: '16px 0px' }}>
           {events.map((event) => (
             <GridItem xs={3}>
               <EventCard event={event} />

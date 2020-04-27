@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import LibraryIcon from 'react-ionicons/lib/IosFolder';
 import GroupIcon from 'react-ionicons/lib/IosPeople';
 import EventIcon from 'react-ionicons/lib/IosCalendar';
@@ -52,7 +53,7 @@ const Features = styled.ul`
   }
 `;
 
-export default props => {
+export default () => {
   const [activeBox, setActiveBox] = useState('signup');
 
   return (
@@ -62,24 +63,34 @@ export default props => {
       }}
       >
         <div>
-          <img src={logo} alt="Logo do AncapHub" />
-          <h2 style={{ fontWeight: 'bold', marginTop: 24 }}>Bem vindo à versão de testes do AncapHub!</h2>
+          <img src={logo} alt="AncapHub logo" />
+          <h2 style={{ fontWeight: 'bold', marginTop: 24 }}>
+            <FormattedMessage id="home.welcomeHeading" />
+          </h2>
           <Features>
             <li>
               <LibraryIcon />
-              <span>Tenha à sua disposição milhares de materiais para estudo.</span>
+              <span>
+                <FormattedMessage id="home.features.0" description="Study materials" />
+              </span>
             </li>
             <li>
               <LocationSearchIcon />
-              <span>Conheça libertários que morem perto de você.</span>
+              <span>
+                <FormattedMessage id="home.features.2" description="Nearby people" />
+              </span>
             </li>
             <li>
               <GroupIcon />
-              <span>Crie e participe de grupos de estudo.</span>
+              <span>
+                <FormattedMessage id="home.features.1" description="Groups" />
+              </span>
             </li>
             <li>
               <EventIcon />
-              <span>Confira eventos libertários que irão rolar.</span>
+              <span>
+                <FormattedMessage id="home.features.3" description="Events" />
+              </span>
             </li>
           </Features>
         </div>
@@ -90,7 +101,7 @@ export default props => {
                 fontWeight: 'bold', marginBottom: 16, marginTop: 8, textAlign: 'center',
               }}
               >
-                Entrar
+                <FormattedMessage id="common.login" />
               </h3>
               <SigninForm />
               <span
@@ -100,7 +111,7 @@ export default props => {
                 tabIndex={0}
                 onKeyDown={() => {}}
               >
-                Não possui uma conta?
+                <FormattedMessage id="home.form.noAccount" />
               </span>
             </>
           ) : (
@@ -109,7 +120,7 @@ export default props => {
                 fontWeight: 'bold', marginBottom: 16, marginTop: 8, textAlign: 'center',
               }}
               >
-                Cadastro
+                <FormattedMessage id="home.form.signUp" />
               </h3>
               <SignupForm />
               <span
@@ -119,7 +130,7 @@ export default props => {
                 tabIndex={0}
                 onKeyDown={() => {}}
               >
-                Já tem uma conta?
+                <FormattedMessage id="home.form.hasAccount" />
               </span>
             </>
           )}

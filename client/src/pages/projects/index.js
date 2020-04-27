@@ -31,13 +31,13 @@ export default () => (
         )}
         description={(
           <FormattedMessage
-            id="home.features.3"
+            id="home.features.4"
             description="Descrição da página de projetos"
           />
         )}
-        actions={(<Button type="contained" color="secondary">Criar projeto</Button>)}
+        actions={(<Button type="contained" color="secondary"><FormattedMessage id="projects.create" /></Button>)}
       />
-      <h3 style={{ margin: '20px 0 10px' }}>Explorar projetos</h3>
+      <h3 style={{ margin: '20px 0 10px' }}><FormattedMessage id="projects.explore" /></h3>
 
       <GridContainer spacing={1}>
         {projects.map((project) => (

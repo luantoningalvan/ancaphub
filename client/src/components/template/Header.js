@@ -99,7 +99,7 @@ const HeaderMenuItem = styled.li`
   }
 `;
 
-const Header = ({user}) => {
+const Header = ({ user }) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const { notifications, notReadCount } = useSelector(
@@ -160,13 +160,15 @@ const Header = ({user}) => {
                     <Notification notification={notification} key={index} />
                   ))}
                 </ul>
-                <CardFooter link="/notifications" label="See all" />
+                <CardFooter link="/notifications" label={<FormattedMessage id="common.showMore" />} />
               </>
             ) : (
-              <CardBody>Nenhuma notificação disponível</CardBody>
+              <CardBody>
+                <FormattedMessage id="notifications.noNotificationsFound" />
+              </CardBody>
             )}
           </Dropdown>
-          
+
           <Dropdown
             placement="bottom"
             offsetY={16}
@@ -179,7 +181,7 @@ const Header = ({user}) => {
           >
             <p>Messages will appear here...</p>
           </Dropdown>
-          
+
           <Dropdown
             offsetY={16}
             offsetX="-4vw"
@@ -198,7 +200,7 @@ const Header = ({user}) => {
                   <FormattedMessage id="common.profile" />
                 </Link>
               </DropdownListItem>
-              
+
               <DropdownListItem icon={<BookIcon />}>
                 <Link to="/contributions"><FormattedMessage id="common.contributions" /></Link>
               </DropdownListItem>

@@ -1,15 +1,16 @@
-import React from "react";
-import Container from "../../components/ui/Container";
-import styled from "styled-components";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import Paper from "../../components/ui/Paper";
-import Button from "../../components/ui/Button";
+import React from 'react';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import LocationIcon from 'react-ionicons/lib/IosPinOutline';
+import TicketIcon from 'react-ionicons/lib/IosCash';
+import HourIcon from 'react-ionicons/lib/IosClock';
+import PeopleIcon from 'react-ionicons/lib/IosPeople';
+import Container from '../../components/ui/Container';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import Paper from '../../components/ui/Paper';
+import Button from '../../components/ui/Button';
 
-import LocationIcon from "react-ionicons/lib/IosPinOutline";
-import TicketIcon from "react-ionicons/lib/IosCash";
-import HourIcon from "react-ionicons/lib/IosClock";
-import PeopleIcon from "react-ionicons/lib/IosPeople";
 
 const Event = styled.div`
   margin-top: 16px;
@@ -124,77 +125,83 @@ const Event = styled.div`
   }
 `;
 
-export default (props) => {
-  return (
-    <Container>
-      <Event>
-        <div className="event-header">
-          <div className="event-cover">
-            <img src="https://pbs.twimg.com/media/EWCrT8iXQAMp5s0?format=jpg&name=large" />
-          </div>
-
-          <div className="event-header-content">
-            <div>
-              <div className="event-date">
-                <span className="month">ABR</span>
-                <span className="day">20</span>
-              </div>
-              <span className="time">08:00 às 20:00</span>
-              <h2>AncapHub Week</h2>
-              <div className="event-location">
-                <LocationIcon />
-                <span>Online</span>
-              </div>
-            </div>
-
-            <div>
-            <Button color="primary" style={{boxShadow: '0px 0px 10px rgba(0,0,0,0.7)'}}>Tenho Interesse</Button>
-            </div>
-          </div>
+export default () => (
+  <Container>
+    <Event>
+      <div className="event-header">
+        <div className="event-cover">
+          <img src="https://pbs.twimg.com/media/EWCrT8iXQAMp5s0?format=jpg&name=large" alt="event cover" />
         </div>
 
-        <GridContainer spacing={2} style={{margin: '16px 0px'}}>
-          <GridItem xs={6}>
-            <Paper className="info-card">
-              <ul>
-                <li>
-                  <PeopleIcon />
-                  <span>53 pessoas comparecerão</span>
-                </li>
-                <li>
-                  <HourIcon />
-                  <span>08:00 às 20:00</span>
-                </li>
-                <li>
-                  <LocationIcon />
-                  <span>Online</span>
-                </li>
-                <li>
-                  <TicketIcon />
-                  <span>Grátis</span>
-                </li>
-              </ul>
+        <div className="event-header-content">
+          <div>
+            <div className="event-date">
+              <span className="month">ABR</span>
+              <span className="day">20</span>
+            </div>
+            <span className="time">
+              <FormattedMessage id="events.time" values={{ from: '08:00', to: '20:00' }} />
+            </span>
+            <h2>AncapHub Week</h2>
+            <div className="event-location">
+              <LocationIcon />
+              <span>Online</span>
+            </div>
+          </div>
 
-              <p>
+          <div>
+            <Button color="primary" style={{ boxShadow: '0px 0px 10px rgba(0,0,0,0.7)' }}>Tenho Interesse</Button>
+          </div>
+        </div>
+      </div>
+
+      <GridContainer spacing={2} style={{ margin: '16px 0px' }}>
+        <GridItem xs={6}>
+          <Paper className="info-card">
+            <ul>
+              <li>
+                <PeopleIcon />
+                <span>
+                  <FormattedMessage id="events.attendance" values={{ num: 53 }} />
+                </span>
+              </li>
+              <li>
+                <HourIcon />
+                <span>
+                  <FormattedMessage id="events.time" values={{ from: '08:00', to: '20:00' }} />
+                </span>
+              </li>
+              <li>
+                <LocationIcon />
+                <span>Online</span>
+              </li>
+              <li>
+                <TicketIcon />
+                <span>
+                  <FormattedMessage id="events.free" />
+                </span>
+              </li>
+            </ul>
+
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ornare risus quis neque suscipit, ut semper orci rhoncus. Proin lobortis nisl eu nisi placerat, ac faucibus lacus finibus.
-              </p>
-            </Paper>
-          </GridItem>
-          <GridItem xs={6}>
-            <h3 style={{marginBottom:8}}>Como chegar</h3>
-          <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d112277.11744442317!2d-51.7964725!3d-28.429516800000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1587573920904!5m2!1spt-BR!2sbr" 
-          allowFullScreen="" 
-          tabIndex="0"
-          frameborder="0" 
+            </p>
+          </Paper>
+        </GridItem>
+        <GridItem xs={6}>
+          <h3 style={{ marginBottom: 8 }}>
+            <FormattedMessage id="events.howToGet" />
+          </h3>
+          <iframe
+            title="event map"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d112277.11744442317!2d-51.7964725!3d-28.429516800000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1587573920904!5m2!1spt-BR!2sbr"
+            allowFullScreen=""
+            frameBorder="0"
 
-          style={{width:'100%', height: 300, borderRadius: 8}}
-          >
-
-          </iframe>
-          </GridItem>
-        </GridContainer>
-      </Event>
-    </Container>
-  );
-};
+            style={{ width: '100%', height: 300, borderRadius: 8 }}
+          />
+        </GridItem>
+      </GridContainer>
+    </Event>
+  </Container>
+);

@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import Paper from "../../components/ui/Paper";
-import Container from "../../components/ui/Container";
-import Button from "../../components/ui/Button";
-import ArticleIcon from "react-ionicons/lib/IosPaper";
-import BookIcon from "react-ionicons/lib/IosBook";
-import VideoIcon from "react-ionicons/lib/IosPlay";
-import styled from "styled-components";
-import TextField from "../../components/ui/TextField";
-import Stepper from "../../components/ui/Stepper";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import LibraryCard from "../../components/library/LibraryCard";
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import ArticleIcon from 'react-ionicons/lib/IosPaper';
+import BookIcon from 'react-ionicons/lib/IosBook';
+import VideoIcon from 'react-ionicons/lib/IosPlay';
+import styled from 'styled-components';
+import Button from '../../components/ui/Button';
+import Container from '../../components/ui/Container';
+import Paper from '../../components/ui/Paper';
+import TextField from '../../components/ui/TextField';
+import Stepper from '../../components/ui/Stepper';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import LibraryCard from '../../components/library/LibraryCard';
 
 const UploadBox = styled.div`
   height: 100px;
@@ -90,7 +91,7 @@ const Contribute = styled.div`
 `;
 
 export default (props) => {
-  const [form, setForm] = useState("");
+  const [form, setForm] = useState('');
   const [step, setStep] = useState(1);
 
   const handleForm = (form) => {
@@ -100,17 +101,17 @@ export default (props) => {
 
   const steps = [
     {
-      label: "Tipo",
-      description: "Escolha um tipo de material para contribuir.",
+      label: <FormattedMessage id="library.contribute.type" />,
+      description: <FormattedMessage id="library.contribute.typeDescription" />,
     },
-    { label: "Conteúdo", description: "Preencha o conteúdo" },
-    { label: "Exibição", description: "Configure uma capa pro seu item" },
-    { label: "Confirmar", description: "Tudo certo?" },
+    { label: <FormattedMessage id="library.contribute.content" />, description: <FormattedMessage id="library.contribute.contentDescription" /> },
+    { label: <FormattedMessage id="library.contribute.exhibition" />, description: <FormattedMessage id="library.contribute.exhibitionDescription" /> },
+    { label: <FormattedMessage id="library.contribute.confirm" />, description: <FormattedMessage id="library.contribute.confirmDescription" /> },
   ];
 
   return (
     <Container>
-      <div style={{ margin: "32px 0px" }}>
+      <div style={{ margin: '32px 0px' }}>
         <Stepper steps={steps} currentStep={step} setStepAction={setStep} />
       </div>
 
@@ -121,23 +122,29 @@ export default (props) => {
           <Paper padding>
             <ul>
               <li>
-                <button onClick={() => handleForm("article")}>
+                <button onClick={() => handleForm('article')}>
                   <ArticleIcon />
-                  <h4>Artigo</h4>
+                  <h4>
+                    <FormattedMessage id="common.article" />
+                  </h4>
                 </button>
               </li>
 
               <li>
-                <button onClick={() => handleForm("book")}>
+                <button onClick={() => handleForm('book')}>
                   <BookIcon />
-                  <h4>Livro</h4>
+                  <h4>
+                    <FormattedMessage id="common.book" />
+                  </h4>
                 </button>
               </li>
 
               <li>
-                <button onClick={() => handleForm("video")}>
+                <button onClick={() => handleForm('video')}>
                   <VideoIcon />
-                  <h4>Vídeo</h4>
+                  <h4>
+                    <FormattedMessage id="common.video" />
+                  </h4>
                 </button>
               </li>
             </ul>
@@ -147,24 +154,42 @@ export default (props) => {
         {step === 2 && (
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
             }}
           >
-            <Paper padding style={{ width: "100%" }}>
-              <TextField placeholder="Título" style={{ marginBottom: 8 }} />
-              <TextField placeholder="Autor" style={{ marginBottom: 8 }} />
-              <TextField
-                placeholder="Descrição"
-                style={{ marginBottom: 8, paddingBottom: 80 }}
-              />
-              <TextField placeholder="Categorias" style={{ marginBottom: 8 }} />
+            <Paper padding style={{ width: '100%' }}>
+              <FormattedMessage id="common.title">
+                {(msg) => (
+                  <TextField placeholder={msg} style={{ marginBottom: 8 }} />
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="common.author">
+                {(msg) => (
+                  <TextField placeholder={msg} style={{ marginBottom: 8 }} />
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="common.description">
+                {(msg) => (
+                  <TextField
+                    placeholder={msg}
+                    style={{ marginBottom: 8, paddingBottom: 80 }}
+                  />
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="common.categories">
+                {(msg) => (
+                  <TextField placeholder={msg} style={{ marginBottom: 8 }} />
+                )}
+              </FormattedMessage>
 
-              <h3 style={{ fontSize: "1em", margin: "16px 0px" }}>
-                Opções de download
+              <h3 style={{ fontSize: '1em', margin: '16px 0px' }}>
+                <FormattedMessage id="library.contribute.downloadOptions" />
               </h3>
-              <UploadBox>Nenhuma opção selecionada</UploadBox>
+              <UploadBox>
+                <FormattedMessage id="library.contribute.noneSelected" />
+              </UploadBox>
             </Paper>
 
             <Button
@@ -172,7 +197,7 @@ export default (props) => {
               onClick={() => setStep(3)}
               style={{ margin: '16px 0px' }}
             >
-              Próximo
+              <FormattedMessage id="common.next" />
             </Button>
           </div>
         )}
@@ -180,38 +205,40 @@ export default (props) => {
         {step === 3 && (
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
             }}
           >
-            <GridContainer spacing={4} style={{ width: "600px" }}>
+            <GridContainer spacing={4} style={{ width: '600px' }}>
               <GridItem xs={7}>
-                <Paper padding style={{ width: "100%" }}>
-                  <UploadBox>Nenhuma imagem selecionada</UploadBox>
+                <Paper padding style={{ width: '100%' }}>
+                  <UploadBox>
+                    <FormattedMessage id="library.contribute.noneSelected" />
+                  </UploadBox>
                   <Button
                     color="primary"
                     onClick={() => setStep(3)}
                     style={{ marginTop: 16 }}
                   >
-                    Próximo
+                    <FormattedMessage id="common.next" />
                   </Button>
                 </Paper>
               </GridItem>
               <GridItem xs={5}>
                 <h3
                   style={{
-                    fontSize: "0.9em",
-                    fontWeight: "normal",
-                    marginBottom: "16px",
+                    fontSize: '0.9em',
+                    fontWeight: 'normal',
+                    marginBottom: '16px',
                   }}
                 >
-                  Pré-visualização
+                  <FormattedMessage id="common.preview" />
                 </h3>
                 <LibraryCard
                   item={{
                     type: form,
-                    title: "Sem título",
+                    title: <FormattedMessage id="common.untitled" />,
                   }}
                 />
               </GridItem>

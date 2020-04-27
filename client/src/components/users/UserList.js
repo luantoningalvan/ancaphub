@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import FollowButton from './FollowButton'
-import defaultAvatar from "../../assets/default-profile-picture.jpg";
-import { Link } from 'react-router-dom'
-import { isEmpty } from 'lodash'
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { isEmpty } from 'lodash';
+import FollowButton from './FollowButton';
+import defaultAvatar from '../../assets/default-profile-picture.jpg';
 
 export const User = styled.li`
   list-style: none;
@@ -42,27 +42,25 @@ const Avatar = styled.div`
   margin-right: 10px;
 `;
 
-const UserList = ({ users }) => {
-  return (
-    <div style={{ width: "100%" }}>
-      <ul>
-        {!isEmpty(users) && users.map(user => (
-          <User key={user.user._id}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Link to={`/${user.user._id}`}>
-              <Avatar src={user.user.avatar && user.user.avatar !== "" ? user.user.avatar : defaultAvatar} />
-              </Link>
-              <div>
-                <h4>{user.user.name}</h4>
-                <span>{user.user.username}</span>
-              </div>
+const UserList = ({ users }) => (
+  <div style={{ width: '100%' }}>
+    <ul>
+      {!isEmpty(users) && users.map((user) => (
+        <User key={user.user._id}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Link to={`/${user.user._id}`}>
+              <Avatar src={user.user.avatar && user.user.avatar !== '' ? user.user.avatar : defaultAvatar} />
+            </Link>
+            <div>
+              <h4>{user.user.name}</h4>
+              <span>{user.user.username}</span>
             </div>
-            <FollowButton user={user.user._id}/>
-          </User>
-        ))}
-      </ul>
-    </div>
-  );
-};
+          </div>
+          <FollowButton user={user.user._id} />
+        </User>
+      ))}
+    </ul>
+  </div>
+);
 
 export default UserList;

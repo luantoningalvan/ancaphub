@@ -1,14 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import Dropdown from "../../components/ui/Dropdown";
-import DropdownListContainer from "../../components/ui/DropdownListContainer";
-import DropdownListItem from "../../components/ui/DropdownListItem";
-import Paper from "../../components/ui/Paper";
-import DropdownIcon from "react-ionicons/lib/MdArrowDropdown";
-import ListBoxIcon from "react-ionicons/lib/MdListBox";
-import GridIcon from "react-ionicons/lib/MdGrid";
-import IconButton from "../../components/ui/IconButton";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import DropdownIcon from 'react-ionicons/lib/MdArrowDropdown';
+import ListBoxIcon from 'react-ionicons/lib/MdListBox';
+import GridIcon from 'react-ionicons/lib/MdGrid';
 import FileIcon, { defaultStyles } from 'react-file-icon';
+import Dropdown from '../../components/ui/Dropdown';
+import DropdownListContainer from '../../components/ui/DropdownListContainer';
+import DropdownListItem from '../../components/ui/DropdownListItem';
+import Paper from '../../components/ui/Paper';
+import IconButton from '../../components/ui/IconButton';
 
 const FileExplorer = styled.div`
   margin-top: 16px;
@@ -72,69 +73,80 @@ const Toolbar = styled.div`
 
     }
   }
-`
+`;
 
 const filelist = [
   {
-    name: "45 ACP Smith And Wesson",
-    updatedAt: "23/04/2020 às 18:37",
-    type: "stl",
-    size: "4.23mb",
+    name: '45 ACP Smith And Wesson',
+    updatedAt: '23/04/2020 às 18:37',
+    type: 'stl',
+    size: '4.23mb',
   },
   {
-    name: "Hino união soviética",
-    updatedAt: "23/04/2020 às 18:37",
-    type: "mp3",
-    size: "3.11mb",
+    name: 'Hino união soviética',
+    updatedAt: '23/04/2020 às 18:37',
+    type: 'mp3',
+    size: '3.11mb',
   },
 ];
 
-export default () => {
-  return (
-    <FileExplorer>
-      <Toolbar>
-        <span>
-          {filelist.length} arquivos
-        </span>
-        <ul>
-          <li><ListBoxIcon /></li>
-          <li><GridIcon /></li>
-        </ul>
-      </Toolbar>
-      <Paper>
+export default () => (
+  <FileExplorer>
+    <Toolbar>
+      <span>
+        <FormattedMessage id="groups.files.number" values={{ num: filelist.length }} />
+      </span>
+      <ul>
+        <li><ListBoxIcon /></li>
+        <li><GridIcon /></li>
+      </ul>
+    </Toolbar>
+    <Paper>
       <table>
         <thead>
-          <th>Nome</th>
-          <th>Última modificação</th>
-          <th>Tipo</th>
-          <th>Tamanho</th>
-          <th></th>
+          <th>
+            <FormattedMessage id="groups.files.fileName" />
+          </th>
+          <th>
+            <FormattedMessage id="groups.files.lastModified" />
+          </th>
+          <th>
+            <FormattedMessage id="groups.files.type" />
+          </th>
+          <th>
+            <FormattedMessage id="groups.files.size" />
+          </th>
+          <th />
         </thead>
 
         <tbody>
           {filelist.map((file) => (
             <tr>
               <td>
-                <div  style={{display: 'flex', alignItems: 'center'}}>
-                <FileIcon extension={file.type} {...defaultStyles[file.type]}/>
-                {file.name}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <FileIcon extension={file.type} {...defaultStyles[file.type]} />
+                  {file.name}
                 </div>
 
-                </td>
+              </td>
               <td>{file.updatedAt}</td>
               <td>{file.type}</td>
               <td>{file.size}</td>
-              <td style={{width: 48}}>
+              <td style={{ width: 48 }}>
                 <Dropdown
-                  toggle={
+                  toggle={(
                     <IconButton>
                       <DropdownIcon />
                     </IconButton>
-                  }
+                  )}
                 >
                   <DropdownListContainer>
-                    <DropdownListItem>Baixar</DropdownListItem>
-                    <DropdownListItem>Excluir</DropdownListItem>
+                    <DropdownListItem>
+                      <FormattedMessage id="common.download" />
+                    </DropdownListItem>
+                    <DropdownListItem>
+                      <FormattedMessage id="common.delete" />
+                    </DropdownListItem>
                   </DropdownListContainer>
                 </Dropdown>
               </td>
@@ -142,7 +154,6 @@ export default () => {
           ))}
         </tbody>
       </table>
-      </Paper>
-    </FileExplorer>
-  );
-};
+    </Paper>
+  </FileExplorer>
+);

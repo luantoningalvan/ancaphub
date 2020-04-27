@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import Container from "../../components/ui/Container";
-import Hero from "../../components/ui/Hero";
-import Paper from "../../components/ui/Paper";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsersRequest } from "../../actions/users";
-import UserCard from "../../components/users/UserCard";
-import LoadContent from "../../components/ui/LoadContent";
-import { isEmpty } from "lodash";
+import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
+import Container from '../../components/ui/Container';
+import Hero from '../../components/ui/Hero';
+import Paper from '../../components/ui/Paper';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import { getUsersRequest } from '../../actions/users';
+import UserCard from '../../components/users/UserCard';
+import LoadContent from '../../components/ui/LoadContent';
 
 export default () => {
   const dispatch = useDispatch();
@@ -16,11 +17,12 @@ export default () => {
 
   useEffect(() => {
     dispatch(getUsersRequest());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container>
-      <Hero title="Usuários" />
+      <Hero title={<FormattedMessage id="common.users" />} />
       <div style={{ marginTop: 16 }}>
         <LoadContent loading={loading}>
           {!isEmpty(items) ? (
@@ -32,7 +34,9 @@ export default () => {
               ))}
             </GridContainer>
           ) : (
-            <Paper padding>Nenhum usuário encontrado.</Paper>
+            <Paper padding>
+              <FormattedMessage id="common.noUsersFound" />
+            </Paper>
           )}
         </LoadContent>
       </div>

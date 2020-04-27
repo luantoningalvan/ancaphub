@@ -1,9 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import Paper from "../ui/Paper";
-import Button from "../ui/Button";
-import { Link } from 'react-router-dom'
-import LocationIcon from "react-ionicons/lib/IosPinOutline";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import LocationIcon from 'react-ionicons/lib/IosPinOutline';
+import Paper from '../ui/Paper';
+import Button from '../ui/Button';
 
 const Event = styled(Paper)`
   position: relative;
@@ -63,29 +64,29 @@ const Event = styled(Paper)`
   }
 `;
 
-export default ({ event }) => {
-  return (
-    <Event>
-      <div className="event-cover">
-        <Link to={`/events/${event._id}`}>
-        <img src={event.cover} />
-        </Link>
-      </div>
+export default ({ event }) => (
+  <Event>
+    <div className="event-cover">
+      <Link to={`/events/${event._id}`}>
+        <img src={event.cover} alt="event cover" />
+      </Link>
+    </div>
 
-      <div className="event-date">
-        <span className="month">ABR</span>
-        <span className="day">20</span>
-      </div>
+    <div className="event-date">
+      <span className="month">ABR</span>
+      <span className="day">20</span>
+    </div>
 
-      <div className="event-content">
-        <h4>{event.title}</h4>
+    <div className="event-content">
+      <h4>{event.title}</h4>
 
-        <div className="event-location">
-          <LocationIcon />
-          <span>{event.location}</span>
-        </div>
-          <Button color="primary" fullwidth>Tenho Interesse</Button>
+      <div className="event-location">
+        <LocationIcon />
+        <span>{event.location}</span>
       </div>
-    </Event>
-  );
-};
+      <Button color="primary" fullwidth>
+        <FormattedMessage id="events.interested" />
+      </Button>
+    </div>
+  </Event>
+);

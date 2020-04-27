@@ -97,10 +97,12 @@ const EnterMessageInput = () => (
   </EnterMessageInputWrapper>
 );
 
-const ChatWindow = ({ chat, showName, showAvatar, showHeader }) => (
+const ChatWindow = ({
+  chat, showName, showAvatar, showHeader,
+}) => (
   <Scrollable
     grow
-    topContent={ showHeader ? <ChatInfo chat={chat} showAvatar={showAvatar} /> : null}
+    topContent={showHeader ? <ChatInfo chat={chat} showAvatar={showAvatar} /> : null}
     bottomContent={<EnterMessageInput />}
     scrollableContent={chat.messages.map((message) => (
       <ChatBubble
@@ -108,6 +110,7 @@ const ChatWindow = ({ chat, showName, showAvatar, showHeader }) => (
         message={message}
         mine={message.sentByUser}
         showName={showName}
+        answeringTo={message.answeringTo || false}
       />
     ))}
   />

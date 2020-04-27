@@ -38,6 +38,14 @@ const chats = [
         body: 'Tô chegando com os refri, rapaziada',
         createdAt: 'agora',
         sentByUser: false,
+        answeringTo: {
+          user: {
+            name: 'Zé Pequeté',
+          },
+          body: 'Lorem ipsum dolor sit amet.',
+          createdAt: '2h',
+          sentByUser: false,
+        },
       },
     ],
   },
@@ -45,6 +53,6 @@ const chats = [
 
 export default () => (
   <Container>
-    <Chatbox chats={chats} currentChat={chats[0]} showList showAvatar />
+    <Chatbox chats={chats} currentChat={chats[0]} showList showAvatar showName />
   </Container>
 );

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SearchIcon from 'react-ionicons/lib/IosSearch';
 import LocateIcon from 'react-ionicons/lib/MdLocate';
 import { FormattedMessage } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom';
 
 const SearchWrapper = styled.div`
   height: 50px;
@@ -43,41 +43,41 @@ const SearchWrapper = styled.div`
 `;
 
 const Search = () => {
-  const [term, setTerm] = useState("")
-  const history = useHistory()
-  
+  const [term, setTerm] = useState('');
+  const history = useHistory();
+
   const search = () => {
-    if(term !== ""){
-      history.push(`/search?s=${term}`)
+    if (term !== '') {
+      history.push(`/search?s=${term}`);
     }
-  }
+  };
 
   const handleKeyPress = (e) => {
-    if(e.key === "Enter"){
-      search()
+    if (e.key === 'Enter') {
+      search();
     }
-  }
+  };
 
-return(
-  <SearchWrapper>
-    <i>
-      <SearchIcon />
-    </i>
-    <FormattedMessage id="common.search" description="Input de pesquisa">
-      {(msg) => 
-      <input 
-      type="text" 
-      placeholder={msg} 
-      value={term}
-      onChange={(e) => setTerm(e.target.value)}
-      onKeyPress={handleKeyPress}
-      />
-      }
-    </FormattedMessage>
-    <Link to="/nearby">
-      <LocateIcon />
-    </Link>
-  </SearchWrapper>
-);
-}
+  return (
+    <SearchWrapper>
+      <i>
+        <SearchIcon />
+      </i>
+      <FormattedMessage id="common.search" description="Input de pesquisa">
+        {(msg) => (
+          <input
+            type="text"
+            placeholder={msg}
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        )}
+      </FormattedMessage>
+      <Link to="/nearby">
+        <LocateIcon />
+      </Link>
+    </SearchWrapper>
+  );
+};
 export default memo(Search);

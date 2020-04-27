@@ -1,12 +1,12 @@
 import React from 'react';
-import GridContainer from '../../components/ui/GridContainer'
-import GridItem from '../../components/ui/GridItem'
+import styled from 'styled-components';
+import CalendarIcon from 'react-ionicons/lib/IosCalendar';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
 import CardBody from '../../components/ui/CardBody';
 import CardHeader from '../../components/ui/CardHeader';
 import Card from '../../components/ui/Card';
 import Paper from '../../components/ui/Paper';
-import styled from 'styled-components'
-import CalendarIcon from 'react-ionicons/lib/IosCalendar'
 
 const Post = styled(Paper)`
   display: flex;
@@ -40,19 +40,19 @@ const Post = styled(Paper)`
       svg { fill: white; height: 20px; width: 20px;margin-right: 8px; }
     }
   }
-`
+`;
 
 export default () => (
   <GridContainer spacing={2}>
     <GridItem xs={7}>
-    <Post>
+      <Post>
         <div className="post-cover">
           <img src="https://i.ytimg.com/vi/ld4fLpniEp0/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpd0xB4vV9bqgrLVD6bHLlu_YLdg" />
         </div>
         <div className="post-content">
           <div className="date">
-          <CalendarIcon />
-          <span>20/04</span>
+            <CalendarIcon />
+            <span>20/04</span>
           </div>
           <h3>Novo Feed e Perfil</h3>
           <p>No nosso décimo episódio iniciamos a demonstração do nosso nov...</p>
@@ -64,8 +64,8 @@ export default () => (
         </div>
         <div className="post-content">
           <div className="date">
-          <CalendarIcon />
-          <span>20/04</span>
+            <CalendarIcon />
+            <span>20/04</span>
           </div>
           <h3>Novo Feed e Perfil</h3>
           <p>No nosso décimo episódio iniciamos a demonstração do nosso nov...</p>
@@ -77,8 +77,8 @@ export default () => (
         </div>
         <div className="post-content">
           <div className="date">
-          <CalendarIcon />
-          <span>20/04</span>
+            <CalendarIcon />
+            <span>20/04</span>
           </div>
           <h3>Novo Feed e Perfil</h3>
           <p>No nosso décimo episódio iniciamos a demonstração do nosso nov...</p>
@@ -90,7 +90,7 @@ export default () => (
       <Card>
         <CardHeader><h3>Widget title</h3></CardHeader>
         <CardBody>
-Widget content
+          Widget content
         </CardBody>
       </Card>
     </GridItem>

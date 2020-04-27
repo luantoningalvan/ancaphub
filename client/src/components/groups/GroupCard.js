@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -42,12 +43,12 @@ const GroupCard = ({ data }) => {
         <GroupInfo>
           <h4><Link to="/groups/id">{name}</Link></h4>
           <span>
-            {membersCounts}
-            {' '}
-            membros
+            <FormattedMessage id="groups.membersNumber" values={{ num: membersCounts }} />
           </span>
           <Button fullwidth variant="outlined" color="primary">
-            {hasEnrolled ? 'Sair' : 'Entrar'}
+            {hasEnrolled
+              ? <FormattedMessage id="common.semanticQuit" />
+              : <FormattedMessage id="common.semanticEnter" />}
           </Button>
         </GroupInfo>
       </Paper>

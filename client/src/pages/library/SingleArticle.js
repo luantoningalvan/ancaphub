@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,7 +7,7 @@ import parse from 'html-react-parser';
 import Paper from '../../components/ui/Paper';
 import Container from '../../components/ui/Container';
 import defaultThumbnail from '../../assets/default-book-cover.jpg';
-import Categories from "../../components/categories/ShowCategories";
+import Categories from '../../components/categories/ShowCategories';
 
 // import LoadContent from "../../../components/loaders/loadContent"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
@@ -57,7 +58,7 @@ const SingleArticle = () => {
   if (!singleItem) {
     return (
       <Container mt={2}>
-        Unavailable content
+        <FormattedMessage id="common.unavailable" />
       </Container>
     );
   }

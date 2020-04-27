@@ -1,8 +1,9 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import defaultAvatar from '../../assets/default-profile-picture.jpg';
-import { Link } from 'react-router-dom';
 
 const Avatar = styled.div`
   width: ${(props) => props.size}px;
@@ -16,13 +17,15 @@ const Avatar = styled.div`
   }
 `;
 
-const UserAvatar = ({user, style, size, ...props }) => (
+const UserAvatar = ({
+  user, style, size, ...props
+}) => (
   <Avatar size={size || 35} style={{ ...style }} {...props}>
     <Link to={`/${user._id}`}>
-    <img
-      src={user.avatar && user.avatar !== '' ? user.avatar : defaultAvatar}
-      alt={`Foto de perfil de ${user.username}`}
-    />
+      <img
+        src={user.avatar && user.avatar !== '' ? user.avatar : defaultAvatar}
+        alt={<FormattedMessage id="profile.avatarAltText" values={{ who: user.name }} />}
+      />
     </Link>
   </Avatar>
 );

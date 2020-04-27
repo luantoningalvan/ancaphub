@@ -1,39 +1,40 @@
-import React, {useRef} from "react";
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProfileInfoRequest } from "../../actions/users";
-import { Form } from "@unform/web";
-import Input from "../form/Input";
-import IconButton from "../ui/IconButton";
-import Button from "../ui/Button";
-import EditIcon from "react-ionicons/lib/IosCreate";
-import CloseIcon from "react-ionicons/lib/MdClose";
-import Dialog from "../ui/Dialog";
-import CardBody from "../ui/CardBody";
-import CardHeader from "../ui/CardHeader";
+import React, { useRef } from 'react';
+import { FormattedMessage } from 'react-intl';
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form } from '@unform/web';
+import EditIcon from 'react-ionicons/lib/IosCreate';
+import CloseIcon from 'react-ionicons/lib/MdClose';
+import { updateProfileInfoRequest } from '../../actions/users';
+import Input from '../form/Input';
+import IconButton from '../ui/IconButton';
+import Button from '../ui/Button';
+import Dialog from '../ui/Dialog';
+import CardBody from '../ui/CardBody';
+import CardHeader from '../ui/CardHeader';
 
 export default () => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
-  const data = useSelector(state => state.profile.user)
-  const handleClick = () =>  setOpen(!open);
-  const editFormRef = useRef(null)
+  const data = useSelector((state) => state.profile.user);
+  const handleClick = () => setOpen(!open);
+  const editFormRef = useRef(null);
   async function handleSubmit(data) {
     try {
       const schema = Yup.object().shape({
         name: Yup.string()
-          .min(3, "Nome muito curto!")
-          .max(30, "Nome muito longo!")
-          .required("O campo nome é obrigatório!"),
-        bio: Yup.string().max(160, "Sua bio deve ter máximo 160 caracteres!"),
-        site: Yup.string().url("URL inválida!"),
-        birthday: Yup.date().max(new Date(), "Tu é viajante do tempo por acaso?").notRequired(),
+          .min(3, <FormattedMessage id="account.settings.validation.nameShort" />)
+          .max(30, <FormattedMessage id="account.settings.validation.nameLong" />)
+          .required(<FormattedMessage id="account.settings.validation.nameRequired" />),
+        bio: Yup.string().max(160, <FormattedMessage id="account.settings.validation.maxBioLength" />),
+        site: Yup.string().url(<FormattedMessage id="account.settings.validation.invalidURL" />),
+        birthday: Yup.date().max(new Date(), <FormattedMessage id="account.settings.validation.invalidBirthDate" />).notRequired(),
       });
-    
+
       await schema.validate(data, {
         abortEarly: false,
       });
-      dispatch(updateProfileInfoRequest(data))
+      dispatch(updateProfileInfoRequest(data));
     } catch (err) {
       const validationErrors = {};
       if (err instanceof Yup.ValidationError) {
@@ -50,34 +51,50 @@ export default () => {
     <div>
       <Button color="primary" size="small" onClick={() => setOpen(true)}>
         <EditIcon />
-        <span>Editar Perfil</span>
+        <span>
+          <FormattedMessage id="components.editProfile.heading" />
+        </span>
       </Button>
 
       <Dialog onClose={handleClick} show={open}>
         <Form
           initialData={{
             name: data.name,
-            bio: data.bio || "",
-            currentCity: data.currentCity || "",
-            site: data.site || "",
+            bio: data.bio || '',
+            currentCity: data.currentCity || '',
+            site: data.site || '',
             birthday: data.birthday && data.birthday !== null ? data.birthday.substring(0, 10) : undefined,
           }}
           onSubmit={handleSubmit}
           ref={editFormRef}
         >
           <CardHeader>
-            <div style={{display:'flex', alignItems:'center'}}>
-            <IconButton onClick={handleClick}><CloseIcon /></IconButton>
-            <h3>Editar Perfil</h3>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton onClick={handleClick}><CloseIcon /></IconButton>
+              <h3>
+                <FormattedMessage id="components.editProfile.heading" />
+              </h3>
             </div>
-            <Button color="secondary" type="submit">Editar</Button>
+            <Button color="secondary" type="submit">
+              <FormattedMessage id="common.edit" />
+            </Button>
           </CardHeader>
-          <CardBody style={{maxWidth: 420}}>
-              <Input placeholder="Nome" name="name" />
-              <Input style={{marginTop: 16}} placeholder="Bio" name="bio" />
-              <Input style={{marginTop: 16}} placeholder="Localização" name="currentCity" />
-              <Input style={{marginTop: 16}} placeholder="Site" name="site" />
-              <Input type="date" style={{marginTop: 16}} placeholder="Data de Nascimento" name="birthday" />
+          <CardBody style={{ maxWidth: 420 }}>
+            <FormattedMessage id="common.name">
+              {(msg) => <Input placeholder={msg} name="name" />}
+            </FormattedMessage>
+            <FormattedMessage id="common.bio">
+              {(msg) => <Input style={{ marginTop: 16 }} placeholder={msg} name="bio" />}
+            </FormattedMessage>
+            <FormattedMessage id="nearby.location">
+              {(msg) => <Input style={{ marginTop: 16 }} placeholder={msg} name="currentCity" />}
+            </FormattedMessage>
+            <FormattedMessage id="common.website">
+              {(msg) => <Input style={{ marginTop: 16 }} placeholder={msg} name="site" />}
+            </FormattedMessage>
+            <FormattedMessage id="common.birthday">
+              {(msg) => <Input type="date" style={{ marginTop: 16 }} placeholder={msg} name="birthday" />}
+            </FormattedMessage>
           </CardBody>
         </Form>
       </Dialog>

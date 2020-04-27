@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import Paper from '../ui/Paper';
 import Button from '../ui/Button';
@@ -42,12 +43,10 @@ const ProjectCard = ({ data }) => {
         <ProjectInfo>
           <h4><Link to="/projects/id">{name}</Link></h4>
           <span>
-            {peopleWatching}
-            {' '}
-            pessoas acompanhando
+            <FormattedMessage id="projects.peopleWatching" values={{ people: peopleWatching }} />
           </span>
           <Button fullwidth variant="outlined" color="secondary">
-            {hasEnrolled ? 'Deixar de acompanhar' : 'Acompanhar'}
+            {hasEnrolled ? <FormattedMessage id="projects.unroll" /> : <FormattedMessage id="projects.enroll" />}
           </Button>
         </ProjectInfo>
       </Paper>

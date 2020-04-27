@@ -54,9 +54,11 @@ export default () => (
           description="Título da página de contribuições"
         />
         )}
-      actions={
-        <Button color="primary" variant="outlined">Nova contribuição</Button>
-        }
+      actions={(
+        <Button color="primary" variant="outlined">
+          <FormattedMessage id="library.contribute" />
+        </Button>
+      )}
     />
 
     <div>
@@ -64,28 +66,36 @@ export default () => (
         <InfoCard>
           <div>
             <span>5</span>
-            <h3>Aprovados</h3>
+            <h3>
+              <FormattedMessage id="library.status.approvedPlural" />
+            </h3>
           </div>
           <ApprovedIcon />
         </InfoCard>
         <InfoCard>
           <div>
             <span>2</span>
-            <h3>Em análise</h3>
+            <h3>
+              <FormattedMessage id="library.status.underAnalysis" />
+            </h3>
           </div>
           <PendingIcon />
         </InfoCard>
         <InfoCard>
           <div>
             <span>1</span>
-            <h3>Reprovados</h3>
+            <h3>
+              <FormattedMessage id="library.status.rejectedPlural" />
+            </h3>
           </div>
           <ReprovedIcon />
         </InfoCard>
         <InfoCard>
           <div>
             <span>90</span>
-            <h3>Pontos</h3>
+            <h3>
+              <FormattedMessage id="library.points" />
+            </h3>
           </div>
           <PointsIcon />
         </InfoCard>

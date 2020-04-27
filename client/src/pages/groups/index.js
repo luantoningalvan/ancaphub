@@ -57,11 +57,13 @@ export default () => (
         )}
       actions={(
         <Button variant="outlined" color="primary">
-          Criar Grupo
+          <FormattedMessage id="groups.create" />
         </Button>
         )}
     />
-    <h3 style={{ margin: '20px 0px 10px' }}>Explorar Grupos</h3>
+    <h3 style={{ margin: '20px 0px 10px' }}>
+      <FormattedMessage id="groups.explore" />
+    </h3>
 
     <GridContainer spacing={2}>
       {groups.map((group) => (

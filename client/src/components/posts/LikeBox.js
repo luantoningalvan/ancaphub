@@ -1,13 +1,15 @@
-import React, { useEffect, memo } from "react";
-import Dialog from "../ui/Dialog";
-import Card from "../ui/Card";
-import CardHeader from "../ui/CardHeader";
-import CardBody from "../ui/CardBody";
-import IconButton from "../ui/IconButton";
-import CloseIcon from "react-ionicons/lib/IosClose";
-import { useDispatch, useSelector } from "react-redux";
-import { getPostLikesRequest } from "../../actions/posts";
-import UserList from '../users/UserList'
+import React, { useEffect, memo } from 'react';
+import CloseIcon from 'react-ionicons/lib/IosClose';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import Dialog from '../ui/Dialog';
+import Card from '../ui/Card';
+import CardHeader from '../ui/CardHeader';
+import CardBody from '../ui/CardBody';
+import IconButton from '../ui/IconButton';
+import { getPostLikesRequest } from '../../actions/posts';
+import UserList from '../users/UserList';
+import Loader from '../ui/Loader';
 
 const LikeBox = ({ open, onClose, postId }) => {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const LikeBox = ({ open, onClose, postId }) => {
     if (open) {
       dispatch(getPostLikesRequest(postId));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   return (
@@ -24,16 +27,16 @@ const LikeBox = ({ open, onClose, postId }) => {
       {open && (
         <Card style={{ minWidth: 350 }}>
           <CardHeader>
-            <h3>Curtidas</h3>
+            <h3><FormattedMessage id="common.likePlural" /></h3>
             <IconButton color="primary" onClick={onClose}>
               <CloseIcon />
             </IconButton>
           </CardHeader>
           <CardBody>
             {likes.postLikesLoading ? (
-              <p>Carregando</p>
+              <Loader size={48} />
             ) : (
-              <UserList users={likes.items[postId].likes}/>
+              <UserList users={likes.items[postId].likes} />
             )}
           </CardBody>
         </Card>

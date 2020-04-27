@@ -1,16 +1,17 @@
-import React, { useState, useCallback } from "react";
-import Dialog from "../ui/Dialog";
-import CardBody from "../ui/CardBody";
-import CardHeader from "../ui/CardHeader";
-import UploadIcon from "react-ionicons/lib/IosCloudUploadOutline";
-import styled from "styled-components";
-import CloseIcon from "react-ionicons/lib/MdClose";
-import Button from "../ui/Button";
-import IconButton from "../ui/IconButton";
-import Slider from "rc-slider";
-import Cropper from "react-easy-crop";
-import { useDispatch } from "react-redux";
-import { updateProfilePictureRequest as updateProfilePicture } from "../../actions/users";
+import React, { useState, useCallback } from 'react';
+import { FormattedMessage } from 'react-intl';
+import UploadIcon from 'react-ionicons/lib/IosCloudUploadOutline';
+import styled from 'styled-components';
+import CloseIcon from 'react-ionicons/lib/MdClose';
+import Slider from 'rc-slider';
+import Cropper from 'react-easy-crop';
+import { useDispatch } from 'react-redux';
+import IconButton from '../ui/IconButton';
+import Button from '../ui/Button';
+import CardHeader from '../ui/CardHeader';
+import CardBody from '../ui/CardBody';
+import Dialog from '../ui/Dialog';
+import { updateProfilePictureRequest as updateProfilePicture } from '../../actions/users';
 
 const UplaodArea = styled.label`
   height: 250px;
@@ -50,10 +51,10 @@ width:450px;
 .slider {
   padding: 16px;
 }
-`
+`;
 
 export default ({ open, onClose }) => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
   const [cropState, setCropState] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -77,37 +78,41 @@ export default ({ open, onClose }) => {
   };
 
   const handleCancel = () => {
-    setImage("");
+    setImage('');
     onClose();
   };
 
   const handleUpload = async () => {
     if (image.image) {
-      let formData = new FormData();
-      formData.append("data", JSON.stringify(cropInfo));
-      formData.append("file", image.image);
+      const formData = new FormData();
+      formData.append('data', JSON.stringify(cropInfo));
+      formData.append('file', image.image);
       dispatch(updateProfilePicture(formData));
       handleCrop();
-      handleCancel()
+      handleCancel();
     }
   };
 
   return (
     <Dialog show={open}>
-      <CardHeader style={{padding: 8}}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <CardHeader style={{ padding: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton onClick={handleCancel}>
             <CloseIcon />
           </IconButton>
-          <h3>Editar Avatar</h3>
+          <h3>
+            <FormattedMessage id="components.editAvatar.heading" />
+          </h3>
         </div>
-        {image !== "" && (
-          <Button color="secondary" onClick={handleUpload}>Atualizar</Button>
+        {image !== '' && (
+          <Button color="secondary" onClick={handleUpload}>
+            <FormattedMessage id="common.update" />
+          </Button>
         )}
       </CardHeader>
 
-      {image !== "" ? (
-          <CropperStyle>
+      {image !== '' ? (
+        <CropperStyle>
           <div className="crop-content">
             <Cropper
               image={image.preview}
@@ -121,18 +126,18 @@ export default ({ open, onClose }) => {
             />
           </div>
           <div className="slider">
-          <Slider
-           
-            value={zoom}
-            min={1}
-            max={3}
-            color="secondary"
-            step={0.1}
-            aria-labelledby="Zoom"
-            onChange={(value) => setZoom(value)}
-          />
+            <Slider
+
+              value={zoom}
+              min={1}
+              max={3}
+              color="secondary"
+              step={0.1}
+              aria-labelledby="Zoom"
+              onChange={(value) => setZoom(value)}
+            />
           </div>
-          </CropperStyle>
+        </CropperStyle>
       ) : (
         <CardBody>
           <UplaodArea htmlFor="upload-avatar">
@@ -143,7 +148,7 @@ export default ({ open, onClose }) => {
               onChange={handleSelectImage}
             />
             <UploadIcon />
-            Clique para enviar uma foto
+            <FormattedMessage id="components.imageUpload.dragHere" />
           </UplaodArea>
         </CardBody>
       )}
