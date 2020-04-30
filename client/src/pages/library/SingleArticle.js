@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,7 +7,8 @@ import parse from 'html-react-parser';
 import Paper from '../../components/ui/Paper';
 import Container from '../../components/ui/Container';
 import defaultThumbnail from '../../assets/default-book-cover.jpg';
-// import Categories from "../../../components/categories/showElementCategories";
+import Categories from '../../components/categories/ShowCategories';
+
 // import LoadContent from "../../../components/loaders/loadContent"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
 // import InvitedBy from "../../../components/profile/invitedBy"
@@ -22,6 +24,12 @@ const Banner = styled.div`
   background-blend-mode: overlay;
   padding: 96px 0px;
   text-align: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+  }
 `;
 
 const Title = styled.h2`
@@ -50,7 +58,7 @@ const SingleArticle = () => {
   if (!singleItem) {
     return (
       <Container mt={2}>
-        Unavailable content
+        <FormattedMessage id="common.unavailable" />
       </Container>
     );
   }
@@ -59,8 +67,7 @@ const SingleArticle = () => {
     <>
       <Banner cover={singleItem.cover && singleItem.cover.url}>
         <Container>
-          {/* <Categories categories={categories} /> */}
-          Categories
+          <Categories categories={singleItem.categories} />
           <Title>{singleItem && singleItem.title}</Title>
           <Author>{singleItem && singleItem.title}</Author>
         </Container>
@@ -71,8 +78,6 @@ const SingleArticle = () => {
           <Paper padding>
             {parse(`${singleItem && singleItem.content}`)}
           </Paper>
-          InvitedBy
-          {/* <InvitedBy user={user} /> */}
         </Container>
       </div>
     </>

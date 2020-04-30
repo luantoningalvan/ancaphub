@@ -4,7 +4,7 @@ import MdMore from 'react-ionicons/lib/MdMore';
 import DeleteIcon from 'react-ionicons/lib/IosRemoveCircleOutline';
 import DocumentIcon from 'react-ionicons/lib/IosDocumentOutline';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormattedRelativeTime } from 'react-intl';
+import { FormattedRelativeTime, FormattedMessage } from 'react-intl';
 import { differenceInSeconds, parseISO, getTime } from 'date-fns';
 import UserAvatar from '../users/UserAvatar';
 import UserName from '../users/UserName';
@@ -110,16 +110,18 @@ const SingleComment = ({ comment, post }) => {
           <UserName user={comment.user} fontSize={1} />
           <p className="comment-text">{` ${comment.content}`}</p>
           <ul className="date">
-            
+
             <li>
-              <a href="#" onClick={handleLikeComment}>Curtir</a>
+              <a href="#" onClick={handleLikeComment}>
+                <FormattedMessage id="common.like" />
+              </a>
             </li>
             <li>
               <a role="presentation" onClick={handleResponse}>
-                Responder
+                <FormattedMessage id="components.commentBox.reply" />
               </a>
             </li>
-            
+
             <li>
               <a>
                 <FormattedRelativeTime
@@ -147,16 +149,20 @@ const SingleComment = ({ comment, post }) => {
           )}
           >
             <DropdownListContainer>
-              <DropdownListItem icon={<DocumentIcon />}>Edit</DropdownListItem>
-              <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>Delete</DropdownListItem>
+              <DropdownListItem icon={<DocumentIcon />}>
+                <FormattedMessage id="common.edit" />
+              </DropdownListItem>
+              <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>
+                <FormattedMessage id="common.delete" />
+              </DropdownListItem>
             </DropdownListContainer>
           </Dropdown>
           <Confirm
             show={deleteBox}
             onClose={() => setDeleteBox(false)}
             onConfirm={handleDelete}
-            title="Deletar comentário?"
-            message="Realmente deseja deletar seu comentário?"
+            title={<FormattedMessage id="components.commentBox.delete" />}
+            message={<FormattedMessage id="components.commentBox.confirmDelete" />}
           />
         </div>
         )}

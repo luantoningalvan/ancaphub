@@ -76,11 +76,13 @@ const ChatInfoWrapper = styled.div`
   }
 `;
 
-const ChatInfo = ({ chat }) => (
+const ChatInfo = ({ chat, showAvatar }) => (
   <ChatInfoWrapper>
+    {showAvatar && (
     <div className="block">
       <img src={defaultProfilePicture} alt="Foto do perfil" />
     </div>
+    )}
     <div className="block grow">
       <p>{chat.name}</p>
     </div>
@@ -95,16 +97,20 @@ const EnterMessageInput = () => (
   </EnterMessageInputWrapper>
 );
 
-const ChatWindow = ({ chat }) => (
+const ChatWindow = ({
+  chat, showName, showAvatar, showHeader,
+}) => (
   <Scrollable
     grow
-    topContent={<ChatInfo chat={chat} />}
+    topContent={showHeader ? <ChatInfo chat={chat} showAvatar={showAvatar} /> : null}
     bottomContent={<EnterMessageInput />}
     scrollableContent={chat.messages.map((message) => (
       <ChatBubble
         key={message.body}
         message={message}
-        sentByUser={message.sentByUser}
+        mine={message.sentByUser}
+        showName={showName}
+        answeringTo={message.answeringTo || false}
       />
     ))}
   />

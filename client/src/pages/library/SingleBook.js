@@ -1,23 +1,24 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import Paper from "../../components/ui/Paper";
-import Container from "../../components/ui/Container";
-import Button from "../../components/ui/Button";
-import LoadContent from "../../components/ui/LoadContent";
-import Dropdown from "../../components/ui/Dropdown";
-import { Link } from "react-router-dom";
-import DropdownListContainer from "../../components/ui/DropdownListContainer";
-import DropdownListItem from "../../components/ui/DropdownListItem";
-import defaultThumbnail from "../../assets/default-book-cover.jpg";
-// import Categories from "../../../components/categories/showElementCategories";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import DownloadIcon from 'react-ionicons/lib/IosDownload';
+import Paper from '../../components/ui/Paper';
+import Container from '../../components/ui/Container';
+import Button from '../../components/ui/Button';
+import LoadContent from '../../components/ui/LoadContent';
+import Dropdown from '../../components/ui/Dropdown';
+
+import DropdownListContainer from '../../components/ui/DropdownListContainer';
+import DropdownListItem from '../../components/ui/DropdownListItem';
+import defaultThumbnail from '../../assets/default-book-cover.jpg';
+import Categories from '../../components/categories/ShowCategories';
 // import Ratings from "../../../components/library/ratings";
 // import InvitedBy from "../../../components/profile/invitedBy"
 // import UnavaliableContent from "../../../components/error/unavaliableContent"
-import DownloadIcon from "react-ionicons/lib/IosDownload";
 // Redux
-import { getSingleItemRequest as getSingleItem } from "../../actions/library";
+import { getSingleItemRequest as getSingleItem } from '../../actions/library';
 
 const Title = styled.h2`
   font-weight: bold;
@@ -82,13 +83,16 @@ function SingleBook() {
             : defaultThumbnail
         }
       />
-      <div style={{ marginTop: -137, position: "absolute", width: "inherit" }}>
+      <div style={{
+        marginTop: -137, marginBottom: 16, position: 'absolute', width: 'inherit',
+      }}
+      >
         <Container>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "33.3333% auto",
-              gap: "1.4em",
+              display: 'grid',
+              gridTemplateColumns: '33.3333% auto',
+              gap: '1.4em',
             }}
           >
             <div>
@@ -102,29 +106,31 @@ function SingleBook() {
                 />
                 <div style={{ padding: 10 }}>
                   <Dropdown
-                    toggle={
-                      <Button fullwidth color="secondary">
-                        Baixar
+                    toggle={(
+                      <Button fullwidth componente={<a />} color="secondary">
+                        <FormattedMessage id="common.download" />
                       </Button>
-                    }
+                    )}
                     placement="top"
                   >
                     <DropdownListContainer>
-                      {singleItem.files && singleItem.files.map((file) => 
+                      {singleItem.files && singleItem.files.map((file) => (
                         <DropdownListItem icon={<DownloadIcon />}>
                           <a href={file.url} target="_blanck">{file.originalname}</a>
                         </DropdownListItem>
-                      )}
+                      ))}
                     </DropdownListContainer>
                   </Dropdown>
                 </div>
               </Paper>
               {/* <InvitedBy user={user} /> */}
-              InvitedBy
             </div>
             <div>
-              {/* <Categories categories={categories} /> */}
-              <div style={{ padding: "15px 0px" }}>Categories</div>
+
+              <div style={{ marginBottom: 8 }}>
+                <Categories categories={singleItem.categories} />
+              </div>
+
               <Title>{singleItem && singleItem.title}</Title>
               <Author>{singleItem && singleItem.author}</Author>
               <div>{singleItem && singleItem.content}</div>

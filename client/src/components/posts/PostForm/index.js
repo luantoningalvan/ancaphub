@@ -159,16 +159,18 @@ function PostForm({ createPostRequest: createPost }) {
                     <ul>
                       {media.data.map((option, index) => (
                         <li>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            placeholder={`Opção ${index + 1} ${
-                              index >= 2 ? '(opcional)' : ''
-                            }`}
-                            value={media.data[index]}
-                            style={{ marginBottom: 8 }}
-                            onChange={(e) => handleChangePollOption(index, e)}
-                          />
+                          <FormattedMessage id={`components.postForm.pollOptionNumber${index >= 2 ? 'Optional' : ''}`} values={{ optionNumber: index + 1 }}>
+                            {(msg) => (
+                              <TextField
+                                fullWidth
+                                type="text"
+                                placeholder={msg}
+                                value={media.data[index]}
+                                style={{ marginBottom: 8 }}
+                                onChange={(e) => handleChangePollOption(index, e)}
+                              />
+                            )}
+                          </FormattedMessage>
                         </li>
                       ))}
                     </ul>
@@ -188,7 +190,7 @@ function PostForm({ createPostRequest: createPost }) {
                     </div>
                   </div>
                   <CardFooter
-                    label="Remover Enquete"
+                    label={<FormattedMessage id="components.postForm.removePoll" />}
                     action={handleRemoveMedia}
                   />
                 </Card>
@@ -196,15 +198,19 @@ function PostForm({ createPostRequest: createPost }) {
               {media.type === 'embed' && (
                 <Card>
                   <CardBody>
-                    <TextField
-                      fullWidth
-                      placeholder="Link do Vídeo"
-                      value={media.data}
-                      onChange={(e) => setMedia({
-                        type: 'embed',
-                        data: e.target.value,
-                      })}
-                    />
+                    <FormattedMessage id="components.postForm.videoUrl">
+                      {(msg) => (
+                        <TextField
+                          fullWidth
+                          placeholder={msg}
+                          value={media.data}
+                          onChange={(e) => setMedia({
+                            type: 'embed',
+                            data: e.target.value,
+                          })}
+                        />
+                      )}
+                    </FormattedMessage>
                     {media.data !== '' && (
                       <ReactPlayer
                         url={media.data}
@@ -216,7 +222,7 @@ function PostForm({ createPostRequest: createPost }) {
                   </CardBody>
 
                   <CardFooter
-                    label="Remover Incorporação"
+                    label={<FormattedMessage id="components.postForm.removeEmbed" />}
                     action={handleRemoveMedia}
                   />
                 </Card>
@@ -247,7 +253,7 @@ function PostForm({ createPostRequest: createPost }) {
             disabled={!contentState.hasText()}
             onClick={handleSubmit}
           >
-            Publicar
+            <FormattedMessage id="common.publish" />
           </Button>
         </div>
       </PostFormStyle>

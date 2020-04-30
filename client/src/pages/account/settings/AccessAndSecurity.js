@@ -1,34 +1,35 @@
-import React, { useRef } from "react";
-import { Form } from "@unform/web";
-import * as Yup from "yup";
-import TextField from "../../../components/form/Input";
-import Button from "../../../components/ui/Button";
-import Card from "../../../components/ui/Card";
-import CardBody from "../../../components/ui/CardBody";
-import CardHeader from "../../../components/ui/CardHeader";
-import ExpansionPanel from "../../../components/ui/ExpansionPanel";
-import { useDispatch, useSelector } from "react-redux";
-import { 
-  updateEmailRequest, 
-  updateUsernameRequest, 
-  updatePasswordRequest
+import React, { useRef } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import TextField from '../../../components/form/Input';
+import Button from '../../../components/ui/Button';
+import Card from '../../../components/ui/Card';
+import CardBody from '../../../components/ui/CardBody';
+import CardHeader from '../../../components/ui/CardHeader';
+import ExpansionPanel from '../../../components/ui/ExpansionPanel';
+import {
+  updateEmailRequest,
+  updateUsernameRequest,
+  updatePasswordRequest,
 } from '../../../actions/settings';
 
-export default (props) => {
+export default () => {
   const emailFormRef = useRef(null);
   const usernameFormRef = useRef(null);
   const passwordFormRef = useRef(null);
-  const dispatch = useDispatch()
-  const currentData = useSelector(state => state.auth.user)
+  const dispatch = useDispatch();
+  const currentData = useSelector((state) => state.auth.user);
 
   const handleUsernameSubmit = async (data) => {
     try {
       const schema = Yup.object().shape({
         username: Yup.string()
-          .min(3, "Nome de usuário muito curto!")
-          .max(20, "Nome de usuário muito longo!")
-          .matches(/^[a-zA-Z0-9_]+$/, "É permitido apenas letras, números e _ ")
-          .required("O campo NOME DE USUÁRIO é obrigatório!"),
+          .min(3, <FormattedMessage id="settings.validation.usernameShort" />)
+          .max(20, <FormattedMessage id="settings.validation.usernameLong" />)
+          .matches(/^[a-zA-Z0-9_]+$/, <FormattedMessage id="settings.validation.regex" />)
+          .required(<FormattedMessage id="settings.validation.usernameRequired" />),
       });
 
       await schema.validate(data, {
@@ -50,8 +51,8 @@ export default (props) => {
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
-          .email("E-mail inválido")
-          .required("O campo E-MAIL é obrigatório!"),
+          .email(<FormattedMessage id="settings.validation.emailInvalid" />)
+          .required(<FormattedMessage id="settings.validation.emailRequired" />),
       });
       await schema.validate(data, {
         abortEarly: false,
@@ -72,13 +73,13 @@ export default (props) => {
     try {
       const schema = Yup.object().shape({
         current_password: Yup.string()
-          .required("O campo SENHA ATUAL é obrigatório!"),
+          .required(<FormattedMessage id="settings.validation.currentPasswordRequired" />),
         new_password: Yup.string()
-          .required("O campo SENHA é obrigatório!")
-          .min(6, "Sua senha precisa ter no mínimo 6 caracteres."),
+          .required(<FormattedMessage id="settings.validation.currentPasswordRequired" />)
+          .min(6, <FormattedMessage id="settings.validation.minPasswordLength" />),
         confirm_new_password: Yup.string()
-          .required("O campo CONFIRMAR SENHA é obrigatório!")
-          .oneOf([Yup.ref("new_password"), null], "As senhas não coincidem"),
+          .required(<FormattedMessage id="settings.validation.confirmPasswordRequired" />)
+          .oneOf([Yup.ref('new_password'), null], <FormattedMessage id="settings.validation.passwordMismatch" />),
       });
       await schema.validate(data, {
         abortEarly: false,
@@ -98,82 +99,108 @@ export default (props) => {
   return (
     <Card>
       <CardHeader>
-        <h3>Acesso e segurança</h3>
+        <h3>
+          <FormattedMessage id="account.settings.accessAndSecurity" />
+        </h3>
       </CardHeader>
       <CardBody>
-        <ExpansionPanel title="Nome de Usuário">
+        <ExpansionPanel title={<FormattedMessage id="common.username" />}>
           <Form
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
             onSubmit={handleUsernameSubmit}
             ref={usernameFormRef}
-            initialData={{username: currentData.username}}
+            initialData={{ username: currentData.username }}
           >
-            <TextField
-              fullWidth
-              placeholder="Seu novo nome de usuário"
-              name="username"
-              type="text"
-            />
+            <FormattedMessage id="account.settings.insertNewUsername">
+              {(msg) => (
+                <TextField
+                  fullWidth
+                  placeholder={msg}
+                  name="username"
+                  type="text"
+                />
+              )}
+            </FormattedMessage>
             <Button type="submit" color="secondary" style={{ marginTop: 16 }}>
-              Alterar
+              <FormattedMessage id="common.change" />
             </Button>
           </Form>
         </ExpansionPanel>
-        <ExpansionPanel title="E-mail" style={{ marginTop: 8 }}>
+        <ExpansionPanel title={<FormattedMessage id="common.email" />} style={{ marginTop: 8 }}>
           <Form
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
             onSubmit={handleEmailSubmit}
             ref={emailFormRef}
-            initialData={{email: currentData.email}}
+            initialData={{ email: currentData.email }}
           >
-            <TextField
-              fullWidth
-              placeholder="Seu novo e-mail"
-              name="email"
-              type="email"
-            />
+            <FormattedMessage id="account.settings.insertNewEmail">
+              {(msg) => (
+                <TextField
+                  fullWidth
+                  placeholder={msg}
+                  name="email"
+                  type="email"
+                />
+              )}
+            </FormattedMessage>
             <Button type="submit" color="secondary" style={{ marginTop: 16 }}>
-              Alterar
+              <FormattedMessage id="common.change" />
             </Button>
           </Form>
         </ExpansionPanel>
-        <ExpansionPanel title="Senha" style={{ marginTop: 8 }}>
+        <ExpansionPanel title={<FormattedMessage id="common.password" />} style={{ marginTop: 8 }}>
           <Form
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
             onSubmit={handlePasswordSubmit}
             ref={passwordFormRef}
           >
-            <TextField
-              placeholder="Nova Senha"
-              name="new_password"
-              type="password"
-            />
-            <TextField
-              placeholder="Confirmar nova senha"
-              name="confirm_new_password"
-              type="password"
-              style={{ marginTop: 8 }}
-            />
-            <TextField
-              placeholder="Sua senha"
-              name="current_password"
-              type="password"
-              style={{ marginTop: 8 }}
-            />
+            <FormattedMessage id="common.password">
+              {(msg) => (
+                <FormattedMessage id="common.newFemale" values={{ what: msg.toLowerCase() }}>
+                  {(_msg) => (
+                    <TextField
+                      placeholder={_msg}
+                      name="new_password"
+                      type="password"
+                    />
+                  )}
+                </FormattedMessage>
+              )}
+            </FormattedMessage>
+            <FormattedMessage id="account.settings.confirmNewPassword">
+              {(msg) => (
+                <TextField
+                  placeholder={msg}
+                  name="confirm_new_password"
+                  type="password"
+                  style={{ marginTop: 8 }}
+                />
+              )}
+            </FormattedMessage>
+            <FormattedMessage id="account.settings.typeCurrentPassword">
+              {(msg) => (
+                <TextField
+                  placeholder={msg}
+                  name="current_password"
+                  type="password"
+                  style={{ marginTop: 8 }}
+                />
+              )}
+            </FormattedMessage>
             <Button type="submit" color="secondary" style={{ marginTop: 16 }}>
-              Alterar
+              <FormattedMessage id="common.change" />
             </Button>
           </Form>
         </ExpansionPanel>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import Collapse from '../ui/Collapse';
@@ -18,12 +19,13 @@ const CommentBox = ({ expanded, post, indent }) => {
     if (expanded) {
       dispatch(loadCommentsRequest(post));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expanded]);
 
   return (
     <Collapse expanded={expanded}>
       <CommentBoxStyle indent={indent}>
-        <CommentForm post={post} placeholder={indent ? 'Faça uma resposta' : 'Faça um comentário'} />
+        <CommentForm post={post} placeholder={indent ? <FormattedMessage id="components.commentBox.reply" /> : <FormattedMessage id="components.commentBox.reply" />} />
         <div style={{ padding: '0px 16px 16px 16px', textAlign: 'center' }}>
           {comments !== undefined && comments.map((comment) => (
             <Comment comment={comment} post={post} />

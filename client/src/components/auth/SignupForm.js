@@ -1,12 +1,13 @@
-import React, { useRef } from "react";
-import Input from "../form/Input";
-import { Form } from "@unform/web";
-import Button from "../ui/Button";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { createUserRequest } from "../../actions/users";
-import GridContainer from "../ui/GridContainer";
-import GridItem from "../ui/GridItem";
+import React, { useRef } from 'react';
+import { Form } from '@unform/web';
+import { FormattedMessage } from 'react-intl';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import Button from '../ui/Button';
+import Input from '../form/Input';
+import { createUserRequest } from '../../actions/users';
+import GridContainer from '../ui/GridContainer';
+import GridItem from '../ui/GridItem';
 
 export default () => {
   const dispatch = useDispatch();
@@ -16,31 +17,31 @@ export default () => {
     try {
       const schema = Yup.object().shape({
         name: Yup.string()
-          .min(3, "Nome muito curto!")
-          .max(30, "Nome muito longo!")
-          .required("O campo NOME é obrigatório!"),
+          .min(3, <FormattedMessage id="account.settings.validation.usernameShort" />)
+          .max(30, <FormattedMessage id="account.settings.validation.usernameLong" />)
+          .required(<FormattedMessage id="account.settings.validation.usernameRequired" />),
         username: Yup.string()
-          .min(3, "Nome de usuário muito curto!")
-          .max(20, "Nome de usuário muito longo!")
-          .matches(/^[a-zA-Z0-9_]+$/, "É permitido apenas letras, números e _ ")
-          .required("O campo NOME DE USUÁRIO é obrigatório!"),
+          .min(3, <FormattedMessage id="account.settings.validation.usernameShort" />)
+          .max(20, <FormattedMessage id="account.settings.validation.usernameLong" />)
+          .matches(/^[a-zA-Z0-9_]+$/, <FormattedMessage id="account.settings.validation.regex" />)
+          .required(<FormattedMessage id="account.settings.validation.usernameRequired" />),
         email: Yup.string()
-          .email("E-mail inválido")
-          .required("O campo E-MAIL é obrigatório!"),
+          .email(<FormattedMessage id="account.settings.validation.emailInvalid" />)
+          .required(<FormattedMessage id="account.settings.validation.emailRequired" />),
         password: Yup.string()
-          .required("O campo SENHA é obrigatório!")
-          .min(6, "Sua senha precisa ter no mínimo 6 caracteres."),
+          .required(<FormattedMessage id="account.settings.validation.currentPasswordRequired" />)
+          .min(6, <FormattedMessage id="account.settings.validation.minPasswordLength" />),
         confirmPassword: Yup.string()
-          .required("O campo CONFIRMAR SENHA é obrigatório!")
-          .oneOf([Yup.ref("password"), null], "As senhas não coincidem"),
+          .required(<FormattedMessage id="account.settings.validation.confirmPasswordRequired" />)
+          .oneOf([Yup.ref('password'), null], <FormattedMessage id="account.settings.validation.passwordMismatch" />),
         code: Yup.string()
-          .required("O campo CONVITE é obrigatório!")
-          .length(20, "Um convite válido possui 20 caracteres."),  
+          .required(<FormattedMessage id="alpha.validation.inviteRequired" />)
+          .length(20, <FormattedMessage id="alpha.validation.inviteLength" />),
       });
       await schema.validate(data, {
         abortEarly: false,
       });
-      dispatch(createUserRequest(data))
+      dispatch(createUserRequest(data));
     } catch (err) {
       const validationErrors = {};
       if (err instanceof Yup.ValidationError) {
@@ -56,56 +57,76 @@ export default () => {
     <Form onSubmit={handleSubmit} ref={signupFormRef}>
       <GridContainer spacing={1}>
         <GridItem xs={12}>
-          <Input
-            type="text"
-            placeholder="Nome"
-            name="name"
-            autoComplete="full-name"
-          />
+          <FormattedMessage id="common.name">
+            {(msg) => (
+              <Input
+                type="text"
+                placeholder={msg}
+                name="name"
+                autoComplete="full-name"
+              />
+            )}
+          </FormattedMessage>
         </GridItem>
 
         <GridItem xs={12}>
-          <Input
-            type="text"
-            placeholder="Usuário"
-            name="username"
-            autoComplete="username"
-          />
+          <FormattedMessage id="common.username">
+            { (msg) => (
+              <Input
+                type="text"
+                placeholder={msg}
+                name="username"
+                autoComplete="username"
+              />
+            ) }
+          </FormattedMessage>
         </GridItem>
 
         <GridItem xs={12}>
-          <Input
-            type="email"
-            placeholder="E-mail"
-            name="email"
-            autoComplete="email"
-          />
+          <FormattedMessage id="common.email">
+            {(msg) => (
+              <Input
+                type="email"
+                placeholder={msg}
+                name="email"
+                autoComplete="email"
+              />
+            )}
+          </FormattedMessage>
         </GridItem>
 
         <GridItem xs={6}>
-          <Input
-            type="password"
-            placeholder="Senha"
-            name="password"
-            autoComplete="new-password"
-          />
+          <FormattedMessage id="common.password">
+            {(msg) => (
+              <Input
+                type="password"
+                placeholder={msg}
+                name="password"
+                autoComplete="new-password"
+              />
+            )}
+          </FormattedMessage>
         </GridItem>
 
         <GridItem xs={6}>
-          <Input
-            type="password"
-            placeholder="Confirmar senha"
-            name="confirmPassword"
-            autoComplete="confirm-password"
-          />
+          <FormattedMessage id="components.auth.signUp.confirmPassword">
+            {(msg) => (
+              <Input
+                type="password"
+                placeholder={msg}
+                name="confirmPassword"
+                autoComplete="confirm-password"
+              />
+            )}
+          </FormattedMessage>
         </GridItem>
 
         <GridItem xs={12}>
           <Input type="text" placeholder="Convite" name="code" />
         </GridItem>
         <GridItem xs={12}>
-          <Button type="submit" color="secondary" style={{width: "100%"}}>
-            Cadastrar
+          <Button type="submit" color="secondary" style={{ width: '100%' }}>
+            <FormattedMessage id="common.register" />
           </Button>
         </GridItem>
       </GridContainer>

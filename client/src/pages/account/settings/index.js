@@ -1,65 +1,66 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import Container from "../../../components/ui/Container";
-import Paper from "../../../components/ui/Paper";
-import Hero from "../../../components/ui/Hero";
-import GridContainer from "../../../components/ui/GridContainer";
-import GridItem from "../../../components/ui/GridItem";
-import Menu from "../../../components/ui/Menu";
-import MenuItem from "../../../components/ui/MenuItem";
-import AccountIcon from "react-ionicons/lib/IosPerson";
-import NotificationsIcon from "react-ionicons/lib/IosNotifications";
-import PrivacyIcon from "react-ionicons/lib/IosLock";
-import { useLocation } from 'react-router-dom'
-import Notifications from './Notifications'
-import Privacy from './Privacy'
-import AccessAndSecurity from './AccessAndSecurity'
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import AccountIcon from 'react-ionicons/lib/IosPerson';
+import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
+import PrivacyIcon from 'react-ionicons/lib/IosLock';
+import { useLocation } from 'react-router-dom';
+import Container from '../../../components/ui/Container';
+import Paper from '../../../components/ui/Paper';
+import Hero from '../../../components/ui/Hero';
+import GridContainer from '../../../components/ui/GridContainer';
+import GridItem from '../../../components/ui/GridItem';
+import Menu from '../../../components/ui/Menu';
+import MenuItem from '../../../components/ui/MenuItem';
+import Notifications from './Notifications';
+import Privacy from './Privacy';
+import AccessAndSecurity from './AccessAndSecurity';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export default () => {
-  let query = useQuery().get('tab');
+  const query = useQuery().get('tab');
 
   const settigsMap = {
-    "notifications": <Notifications />,
-    "privacy": <Privacy />,
-    "access_and_security": <AccessAndSecurity />,
-  }
-  
-  const Tab = () => query !== null ? (settigsMap[query] === undefined ?<AccessAndSecurity /> : settigsMap[query]) : <AccessAndSecurity /> 
+    notifications: <Notifications />,
+    privacy: <Privacy />,
+    access_and_security: <AccessAndSecurity />,
+  };
+
+  // eslint-disable-next-line no-nested-ternary
+  const Tab = () => (query !== null ? (settigsMap[query] === undefined ? <AccessAndSecurity /> : settigsMap[query]) : <AccessAndSecurity />);
 
   return (
     <Container>
       <Hero
-        title={
+        title={(
           <FormattedMessage
             id="common.settings"
             description="Título da página de configurações"
           />
-        }
+        )}
       />
       <div style={{ marginTop: 16 }}>
         <GridContainer>
           <GridItem xs={3}>
-            <Paper style={{ width: "100%" }}>
+            <Paper style={{ width: '100%' }}>
               <Menu>
                 <MenuItem
-                  current={query === "access_and_security" || query === null || settigsMap[query] === undefined}
-                  label="Conta"
+                  current={query === 'access_and_security' || query === null || settigsMap[query] === undefined}
+                  label={<FormattedMessage id="common.account" />}
                   link="/settings?tab=access_and_security"
                   icon={<AccountIcon />}
                 />
                 <MenuItem
-                  current={query === "notifications"}
-                  label="Notificações"
+                  current={query === 'notifications'}
+                  label={<FormattedMessage id="common.notifications" />}
                   link="/settings?tab=notifications"
                   icon={<NotificationsIcon />}
                 />
                 <MenuItem
-                  current={query === "privacy"}
-                  label="Privacidade"
+                  current={query === 'privacy'}
+                  label={<FormattedMessage id="common.privacy" />}
                   link="/settings?tab=privacy"
                   icon={<PrivacyIcon />}
                 />
@@ -68,7 +69,7 @@ export default () => {
           </GridItem>
 
           <GridItem xs={9}>
-            <div style={{ width: "100%", marginLeft: 16 }}>
+            <div style={{ width: '100%', marginLeft: 16 }}>
               <Tab />
             </div>
           </GridItem>

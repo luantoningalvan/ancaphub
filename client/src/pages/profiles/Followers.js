@@ -1,24 +1,27 @@
-import React, { useEffect, memo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserFollowersRequest } from "../../actions/users";
-import UserCard from "../../components/users/UserCard";
-import GridContainer from "../../components/ui/GridContainer";
-import GridItem from "../../components/ui/GridItem";
-import Paper from "../../components/ui/Paper";
-import LoadContent from "../../components/ui/LoadContent";
+import React, { useEffect, memo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserFollowersRequest } from '../../actions/users';
+import UserCard from '../../components/users/UserCard';
+import GridContainer from '../../components/ui/GridContainer';
+import GridItem from '../../components/ui/GridItem';
+import Paper from '../../components/ui/Paper';
+import LoadContent from '../../components/ui/LoadContent';
 
 const Feed = ({ user: userId }) => {
-  const dipatch = useDispatch();
+  const dispatch = useDispatch();
   const { loadingFollowers, followers } = useSelector((state) => state.profile);
 
   useEffect(() => {
-    dipatch(getUserFollowersRequest(userId));
-  }, []);
+    dispatch(getUserFollowersRequest(userId));
+  }, [dispatch, userId]);
 
   return (
     <LoadContent loading={loadingFollowers}>
       {followers.length === 0 ? (
-        <Paper padding>Esse usuário não é seguido por ninguém.</Paper>
+        <Paper padding>
+          <FormattedMessage id="profile.followers.noFollowers" />
+        </Paper>
       ) : (
         <GridContainer spacing={1}>
           {followers.map((user) => (

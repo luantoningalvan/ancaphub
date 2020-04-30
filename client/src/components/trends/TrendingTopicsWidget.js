@@ -60,7 +60,7 @@ const TrendingTopicsWidget = () => (
           </li>
         </TrendingList>
       </CardBody>
-      <CardFooter link="/" label="Show more" />
+      <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
     </Card>
   </div>
 );

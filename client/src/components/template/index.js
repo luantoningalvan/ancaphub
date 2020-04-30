@@ -1,11 +1,12 @@
-import React from "react";
-import ThemeProvider from "./Provider";
-import Header from "./Header";
-import Sidenav from "./Sidenav";
-import Main from "./Main";
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import ThemeProvider from './Provider';
+import Header from './Header';
+import Sidenav from './Sidenav';
+import Main from './Main';
+
 const Template = ({ children }) => {
-  const auth = useSelector(state => state.auth)
+  const auth = useSelector((state) => state.auth);
   return (
     <ThemeProvider>
       <Header user={auth.user} />

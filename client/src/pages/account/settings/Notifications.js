@@ -1,11 +1,12 @@
-import React from "react";
-import Card from "../../../components/ui/Card";
-import CardBody from "../../../components/ui/CardBody";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import Card from '../../../components/ui/Card';
+import CardBody from '../../../components/ui/CardBody';
 
-export default (props) => (
+export default () => (
   <Card>
     <CardBody>
-    Nenhuma configuração a respeito das NOTIFICAÇÕES disponível.
+      <FormattedMessage id="account.settings.noneAvailable" values={{ what: <FormattedMessage id="common.notifications" /> }} />
     </CardBody>
   </Card>
 );

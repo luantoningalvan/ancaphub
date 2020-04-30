@@ -1,14 +1,7 @@
-import React from 'react'
-import Paper from './Paper'
+import React from "react";
 
-const Tabs = ({children}) => {
-  return (
-    <Paper>
-      <ul style={{ display: 'flex', padding: '0px 8px' }}>
-        {children}
-      </ul>
-    </Paper>
-  )
-}
+const Tabs = ({ children, style }) => {
+  return <ul style={{ display: "flex", ...style }}>{children}</ul>;
+};
 
-export default Tabs
+export default Tabs;

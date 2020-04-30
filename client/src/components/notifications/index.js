@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import UserAvatar from '../users/UserAvatar'
 // Icons
 import LikeIcon from 'react-ionicons/lib/IosThumbsUp';
 import CommentIcon from 'react-ionicons/lib/IosText';
@@ -10,6 +9,9 @@ import CheckIcon from 'react-ionicons/lib/IosCheckmark';
 import RateIcon from 'react-ionicons/lib/IosStar';
 import ShareIcon from 'react-ionicons/lib/IosRedo';
 import FollowIcon from 'react-ionicons/lib/IosPersonAdd';
+
+// Other
+import UserAvatar from '../users/UserAvatar';
 
 const icons = {
   comment_liked: () => LikeIcon,
@@ -80,7 +82,7 @@ const Notification = ({ notification }) => {
   return (
     <NotificationWrap>
       <div className="thumb">
-        <UserAvatar user={notification.sender} size={56}/>
+        <UserAvatar user={notification.sender} size={56} />
         <div className="icon"><Icon /></div>
       </div>
       <div>

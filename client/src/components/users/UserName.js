@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import styled from 'styled-components';
@@ -21,7 +22,7 @@ const UserNameStyle = styled(Link)`
 
 const UserName = ({ user, fontSize }) => (
   <UserNameStyle
-    title={user.isVerified && 'Verificado'}
+    title={user.isVerified && <FormattedMessage id="common.verified" />}
     to={`/${user._id}`}
     className={clsx({ verifiedUser: user.isVerified })}
     fontSize={fontSize}

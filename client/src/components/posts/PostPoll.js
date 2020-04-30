@@ -4,7 +4,10 @@ import styled from 'styled-components';
 
 // Redux
 import VotedIcon from 'react-ionicons/lib/IosCheckmarkCircleOutline';
+import { FormattedMessage, FormattedPlural } from 'react-intl';
 import { votePostPollRequest } from '../../actions/posts';
+
+// i18n
 
 // Icons
 
@@ -85,16 +88,18 @@ const PostPoll = ({ post }) => {
                 {' '}
                 {option.votesCount}
                 {' '}
-                voto(s)
+                <FormattedPlural
+                  value={option.votesCount}
+                  one={<FormattedMessage id="common.vote">{(txt) => <>{txt.toLowerCase()}</>}</FormattedMessage>}
+                  other={<FormattedMessage id="common.votePlural">{(txt) => <>{txt.toLowerCase()}</>}</FormattedMessage>}
+                />
               </small>
             </div>
           ) }
         </>
       ))}
       <small>
-        Total de votos:
-        {' '}
-        {post.poll.allVotesCount || 0}
+        <FormattedMessage id="components.postPoll.votesTotal" values={{ votes: post.poll.allVotesCount || 0 }} />
       </small>
     </PostPollWrap>
   );

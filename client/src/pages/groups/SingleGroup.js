@@ -1,73 +1,98 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import SettingIcon from 'react-ionicons/lib/IosSettings';
 import Container from '../../components/ui/Container';
+import Tabs from '../../components/ui/Tabs';
 import Tab from '../../components/ui/Tab';
-import Button from '../../components/ui/Button';
+import Loader from '../../components/ui/Loader';
 
-const GroupBanner = styled.div`
-  height: 200px;
-  background: url("${(props) => props.cover}") rgba(0,0,0,.5);
-  background-size: cover;
-  background-blend-mode: overlay;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-position: center;
+const GroupBoard = lazy(() => import('./GroupBoard'));
+const GroupChat = lazy(() => import('./GroupChat'));
+const GroupFiles = lazy(() => import('./GroupFiles'));
+const GroupMembers = lazy(() => import('./GroupMembers'));
+const GroupManage = lazy(() => import('./GroupManage'));
+
+const GroupHeader = styled.div`
+  height: 64px;
+  width: 100%;
+  background: ${(props) => props.theme.palette.paperDark};
+  border-bottom: 1px solid ${(props) => props.theme.palette.border};
 
   h2 {
-    color: ${(props) => props.theme.palette.text.contrast};
-    font-size: 1.9em;
-    margin-bottom: 5px;
+    color: ${(props) => props.theme.palette.text.primary};
+    font-size: 1.3em;
   }
 
-  span {
-    color: ${(props) => props.theme.palette.text.contrast};
-    font-size: 1.1em;
-    font-weight: lighter;
+  .group-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    width: 100%;
   }
 `;
 
-const GroupMenu = styled.div`
-  width: 100%;
-  background: rgba(255,255,255,0.02);
-`;
+const SingleGroup = () => {
+  const [Page, setPage] = React.useState();
+  const { id: groupId, page: groupPage } = useParams();
 
-const SingleGroup = () => (
-  <>
-    <GroupBanner cover="https://www.outraestacao.com/wp-content/uploads/2019/04/significado_bandeira_rio_grande_do_sul.jpg">
-      <Container>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
+  const pages = {
+    undefined: <GroupBoard />,
+    chat: <GroupChat />,
+    files: <GroupFiles />,
+    members: <GroupMembers />,
+    manage: <GroupManage />,
+  };
+
+  React.useEffect(() => {
+    setPage(pages[groupPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupPage]);
+
+  return (
+    <>
+      <GroupHeader>
+        <Container>
+          <div className="group-header-wrapper">
             <h2>Anarco Bagualismo</h2>
-            <span>Grupo Público - 120 membros</span>
-          </div>
-          <div>
-            <Button color="secondary">SAIR</Button>
-          </div>
-        </div>
-      </Container>
-    </GroupBanner>
 
-    <GroupMenu>
+            <Tabs style={{ height: 64 }}>
+              <Tab
+                current={groupPage === undefined}
+                link={`/groups/${groupId}`}
+                label={<FormattedMessage id="groups.board" />}
+              />
+              <Tab
+                current={groupPage === 'chat'}
+                link={`/groups/${groupId}/chat`}
+                label={<FormattedMessage id="groups.chat" />}
+              />
+              <Tab
+                current={groupPage === 'files'}
+                link={`/groups/${groupId}/files`}
+                label={<FormattedMessage id="groups.files" />}
+              />
+              <Tab
+                current={groupPage === 'members'}
+                link={`/groups/${groupId}/members`}
+                label={<FormattedMessage id="groups.members" />}
+              />
+              <Tab
+                current={groupPage === 'manage'}
+                link={`/groups/${groupId}/manage`}
+                label={<SettingIcon />}
+              />
+            </Tabs>
+          </div>
+        </Container>
+      </GroupHeader>
       <Container>
-        <ul style={{ display: 'flex' }}>
-          <Tab>
-            <Link to="/user" className="current">Quadro</Link>
-          </Tab>
-          <Tab>
-            <Link to="/user">Chat</Link>
-          </Tab>
-          <Tab>
-            <Link to="/user">Arquivos</Link>
-          </Tab>
-          <Tab>
-            <Link to="/user">Membros</Link>
-          </Tab>
-        </ul>
+        <Suspense fallback={<Loader size={96} />}>{Page}</Suspense>
       </Container>
-    </GroupMenu>
-  </>
-);
+    </>
+  );
+};
 
 export default SingleGroup;
