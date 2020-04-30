@@ -1,10 +1,36 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from "react";
+import ListCard from "../../components/lists/ListCard";
+import GridContainer from "../../components/ui/GridContainer";
+import GridItem from "../../components/ui/GridItem";
 
-const Collection = () => (
-  <p>
-    <FormattedMessage id="common.collection" />
-  </p>
-);
+const Lists = () => {
+  const lists = [
+  {
+    title: "Pretendo ler",
+    itemsCount: 3,
+    cover: "https://images-na.ssl-images-amazon.com/images/I/9140LT91hYL.jpg"
+  },
+  {
+    title: "Lidos",
+    itemsCount: 12,
+    cover: "https://cdn.mises.org.br/images/articles/b6f1001c42844f29b2832c713c13c5bc.jpg"
+  },
+  {
+    title: "Iniciantes",
+    itemsCount: 8,
+    cover: "https://images-na.ssl-images-amazon.com/images/I/71cA1CzENgL.jpg"
+  }
+];
 
-export default Collection;
+  return (
+      <GridContainer spacing={2}>
+        {lists.map((list) => (
+          <GridItem xs={4}>
+            <ListCard list={list} />
+          </GridItem>
+        ))}
+      </GridContainer>
+  );
+};
+
+export default Lists;
