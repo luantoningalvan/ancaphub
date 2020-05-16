@@ -19,7 +19,9 @@ services:
     volumes: 
       - ancaphub_localstack_data:/tmp/localstack
       - ./scripts:/docker-entrypoint-initaws.d
-      - ../.env:/.env
+      - type: bind
+        source: ./../.env
+        target: /.env
     environment: 
       - SERVICES=s3
       - PORT_WEB_UI=8055
