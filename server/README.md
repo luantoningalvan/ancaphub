@@ -1,41 +1,37 @@
-## Server
+# AncapHub Server
 
 <div >
   <img src="https://img.shields.io/badge/dynamic/json?color=43BD15&label=Express&query=dependencies.express&url=https%3A%2F%2Fraw.githubusercontent.com%2Fancaphub%2Fancaphub%2Fmaster%2Fserver%2Fpackage.json">
-
   <img src="https://img.shields.io/badge/dynamic/json?color=informational&label=Mongoose&query=dependencies.mongoose&url=https%3A%2F%2Fraw.githubusercontent.com%2Fancaphub%2Fancaphub%2Fmaster%2Fserver%2Fpackage.json">
-
   <img src="https://img.shields.io/badge/dynamic/json?color=F16AAD&label=AWS-SDK&query=dependencies['aws-sdk']&url=https%3A%2F%2Fraw.githubusercontent.com%2Fancaphub%2Fancaphub%2Fmaster%2Fserver%2Fpackage.json">
 </div >
 
-1. Entrar na pasta server
-2. Executar `$ yarn`
-3. Para testar/rodar `$ yarn dev`
+## Requirements
 
-### AWS e Banco de dados
+You'll need [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) to run [MongoDB](https://hub.docker.com/_/mongo), where the application data persists, and [localstack](https://hub.docker.com/r/localstack/localstack), where AWS services are emulated locally (currently only S3 service is being used). You can see more about using localstack in its [repository](https://github.com/localstack/localstack).
 
-É necessário banco mongodb e uma conta na AWS
+## Running the project
 
-- O mongodb pode ser utilizado via docker (local) ou via Atlas (Online), os passos a seguir utilizam o tier gratuito do Atlas.
+First install its dependencies:
 
-1. Após criar uma org e um projeto no Atlas, crie um cluster
-2. Com o cluster iniciado vá em _Network Access -> Add Ip Address -> Allow Access From Anywhere -> Confirm_
-3. Na tela de Clusters clique em _Connect_:
-   ![Imgur](https://i.imgur.com/Ougy41b.png)
-4. Crie um usuário, guarde a senha:
-   ![Imgur](https://i.imgur.com/f5v3Yok.png)
-5. Em _Choose a connection method_, selecione _Connect Your Application_, copie a Connection String que irá aparecer e cole no arquivo .env
-6. Lembre-se de subtituir \<password> pela senha do usuário
+```sh
+$ yarn # npm i
+```
 
-- Para configurar o bucket do S3
+Then create a copy of `.env.example` as `.env`, you can change the variables values or leave it as it is. After that, start the Docker containers and the server application:
 
-1.  Entre no dashboard da AWS e selecione o S3
-2.  Selecione 'Create bucket' escolha um nome e selecione 'Create Bucket' novamente.
-3.  Selecione seu nome de usuário no menu superior e clique em 'My Security Credentials'
-4.  Em 'Access Keys' selecione 'Create new Access Key' e utilize os valores no arquivo .env, assim como o nome do bucket criado
-    ![Imgur](https://i.imgur.com/4XTjDcL.png)
-    > O AWS S3 possui um tier gratuito para contas novas, durante 12 meses. Existem alternativas como o Digital Ocean Spaces, a configuração é similar, basta ler a documentação. ```
+```sh
+$ yarn docker:up # npm run docker:up
+$ yarn dev # npm run dev
+```
 
-#### JWT Secret
+## Scripts
 
-Para testes/local pode utilizar qualquer string, utilize um gerador de senhas de 10 caracteres com letras e numeros.
+- **dev**  
+  Starts the application in watch mode.
+- **start**  
+  Starts the application.
+- **docker:up**  
+  Starts Docker containers.
+- **docker:down**  
+  Stops and removes the Docker containers.

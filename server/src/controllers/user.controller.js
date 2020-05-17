@@ -123,8 +123,8 @@ const updateAvatar = async (req, res, next) => {
     .quality(60)
     .crop(x, y, w, h)
     .resize(256, 256)
-    .write(`/public/uploads/avatar/${req.file.name}`, async () => {
-      const fileContent = fs.createReadStream(`/public/uploads/avatar/${req.file.name}`);
+    .write(`./public/uploads/avatar/${req.file.name}`, async () => {
+      const fileContent = fs.createReadStream(`./public/uploads/avatar/${req.file.name}`);
       const upload = await uploadToS3(req.file, fileContent)
       const result = await updateUser(userId, { avatar: upload.url });
       res.send({ _id: result._id, avatar: result.avatar });

@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "docker:up": "docker-compose -f docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f docker/docker-compose.yml down"
   },
   "keywords": [],
   "author": "",
