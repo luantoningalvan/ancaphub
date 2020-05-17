@@ -20,6 +20,8 @@ import GridItem from '../../components/ui/GridItem';
 import FollowButton from '../../components/users/FollowButton';
 import EditProfile from '../../components/users/EditProfile';
 import EditAvatar from '../../components/users/EditAvatar';
+import Tabs from '../../components/ui/Tabs';
+import Tab from '../../components/ui/Tab';
 
 import { getSingleUserRequest } from '../../actions/users';
 import {
@@ -28,7 +30,6 @@ import {
   ProfilePicture,
   ProfileInfo,
   UserAbout,
-  Tabs,
 } from './styles.css';
 
 const Feed = lazy(() => import('./Feed'));
@@ -159,7 +160,7 @@ export default () => {
             </ProfileInfo>
           </ProfileHeader>
           <GridContainer style={{ marginTop: 16 }} spacing={2}>
-            <GridItem xs={4}>
+            <GridItem md={3}>
               <Paper padding style={{ width: '100%' }}>
                 <UserAbout>
                   <h3>
@@ -196,36 +197,24 @@ export default () => {
                 </UserAbout>
               </Paper>
             </GridItem>
-            <GridItem xs={8}>
+            <GridItem md={9}>
               <Paper style={{ width: '100%' }}>
                 <Tabs>
-                  <li className={pageParam === undefined ? 'current' : ''}>
-                    <Link to={`/${userId}`}>
-                      <FormattedMessage id="common.feed" />
-                    </Link>
-                  </li>
-
-                  <li className={pageParam === 'lists' ? 'current' : ''}>
-                    <Link to={`/${userId}/lists`}>
-                      <FormattedMessage id="common.lists" />
-                    </Link>
-                  </li>
-                  <li className={pageParam === 'contributions' ? 'current' : ''}>
-                    <Link to={`/${userId}/contributions`}>
-                      <FormattedMessage id="common.contributions" />
-                    </Link>
-                  </li>
-
-                  <li className={pageParam === 'following' ? 'current' : ''}>
-                    <Link to={`/${userId}/following`}>
-                      <FormattedMessage id="common.following" />
-                    </Link>
-                  </li>
-                  <li className={pageParam === 'followers' ? 'current' : ''}>
-                    <Link to={`/${userId}/followers`}>
-                      <FormattedMessage id="common.followers" />
-                    </Link>
-                  </li>
+                  <Tab 
+                  current={pageParam === undefined} 
+                  label={<FormattedMessage id="common.feed" />}
+                  link={`/${userId}`}
+                  />
+                                    <Tab 
+                  current={pageParam === ""} 
+                  label={<FormattedMessage id="common.lists" />}
+                  link={`/${userId}/lists`}
+                  />
+                                    <Tab 
+                  current={pageParam === undefined} 
+                  label={<FormattedMessage id="common.contributions" />}
+                  link={`/${userId}/contributions`}
+                  />
                 </Tabs>
               </Paper>
 

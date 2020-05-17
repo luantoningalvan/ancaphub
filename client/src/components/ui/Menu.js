@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default ({children}) => (
-  <ul style={{padding: '8px 0px'}}>
+export default ({children, style}) => (
+  <ul style={{padding: '8px 0px', ...style}}>
     {children}
   </ul>
 )

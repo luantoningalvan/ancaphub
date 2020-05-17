@@ -68,14 +68,14 @@ export default () => {
       />
 
       <GridContainer spacing={2} style={{ marginTop: 8 }}>
-        <GridItem xs={3}>
+        <GridItem xs={12}>
           <Card style={{ width: '100%' }}>
             <CardHeader style={{ paddingBottom: 8 }}>
               <h3>
                 <FormattedMessage id="common.categories" />
               </h3>
             </CardHeader>
-            <Menu>
+            <Menu style={{maxHeight:208, overflowX: 'scroll'}}>
               <LoadContent loading={loadingCategories}>
                 <MenuItem
                   label={<FormattedMessage id="common.all" />}
@@ -93,9 +93,10 @@ export default () => {
             </Menu>
           </Card>
         </GridItem>
-        <GridItem xs={9}>
+        <GridItem xs={12}>
           <div style={{ width: '100%' }}>
-            <Tabs>
+            <Paper>
+            <Tabs style={{height: 48, padding: '0px 8px'}}>
               <Tab
                 label={<FormattedMessage id="common.all" />}
                 current={typeParam === undefined}
@@ -117,7 +118,7 @@ export default () => {
                 link="/library/videos"
               />
             </Tabs>
-
+            </Paper>
             <div style={{ marginTop: 16 }}>
               <LoadContent loading={loading}>
                 {isEmpty(items) ? (
@@ -127,7 +128,7 @@ export default () => {
                 ) : (
                   <GridContainer spacing={2}>
                     {items.map((item) => (
-                      <GridItem xs={4}>
+                      <GridItem xs={12}>
                         <LibraryCard item={item} />
                       </GridItem>
                     ))}

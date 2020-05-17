@@ -11,6 +11,9 @@ const HeroWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items:center;
+  flex-wrap: wrap;
+
+  .hero-actions { margin-top: 16px; }
   
   h2 { 
     font-size: 30px;
@@ -30,7 +33,7 @@ const Hero = ({ title, description, actions }) => (
       <p>{description}</p>
     </div>
 
-    <div>
+    <div className="hero-actions">
       {actions}
     </div>
   </HeroWrapper>

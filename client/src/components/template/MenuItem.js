@@ -8,11 +8,17 @@ export const StyledLink = styled(Link)`
   padding: 9.5px;
   margin: 10px;
   border-radius: 5px;
-  text-align: center;
   background: ${(props) => (props.current ? props.theme.palette.secondary : 'transparent')};
 
   > i svg {
     fill: ${(props) => (props.current
+    ? props.theme.palette.text.contrast
+    : props.theme.palette.text.secondary)};
+    margin-right: 8px;
+  }
+
+  span {
+    color: ${(props) => (props.current
     ? props.theme.palette.text.contrast
     : props.theme.palette.text.secondary)};
   }
@@ -23,11 +29,19 @@ export const StyledLink = styled(Link)`
       fill: ${(props) => props.theme.palette.text.contrast};
     }
   }
+
+  @media (min-width: 576px) { span {display: none}}
 `;
 
 export const Item = styled.li`
   list-style: none;
   position: ${(props) => props.position};
+
+  a {
+    display:flex;
+    align-items:center;
+  }
+
   &:hover {
     ul {
       display: block;
@@ -35,10 +49,11 @@ export const Item = styled.li`
   }
 `;
 
-const MenuItem = ({ link, icon, current }) => (
+const MenuItem = ({ link, icon, current, label}) => (
   <Item>
     <StyledLink to={link} current={!!current}>
       <i>{icon}</i>
+<span>{label}</span>
     </StyledLink>
   </Item>
 );

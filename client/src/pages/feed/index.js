@@ -24,7 +24,7 @@ const Feed = () => {
   const { items, loading } = useSelector((state) => state.posts);
 
   return (
-    <Container style={{ marginTop: 16 }}>
+    <Container style={{ marginTop: 8 }}>
       <GridContainer spacing={2}>
         <GridItem xs={12} lg={8}>
           <PostForm />
@@ -33,13 +33,7 @@ const Feed = () => {
           </div>
         </GridItem>
         <GridItem xs={12} lg={4} xl={3}>
-          <TrendingTopicsWidget />
-          <div style={{ marginTop: 16, width: '100%' }}>
-            <LastItemsWidget />
-          </div>
-          <div style={{ marginTop: 16, width: '100%' }}>
-            <UserListWidget />
-          </div>
+          <LastItemsWidget />
         </GridItem>
       </GridContainer>
     </Container>

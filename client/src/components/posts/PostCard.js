@@ -163,14 +163,14 @@ const PostCard = ({ data }) => {
             <span><FormattedMessage id="common.commentVerb" /></span>
           </button>
         </div>
-
+          {/* 
         <div>
           <button disabled>
             <ShareIcon />
             <span><FormattedMessage id="common.share" /></span>
           </button>
         </div>
-
+*/}
       </div>
       <CommentBox expanded={commentBoxState} post={data._id} />
     </PostContainer>

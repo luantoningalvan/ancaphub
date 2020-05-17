@@ -97,7 +97,7 @@ const LastItemsWidget = () => {
           </LastItems>
           </LoadContent>
         </CardBody>
-        <CardFooter link="/" label={<FormattedMessage id="common.showMore" />} />
+        <CardFooter link="/library" label={<FormattedMessage id="common.showMore" />} />
       </Card>
     </div>
   );

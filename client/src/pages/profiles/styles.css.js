@@ -74,21 +74,21 @@ export const ProfilePicture = styled.div`
 `;
 
 export const ProfileInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+  display: grid;
+  grid-template-areas: "userName" "followerCount" "userActions";
+  padding: 16px;
 
-  > .follower-count,
+  .follower-count,
   .user-name,
   .user-action-buttons {
     flex: 1;
     display: flex;
   }
 
-  > .follower-count {
-    justify-content: flex-start;
-
+  .follower-count {
+    justify-content: center;
+    grid-area: followerCount;
+    margin: 16px 0px;
     > ul {
       margin: 0;
       padding: 0;
@@ -138,7 +138,8 @@ export const ProfileInfo = styled.div`
     }
   }
 
-  > .user-name {
+  .user-name {
+    grid-area: userName;
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -155,12 +156,17 @@ export const ProfileInfo = styled.div`
     }
   }
 
-  > .user-action-buttons {
-    justify-content: flex-end;
+  .user-action-buttons {
+    grid-area: userActions;
+    justify-content: center;
 
-    > button {
-      margin-left: 10px;
+    button { 
+      width:100%; 
+      flex:1;
+      margin-right:16px;
     }
+
+    button:last-child {margin:0px}
   }
 `;
 
@@ -185,28 +191,5 @@ export const UserAbout = styled.div`
     float: left;
     fill: ${(props) => props.theme.palette.text.primary};
     margin-right: 10px;
-  }
-`;
-
-export const Tabs = styled.ul`
-  display: flex;
-
-  > li {
-    list-style: none;
-    border-bottom: 3px solid transparent;
-
-    &:hover {
-      border-bottom: 3px solid ${(props) => props.theme.palette.border};
-    }
-  }
-
-  > li.current {
-    border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
-  }
-  > li a {
-    display: block;
-    color: ${(props) => props.theme.palette.text.primary};
-    text-decoration: none;
-    padding: 16px 32px;
   }
 `;

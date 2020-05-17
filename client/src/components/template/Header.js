@@ -1,29 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link, useRouteMatch } from 'react-router-dom';
-import NotificationsIcon from 'react-ionicons/lib/IosNotifications';
-import MessagesIcon from 'react-ionicons/lib/IosChatbubbles';
-import { FormattedMessage } from 'react-intl';
-import ArrowDownIcon from 'react-ionicons/lib/IosArrowDown';
-import ProfileIcon from 'react-ionicons/lib/MdPerson';
-import BookIcon from 'react-ionicons/lib/MdBook';
-import BookmarkIcon from 'react-ionicons/lib/MdBookmark';
-import ContrastIcon from 'react-ionicons/lib/MdContrast';
-import SettingsIcon from 'react-ionicons/lib/MdSettings';
-import LogoutIcon from 'react-ionicons/lib/IosLogOut';
-import { useDispatch, useSelector } from 'react-redux';
-import Search from './Search';
-import Dropdown from '../ui/Dropdown';
-import DropdownListContainer from '../ui/DropdownListContainer';
-import DropdownListItem from '../ui/DropdownListItem';
-import DropdownHeader from '../ui/DropdownHeader';
-import CardBody from '../ui/CardBody';
-import CardFooter from '../ui/CardFooter';
-import Switch from '../ui/FlipSwitch';
-import Notification from '../notifications';
-import { logoutRequest as logout } from '../../actions/auth';
-import { switchColorMode as changeTheme } from '../../actions/settings';
-import logo from '../../assets/logo-prov.png';
+import React from "react";
+import styled from "styled-components";
+import { Link, useRouteMatch } from "react-router-dom";
+import NotificationsIcon from "react-ionicons/lib/IosNotifications";
+import MessagesIcon from "react-ionicons/lib/IosChatbubbles";
+import { FormattedMessage } from "react-intl";
+import ArrowDownIcon from "react-ionicons/lib/IosArrowDown";
+import ProfileIcon from "react-ionicons/lib/MdPerson";
+import MenuIcon from "react-ionicons/lib/IosMenu";
+import BookIcon from "react-ionicons/lib/MdBook";
+import BookmarkIcon from "react-ionicons/lib/MdBookmark";
+import ContrastIcon from "react-ionicons/lib/MdContrast";
+import SettingsIcon from "react-ionicons/lib/MdSettings";
+import LogoutIcon from "react-ionicons/lib/IosLogOut";
+import { useDispatch, useSelector } from "react-redux";
+import Search from "./Search";
+import Dropdown from "../ui/Dropdown";
+import DropdownListContainer from "../ui/DropdownListContainer";
+import DropdownListItem from "../ui/DropdownListItem";
+import DropdownHeader from "../ui/DropdownHeader";
+import CardBody from "../ui/CardBody";
+import CardFooter from "../ui/CardFooter";
+import Switch from "../ui/FlipSwitch";
+import Notification from "../notifications";
+import { logoutRequest as logout } from "../../actions/auth";
+import { switchColorMode as changeTheme } from "../../actions/settings";
+import logo from "../../assets/logo-prov.png";
 
 const AppBar = styled.header`
   background: ${(props) => props.theme.palette.secondary};
@@ -33,7 +34,7 @@ const AppBar = styled.header`
   width: 100%;
   height: 64px;
   position: fixed;
-  z-index: 100;
+  z-index: 99;
   top: 0;
   left: 0;
 `;
@@ -44,14 +45,44 @@ const HeaderWrapper = styled.div`
 `;
 
 const Logo = styled.div`
-  height: 64px;
-  width: 64px;
+  flex: 1;
   display: flex;
-  align-items: start;
-  justify-content: center;
+  align-items: center;
 
-  > a img {
-    height: 54px;
+  .logo {
+    display: flex;
+    justify-content: flex-start;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      height: 56px;
+    }
+  }
+
+  .collapse-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    margin-left: 16px;
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    border-radius: 100%;
+    svg {
+      fill: ${(props) => props.theme.palette.text.contrast};
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  @media (min-width: 576px) {
+    .collapse-button { display: none;}
+    flex: 0;
   }
 `;
 
@@ -75,7 +106,8 @@ const HeaderMenuItem = styled.li`
     position: relative;
     padding: 10px;
     border-radius: 5px;
-    background: ${(props) => (props.current ? 'rgba(0,0,0,0.15)' : 'transparent')};
+    background: ${(props) =>
+      props.current ? "rgba(0,0,0,0.15)" : "transparent"};
     transition: background 0.3s;
 
     &:hover {
@@ -99,11 +131,11 @@ const HeaderMenuItem = styled.li`
   }
 `;
 
-const Header = ({ user }) => {
+const Header = ({ user, setCollapsed }) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const { notifications, notReadCount } = useSelector(
-    (state) => state.notifications,
+    (state) => state.notifications
   );
 
   const { colorMode } = useSelector((state) => state.settings);
@@ -113,19 +145,23 @@ const Header = ({ user }) => {
   };
 
   const handleChangeTheme = () => {
-    if (colorMode === 'dark') dispatch(changeTheme('light'));
-    if (colorMode === 'light') dispatch(changeTheme('dark'));
+    if (colorMode === "dark") dispatch(changeTheme("light"));
+    if (colorMode === "light") dispatch(changeTheme("dark"));
   };
 
   return (
     <>
       <AppBar>
         <Logo>
-          <Link to="/">
-            <img src={logo} alt="Logo AncapHub" />
-          </Link>
+          <button className="collapse-button" onClick={setCollapsed}>
+            <MenuIcon />
+          </button>
+          <div className="logo">
+            <Link to="/">
+              <img src={logo} />
+            </Link>
+          </div>
         </Logo>
-
         <Search />
 
         <HeaderMenu>
@@ -133,16 +169,14 @@ const Header = ({ user }) => {
             placement="bottom"
             offsetY={16}
             offsetX="-8vw"
-            toggle={(
-              <HeaderMenuItem current={url.includes('/notifications')}>
+            toggle={
+              <HeaderMenuItem current={url.includes("/notifications")}>
                 <div>
                   <NotificationsIcon />
-                  {notReadCount > 0 && (
-                  <span className="badge" />
-                  )}
+                  {notReadCount > 0 && <span className="badge" />}
                 </div>
               </HeaderMenuItem>
-            )}
+            }
           >
             <DropdownHeader>
               <FormattedMessage id="common.notifications" />
@@ -153,14 +187,17 @@ const Header = ({ user }) => {
                   style={{
                     maxWidth: 400,
                     maxHeight: 400,
-                    overflowY: 'scroll',
+                    overflowY: "scroll",
                   }}
                 >
                   {notifications.map((notification, index) => (
                     <Notification notification={notification} key={index} />
                   ))}
                 </ul>
-                <CardFooter link="/notifications" label={<FormattedMessage id="common.showMore" />} />
+                <CardFooter
+                  link="/notifications"
+                  label={<FormattedMessage id="common.showMore" />}
+                />
               </>
             ) : (
               <CardBody>
@@ -168,31 +205,33 @@ const Header = ({ user }) => {
               </CardBody>
             )}
           </Dropdown>
-
+          {/* 
           <Dropdown
             placement="bottom"
             offsetY={16}
             offsetX="-4vw"
-            toggle={(
-              <HeaderMenuItem current={url.includes('/messages')}>
-                <div><MessagesIcon /></div>
+            toggle={
+              <HeaderMenuItem current={url.includes("/messages")}>
+                <div>
+                  <MessagesIcon />
+                </div>
               </HeaderMenuItem>
-      )}
+            }
           >
             <p>Messages will appear here...</p>
           </Dropdown>
-
+          */}
           <Dropdown
             offsetY={16}
             offsetX="-4vw"
             placement="bottom"
-            toggle={(
+            toggle={
               <HeaderMenuItem>
                 <div>
                   <ArrowDownIcon />
                 </div>
               </HeaderMenuItem>
-            )}
+            }
           >
             <DropdownListContainer>
               <DropdownListItem icon={<ProfileIcon />}>
@@ -202,14 +241,24 @@ const Header = ({ user }) => {
               </DropdownListItem>
 
               <DropdownListItem icon={<BookIcon />}>
-                <Link to="/contributions"><FormattedMessage id="common.contributions" /></Link>
+                <Link to="/contributions">
+                  <FormattedMessage id="common.contributions" />
+                </Link>
               </DropdownListItem>
               <DropdownListItem icon={<BookmarkIcon />}>
                 <Link to="/bookmarks">
                   <FormattedMessage id="account.bookmarks.savedItemsHeading" />
                 </Link>
               </DropdownListItem>
-              <DropdownListItem icon={<ContrastIcon />} action={<Switch value={colorMode === 'dark'} onChange={() => handleChangeTheme()} />}>
+              <DropdownListItem
+                icon={<ContrastIcon />}
+                action={
+                  <Switch
+                    value={colorMode === "dark"}
+                    onChange={() => handleChangeTheme()}
+                  />
+                }
+              >
                 <FormattedMessage id="common.darkMode" />
               </DropdownListItem>
               <DropdownListItem icon={<SettingsIcon />}>
