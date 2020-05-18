@@ -3,12 +3,11 @@ import React, {
 } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 import LocationIcon from 'react-ionicons/lib/IosPinOutline';
 import BirthIcon from 'react-ionicons/lib/IosEggOutline';
 import SiteIcon from 'react-ionicons/lib/IosLinkOutline';
 import EditIcon from 'react-ionicons/lib/IosCreate';
-import moment from 'moment';
 import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
 import defaultProfileCover from '../../assets/default-profile-cover.jpg';
 import Paper from '../../components/ui/Paper';
@@ -44,7 +43,7 @@ export default () => {
   const auth = useSelector((state) => state.auth);
 
   const [Page, setPage] = useState();
-  const [editProfile, setEditProfile] = useState(false);
+  const [editProfile] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
 
   const { id: userId, page: pageParam } = useParams();
@@ -92,6 +91,7 @@ export default () => {
             <ProfilePicture isOwn={verifyIfIsOwnProfile}>
               <div className="avatar">
                 <img
+                  alt="user avatar"
                   src={
                     user.avatar && user.avatar !== ''
                       ? user.avatar
@@ -100,6 +100,7 @@ export default () => {
                 />
                 {verifyIfIsOwnProfile && (
                   <div
+                    role="presentation"
                     className="edit-profile-picture"
                     onClick={() => setEditAvatar(true)}
                   >
@@ -160,7 +161,7 @@ export default () => {
             </ProfileInfo>
           </ProfileHeader>
           <GridContainer style={{ marginTop: 16 }} spacing={2}>
-            <GridItem md={3}>
+            <GridItem lg={3} sm={12}>
               <Paper padding style={{ width: '100%' }}>
                 <UserAbout>
                   <h3>
@@ -179,7 +180,9 @@ export default () => {
                     {user.birthday && (
                       <li>
                         <BirthIcon />
-                        <span>{moment.utc(user.birthday).format('L')}</span>
+                        <span>
+                          <FormattedDate value={user.birthday} year="numeric" month="long" day="2-digit" />
+                        </span>
                       </li>
                     )}
 
@@ -197,23 +200,26 @@ export default () => {
                 </UserAbout>
               </Paper>
             </GridItem>
-            <GridItem md={9}>
+            <GridItem sm={12} lg={9}>
               <Paper style={{ width: '100%' }}>
-                <Tabs>
-                  <Tab 
-                  current={pageParam === undefined} 
-                  label={<FormattedMessage id="common.feed" />}
-                  link={`/${userId}`}
+                <Tabs style={{
+                  height: 48, padding: '0px 8px', overflow: 'hidden', flexGrow: 1,
+                }}
+                >
+                  <Tab
+                    current={pageParam === undefined}
+                    label={<FormattedMessage id="common.feed" />}
+                    link={`/${userId}`}
                   />
-                                    <Tab 
-                  current={pageParam === ""} 
-                  label={<FormattedMessage id="common.lists" />}
-                  link={`/${userId}/lists`}
+                  <Tab
+                    current={pageParam === 'lists'}
+                    label={<FormattedMessage id="common.lists" />}
+                    link={`/${userId}/lists`}
                   />
-                                    <Tab 
-                  current={pageParam === undefined} 
-                  label={<FormattedMessage id="common.contributions" />}
-                  link={`/${userId}/contributions`}
+                  <Tab
+                    current={pageParam === 'contributions'}
+                    label={<FormattedMessage id="common.contributions" />}
+                    link={`/${userId}/contributions`}
                   />
                 </Tabs>
               </Paper>

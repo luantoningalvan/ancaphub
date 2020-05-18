@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Calendar as RCBC, momentLocalizer } from 'react-big-calendar';
+import { Calendar as RCBC, dateFnsLocalizer } from 'react-big-calendar';
+import {
+  format, parse, startOfWeek, getDay,
+} from 'date-fns';
+import locale from 'date-fns/locale/pt-BR';
 import BackButton from 'react-ionicons/lib/IosArrowBack';
 import NextButton from 'react-ionicons/lib/IosArrowForward';
-import moment from 'moment';
 import Container from '../../components/ui/Container';
 import Hero from '../../components/ui/Hero';
 import Button from '../../components/ui/Button';
@@ -12,7 +15,6 @@ import GridContainer from '../../components/ui/GridContainer';
 import GridItem from '../../components/ui/GridItem';
 import IconButton from '../../components/ui/IconButton';
 import EventCard from '../../components/events/EventCard';
-import 'moment/locale/pt-br';
 import CreateEvent from '../../components/events/CreateEvent';
 
 const Calendar = styled(RCBC)`
@@ -167,13 +169,19 @@ const Toolbar = (toolbar) => {
 
 export default () => {
   const [createEventState, setCreateEventState] = useState(false);
-  moment.locale('pt-br');
-  const localizer = momentLocalizer(moment);
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales: { pt: locale },
+  });
+
   const events = [
     {
       _id: 1,
-      start: moment().toDate(),
-      end: moment().toDate(),
+      start: Date.now(),
+      end: Date.now(),
       title: 'AncapHub Week',
       cover: 'https://ancaphub.com/wp-content/uploads/2020/04/maxresdefault-360x240.jpg',
       location: 'Online',
@@ -208,6 +216,8 @@ export default () => {
       <div style={{ marginTop: 16 }}>
 
         <Calendar
+          startAccessor="start"
+          endAccessor="end"
           localizer={localizer}
           events={events}
           drilldownView="day"

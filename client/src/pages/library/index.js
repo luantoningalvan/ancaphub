@@ -75,7 +75,7 @@ export default () => {
                 <FormattedMessage id="common.categories" />
               </h3>
             </CardHeader>
-            <Menu style={{maxHeight:208, overflowX: 'scroll'}}>
+            <Menu style={{ maxHeight: 208, overflowX: 'scroll' }}>
               <LoadContent loading={loadingCategories}>
                 <MenuItem
                   label={<FormattedMessage id="common.all" />}
@@ -96,28 +96,28 @@ export default () => {
         <GridItem xs={12}>
           <div style={{ width: '100%' }}>
             <Paper>
-            <Tabs style={{height: 48, padding: '0px 8px'}}>
-              <Tab
-                label={<FormattedMessage id="common.all" />}
-                current={typeParam === undefined}
-                link="/library"
-              />
-              <Tab
-                label={<FormattedMessage id="library.articles" />}
-                current={typeParam === 'articles'}
-                link="/library/articles"
-              />
-              <Tab
-                label={<FormattedMessage id="library.books" />}
-                current={typeParam === 'books'}
-                link="/library/books"
-              />
-              <Tab
-                label={<FormattedMessage id="library.videos" />}
-                current={typeParam === 'videos'}
-                link="/library/videos"
-              />
-            </Tabs>
+              <Tabs style={{ height: 48, padding: '0px 8px' }}>
+                <Tab
+                  label={<FormattedMessage id="common.all" />}
+                  current={typeParam === undefined}
+                  link="/library"
+                />
+                <Tab
+                  label={<FormattedMessage id="library.articles" />}
+                  current={typeParam === 'articles'}
+                  link="/library/articles"
+                />
+                <Tab
+                  label={<FormattedMessage id="library.books" />}
+                  current={typeParam === 'books'}
+                  link="/library/books"
+                />
+                <Tab
+                  label={<FormattedMessage id="library.videos" />}
+                  current={typeParam === 'videos'}
+                  link="/library/videos"
+                />
+              </Tabs>
             </Paper>
             <div style={{ marginTop: 16 }}>
               <LoadContent loading={loading}>
