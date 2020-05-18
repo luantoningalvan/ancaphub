@@ -49,11 +49,13 @@ export const Item = styled.li`
   }
 `;
 
-const MenuItem = ({ link, icon, current, label}) => (
+const MenuItem = ({
+  link, icon, current, label,
+}) => (
   <Item>
     <StyledLink to={link} current={!!current}>
       <i>{icon}</i>
-<span>{label}</span>
+      <span>{label}</span>
     </StyledLink>
   </Item>
 );

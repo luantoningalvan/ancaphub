@@ -1,4 +1,4 @@
-import { Types } from "../actions/categories";
+import { Types } from '../actions/categories';
 
 const INITIAL_STATE = {
   items: [],

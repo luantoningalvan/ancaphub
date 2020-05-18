@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const TabStyle = styled.li`
   list-style: none;
-  border-bottom: ${props => props.current 
+  border-bottom: ${(props) => (props.current
     ? `3px solid ${props.theme.palette.secondary}`
-    : '3px solid transparent'
-  };
+    : '3px solid transparent')
+};
 
   &:hover {
     border-bottom: 3px solid ${(props) => props.theme.palette.secondary};
@@ -16,7 +16,7 @@ const TabStyle = styled.li`
 
   > a {
     display: block;
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
     text-decoration: none;
     padding:  0px 16px;
     height:100%;
@@ -24,17 +24,17 @@ const TabStyle = styled.li`
     align-items:center;
 
     svg {
-      fill: ${props => props.theme.palette.text.primary}
+      fill: ${(props) => props.theme.palette.text.primary}
     }
   }
 `;
 
-const Tab = ({label, link, current, ...props }) => {
-  return (
-    <TabStyle current={current} {...props }>
-      <Link to={link}>{label}</Link>
-    </TabStyle>
-  )
-}
+const Tab = ({
+  label, link, current, ...props
+}) => (
+  <TabStyle current={current} {...props}>
+    <Link to={link}>{label}</Link>
+  </TabStyle>
+);
 
-export default Tab
+export default Tab;

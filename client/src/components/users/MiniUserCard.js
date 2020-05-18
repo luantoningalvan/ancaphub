@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { FormattedMessage } from "react-intl";
-import Button from "../ui/Button";
-import defaultAvatar from "../../assets/default-profile-picture.jpg";
+import React from 'react';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import Button from '../ui/Button';
+import defaultAvatar from '../../assets/default-profile-picture.jpg';
 
 export const User = styled.div`
   display: flex;
@@ -35,21 +35,19 @@ const Avatar = styled.div`
   margin-right: 10px;
 `;
 
-const MiniUserCard = ({ user }) => {
-  return (
-    <User>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Avatar src={user.avatar !== "" ? user.avatar : defaultAvatar} />
-        <div>
-          <h4>{user.name}</h4>
-          <span>{user.username}</span>
-        </div>
+const MiniUserCard = ({ user }) => (
+  <User>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Avatar src={user.avatar !== '' ? user.avatar : defaultAvatar} />
+      <div>
+        <h4>{user.name}</h4>
+        <span>{user.username}</span>
       </div>
-      <Button variant="outlined" size="small" color="primary">
-        <FormattedMessage id="common.follow" />
-      </Button>
-    </User>
-  );
-};
+    </div>
+    <Button variant="outlined" size="small" color="primary">
+      <FormattedMessage id="common.follow" />
+    </Button>
+  </User>
+);
 
 export default MiniUserCard;

@@ -7,12 +7,12 @@ import Main from './Main';
 
 const Template = ({ children }) => {
   const auth = useSelector((state) => state.auth);
-  const [collapsed, setCollapsed] = useState(true)
+  const [collapsed, setCollapsed] = useState(true);
 
   const handleCollapse = () => {
-    console.log('cu')
-    setCollapsed(!collapsed)
-  }
+    console.log('cu');
+    setCollapsed(!collapsed);
+  };
   return (
     <ThemeProvider>
       <Header user={auth.user} collapsed={collapsed} setCollapsed={handleCollapse} />

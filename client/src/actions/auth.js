@@ -27,8 +27,8 @@ export const loadUserSuccess = (data) => ({
   payload: data,
 });
 
-export const logoutRequest = () => ({ type: Types.LOGOUT_REQUEST,});
-export const logoutSuccess = () => ({ type: Types.LOGOUT_SUCCESS,});
+export const logoutRequest = () => ({ type: Types.LOGOUT_REQUEST });
+export const logoutSuccess = () => ({ type: Types.LOGOUT_SUCCESS });
 
 export const authError = ({ errorMessage }) => ({
   type: Types.AUTH_ERROR,

@@ -1,14 +1,16 @@
-import { takeLatest, call, fork, put } from "redux-saga/effects";
-import * as actions from "../actions/auth";
-import { getNotificationsRequest } from '../actions/notifications'
-import * as api from "../api/auth";
+import {
+  takeLatest, call, fork, put,
+} from 'redux-saga/effects';
+import * as actions from '../actions/auth';
+import { getNotificationsRequest } from '../actions/notifications';
+import * as api from '../api/auth';
 
 function* authUser(action) {
   try {
     const data = action.payload;
     const response = yield call(api.authUser, data);
-    localStorage.setItem("token", response.data.token);
-    document.location.reload()
+    localStorage.setItem('token', response.data.token);
+    document.location.reload();
   } catch (e) {
     yield put(actions.authError({ errorMessage: e.message }));
   }
@@ -25,8 +27,8 @@ function* loadUser() {
 }
 
 function* logout() {
-  localStorage.removeItem('token')
-  document.location.reload()
+  localStorage.removeItem('token');
+  document.location.reload();
 }
 
 function* watchAuthUserRequest() {
@@ -44,5 +46,5 @@ function* watchLogout() {
 export default [
   fork(watchAuthUserRequest),
   fork(watchLogout),
-  fork(watchLoadUserRequest)
+  fork(watchLoadUserRequest),
 ];

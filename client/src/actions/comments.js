@@ -31,7 +31,7 @@ export const addCommentSuccess = (data) => ({
 
 export const deleteCommentRequest = (postId, commentId) => ({
   type: Types.DELETE_COMMENT_REQUEST,
-  payload: {postId, commentId},
+  payload: { postId, commentId },
 });
 
 export const deleteCommentSuccess = (commentId) => ({

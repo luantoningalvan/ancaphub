@@ -14,19 +14,19 @@ export const getUserFollowers = (payload) => axios.get(`users/${payload}/followe
 export const getUserFollowing = (payload) => axios.get(`users/${payload}/following`);
 
 export const createUser = ({
-  name, username, email, password,code
+  name, username, email, password, code,
 }) => axios.post('/users', {
   name,
   username,
   email,
   password,
-  code
+  code,
 });
 
 export const updateUserInfo = ({
-  name, bio, birthday, currentCity, site
+  name, bio, birthday, currentCity, site,
 }) => axios.put('/users/profile', {
-  name, bio, birthday, currentCity, site
+  name, bio, birthday, currentCity, site,
 });
 
 export const updateUserAvatar = (data) => axios.post('/users/avatar', data);

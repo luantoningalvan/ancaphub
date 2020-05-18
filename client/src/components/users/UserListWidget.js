@@ -7,7 +7,7 @@ import CardFooter from '../ui/CardFooter';
 import CardHeader from '../ui/CardHeader';
 import CardBody from '../ui/CardBody';
 import defaultAvatar from '../../assets/default-profile-picture.jpg';
-import MiniUserCard from './MiniUserCard'
+import MiniUserCard from './MiniUserCard';
 
 export const User = styled.li`
   list-style: none;
@@ -81,7 +81,7 @@ const UserListWidget = () => {
         <CardBody>
           <ul>
             {users.map((user, index) => (
-              <MiniUserCard key={index} user={user}/>
+              <MiniUserCard key={index} user={user} />
             ))}
           </ul>
         </CardBody>

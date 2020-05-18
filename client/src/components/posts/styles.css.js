@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Paper from '../../components/ui/Paper'
+import styled from 'styled-components';
+import Paper from '../ui/Paper';
 
 export const PostContainer = styled(Paper)`
   margin-bottom: 16px; 

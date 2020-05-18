@@ -7,7 +7,7 @@ const CardHeader = styled.div`
     align-items:center;
     h3 { font-size:1em; }
 
-    svg { fill: ${props => props.theme.palette.text.primary}}
+    svg { fill: ${(props) => props.theme.palette.text.primary}}
 `;
 
 export default CardHeader;

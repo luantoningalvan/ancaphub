@@ -24,5 +24,5 @@ export default combineReducers({
   notifications,
   search,
   settings,
-  categories
+  categories,
 });

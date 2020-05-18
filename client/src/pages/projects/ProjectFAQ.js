@@ -21,26 +21,26 @@ export default () => {
     <>
       <FAQQuestion open={openQuestions[0]}>
         <Card>
-          <CardHeader style={{padding: 16}}>
+          <CardHeader style={{ padding: 16 }}>
             <h3>A plataforma será gratuita?</h3>
             <ArrowIcon onClick={() => setOpenQuestions({ ...openQuestions, 0: !openQuestions[0] })} color="white" style={{ marginLeft: 'auto' }} />
           </CardHeader>
           <Collapse expanded={openQuestions[0]}>
             <CardBody>
-            <p>Sim, será gratuita. É possível que no futuro haja um plano PRO, mas este traria funções que nunca sequer foram anunciadas.</p>
+              <p>Sim, será gratuita. É possível que no futuro haja um plano PRO, mas este traria funções que nunca sequer foram anunciadas.</p>
             </CardBody>
           </Collapse>
         </Card>
       </FAQQuestion>
       <FAQQuestion open={openQuestions[1]}>
         <Card>
-          <CardHeader style={{padding: 16}}>
+          <CardHeader style={{ padding: 16 }}>
             <h3>Vai ter aplicativo?</h3>
             <ArrowIcon onClick={() => setOpenQuestions({ ...openQuestions, 1: !openQuestions[1] })} color="white" style={{ marginLeft: 'auto' }} />
           </CardHeader>
           <Collapse expanded={openQuestions[1]}>
             <CardBody>
-            <p>Sim, além do nosso site ser 100% compatível com dispositivos móveis teremos também aplicativos nativos para Android e iOS.</p>
+              <p>Sim, além do nosso site ser 100% compatível com dispositivos móveis teremos também aplicativos nativos para Android e iOS.</p>
             </CardBody>
           </Collapse>
         </Card>

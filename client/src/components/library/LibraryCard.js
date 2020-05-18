@@ -1,34 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import BookmarkButton from './BookmarkButton.js'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import BookIcon from "react-ionicons/lib/IosBook";
-import VideoIcon from "react-ionicons/lib/IosVideocam";
-import ArticleIcon from "react-ionicons/lib/IosPaper";
+import BookIcon from 'react-ionicons/lib/IosBook';
+import VideoIcon from 'react-ionicons/lib/IosVideocam';
+import ArticleIcon from 'react-ionicons/lib/IosPaper';
+import BookmarkButton from './BookmarkButton.js';
 
-import defaultBookCover from "../../assets/default-book-cover.jpg";
-import defaultArticleCover from "../../assets/default-article-cover.jpg";
-import defaultVideoCover from "../../assets/default-video-cover.jpg";
+import defaultBookCover from '../../assets/default-book-cover.jpg';
+import defaultArticleCover from '../../assets/default-article-cover.jpg';
+import defaultVideoCover from '../../assets/default-video-cover.jpg';
 
 
 const types = {
   book: {
     icon: <BookIcon />,
     defaulCover: defaultBookCover,
-    size: 280
+    size: 280,
   },
   article: {
     icon: <ArticleIcon />,
     defaulCover: defaultArticleCover,
-    size: 200
+    size: 200,
   },
   video: {
     icon: <VideoIcon />,
     defaulCover: defaultVideoCover,
-    size:130
-  }
-}
+    size: 130,
+  },
+};
 
 const LibraryCard = styled.div`
   padding-top:10px;
@@ -37,7 +37,7 @@ const LibraryCard = styled.div`
   .card-cover {
     width: 100%;
     border-radius: 16px;
-    height: ${props => types[props.type].size}px ;
+    height: ${(props) => types[props.type].size}px ;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +57,7 @@ const LibraryCard = styled.div`
     .card-image{
       width:100%;
       border-radius: 16px;
-      height: ${props => types[props.type].size}px ;
+      height: ${(props) => types[props.type].size}px ;
       overflow: hidden;
 
       img {  
@@ -80,7 +80,7 @@ const LibraryCard = styled.div`
       .card-image {
         &:before {
           width: 100%;
-          height: ${props => types[props.type].size}px ;
+          height: ${(props) => types[props.type].size}px ;
           background: linear-gradient(to bottom, rgba(0,0,0,.3) 0%,rgba(0,0,0,1) 100%);
           content: "";
           position: absolute;

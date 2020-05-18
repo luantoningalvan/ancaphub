@@ -15,9 +15,9 @@ export const searchTermSuccess = (data) => ({
   payload: data,
 });
 
-export const searchNearbyUserRequest = ({radius, lastLocation}) => ({
+export const searchNearbyUserRequest = ({ radius, lastLocation }) => ({
   type: Types.SEARCH_NEARBY_USERS_REQUEST,
-  payload: {radius, lastLocation},
+  payload: { radius, lastLocation },
 });
 
 export const searchNearbyUserSuccess = (data) => ({

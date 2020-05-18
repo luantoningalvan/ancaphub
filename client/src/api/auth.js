@@ -1,10 +1,10 @@
 import axios from './axios';
 
 export const authUser = ({
-  email, password
+  email, password,
 }) => axios.post('/auth', {
   email,
-  password
+  password,
 });
 
 

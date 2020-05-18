@@ -3,7 +3,7 @@ import { Types } from '../actions/notifications';
 const INITIAL_STATE = {
   notifications: [],
   notReadCount: 0,
-  loading: true
+  loading: true,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,13 +16,13 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         notifications: payload.notifications,
-        notReadCount: payload.notReadCount
-      }
+        notReadCount: payload.notReadCount,
+      };
     case Types.MARK_ALL_AS_READ_SUCCESS:
       return {
         ...state,
-        notReadCount: 0
-      }  
+        notReadCount: 0,
+      };
     default:
       return state;
   }

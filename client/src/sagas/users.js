@@ -9,8 +9,8 @@ import {
 import * as actions from '../actions/users';
 import * as alerts from '../actions/alerts';
 import * as api from '../api/users';
-import { getUsersCount } from '../actions/users'
-import { getUsersRelationsips } from '../actions/relationships'
+import { getUsersCount } from '../actions/users';
+import { getUsersRelationsips } from '../actions/relationships';
 
 function* getUsers() {
   try {
@@ -19,18 +19,18 @@ function* getUsers() {
     yield put(getUsersRelationsips(result.data));
     yield put(actions.getUsersSuccess({ items: result.data }));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 
 function* getSingleUser(action) {
   try {
     const user = yield call(() => api.getSingleUser(action.payload));
-    yield put(getUsersCount([{user: user.data}]));
-    yield put(getUsersRelationsips([{user: user.data}]));
+    yield put(getUsersCount([{ user: user.data }]));
+    yield put(getUsersRelationsips([{ user: user.data }]));
     yield put(actions.getSingleUserSuccess(user.data));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 
@@ -41,7 +41,7 @@ function* getUserFollowers(action) {
     yield put(getUsersRelationsips(users.data));
     yield put(actions.getUserFollowersSuccess(users.data));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 
@@ -52,17 +52,16 @@ function* getUserFollowing(action) {
     yield put(getUsersRelationsips(users.data));
     yield put(actions.getUserFollowingSuccess(users.data));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 
-function* createUser({payload}) {
+function* createUser({ payload }) {
   try {
     const result = yield call(api.createUser, payload);
-    localStorage.setItem("token", result.data.token);
-    document.location.reload()
+    localStorage.setItem('token', result.data.token);
+    document.location.reload();
     yield put(actions.createUserSuccess(result.data));
-
   } catch (e) {
     yield put(actions.createUserError());
     yield put(alerts.addAlert('error', e.message));
@@ -70,22 +69,20 @@ function* createUser({payload}) {
 }
 
 
-function* updateUserInfo({payload}) {
+function* updateUserInfo({ payload }) {
   try {
     const result = yield call(api.updateUserInfo, payload);
     yield put(actions.updateProfileInfoSuccess(result.data));
-
   } catch (e) {
     yield put(alerts.addAlert('error', e.message));
   }
 }
 
 
-function* updateUserAvatar({payload}) {
+function* updateUserAvatar({ payload }) {
   try {
     const result = yield call(api.updateUserAvatar, payload);
     yield put(actions.updateProfilePictureSuccess(result.data));
-
   } catch (e) {
     yield put(alerts.addAlert('error', e.message));
   }
@@ -126,5 +123,5 @@ export default [
   fork(watchGetUserFollowers),
   fork(watchUpdateUserInfo),
   fork(watchUpdateUserAvatar),
-  fork(watchGetUserFollowing)
+  fork(watchGetUserFollowing),
 ];

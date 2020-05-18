@@ -47,9 +47,9 @@ const Menu = () => {
         icon={<UsersIcon />}
         label="Usuários"
         link="/users"
-        />
+      />
 
-        {/*
+      {/*
       <MenuItem
         current={url.includes('/groups')}
         icon={<GroupIcon />}
@@ -86,7 +86,7 @@ const Menu = () => {
         link="/projects"
       />
     */}
-      
+
     </MenuWrapper>
   );
 };

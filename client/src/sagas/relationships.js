@@ -10,21 +10,21 @@ import * as actions from '../actions/relationships';
 import * as alerts from '../actions/alerts';
 import * as api from '../api/users';
 
-function* followUser({payload}) {
+function* followUser({ payload }) {
   try {
     const result = yield call(api.followUser, payload);
     yield put(actions.followUserSuccess(result.data));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 
-function* unfollowUser({payload}) {
+function* unfollowUser({ payload }) {
   try {
     const result = yield call(api.unfollowUser, payload);
     yield put(actions.unfollowUserSuccess(result.data));
   } catch (e) {
-    yield put(alerts.addAlert('error', e.message ));
+    yield put(alerts.addAlert('error', e.message));
   }
 }
 

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const UploadBox = styled.div`
   height: 100px;
@@ -25,4 +25,4 @@ const UploadBox = styled.div`
   }
 `;
 
-export default UploadBox
+export default UploadBox;

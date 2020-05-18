@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const IconButton = styled.button`
-    background: ${props => props.color ? props.theme.palette[props.color] : 'transparent'};
+    background: ${(props) => (props.color ? props.theme.palette[props.color] : 'transparent')};
     cursor: pointer;
     border-radius: 100%;
     text-align: center;

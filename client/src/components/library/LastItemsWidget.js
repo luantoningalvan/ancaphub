@@ -8,9 +8,9 @@ import CardFooter from '../ui/CardFooter';
 import CardHeader from '../ui/CardHeader';
 import CardBody from '../ui/CardBody';
 import defaultCover from '../../assets/default-book-cover.jpg';
-import LoadContent from '../ui/LoadContent'
+import LoadContent from '../ui/LoadContent';
 import { getRecentItemsRequest } from '../../actions/library';
-import MiniLibraryCard from './MiniLibraryCard'
+import MiniLibraryCard from './MiniLibraryCard';
 
 const LastItems = styled.div`
   padding:0;
@@ -90,11 +90,11 @@ const LastItemsWidget = () => {
         </CardHeader>
         <CardBody>
           <LoadContent loading={loading}>
-          <LastItems>
-            {items && items.map((item) => (
-              <MiniLibraryCard item={item} />
-            ))}
-          </LastItems>
+            <LastItems>
+              {items && items.map((item) => (
+                <MiniLibraryCard item={item} />
+              ))}
+            </LastItems>
           </LoadContent>
         </CardBody>
         <CardFooter link="/library" label={<FormattedMessage id="common.showMore" />} />

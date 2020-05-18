@@ -110,7 +110,7 @@ const SingleComment = ({ comment, post }) => {
           <UserName user={comment.user} fontSize={1} />
           <p className="comment-text">{` ${comment.content}`}</p>
           <ul className="date">
-{/* 
+            {/*
             <li>
               <a href="#" onClick={handleLikeComment}>
                 <FormattedMessage id="common.like" />
@@ -149,10 +149,10 @@ const SingleComment = ({ comment, post }) => {
           )}
           >
             <DropdownListContainer>
-              {/* 
+              {/*
               <DropdownListItem icon={<DocumentIcon />}>
                 <FormattedMessage id="common.edit" />
-              </DropdownListItem>*/}
+              </DropdownListItem> */}
               <DropdownListItem icon={<DeleteIcon />} onClick={() => setDeleteBox(true)}>
                 <FormattedMessage id="common.delete" />
               </DropdownListItem>

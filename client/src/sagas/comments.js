@@ -10,38 +10,38 @@ import * as actions from '../actions/comments';
 import { addAlert } from '../actions/alerts';
 import * as api from '../api/comments';
 
-function* loadComments({payload}) {
+function* loadComments({ payload }) {
   try {
     const comments = yield call(api.getComments, payload);
-    yield put(actions.loadCommentsSuccess({id: payload, data: comments.data}));
+    yield put(actions.loadCommentsSuccess({ id: payload, data: comments.data }));
   } catch (e) {
-    yield put(addAlert('error', e.message ));
+    yield put(addAlert('error', e.message));
   }
 }
 
-function* addComment({payload}) {
+function* addComment({ payload }) {
   try {
     const comment = yield call(api.createComment, payload);
-    const state = yield select()
-    
+    const state = yield select();
+
     const data = {
       postId: payload.postId,
       user: state.auth.user,
       data: comment.data,
-      content: payload.comment.content
-    }
+      content: payload.comment.content,
+    };
     yield put(actions.addCommentSuccess(data));
   } catch (e) {
-    yield put(addAlert('error', e.message ));
+    yield put(addAlert('error', e.message));
   }
 }
 
-function* deleteComment({payload}) {
+function* deleteComment({ payload }) {
   try {
     yield call(api.deleteComment, payload);
     yield put(actions.deleteCommentSuccess(payload));
   } catch (e) {
-    yield put(addAlert('error', e.message ));
+    yield put(addAlert('error', e.message));
   }
 }
 
@@ -60,5 +60,5 @@ function* watchDeleteComment() {
 export default [
   fork(watchLoadComments),
   fork(watchAddComment),
-  fork(watchDeleteComment)
+  fork(watchDeleteComment),
 ];

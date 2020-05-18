@@ -1,7 +1,7 @@
-import React from 'react'
-import Paper from "../../components/ui/Paper";
-import styled from 'styled-components'
-import ListIcon from 'react-ionicons/lib/IosList'
+import React from 'react';
+import styled from 'styled-components';
+import ListIcon from 'react-ionicons/lib/IosList';
+import Paper from '../ui/Paper';
 
 const ListCard = styled.div`
   width: 100%;
@@ -41,17 +41,17 @@ const ListCard = styled.div`
     margin: 15px 0px 5px;
     color: ${(props) => props.theme.palette.text.primary};
   }
-`
+`;
 
-export default ({list}) => (
+export default ({ list }) => (
   <ListCard>
     <Paper className="list-cover">
-    <img src={list.cover} />
-    <span>
-      {list.itemsCount}
-      <ListIcon />
-    </span>
+      <img src={list.cover} />
+      <span>
+        {list.itemsCount}
+        <ListIcon />
+      </span>
     </Paper>
     <h4>{list.title}</h4>
   </ListCard>
-)
+);

@@ -22,4 +22,3 @@ export const markAllAsReadSuccess = (data) => ({
   type: Types.MARK_ALL_AS_READ_SUCCESS,
   payload: data,
 });
-

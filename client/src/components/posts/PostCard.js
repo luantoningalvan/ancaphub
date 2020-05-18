@@ -163,7 +163,7 @@ const PostCard = ({ data }) => {
             <span><FormattedMessage id="common.commentVerb" /></span>
           </button>
         </div>
-          {/* 
+        {/*
         <div>
           <button disabled>
             <ShareIcon />

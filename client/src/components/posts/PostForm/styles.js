@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import Paper from "../../ui/Paper";
+import styled from 'styled-components';
+import Paper from '../../ui/Paper';
 
 export default styled(Paper)`
   .form-actions {
     display: flex;
     justify-content: flex-start;
     padding: 15px;
-    border-top: 1px solid ${props => props.theme.palette.border};
-    background: ${props => props.theme.palette.paperDark};
+    border-top: 1px solid ${(props) => props.theme.palette.border};
+    background: ${(props) => props.theme.palette.paperDark};
   }
 
   .text-box {
@@ -29,7 +29,7 @@ export default styled(Paper)`
 
     svg {
       cursor: pointer;
-      fill: ${props => props.theme.palette.text.secondary};
+      fill: ${(props) => props.theme.palette.text.secondary};
       height: 2em;
       width: 2em;
       margin: 2.5px 0;
@@ -52,7 +52,7 @@ export default styled(Paper)`
     overflow: hidden;
     position: relative;
     margin-top: 20px;
-    border: 1px solid ${props => props.theme.palette.border};
+    border: 1px solid ${(props) => props.theme.palette.border};
   }
 
   .image-box {

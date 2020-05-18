@@ -14,7 +14,7 @@ export const Types = {
   UPDATE_PROFILE_INFO_REQUEST: 'users/update_profile_info_request',
   UPDATE_PROFILE_INFO_SUCCESS: 'users/update_profile_info_success',
   CREATE_USER_ERROR: 'users/create_user_error',
-  GET_USERS_COUNT: 'users/get_users_count'
+  GET_USERS_COUNT: 'users/get_users_count',
 };
 
 
@@ -29,7 +29,7 @@ export const getUsersSuccess = ({ items }) => ({
 
 export const getSingleUserRequest = (id) => ({
   type: Types.GET_SINGLE_USER_REQUEST,
-  payload: id
+  payload: id,
 });
 
 export const getSingleUserSuccess = (data) => ({
@@ -39,7 +39,7 @@ export const getSingleUserSuccess = (data) => ({
 
 export const getUserFollowersRequest = (id) => ({
   type: Types.GET_USER_FOLLOWERS_REQUEST,
-  payload: id
+  payload: id,
 });
 
 export const getUserFollowersSuccess = (data) => ({
@@ -49,7 +49,7 @@ export const getUserFollowersSuccess = (data) => ({
 
 export const getUserFollowingRequest = (id) => ({
   type: Types.GET_USER_FOLLOWING_REQUEST,
-  payload: id
+  payload: id,
 });
 
 export const getUserFollowingSuccess = (data) => ({
@@ -98,5 +98,3 @@ export const updateProfileInfoSuccess = (data) => ({
   type: Types.UPDATE_PROFILE_INFO_SUCCESS,
   payload: data,
 });
-
-

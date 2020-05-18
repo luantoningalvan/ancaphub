@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Dialog from "./Dialog";
-import IconButton from "./IconButton";
-import CloseIcon from "react-ionicons/lib/IosClose";
+import React, { useState } from 'react';
+import CloseIcon from 'react-ionicons/lib/IosClose';
+import Dialog from './Dialog';
+import IconButton from './IconButton';
 
 export default ({ src }) => {
   const [open, setOpen] = useState(false);
@@ -10,17 +10,17 @@ export default ({ src }) => {
     <div
       style={{
         marginTop: 16,
-        cursor: "pointer",
-        width: "100%",
+        cursor: 'pointer',
+        width: '100%',
         maxHeight: 350,
-        overflow: "hidden",
+        overflow: 'hidden',
         borderRadius: 8,
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
       <img
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
         src={src}
         alt=""
         onClick={() => setOpen(true)}
@@ -30,11 +30,11 @@ export default ({ src }) => {
         <IconButton
           color="primary"
           style={{
-            position: "absolute",
+            position: 'absolute',
             left: 16,
             top: 16,
             height: 40,
-            width: 40
+            width: 40,
           }}
           onClick={() => setOpen(false)}
         >

@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import defaultCover from "../../assets/default-book-cover.jpg";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import defaultCover from '../../assets/default-book-cover.jpg';
 
 const MiniLIbraryCardSyle = styled(Link)`
   display: flex;
@@ -61,10 +61,10 @@ const MiniLIbraryCard = ({ item }) => (
   <MiniLIbraryCardSyle
     to={`/library/${item.type}s/${item._id}`}
     cover={
-      item.cover !== "" && item.cover !== null ? item.cover.url : defaultCover
+      item.cover !== '' && item.cover !== null ? item.cover.url : defaultCover
     }
   >
-    <div className="cover"></div>
+    <div className="cover" />
     <div className="content">
       <h4 className="title">{item.title.substr(0, 49)}</h4>
       <h5 className="author">{item.author.substr(0, 49)}</h5>

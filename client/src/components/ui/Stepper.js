@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Stepper = styled.div`
   display: flex;
@@ -25,8 +25,7 @@ const Step = styled.div`
   .step-id {
     height: 40px;
     width: 40px;
-    background: ${({theme, checked, current}) => 
-    checked || current ? theme.palette.secondary : theme.palette.paper};
+    background: ${({ theme, checked, current }) => (checked || current ? theme.palette.secondary : theme.palette.paper)};
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -44,8 +43,7 @@ const Step = styled.div`
     content: "";
     height: 2px;
     width: calc(100% - 40px);
-    background: ${({theme, checked}) => 
-    checked ? theme.palette.secondary : theme.palette.paper};
+    background: ${({ theme, checked }) => (checked ? theme.palette.secondary : theme.palette.paper)};
   }
 
   &:first-child {
@@ -68,21 +66,18 @@ const Step = styled.div`
 }
 `;
 
-export default ({ steps, currentStep, setStepAction }) => {
-  return (
-    <Stepper>
-      {steps.map((step, index) => (
-        <Step 
-          checked={currentStep > (index + 1)}
-          current={currentStep === (index + 1)}
-          
-        >
-          <div className="step-content" onClick={() => setStepAction(index + 1)}>
+export default ({ steps, currentStep, setStepAction }) => (
+  <Stepper>
+    {steps.map((step, index) => (
+      <Step
+        checked={currentStep > (index + 1)}
+        current={currentStep === (index + 1)}
+      >
+        <div className="step-content" onClick={() => setStepAction(index + 1)}>
           <div className="step-id">{step.icon || index + 1}</div>
           <span>{step.label}</span>
-          </div>
-        </Step>
-      ))}
-    </Stepper>
-  );
-};
+        </div>
+      </Step>
+    ))}
+  </Stepper>
+);

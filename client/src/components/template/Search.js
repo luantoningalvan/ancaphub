@@ -1,12 +1,12 @@
-import React, { memo, useState } from "react";
-import styled from "styled-components";
-import SearchIcon from "react-ionicons/lib/IosSearch";
-import BackIcon from "react-ionicons/lib/IosArrowBack";
-import LocateIcon from "react-ionicons/lib/MdLocate";
-import IconButton from "../ui/IconButton";
-import { FormattedMessage } from "react-intl";
-import { Link, useHistory } from "react-router-dom";
-import clsx from "clsx";
+import React, { memo, useState } from 'react';
+import styled from 'styled-components';
+import SearchIcon from 'react-ionicons/lib/IosSearch';
+import BackIcon from 'react-ionicons/lib/IosArrowBack';
+import LocateIcon from 'react-ionicons/lib/MdLocate';
+import { FormattedMessage } from 'react-intl';
+import { Link, useHistory } from 'react-router-dom';
+import clsx from 'clsx';
+import IconButton from '../ui/IconButton';
 
 const SearchWrapper = styled.div`
   .not-collapsed {
@@ -77,7 +77,7 @@ const SearchWrapper = styled.div`
       align-items:center;
       padding:8px;
 
-      svg { fill: ${props => props.theme.palette.text.contrast}}
+      svg { fill: ${(props) => props.theme.palette.text.contrast}}
 
       input {
         flex: 1;
@@ -88,7 +88,7 @@ const SearchWrapper = styled.div`
       
       input, 
       input::placeholder {
-        color: ${props => props.theme.palette.text.contrast};
+        color: ${(props) => props.theme.palette.text.contrast};
         font-size: 1rem;
       }
     }
@@ -96,25 +96,25 @@ const SearchWrapper = styled.div`
 `;
 
 const Search = () => {
-  const [term, setTerm] = useState("");
+  const [term, setTerm] = useState('');
   const [collapsed, setCollapsed] = useState(true);
   const history = useHistory();
 
   const search = () => {
-    if (term !== "") {
+    if (term !== '') {
       history.push(`/search?s=${term}`);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       search();
     }
   };
 
   return (
     <SearchWrapper>
-      <div className={clsx("mobile-search", !collapsed && "not-collapsed")}>
+      <div className={clsx('mobile-search', !collapsed && 'not-collapsed')}>
         {collapsed ? (
           <IconButton onClick={() => setCollapsed(false)}>
             <SearchIcon />

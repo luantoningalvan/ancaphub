@@ -5,4 +5,4 @@ export const Types = {
 export const addAlert = (type, message) => ({
   type: Types.ADD_ALERT,
   payload: { type, message },
-})
+});

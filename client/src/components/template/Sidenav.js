@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import CloseIcon from 'react-ionicons/lib/MdClose';
+import clsx from 'clsx';
 import defaultProfilePicture from '../../assets/default-profile-picture.jpg';
 import Menu from './Menu';
-import CloseIcon from "react-ionicons/lib/MdClose";
-import IconButton from "../ui/IconButton";
-import clsx from 'clsx';
+import IconButton from '../ui/IconButton';
 
 const Nav = styled.aside`
-  display: ${props => props.className && props.className == "collapsed" ? "none" : "block"};
+  display: ${(props) => (props.className && props.className == 'collapsed' ? 'none' : 'block')};
   width:100%;
   max-width: 240px;
   height: calc(100vh);
@@ -54,11 +54,11 @@ const UserMenu = styled.div`
   @media (min-width: 576px) { button {display:none;}}
   `;
 
-const Sidenav = ({user, collapsed, setCollapsed}) => (
-  <Nav className={clsx(collapsed && "collapsed")}>
+const Sidenav = ({ user, collapsed, setCollapsed }) => (
+  <Nav className={clsx(collapsed && 'collapsed')}>
     <UserMenu>
       <Link to={`/${user._id}`}>
-        <img src={user.avatar && user.avatar !== "" ? user.avatar : defaultProfilePicture} alt="profile pic" />
+        <img src={user.avatar && user.avatar !== '' ? user.avatar : defaultProfilePicture} alt="profile pic" />
       </Link>
 
       <IconButton onClick={setCollapsed}>

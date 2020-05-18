@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import styled from 'styled-components'
-import Paper from './Paper'
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+import Paper from './Paper';
 
 const Dialog = styled.div`
   width: 100vw;
@@ -27,7 +27,7 @@ const Dialog = styled.div`
     padding:16px;
     justify-content:space-between;
     align-items:center;
-    border-bottom: 1px solid ${props => props.theme.palette.border}
+    border-bottom: 1px solid ${(props) => props.theme.palette.border}
   }
 
   .dialog-message{padding:16px;}
@@ -41,26 +41,27 @@ const Dialog = styled.div`
       margin-right: 8px;
     }
   }
-`
+`;
 
-export default ({show, children}) => {
+export default ({ show, children }) => {
   useEffect(() => {
-    if(!show) {
-      document.body.classList.remove('modal-open')
+    if (!show) {
+      document.body.classList.remove('modal-open');
     } else {
-      document.body.classList.add('modal-open')
+      document.body.classList.add('modal-open');
     }
-  }, [show])
- 
-  if(!show) return null;
+  }, [show]);
 
-  const modalRoot = document.getElementById("modal-root");
+  if (!show) return null;
+
+  const modalRoot = document.getElementById('modal-root');
 
   return ReactDOM.createPortal(
     <Dialog>
       <Paper className="content">
         {children}
       </Paper>
-    </Dialog>
-  , modalRoot)
-}
+    </Dialog>,
+    modalRoot,
+  );
+};

@@ -32,7 +32,7 @@ export const ProfilePicture = styled.div`
       width: 100%;
     }
 
-    ${props => props.isOwn && `
+    ${(props) => props.isOwn && `
     &:before {
       content: "";
       transition: all 0.3s;

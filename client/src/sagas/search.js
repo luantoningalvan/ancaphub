@@ -1,10 +1,12 @@
-import { takeLatest, call, fork, put } from "redux-saga/effects";
+import {
+  takeLatest, call, fork, put,
+} from 'redux-saga/effects';
 
-import * as actions from "../actions/search";
-import * as api from "../api/search";
+import * as actions from '../actions/search';
+import * as api from '../api/search';
 import { addAlert } from '../actions/alerts';
-import { getUsersCount } from '../actions/users'
-import { getUsersRelationsips } from '../actions/relationships'
+import { getUsersCount } from '../actions/users';
+import { getUsersRelationsips } from '../actions/relationships';
 
 function* searchTerm(action) {
   try {
@@ -13,7 +15,7 @@ function* searchTerm(action) {
     yield put(getUsersRelationsips(response.data.users));
     yield put(actions.searchTermSuccess(response.data));
   } catch (e) {
-    yield put(addAlert('error',e.message));
+    yield put(addAlert('error', e.message));
   }
 }
 
