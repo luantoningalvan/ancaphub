@@ -1,5 +1,5 @@
 const User = require('../models/UserModel')
-const { verifyCode, updateUserCode } = require('../services/accesscode.service')
+const { verifyCode, updateUserCode } = require('./accesscode.service')
 const bcrypt = require('bcryptjs');
 
 const getManyUsers = async ({ filter }) => {
