@@ -6,16 +6,15 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads');
   },
   filename: (req, file, cb) => {
-    file.name = 'file-' + Date.now() + path.extname(file.originalname);
-    cb(null, file.name);
-  }
-})
-
+    const filename = `file-${Date.now()}${path.extname(file.originalname)}`;
+    cb(null, filename);
+  },
+});
 
 module.exports = {
-  storage: storage,
+  storage,
   limits: {
-    fileSize: 5 * 1024 * 1024
+    fileSize: 5 * 1024 * 1024,
   },
   fileFilter: (req, file, cb) => {
     const allowedMimes = [
@@ -25,7 +24,7 @@ module.exports = {
       'image/gif',
       'application/pdf',
       'application/epub+zip',
-      'application/x-mobipocket-ebook'
+      'application/x-mobipocket-ebook',
     ];
 
     if (allowedMimes.includes(file.mimetype)) {
@@ -33,5 +32,5 @@ module.exports = {
     } else {
       cb(new Error('Invalid file type.'));
     }
-  }
+  },
 };

@@ -1,18 +1,25 @@
-const { notificationService, rateService, libraryService } = require('../services')
-const { createNotification } = notificationService
-const { getRate, createRate } = rateService
-const { getItem, updateItem } = libraryService
+const {
+  notificationService,
+  rateService,
+  libraryService,
+} = require('../services');
 
-const get = async (req, res) => {
-  const { id } = req.params
+const Rate = require('../models/RateModel');
+
+const { createNotification } = notificationService;
+const { getRate, insertRate } = rateService;
+const { getItem, updateItem } = libraryService;
+
+const get = async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const result = getRate(id)
+    const result = getRate(id);
     res.send(result.rates);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const insert = async (req, res, next) => {
   try {
@@ -21,18 +28,18 @@ const insert = async (req, res, next) => {
       item: req.body.item,
       user: req.user.id,
       value: req.body.value,
-      comment: req.body.comment
-    })
-    const rate = await createRate(rateData)
+      comment: req.body.comment,
+    });
+    const rate = await insertRate(rateData);
 
     // Item
-    const item = await getItem(req.body.item)
+    const item = await getItem(req.body.item);
     const updateItemData = {
       rateCount: item.rateCount + 1,
       rateValue: item.rateValue + rate.value,
-      rateAverage: (item.rateValue + rate.value) / (item.rateCount + 1)
-    }
-    await updateItem(updateItemData)
+      rateAverage: (item.rateValue + rate.value) / (item.rateCount + 1),
+    };
+    await updateItem(updateItemData);
 
     // Notification
     await createNotification({
@@ -42,15 +49,15 @@ const insert = async (req, res, next) => {
       data: {
         _id: item._id,
         title: item.title,
-        type: item.type
-      }
-    })
+        type: item.type,
+      },
+    });
 
     res.send(rate);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
-module.exports = { get, insert }
+module.exports = { get, insert };

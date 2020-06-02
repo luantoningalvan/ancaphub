@@ -1,10 +1,11 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const PointSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ["Point"],
+    enum: ['Point'],
     required: true,
   },
   coordinates: {
@@ -33,13 +34,13 @@ const UserSchema = new Schema(
     role: {
       type: Array,
       required: true,
-      default: ["user"],
+      default: ['user'],
     },
     name: {
       type: String,
     },
-    library: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
-    saved: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
+    library: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+    saved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
     following: [],
     followers: [],
     birthday: Date,
@@ -51,12 +52,12 @@ const UserSchema = new Schema(
     geoLocation: { type: Boolean, default: false },
     lastLocation: {
       type: PointSchema,
-      index: "2dsphere",
+      index: '2dsphere',
     },
   },
   { timestamps: true }
 );
 
-UserSchema.index({ username: "text" });
+UserSchema.index({ username: 'text' });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

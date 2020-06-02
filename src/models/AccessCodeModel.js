@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const AccessCodeSchema = new Schema({
-  code: String,
-  used: {
+const { Schema } = mongoose;
+
+const AccessCodeSchema = new Schema(
+  {
+    code: String,
+    used: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-}, { timestamps: true })
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('AccessCode', AccessCodeSchema);

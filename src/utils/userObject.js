@@ -7,6 +7,10 @@ module.exports = (user, isAuthenticated) => ({
   isVerified: user.isVerified,
   followersCount: user.followers.length || 0,
   followingCount: user.following.length || 0,
-  ...(isAuthenticated && {followed_by: user.following.includes(isAuthenticated.id)}),
-  ...(isAuthenticated && {following: user.followers.includes(isAuthenticated.id)}),
-})
+  ...(isAuthenticated && {
+    followed_by: user.following.includes(isAuthenticated.id),
+  }),
+  ...(isAuthenticated && {
+    following: user.followers.includes(isAuthenticated.id),
+  }),
+});

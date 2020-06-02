@@ -1,12 +1,26 @@
-const { notificationService, libraryService, fileService } = require('../services')
-const { createNotification } = notificationService
-const { getFile } = fileService
-const { getManyItems, getItem, insertItem, updateItem, removeItem, approveItem, getAuthContributedItems, addItemToLibrary, saveItem } = libraryService
-const Post = require('../models/PostModel')
-const verifyToken = require('../utils/verifyToken')
+const {
+  notificationService,
+  libraryService,
+  fileService,
+} = require('../services');
+
+const { createNotification } = notificationService;
+const { getFile } = fileService;
+const {
+  getManyItems,
+  getItem,
+  insertItem,
+  updateItem,
+  removeItem,
+  approveItem,
+  getAuthContributedItems,
+  addItemToLibrary,
+} = libraryService;
+const Post = require('../models/PostModel');
+const verifyToken = require('../utils/verifyToken');
 
 const getAll = async (req, res, next) => {
-  const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 10;
+  const pageSize = req.query.pageSize ? parseInt(req.query.pageSize, 10) : 10;
   const currentPage = req.query.page > 0 ? req.query.page - 1 : 0;
   const filter = req.query.filter || '';
   const filterOn = req.query.filterOn || '';
@@ -28,42 +42,59 @@ const getAll = async (req, res, next) => {
     }
   }
 
-  if (category != '') {
-    console.log('TOP')
-    filterQuery = { ...filterQuery, 'categories': category };
+  if (category !== '') {
+    filterQuery = { ...filterQuery, categories: category };
   }
 
-  if (type != '') {
-    filterQuery = { ...filterQuery, type: type };
+  if (type === '') {
+    filterQuery = { ...filterQuery, type };
   }
 
   filterQuery = { ...filterQuery, status };
 
-  const isAutheticated = verifyToken(req)
+  const isAutheticated = verifyToken(req);
 
   try {
-    const result = await getManyItems({ pageSize, currentPage, filter: filterQuery, sort: sortQuery }, type, isAutheticated)
-    res.status(200).send(result)
-    next()
+    const result = await getManyItems(
+      {
+        pageSize,
+        currentPage,
+        filter: filterQuery,
+        sort: sortQuery,
+      },
+      type,
+      isAutheticated
+    );
+    res.status(200).send(result);
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const get = async (req, res, next) => {
-  const {id} = req.params
+  const { id } = req.params;
 
   try {
-    const result = await getItem(id, { populate: true })
+    const result = await getItem(id, { populate: true });
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const insert = async (req, res, next) => {
-  const { title, author, content, cover, categories, type, downloadOptions, videoUrl } = req.body;
+  const {
+    title,
+    author,
+    content,
+    cover,
+    categories,
+    type,
+    downloadOptions,
+    videoUrl,
+  } = req.body;
 
   try {
     const data = {
@@ -71,25 +102,33 @@ const insert = async (req, res, next) => {
       author,
       content,
       cover,
-      categories: categories.map(category => category.category),
+      categories: categories.map((category) => category.category),
       status: 'pending',
       user: req.user.id,
       type,
       downloadOptions,
-      videoUrl
+      videoUrl,
     };
 
-    const result = await insertItem(data)
+    const result = await insertItem(data);
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const update = async (req, res, next) => {
-  const { title, author, content, cover, categories, downloadOptions, videoUrl } = req.body;
-  const { id } = req.params
+  const {
+    title,
+    author,
+    content,
+    cover,
+    categories,
+    downloadOptions,
+    videoUrl,
+  } = req.body;
+  const { id } = req.params;
 
   try {
     const data = {
@@ -97,36 +136,36 @@ const update = async (req, res, next) => {
       author,
       content,
       cover,
-      categories: categories.map(category => category.category),
+      categories: categories.map((category) => category.category),
       downloadOptions,
-      videoUrl
+      videoUrl,
     };
 
-    const result = await updateItem(id, data)
+    const result = await updateItem(id, data);
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const remove = async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
-    const result = await removeItem(id)
+    const result = await removeItem(id);
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
 const approve = async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
-    const result = await approveItem(id)
+    const result = await approveItem(id);
 
     await createNotification({
       receiver: result.user,
@@ -134,26 +173,26 @@ const approve = async (req, res, next) => {
       data: {
         _id: result._id,
         type: result.type,
-        title: result.title
-      }
-    })
+        title: result.title,
+      },
+    });
 
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
 const getAuthContributions = async (req, res, next) => {
-  const { id } = req.user
+  const { id } = req.user;
 
   try {
-    const result = await getAuthContributedItems(id)
+    const result = await getAuthContributedItems(id);
     res.send(result);
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
@@ -162,9 +201,9 @@ const addToLibrary = async (req, res, next) => {
   const { id: user } = req.user;
 
   try {
-    const result = await addItemToLibrary(user, item)
+    const result = await addItemToLibrary(user, item);
     if (post) {
-      const cover = result.cover !== "" ? await getFile(result.cover) : null
+      const cover = result.cover !== '' ? await getFile(result.cover) : null;
 
       const newPost = new Post({
         type: 'library_item',
@@ -172,10 +211,10 @@ const addToLibrary = async (req, res, next) => {
         extraFields: {
           _id: result._id,
           title: result.title,
-          cover: cover ? cover.url : "",
+          cover: cover ? cover.url : '',
           type: result.type,
-          description: result.content
-        }
+          description: result.content,
+        },
       });
 
       await newPost.save();
@@ -183,12 +222,21 @@ const addToLibrary = async (req, res, next) => {
 
     res.send({
       _id: result._id,
-      inLibrary: result.inLibrary
+      inLibrary: result.inLibrary,
     });
-    next()
+    next();
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
-module.exports = { get, getAll, insert, update, remove, approve, getAuthContributions, addToLibrary }
+module.exports = {
+  get,
+  getAll,
+  insert,
+  update,
+  remove,
+  approve,
+  getAuthContributions,
+  addToLibrary,
+};

@@ -1,15 +1,17 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-module.exports = function(req){
-    const token = req.header('x-auth-token')
-    
-	if (!token) {
-		return false
-	}
-	try {
-		const decoded = jwt.verify(token, process.env.JWT_SECRET)
-		return  decoded.user
-	} catch (err) {
-		return false
-	}
+function verifyToken(req) {
+  const token = req.header('x-auth-token');
+
+  if (!token) {
+    return false;
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.user;
+  } catch (err) {
+    return false;
+  }
 }
+
+module.exports = verifyToken;

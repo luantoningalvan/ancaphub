@@ -1,147 +1,155 @@
 const mongoose = require('mongoose');
 
+const isEqual = require('lodash.isequal');
 const Post = require('../models/PostModel');
 const Poll = require('../models/PollModel');
-const isEqual = require('lodash.isequal');
 const userObject = require('../utils/userObject');
 
 const getManyPosts = async ({ filter, pageSize, currentPage }, auth) => {
   try {
     let posts = await Post.find(filter)
       .sort({ createdAt: 'desc' })
-      .limit(parseInt(pageSize))
+      .limit(parseInt(pageSize, 10))
       .skip(pageSize * currentPage - pageSize)
       .populate('user')
-      .populate('poll')
-      
-      posts = posts.map(post => ({
-        _id: post._id,
-        content: post.content,
-        type: post.type,
-        extraFields: post.extraFields,
-        media: post.media,
-        poll: post.poll ? { ...post.poll._doc, allVotesCount: post.poll.allVotes.length } : post.poll,
-        user: userObject(post.user, auth),
-        commentCount: post.comments.length || 0,
-        likeCount: post.likes.length,
-        createdAt: post.createdAt,
-        ...(auth && {hasLiked: post.likes.includes(auth.id)}),
-      }));
+      .populate('poll');
 
-    return posts
+    posts = posts.map((post) => ({
+      _id: post._id,
+      content: post.content,
+      type: post.type,
+      extraFields: post.extraFields,
+      media: post.media,
+      poll: post.poll
+        ? { ...post.poll._doc, allVotesCount: post.poll.allVotes.length }
+        : post.poll,
+      user: userObject(post.user, auth),
+      commentCount: post.comments.length || 0,
+      likeCount: post.likes.length,
+      createdAt: post.createdAt,
+      ...(auth && { hasLiked: post.likes.includes(auth.id) }),
+    }));
+
+    return posts;
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
 const getPost = async (postId, auth) => {
   try {
-    const post = await Post
-    .findById(postId)
-    .populate('user')
-    .populate('poll')
+    const post = await Post.findById(postId).populate('user').populate('poll');
 
-    return { 
+    return {
       ...post._doc,
       user: userObject(post.user, auth),
       commentCount: post.comments.length || 0,
       likeCount: post.likes.length,
-      ...(auth && {hasLiked: post.likes.includes(auth.id)}),
-    }
+      ...(auth && { hasLiked: post.likes.includes(auth.id) }),
+    };
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
 const insertPost = async (data) => {
   try {
-
     const { content, mediaType, media, user } = data;
     let postData = {
-      user
+      user,
     };
-
-    if (!mediaType || mediaType === 'none'){
-      postData = {
-        ...postData,
-        content
-      }
-
-      const post = await Post.create(postData)
-
-      await post.populate('user', 'name username id avatar isVerified').execPopulate();
-      return { ...post._doc, hasLiked: false, likeCount: 0 }
-    }
-
-    if (mediaType === 'embed' || mediaType === 'image'){
+    if (mediaType === 'embed' || mediaType === 'image') {
       postData = {
         ...postData,
         content,
         media: {
           mediaType,
-          data: media
-        }
-      }
+          data: media,
+        },
+      };
 
       const post = await Post.create(postData);
 
-      await post.populate('user', 'name username id avatar isVerified').execPopulate();
-      return { ...post._doc, hasLiked: false, likeCount: 0 }
+      await post
+        .populate('user', 'name username id avatar isVerified')
+        .execPopulate();
+      return { ...post._doc, hasLiked: false, likeCount: 0 };
     }
-
-    if (mediaType === 'poll'){
+    if (mediaType === 'poll') {
       let pollData = [];
-      
-      media.map(option =>{
-        pollData = [...pollData, {
-          title: option,
-          votes: [],
-          votesCount: 0
-        }]
-      })
-      const poll = await Poll.create({options: pollData, allVotes: []})
-      const pollId = mongoose.Types.ObjectId(poll._id)
+
+      // We assume media is an array here.
+      // changed map in favor of forEach because we don't need
+      // to return nothing.
+      media.forEach((option) => {
+        pollData = [
+          ...pollData,
+          {
+            title: option,
+            votes: [],
+            votesCount: 0,
+          },
+        ];
+      });
+
+      const poll = await Poll.create({ options: pollData, allVotes: [] });
+      const pollId = mongoose.Types.ObjectId(poll._id);
 
       postData = {
         ...postData,
         content,
         media: {
           mediaType,
-          data: pollId
+          data: pollId,
         },
-        poll: pollId
-      }
+        poll: pollId,
+      };
 
-      const post = await Post.create(postData)
-      
-      await post.save()
-      await post.populate('user', 'name username id avatar isVerified').populate('poll').execPopulate();
-      return { ...post._doc, hasLiked: false, likeCount: 0 }
+      const post = await Post.create(postData);
+
+      await post.save();
+      await post
+        .populate('user', 'name username id avatar isVerified')
+        .populate('poll')
+        .execPopulate();
+      return { ...post._doc, hasLiked: false, likeCount: 0 };
     }
 
+    postData = {
+      ...postData,
+      content,
+    };
+
+    const post = await Post.create(postData);
+
+    await post
+      .populate('user', 'name username id avatar isVerified')
+      .execPopulate();
+    return { ...post._doc, hasLiked: false, likeCount: 0 };
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
 const removePost = async (postId, userId) => {
   try {
     const post = await Post.findById(postId);
 
-    if (!post) throw new Error('Este post não existe.')
-    if (!isEqual(JSON.stringify(post.user), JSON.stringify(userId))) throw new Error('Você não tem autorização para excluir esta postagem')
+    if (!post) throw new Error('Este post não existe.');
+    if (!isEqual(JSON.stringify(post.user), JSON.stringify(userId)))
+      throw new Error('Você não tem autorização para excluir esta postagem');
     post.remove();
     return await post.save();
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
 const likePost = async (postId, userId) => {
   try {
-    const post = await Post.findById(postId, "likes");
+    const post = await Post.findById(postId, 'likes');
 
-    if (!post) throw new Error('Este post não existe.')
+    if (!post) throw new Error('Este post não existe.');
 
     if (post.likes.includes(userId)) {
       post.likes.pull(userId);
@@ -149,17 +157,17 @@ const likePost = async (postId, userId) => {
       post.likes.push(userId);
     }
     await post.save();
-    return { 
-      _id: post._id, 
-      likeCount: post.likes.length, 
-      hasLiked: post.likes.includes(userId)
-    }
+    return {
+      _id: post._id,
+      likeCount: post.likes.length,
+      hasLiked: post.likes.includes(userId),
+    };
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
-const getPostComments = async(postId, isAuthenticaded) => {
+const getPostComments = async (postId, isAuthenticaded) => {
   try {
     let { comments } = await Post.findById(postId)
       .select('comments')
@@ -167,57 +175,71 @@ const getPostComments = async(postId, isAuthenticaded) => {
         path: 'comments',
         populate: {
           path: 'user',
-        }
-      })
+        },
+      });
 
-      comments = comments.map((comment) => ({
-        ...comment._doc,
-        user: userObject(comment.user, isAuthenticaded)
-      }))
-    return comments
+    comments = comments.map((comment) => ({
+      ...comment._doc,
+      user: userObject(comment.user, isAuthenticaded),
+    }));
+    return comments;
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
-const getPostLikes = async(postId, isAuthenticaded) => {
+const getPostLikes = async (postId, isAuthenticaded) => {
   try {
-    let {likes} = await Post.findById(postId)
+    let { likes } = await Post.findById(postId)
       .select('likes')
-      .populate('likes', 'isVerified name username bio avatar followers following')
+      .populate(
+        'likes',
+        'isVerified name username bio avatar followers following'
+      );
 
-    if(!likes) throw new Error("Essa postagem não existe")
-    
+    if (!likes) throw new Error('Essa postagem não existe');
+
     likes = likes.map((like) => ({
       user: userObject(like, isAuthenticaded),
-    }))
+    }));
 
-    return { _id: postId, likes}
+    return { _id: postId, likes };
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
 const votePoll = async (pollId, userId, optionVote) => {
   try {
-    const poll = await Poll.findById(pollId)
+    const poll = await Poll.findById(pollId);
 
-    if (poll.allVotes.includes(userId)) throw new Error('Você já votou')
+    if (poll.allVotes.includes(userId)) throw new Error('Você já votou');
 
-    const index = poll.options.findIndex((option => option.title === optionVote))    
-    if (index === -1) throw new Error('Opção não encontrada')
+    const index = poll.options.findIndex(
+      (option) => option.title === optionVote
+    );
+    if (index === -1) throw new Error('Opção não encontrada');
 
-    poll.options[index].votes.push(userId)
-    poll.allVotes.push(userId)
-    poll.options[index].votesCount = poll.options[index].votes.length
-    
-    await poll.markModified("options")
-    await poll.save()
+    poll.options[index].votes.push(userId);
+    poll.allVotes.push(userId);
+    poll.options[index].votesCount = poll.options[index].votes.length;
 
-    return poll
+    await poll.markModified('options');
+    await poll.save();
+
+    return poll;
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
-}
+};
 
-module.exports = { getManyPosts, getPost, insertPost, removePost, likePost, getPostComments, getPostLikes, votePoll };
+module.exports = {
+  getManyPosts,
+  getPost,
+  insertPost,
+  removePost,
+  likePost,
+  getPostComments,
+  getPostLikes,
+  votePoll,
+};
