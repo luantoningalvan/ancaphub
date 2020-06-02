@@ -8,7 +8,6 @@
     - [Language](#language)
       - [If you are a native English speaker](#if-you-are-a-native-english-speaker)
       - [If you're not a native English speaker](#if-youre-not-a-native-english-speaker)
-    - [Code of conduct](#code-of-conduct)
   - [What can I do to make AncapHub better?](#what-can-i-do-to-make-ancaphub-better)
     - [Submit an issue](#submit-an-issue)
     - [Documentation](#documentation)
@@ -43,10 +42,6 @@ help them feel more comfortable to keep contributing.
 
 Don't worry. We're a community and as such we make no judgements. Feel free to
 express yourself - in a simple way - and to contribute.
-
-### Code of conduct
-
-You can check our [code of conduct](CODE_OF_CONDUCT.md) so that you can understand what kind of conduct we do value, and what we do not.
 
 ## What can I do to make AncapHub better?
 
