@@ -6,8 +6,11 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads');
   },
   filename: (req, file, cb) => {
-    const filename = `file-${Date.now()}${path.extname(file.originalname)}`;
-    cb(null, filename);
+    // For this line we have to reassign, it's not working otherwise
+    // TODO: a workaround
+    // eslint-disable-next-line no-param-reassign
+    file.name = `file-${Date.now()}${path.extname(file.originalname)}`;
+    cb(null, file.name);
   },
 });
 
