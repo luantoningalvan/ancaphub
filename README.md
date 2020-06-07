@@ -6,7 +6,7 @@ over the world.
 This repository contains the original code used in production for the platform's
 server. It is written mainly in Javascript, making use of Node.js as the runtime.
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) ![David](https://img.shields.io/david/ancaphub/ancaphub?style=flat-square)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) ![David](https://img.shields.io/david/ancaphub/ancaphub?style=flat-square) ![GitHub](https://img.shields.io/github/license/ancaphub/ancaphub?style=flat-square)
 
 ## What is AncapHub?
 
