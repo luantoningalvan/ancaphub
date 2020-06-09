@@ -7,8 +7,6 @@ const getManyItems = async (query, type, auth) => {
   try {
     const itemCount = await Item.countDocuments(filter);
 
-    console.log(type);
-
     if (currentPage * pageSize > itemCount) {
       // WARNING: this is not type-safe code and should be refactored.
       // This function calls express response object in a presumed context.
