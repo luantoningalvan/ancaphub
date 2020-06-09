@@ -15,6 +15,7 @@ const {
   approveItem,
   getAuthContributedItems,
   addItemToLibrary,
+  getAllItems,
 } = libraryService;
 const Post = require('../models/PostModel');
 const verifyToken = require('../utils/verifyToken');
@@ -52,20 +53,34 @@ const getAll = async (req, res, next) => {
 
   filterQuery = { ...filterQuery, status };
 
-  const isAutheticated = verifyToken(req);
+  // TODO: remove authentication duplicate checks
+  const isAuthenticated = verifyToken(req);
 
   try {
-    const result = await getManyItems(
-      {
-        pageSize,
-        currentPage,
-        filter: filterQuery,
-        sort: sortQuery,
-      },
-      type,
-      isAutheticated
-    );
-    res.status(200).send(result);
+    if (!req.query.type) {
+      const result = await getAllItems(
+        {
+          pageSize,
+          currentPage,
+          filter: filterQuery,
+          sort: sortQuery,
+        },
+        isAuthenticated
+      );
+      res.status(200).send(result);
+    } else {
+      const result = await getManyItems(
+        {
+          pageSize,
+          currentPage,
+          filter: filterQuery,
+          sort: sortQuery,
+        },
+        type,
+        isAuthenticated
+      );
+      res.status(200).send(result);
+    }
     next();
   } catch (e) {
     next(e);

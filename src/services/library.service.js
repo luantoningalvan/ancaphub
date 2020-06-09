@@ -1,6 +1,39 @@
 const Item = require('../models/LibraryModel');
 const User = require('../models/UserModel');
 
+const getAllItems = async (query, auth) => {
+  const { pageSize, currentPage, filter, sort } = query;
+  try {
+    const itemCount = await Item.countDocuments(filter);
+
+    if (currentPage * pageSize > itemCount) {
+      // WARNING: this is not type-safe code and should be refactored.
+      // This function calls express response object in a presumed context.
+      // In a testing environment, for example, this function is likely unusable.
+      // eslint-disable-next-line no-undef
+      return res.status(400).json([]);
+    }
+    let items = await Item.find({ status: 'published' })
+      .limit(pageSize)
+      .skip(currentPage * pageSize)
+      .sort(sort)
+      .populate('cover');
+
+    if (auth) {
+      const user = await User.findById(auth.id);
+      items = items.map((item) => ({
+        ...item._doc,
+        hasSaved: user.saved.includes(item._id),
+        inLibrary: user.library.includes(item._id),
+      }));
+    }
+
+    return items;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 const getManyItems = async (query, type, auth) => {
   const { pageSize, currentPage, filter, sort } = query;
 
@@ -14,7 +47,6 @@ const getManyItems = async (query, type, auth) => {
       // eslint-disable-next-line no-undef
       return res.status(400).json([]);
     }
-
     let items = await Item.find({ ...filter, type })
       .limit(pageSize)
       .skip(currentPage * pageSize)
@@ -182,6 +214,7 @@ const addItemToLibrary = async (userId, itemId) => {
 };
 
 module.exports = {
+  getAllItems,
   getManyItems,
   getItem,
   insertItem,
