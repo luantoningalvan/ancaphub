@@ -69,7 +69,7 @@ router.put('/notifications/markallasread', auth, Notification.markAllAsRead);
 
 // Post
 router.get('/posts/auth/feed', auth, Post.getUserFeed);
-router.get('/posts/user/:id', auth, Post.getUserPosts);
+router.get('/posts/user/:handle', auth, Post.getUserPosts);
 router.get('/posts/:id', auth, Post.getPostById);
 router.post('/posts', auth, multer(multerConfig).single('file'), Post.insert);
 router.delete('/posts/:id', auth, Post.remove);
@@ -85,12 +85,12 @@ router.get('/posts/:postId/likes', Post.getLikes);
 router.post('/posts/:pollId/vote', auth, Post.vote);
 
 // Profile
-router.get('/users/:id/followers', Profile.getFollowers);
-router.get('/users/:id/following', Profile.getFollowing);
+router.get('/users/:handle/followers', Profile.getFollowers);
+router.get('/users/:handle/following', Profile.getFollowing);
 router.get('/users/:id/contributions', Profile.getContributions);
 router.get('/users/:id/library', Profile.getLibrary);
-router.post('/users/:id/follow', auth, Profile.follow);
-router.post('/users/:id/unfollow', auth, Profile.unfollow);
+router.post('/users/:handle/follow', auth, Profile.follow);
+router.post('/users/:handle/unfollow', auth, Profile.unfollow);
 router.put('/users/profile', auth, User.updateProfile);
 
 // Rate

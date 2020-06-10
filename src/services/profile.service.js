@@ -1,9 +1,12 @@
 const User = require('../models/UserModel');
 const userObject = require('../utils/userObject');
 
-const getUserFollowers = async (id, isAuthenticated) => {
+const getUserFollowers = async (handle, isAuthenticated) => {
   try {
-    const users = await User.findById(id, 'followers').populate('followers');
+    const users = await User.findOne(
+      { username: handle },
+      'followers'
+    ).populate('followers');
 
     return users.followers.map((user) => ({
       user: userObject(user, isAuthenticated),
@@ -13,9 +16,12 @@ const getUserFollowers = async (id, isAuthenticated) => {
   }
 };
 
-const getFollowedUsers = async (id, isAuthenticated) => {
+const getFollowedUsers = async (handle, isAuthenticated) => {
   try {
-    const users = await User.findById(id, 'following').populate('following');
+    const users = await User.findOne(
+      { username: handle },
+      'following'
+    ).populate('following');
 
     return users.following.map((user) => ({
       user: userObject(user, isAuthenticated),
@@ -25,10 +31,10 @@ const getFollowedUsers = async (id, isAuthenticated) => {
   }
 };
 
-const followUser = async (followedId, followerId) => {
+const followUser = async (followedHandle, followerHandle) => {
   try {
-    const followed = await User.findById(followedId);
-    const follower = await User.findById(followerId);
+    const followed = await User.findOne({ username: followedHandle });
+    const follower = await User.findOne({ username: followerHandle });
 
     if (!followed) throw new Error('O usuário a ser seguido não existe.');
 
@@ -38,14 +44,14 @@ const followUser = async (followedId, followerId) => {
       );
     }
 
-    followed.followers.push(followerId);
-    follower.following.push(followedId);
+    followed.followers.push(follower._id);
+    follower.following.push(followed._id);
 
     await followed.save();
     await follower.save();
 
     return {
-      _id: followedId,
+      _id: followed._id,
       following: true,
     };
   } catch (e) {
@@ -53,10 +59,10 @@ const followUser = async (followedId, followerId) => {
   }
 };
 
-const unfollowUser = async (followedId, followerId) => {
+const unfollowUser = async (followedHandle, followerHandle) => {
   try {
-    const followed = await User.findById(followedId);
-    const follower = await User.findById(followerId);
+    const followed = await User.findOne({ username: followedHandle });
+    const follower = await User.findById({ username: followerHandle });
 
     if (!followed) throw new Error('O usuário a não ser seguido não existe.');
 
@@ -66,14 +72,14 @@ const unfollowUser = async (followedId, followerId) => {
       );
     }
 
-    followed.followers.pull(followerId);
-    follower.following.pull(followedId);
+    followed.followers.pull(follower._id);
+    follower.following.pull(followed._id);
 
     await followed.save();
     await follower.save();
 
     return {
-      _id: followedId,
+      _id: followed._id,
       following: false,
     };
   } catch (e) {

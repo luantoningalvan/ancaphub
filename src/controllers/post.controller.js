@@ -14,7 +14,7 @@ const {
   getPostLikes,
   votePoll,
 } = postService;
-const { getUser } = userService;
+const { getUser, getUserByHandle } = userService;
 const verifyToken = require('../utils/verifyToken');
 
 const { uploadToS3 } = fileService;
@@ -40,10 +40,11 @@ const getUserFeed = async (req, res, next) => {
 };
 
 const getUserPosts = async (req, res, next) => {
-  const { id } = req.params;
+  const { handle } = req.params;
   const auth = verifyToken(req);
+  const user = await getUserByHandle(handle);
   try {
-    const result = await getManyPosts({ filter: { user: id } }, auth);
+    const result = await getManyPosts({ filter: { user: user._id } }, auth);
     res.send(result);
     next();
   } catch (e) {
