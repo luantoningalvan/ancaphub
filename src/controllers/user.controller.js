@@ -7,6 +7,7 @@ const { fileService } = require('../services');
 const {
   getManyUsers,
   getUser,
+  getUserByHandle,
   verifyUser,
   insertUser,
   updateUser,
@@ -20,7 +21,7 @@ const getAll = async (req, res, next) => {
   const filter = req.query.filter || '';
   const filterOn = req.query.filterOn || '';
   let filterQuery = {};
-  const isAuthenticaded = verifyToken(req);
+  const isAuthenticated = verifyToken(req);
 
   if (filter.length > 0) {
     const regx = new RegExp(filter, 'i');
@@ -36,7 +37,7 @@ const getAll = async (req, res, next) => {
     const users = await getManyUsers({ filter: filterQuery });
 
     const result = users.map((user) => ({
-      user: userObject(user, isAuthenticaded),
+      user: userObject(user, isAuthenticated),
     }));
     res.status(200).send(result);
     next();
@@ -47,12 +48,31 @@ const getAll = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   const { id } = req.params;
-  const isAuthenticaded = verifyToken(req);
+  const isAuthenticated = verifyToken(req);
 
   try {
     const user = await getUser(id);
     const result = {
-      ...userObject(user, isAuthenticaded),
+      ...userObject(user, isAuthenticated),
+      birthday: user.birthday,
+      currentCity: user.currentCity,
+      site: user.site,
+    };
+    res.status(200).send(result);
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getByHandle = async (req, res, next) => {
+  const { handle } = req.params;
+  const isAuthenticated = verifyToken(req);
+
+  try {
+    const user = await getUserByHandle(handle);
+    const result = {
+      ...userObject(user, isAuthenticated),
       birthday: user.birthday,
       currentCity: user.currentCity,
       site: user.site,
@@ -192,6 +212,7 @@ const updatePassword = async (req, res, next) => {
 module.exports = {
   getAll,
   get,
+  getByHandle,
   insert,
   updateProfile,
   updateAvatar,

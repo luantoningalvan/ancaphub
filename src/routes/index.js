@@ -104,6 +104,7 @@ router.post('/search/nearby', auth, Search.searchNearbyUsers);
 // User
 router.get('/users', User.getAll);
 router.get('/users/:id', User.get);
+router.get('/users/handle/:handle', User.getByHandle);
 router.post('/users', User.insert);
 router.patch('/users/geolocation', auth, User.updateGeoLocation);
 router.patch('/users/username', auth, User.updateUsername);

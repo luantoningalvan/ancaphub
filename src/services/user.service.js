@@ -30,6 +30,17 @@ const getUsersByDistance = async (user, radius, coordinates) => {
   }
 };
 
+const getUserByHandle = async (handle, extraFields) => {
+  try {
+    return await User.findOne(
+      { username: handle },
+      `_id name username avatar bio birthday currentCity site following followers isVerified ${extraFields}`
+    );
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 const getUser = async (id, extraFields) => {
   try {
     return await User.findById(
@@ -127,6 +138,7 @@ module.exports = {
   getManyUsers,
   getUsersByDistance,
   getUser,
+  getUserByHandle,
   verifyUser,
   insertUser,
   updateUser,
