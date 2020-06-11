@@ -158,7 +158,7 @@ const forgetPasswordRequest = async ({ identifier }) => {
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
-      secure: process.env.EMAIL_SECURE,
+      secure: process.env.EMAIL_SECURE === 'true',
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
@@ -169,7 +169,7 @@ const forgetPasswordRequest = async ({ identifier }) => {
       from: '"AncapHub" <recover@ancaphub.com>',
       to: user.email,
       subject: 'Recuperação de senha da sua conta do AncapHub',
-      html: `<h2>Resetar sua senha</h2>Olá, <b>${user.name}</b>. Alguém (esperamos que tenha sido você) solicitou a alteração da senha da sua conta do AncapHu. Segue abaixo o link de redefinição de senha.<br /><br /><a href="${recoverLink}" target="_blank">${recoverLink}</a>`,
+      html: `<h2>Resetar sua senha</h2>Olá, <b>${user.name}</b>. Alguém (esperamos que tenha sido você) solicitou a alteração da senha da sua conta do AncapHub. Segue abaixo o link de redefinição de senha.<br /><br /><a href="${recoverLink}" target="_blank">${recoverLink}</a>`,
     });
 
     const censoredEmail = censorEmail(user.email);
