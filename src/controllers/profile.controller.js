@@ -13,15 +13,15 @@ const {
   unfollowUser,
 } = profileService;
 const { getManyItems } = libraryService;
-const { getUser } = userService;
+const { getUser, getUserByHandle } = userService;
 const verifyToken = require('../utils/verifyToken');
 
 const getFollowers = async (req, res, next) => {
-  const { id } = req.params;
+  const { handle } = req.params;
 
   try {
     const isAuthenticaded = verifyToken(req);
-    const result = await getUserFollowers(id, isAuthenticaded);
+    const result = await getUserFollowers(handle, isAuthenticaded);
     res.send(result);
     next();
   } catch (e) {
@@ -30,11 +30,11 @@ const getFollowers = async (req, res, next) => {
 };
 
 const getFollowing = async (req, res, next) => {
-  const { id } = req.params;
+  const { handle } = req.params;
 
   try {
     const isAuthenticaded = verifyToken(req);
-    const result = await getFollowedUsers(id, isAuthenticaded);
+    const result = await getFollowedUsers(handle, isAuthenticaded);
     res.send(result);
     next();
   } catch (e) {
@@ -78,15 +78,18 @@ const getContributions = async (req, res, next) => {
 };
 
 const follow = async (req, res, next) => {
-  const { id: followedId } = req.params;
-  const { id: followerId } = req.user;
+  const { handle: followedHandle } = req.params;
+  const { username: followerHandle, id } = req.user;
 
   try {
-    const result = await followUser(followedId, followerId);
+    const result = await followUser(followedHandle, followerHandle);
+
+    // Get followed user in order to reach their ID
+    const followed = await getUserByHandle(followedHandle);
 
     await createNotification({
-      receiver: followedId,
-      sender: followerId,
+      receiver: followed._id,
+      sender: id,
       type: 'user_followed',
       data: {
         _id: result._id,
@@ -103,11 +106,11 @@ const follow = async (req, res, next) => {
 };
 
 const unfollow = async (req, res, next) => {
-  const { id: followedId } = req.params;
-  const { id: followerId } = req.user;
+  const { handle: followedHandle } = req.params;
+  const { username: followerHandle } = req.user;
 
   try {
-    const result = await unfollowUser(followedId, followerId);
+    const result = await unfollowUser(followedHandle, followerHandle);
     res.send(result);
     next();
   } catch (e) {
