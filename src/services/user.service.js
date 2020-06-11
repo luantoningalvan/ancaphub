@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 const User = require('../models/UserModel');
+const censorEmail = require('../utils/censorEmail');
+
 const { verifyCode, updateUserCode } = require('./accesscode.service');
 
 const getManyUsers = async ({ filter }) => {
@@ -123,6 +126,70 @@ const authenticateUser = async ({ email, password, level = 'user' }) => {
   }
 };
 
+const forgetPasswordRequest = async ({ identifier }) => {
+  try {
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+    });
+
+    if (!user) throw new Error("User doesn't exists");
+
+    const code = Math.floor(1000000000000000 + Math.random() * 9000000000000000)
+      .toString(36)
+      .substr(0, 10);
+
+    await User.update({ recoverCode: { active: true, code } });
+
+    const recoverLink = `${
+      process.env.WEB_CLIENT_URL || 'http://localhost:3000'
+    }/auth/reset/${user._id}/${code}`;
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: process.env.EMAIL_SECURE,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: '"AncapHub" <recover@ancaphub.com>',
+      to: user.email,
+      subject: 'Recuperação de senha da sua conta do AncapHub',
+      html: `<h2>Resetar sua senha</h2>Olá, <b>${user.name}</b>. Alguém (esperamos que tenha sido você) solicitou a alteração da senha da sua conta do AncapHu. Segue abaixo o link de redefinição de senha.<br /><br /><a href="${recoverLink}" target="_blank">${recoverLink}</a>`,
+    });
+
+    const censoredEmail = censorEmail(user.email);
+
+    return { user: user._id, censoredEmail };
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const newPasswordRequest = async ({ token, user: userId, password }) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) throw new Error("User doesn't exists");
+
+    if (user.recoverCode.active && user.recoverCode.code === token) {
+      const salt = await bcrypt.genSalt(10);
+      const newPassword = await bcrypt.hash(password, salt);
+      await user.update({
+        password: newPassword,
+        recoverCode: { active: false, code: '' },
+      });
+      return { ok: true };
+    }
+    throw new Error('Código incorreto');
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 module.exports = {
   getManyUsers,
   getUsersByDistance,
@@ -132,4 +199,6 @@ module.exports = {
   updateUser,
   updateUserPassword,
   authenticateUser,
+  forgetPasswordRequest,
+  newPasswordRequest,
 };

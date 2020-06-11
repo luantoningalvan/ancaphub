@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { userService } = require('../services');
 
-const { authenticateUser, getUser } = userService;
+const {
+  authenticateUser,
+  getUser,
+  forgetPasswordRequest,
+  newPasswordRequest,
+} = userService;
 
 const get = async (req, res, next) => {
   const { id } = req.user;
@@ -35,4 +40,28 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login, get };
+const recoverPasswordRequest = async (req, res, next) => {
+  try {
+    const { identifier } = req.body;
+    const result = await forgetPasswordRequest({ identifier });
+
+    res.send(result);
+    return next();
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const recoverPasswordCode = async (req, res, next) => {
+  try {
+    const { user, token, password } = req.body;
+    const result = await newPasswordRequest({ user, token, password });
+
+    res.send(result);
+    return next();
+  } catch (e) {
+    return next(e);
+  }
+};
+
+module.exports = { login, get, recoverPasswordRequest, recoverPasswordCode };

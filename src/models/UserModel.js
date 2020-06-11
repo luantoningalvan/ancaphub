@@ -54,6 +54,10 @@ const UserSchema = new Schema(
       type: PointSchema,
       index: '2dsphere',
     },
+    recoverCode: {
+      active: { type: Boolean, default: false },
+      code: { type: String },
+    },
   },
   { timestamps: true }
 );

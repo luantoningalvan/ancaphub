@@ -34,6 +34,9 @@ const {
 router.get('/auth', auth, Auth.get);
 router.post('/auth', Auth.login);
 
+router.post('/auth/recover-password-request', Auth.recoverPasswordRequest);
+router.post('/auth/recover-password-code', Auth.recoverPasswordCode);
+
 // Access Code
 router.post('/code', auth, admin, AccessCode.generate);
 router.get('/code', auth, admin, AccessCode.getAll);
