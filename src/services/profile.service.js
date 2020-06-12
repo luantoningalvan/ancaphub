@@ -62,7 +62,7 @@ const followUser = async (followedHandle, followerHandle) => {
 const unfollowUser = async (followedHandle, followerHandle) => {
   try {
     const followed = await User.findOne({ username: followedHandle });
-    const follower = await User.findById({ username: followerHandle });
+    const follower = await User.findOne({ username: followerHandle });
 
     if (!followed) throw new Error('O usuário a não ser seguido não existe.');
 

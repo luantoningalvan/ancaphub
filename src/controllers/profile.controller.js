@@ -106,6 +106,7 @@ const follow = async (req, res, next) => {
 };
 
 const unfollow = async (req, res, next) => {
+  console.log(req.user);
   const { handle: followedHandle } = req.params;
   const { username: followerHandle } = req.user;
 

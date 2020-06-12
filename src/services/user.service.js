@@ -130,6 +130,7 @@ const authenticateUser = async ({ email, password, level = 'user' }) => {
     return {
       user: {
         id: user._id,
+        username: user.username,
       },
     };
   } catch (e) {
