@@ -149,10 +149,7 @@ const forgetPasswordRequest = async ({ identifier }) => {
       .toString(36)
       .substr(0, 10);
 
-    // Add recover code to user model
-    user.recoverCode = { recoverCode: { active: true, code } };
-    // Save the update
-    await user.save();
+    await user.update({ recoverCode: { active: true, code } });
 
     const recoverLink = `${
       process.env.WEB_CLIENT_URL || 'http://localhost:3000'
