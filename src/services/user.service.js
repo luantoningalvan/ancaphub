@@ -3,7 +3,7 @@ const User = require('../models/UserModel');
 const { sendMail } = require('./email.service');
 const censorEmail = require('../utils/censorEmail');
 
-const { verifyCode, updateUserCode } = require('./accesscode.service');
+const { verifyCode } = require('./accesscode.service');
 
 const getManyUsers = async ({ filter }) => {
   try {
@@ -68,20 +68,13 @@ const insertUser = async (data) => {
   try {
     let user = await User.findOne({ email: data.email });
     if (user) throw new Error('Este e-mail já está sendo utilizado.');
+    await verifyCode(data.code);
 
     user = new User(data);
-
-    if (process.env.CODE_TO_SIGNUP === 1) {
-      await verifyCode(data.code);
-    }
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(data.password, salt);
     await user.save();
-
-    if (process.env.CODE_TO_SIGNUP === 1) {
-      await updateUserCode(data.code, user.id);
-    }
 
     return {
       user: {
@@ -130,7 +123,6 @@ const authenticateUser = async ({ email, password, level = 'user' }) => {
     return {
       user: {
         id: user._id,
-        username: user.username,
       },
     };
   } catch (e) {

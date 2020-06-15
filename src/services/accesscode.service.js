@@ -31,19 +31,8 @@ const verifyCode = async (code) => {
     throw new Error('Este código de acesso já foi utilizado.');
 };
 
-const updateUserCode = async (code, userId) => {
-  const useCode = await AccessCode.findOneAndUpdate(
-    { code },
-    { used: true, user: userId },
-    { new: true }
-  );
-
-  return useCode;
-};
-
 module.exports = {
   generateCode,
   getCodes,
   verifyCode,
-  updateUserCode,
 };
