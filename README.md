@@ -1,24 +1,47 @@
-# AncapHub
+# The official AncapHub Git repository
 
-## Como Funciona?
-Existe um servidor central da aplicação criado com Express que disponibiliza um API Rest. O banco de dados utilizado está sendo MongoDB. O painel de controle, site e aplicativo são separados e consomem a mesma API.
+Welcome to AncapHub, the network that aims to connect libertarians all
+over the world.
 
-## Estrutura
-Estão sendo utilizados no projeto
-- Node
-- Express
-- MongoDB
-- React
-- React Native
-- Material-UI
+This repository contains the original code used in production for the platform's
+server. It is written mainly in Javascript, making use of Node.js as the runtime.
 
-## Como Rodar
-Basta fazer um clone do repositório, entrar em todas as pastas na raíz(cada uma correspondente a uma aplicação diferente) e instalar as respectivas dependências.
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) ![David](https://img.shields.io/david/ancaphub/ancaphub?style=flat-square) ![GitHub](https://img.shields.io/github/license/ancaphub/ancaphub?style=flat-square)
 
-Para rodar o servidor entre na pasta /server e utilize o comando `$ npm start`. Ele será executado na porta :3000
+## What is AncapHub?
 
-Para rodar o Painel Administrativo entre na pasta /admin e utilize o comando `$ npm run dev`. Ele será executado na porta :8080
+AncapHub is a community-driven effort to build a platform focused on
+connecting libertarians, providing an environment that while directed to studies,
+provides full-fledged social experience. 
 
-Para rodar a Versão Web entre na pasta /web e utilize o comando `$ npm run dev`. Ela será executada na porta :8081
+## We're completely open source
 
-O aplicativo contém apenas a estrutura padrão do react-native, ele não será alterado no momento.
+We believe that everyone should be able to have access to education and information.
+With that said, we decided to leave the source code open for everyone to read,
+contribute and also copy, without restrictions.
+
+### How to contribute to the project?
+
+First of all, we'd like to thank you for your interest in being part of our
+project. Before you start to contribute, we recommend you to take a quick look
+at our [contribution guide](.github/CONTRIBUTING.md). We have also a pull request
+template you should follow in order to keep things organized.
+
+### How to run the code locally?
+
+ - Clone this repository.
+ - Open the cloned repository folder and type ```npm install``` to install dependencies.
+ - Create a ```.env``` file following the ```.env.example``` file located in the folder.
+ - Ensure you have Docker and Docker Compose installed in your machine so you can run the containerized database and AWS localstack instances.
+ - After your Docker installation is all set, run ```npm run docker:up``` to start the containers.
+ - Run ```npm run dev``` to start the development server.
+
+#### Other repositories
+
+- [Web client](https://github.com/ancaphub/ancaphub-web)
+- [Presentation site WordPress Theme](https://github.com/ancaphub/presentation-website-wordpress-theme)
+
+#### Social media
+
+You can find us on [Twitter](https://twitter.com/ancaphub), [Instagram](https://instagram.com/ancaphub) and [Facebook](https://facebook.com/ancaphub), as well as in AncapHub if you're already
+an alpha tester :zap:
