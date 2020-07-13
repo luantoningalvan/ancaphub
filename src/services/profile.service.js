@@ -78,6 +78,14 @@ const unfollowUser = async (followedHandle, followerHandle) => {
     followed.followers.pull(follower._id);
     follower.following.pull(followed._id);
 
+    // Remove as referências antigas em forma de string também
+    followed.followers = followed.followers.filter(
+      (id) => id !== follower._id.toHexString()
+    );
+    follower.following = follower.following.filter(
+      (id) => id !== followed._id.toHexString()
+    );
+
     await followed.save();
     await follower.save();
 
