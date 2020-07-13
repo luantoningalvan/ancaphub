@@ -1,5 +1,6 @@
 const User = require('../models/UserModel');
 const userObject = require('../utils/userObject');
+const withRelationships = require('../utils/withRelationships');
 
 const getUserFollowers = async (handle, isAuthenticated) => {
   try {
@@ -33,17 +34,18 @@ const getFollowedUsers = async (handle, isAuthenticated) => {
 
 const followUser = async (followedHandle, followerHandle) => {
   try {
-    const followed = await User.findOne({ username: followedHandle });
-    const follower = await User.findOne({ username: followerHandle });
+    const followed = await withRelationships(followedHandle);
+    const follower = await withRelationships(followerHandle);
 
     if (!followed) throw new Error('O usuário a ser seguido não existe.');
 
-    if (follower.following.includes(followed)) {
+    if (follower.following.includes(followed._id)) {
       throw new Error(
         `O usuário @${followed.username} já é seguido por @${follower.username}`
       );
     }
 
+    // Adiciona as referências aos usuários
     followed.followers.push(follower._id);
     follower.following.push(followed._id);
 
@@ -66,12 +68,13 @@ const unfollowUser = async (followedHandle, followerHandle) => {
 
     if (!followed) throw new Error('O usuário a não ser seguido não existe.');
 
-    if (follower.following.includes(followed)) {
+    if (!followed.followers.includes(follower._id)) {
       throw new Error(
         `O usuário @${followed.username} não é seguido por @${follower.username}`
       );
     }
 
+    // Remove as referências
     followed.followers.pull(follower._id);
     follower.following.pull(followed._id);
 
