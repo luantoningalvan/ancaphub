@@ -79,7 +79,13 @@ const getContributions = async (req, res, next) => {
 
 const follow = async (req, res, next) => {
   const { handle: followedHandle } = req.params;
-  const { username: followerHandle, id } = req.user;
+  // eslint-disable-next-line prefer-const
+  let { username: followerHandle, id } = req.user;
+
+  // Atenção: gambiarra altamente tóxica. Use máscara a partir dessa linha
+  if (!followerHandle) {
+    followerHandle = (await userService.getUser(id)).username;
+  }
 
   try {
     const result = await followUser(followedHandle, followerHandle);
