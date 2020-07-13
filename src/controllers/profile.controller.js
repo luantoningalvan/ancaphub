@@ -112,9 +112,14 @@ const follow = async (req, res, next) => {
 };
 
 const unfollow = async (req, res, next) => {
-  console.log(req.user);
   const { handle: followedHandle } = req.params;
-  const { username: followerHandle } = req.user;
+  // eslint-disable-next-line prefer-const
+  let { username: followerHandle, id } = req.user;
+
+  // Gambiarra atômica, parte 2
+  if (!followerHandle) {
+    followerHandle = (await userService.getUser(id)).username;
+  }
 
   try {
     const result = await unfollowUser(followedHandle, followerHandle);
