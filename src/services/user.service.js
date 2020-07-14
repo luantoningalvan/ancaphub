@@ -5,11 +5,12 @@ const censorEmail = require('../utils/censorEmail');
 
 const { verifyCode } = require('./accesscode.service');
 
-const getManyUsers = async ({ filter }) => {
+const getManyUsers = async ({ filter, startAt = 0, limit = 20 }) => {
   try {
     return await User.find(filter)
       .select('-email -password -geoLocation -__v -saved -library -role')
-      .limit(20);
+      .skip(startAt)
+      .limit(limit);
   } catch (e) {
     throw new Error(e.message);
   }
