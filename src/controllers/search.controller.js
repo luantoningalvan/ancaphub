@@ -1,28 +1,38 @@
-const { userService, libraryService } = require('../services');
+const { userService, searchService } = require('../services');
 
-const { getManyUsers, updateUser, getUsersByDistance } = userService;
-const { getManyItems } = libraryService;
+const { updateUser, getUsersByDistance } = userService;
 const verifyToken = require('../utils/verifyToken');
 const userObject = require('../utils/userObject');
 
 const searchTerm = async (req, res, next) => {
   try {
-    const isAutheticated = verifyToken(req);
-    const items = await getManyItems(
-      { filter: { $text: { $search: req.body.query } } },
-      '',
-      isAutheticated
-    );
-    const users = await getManyUsers({
-      filter: { $text: { $search: req.body.query } },
-    });
+    const { page, pageSize, term } = req.query;
 
-    res.send({
-      items,
-      users: users.map((user) => ({
-        user: userObject(user, isAutheticated),
-      })),
-    });
+    const results = await searchService.globalSearch(
+      term,
+      page || 1,
+      pageSize || 10
+    );
+
+    res.send(results);
+
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
+
+const searchMentionUsers = async (req, res, next) => {
+  const { term, page, pageSize } = req.query;
+
+  try {
+    const results = await searchService.mentionSearch(
+      term,
+      page || 1,
+      pageSize || 10
+    );
+
+    res.send(results);
     next();
   } catch (e) {
     next(e);
@@ -55,4 +65,4 @@ const searchNearbyUsers = async (req, res, next) => {
     next(e);
   }
 };
-module.exports = { searchTerm, searchNearbyUsers };
+module.exports = { searchTerm, searchMentionUsers, searchNearbyUsers };

@@ -8,6 +8,7 @@ const userService = require('./user.service');
 const commentService = require('./comment.service');
 const postService = require('./post.service');
 const accesscodeService = require('./accesscode.service');
+const searchService = require('./search.service');
 
 module.exports = {
   notificationService,
@@ -20,4 +21,5 @@ module.exports = {
   postService,
   commentService,
   accesscodeService,
+  searchService,
 };

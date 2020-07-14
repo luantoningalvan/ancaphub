@@ -101,7 +101,8 @@ router.get('/rates/:id', Rate.get);
 router.post('/rates', auth, Rate.insert);
 
 // Search
-router.post('/search', Search.searchTerm);
+router.get('/search', Search.searchTerm);
+router.get('/search/mention', Search.searchMentionUsers);
 router.post('/search/nearby', auth, Search.searchNearbyUsers);
 
 // User
