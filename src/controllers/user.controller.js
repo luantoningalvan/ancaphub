@@ -33,8 +33,12 @@ const getAll = async (req, res, next) => {
     }
   }
 
+  const limit = Number(req.query.limit) || 20;
+  const page = Number(req.query.page) || 1;
+  const startAt = (page - 1) * limit;
+
   try {
-    const users = await getManyUsers({ filter: filterQuery });
+    const users = await getManyUsers({ filter: filterQuery, startAt, limit });
 
     const result = users.map((user) => ({
       user: userObject(user, isAuthenticated),
