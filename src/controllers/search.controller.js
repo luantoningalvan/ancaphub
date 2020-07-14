@@ -11,7 +11,8 @@ const searchTerm = async (req, res, next) => {
     const results = await searchService.globalSearch(
       term,
       page || 1,
-      pageSize || 10
+      pageSize || 10,
+      verifyToken(req)
     );
 
     res.send(results);

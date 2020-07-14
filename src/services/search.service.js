@@ -1,13 +1,14 @@
 const User = require('../models/UserModel');
 const Library = require('../models/LibraryModel');
 const Event = require('../models/EventModel');
+const userObject = require('../utils/userObject');
 
 /**
  * Performs a global search in the site for the given term
  * @param string term The search term
  * @returns object Data returned, sorted by types
  */
-const globalSearch = async (term, page = 1, pageSize = 10) => {
+const globalSearch = async (term, page = 1, pageSize = 10, isAuth = false) => {
   // Regex is case-insensitive of type 'starts with'
   // const pattern = `/^${term}$/gi`;
 
@@ -31,8 +32,15 @@ const globalSearch = async (term, page = 1, pageSize = 10) => {
     .skip(page * pageSize === 10 ? 0 : page * pageSize)
     .limit(10);
 
+  // Format users response data
+  const formattedUsers = [];
+
+  users.forEach((user) => {
+    formattedUsers.push(userObject(user, isAuth));
+  });
+
   const data = {
-    users,
+    users: formattedUsers,
     library,
     events,
     page: parseInt(page, 10),
