@@ -13,6 +13,7 @@ const multerConfig = require('../config/multer');
 
 // Controllers
 const {
+  Ad,
   Auth,
   Category,
   File,
@@ -29,6 +30,17 @@ const {
 } = require('../controllers');
 
 // Routes
+
+// Ads
+router.get('/aflbanner', Ad.getRandom);
+router.get('/aflbanner/all', Ad.getAll);
+router.post(
+  '/aflbanner',
+  auth,
+  admin,
+  multer(multerConfig).single('file'),
+  Ad.insert
+);
 
 // Auth
 router.get('/auth', auth, Auth.get);

@@ -1,3 +1,4 @@
+const adService = require('./ad.service');
 const notificationService = require('./notification.service');
 const fileService = require('./file.service');
 const categoryService = require('./category.service');
@@ -11,6 +12,7 @@ const accesscodeService = require('./accesscode.service');
 const searchService = require('./search.service');
 
 module.exports = {
+  adService,
   notificationService,
   fileService,
   categoryService,

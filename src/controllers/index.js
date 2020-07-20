@@ -1,3 +1,4 @@
+const Ad = require('./ad.controller');
 const Auth = require('./auth.controller');
 const Category = require('./category.controller');
 const File = require('./file.controller');
@@ -13,6 +14,7 @@ const Bookmark = require('./bookmark.controller');
 const AccessCode = require('./accesscode.controller');
 
 module.exports = {
+  Ad,
   Auth,
   Category,
   File,
