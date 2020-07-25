@@ -12,6 +12,7 @@ const Search = require('./search.controller');
 const User = require('./user.controller');
 const Bookmark = require('./bookmark.controller');
 const AccessCode = require('./accesscode.controller');
+const Project = require('./project.controller');
 
 module.exports = {
   Ad,
@@ -28,4 +29,5 @@ module.exports = {
   User,
   Bookmark,
   AccessCode,
+  Project,
 };

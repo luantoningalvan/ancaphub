@@ -27,6 +27,7 @@ const {
   Bookmark,
   Comment,
   AccessCode,
+  Project,
 } = require('../controllers');
 
 // Routes
@@ -107,6 +108,13 @@ router.get('/users/:id/library', Profile.getLibrary);
 router.post('/users/:handle/follow', auth, Profile.follow);
 router.post('/users/:handle/unfollow', auth, Profile.unfollow);
 router.put('/users/profile', auth, User.updateProfile);
+
+// Projects
+router.get('/projects', Project.getAll);
+router.get('/projects/:id', Project.getOne);
+router.post('/projects', auth, Project.insert);
+router.patch('/projects/:id', Project.update);
+router.delete('/projects/:id', Project.remove);
 
 // Rate
 router.get('/rates/:id', Rate.get);
