@@ -113,8 +113,8 @@ router.put('/users/profile', auth, User.updateProfile);
 router.get('/projects', Project.getAll);
 router.get('/projects/:id', Project.getOne);
 router.post('/projects', auth, Project.insert);
-router.patch('/projects/:id', Project.update);
-router.delete('/projects/:id', Project.remove);
+router.patch('/projects/:id', auth, Project.update);
+router.delete('/projects/:id', auth, Project.remove);
 
 // Rate
 router.get('/rates/:id', Rate.get);
