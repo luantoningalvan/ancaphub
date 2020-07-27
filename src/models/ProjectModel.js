@@ -22,37 +22,57 @@ const DonationMethod = new Schema({
 });
 
 // Main project model
-const Project = new Schema({
-  name: {
-    type: String,
-    required: true,
+const Project = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: ObjectId,
+      ref: 'Category',
+      required: true,
+    },
+    links: {
+      type: [ProjectLink],
+      default: [],
+    },
+    faq: {
+      type: [FrequentQuestion],
+    },
+    about: String,
+    donation_methods: {
+      type: [DonationMethod],
+    },
+    mantainers: {
+      type: [ObjectId],
+      ref: 'User',
+    },
+    createdBy: {
+      type: ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    avatar: {
+      type: ObjectId,
+      ref: 'File',
+    },
+    cover: {
+      type: ObjectId,
+      ref: 'File',
+    },
   },
-  category: {
-    type: ObjectId,
-    ref: 'Category',
-    required: true,
-  },
-  links: {
-    type: [ProjectLink],
-    default: [],
-  },
-  faq: {
-    type: [FrequentQuestion],
-  },
-  about: String,
-  donation_methods: {
-    type: [DonationMethod],
-  },
-  mantainers: {
-    type: [ObjectId],
-    ref: 'User',
-  },
-  createdBy: {
-    type: ObjectId,
-    ref: 'User',
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
+
+// Static method for getting the number of followers for a given project
+Project.statics.getFollowerCount = async function () {
+  return this.model('User').countDocuments({
+    followedProjects: { $in: this._id },
+  });
+};
 
 const ProjectModel = model('Project', Project);
 

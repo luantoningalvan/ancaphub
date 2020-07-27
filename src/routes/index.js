@@ -114,6 +114,18 @@ router.get('/projects', Project.getAll);
 router.get('/projects/:id', Project.getOne);
 router.post('/projects', auth, Project.insert);
 router.patch('/projects/:id', auth, Project.update);
+router.put(
+  '/projects/avatar/:id',
+  auth,
+  multer(multerConfig).single('file'),
+  Project.updateAvatar
+);
+router.put(
+  '/projects/cover/:id',
+  auth,
+  multer(multerConfig).single('file'),
+  Project.updateCoverPicture
+);
 router.delete('/projects/:id', auth, Project.remove);
 
 // Rate
