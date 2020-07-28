@@ -1,5 +1,6 @@
 const jimp = require('jimp');
 const fs = require('fs');
+const verifyToken = require('../utils/verifyToken');
 
 const service = require('../services/project.service');
 const { uploadToS3 } = require('../services/file.service');
@@ -18,7 +19,8 @@ const getOne = async (req, res, next) => {
   try {
     const project = await service.getProject(req.params.id);
 
-    const { id } = req.user;
+    const auth = verifyToken(req);
+    const { id } = auth;
 
     if (id) {
       // Check whether project is managed by current user
