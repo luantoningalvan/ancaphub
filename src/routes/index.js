@@ -28,6 +28,7 @@ const {
   Comment,
   AccessCode,
   Project,
+  ProjectPost,
 } = require('../controllers');
 
 // Routes
@@ -127,6 +128,12 @@ router.put(
   Project.updateCoverPicture
 );
 router.delete('/projects/:id', auth, Project.remove);
+
+router.get('/projects/:projectId/posts', ProjectPost.getAll);
+router.get('/projects/:projectId/posts/:postId', ProjectPost.getOne);
+router.post('/projects/:projectId/posts', auth, ProjectPost.insert);
+router.put('/projects/:projectId/posts/:postId', auth, ProjectPost.update);
+router.delete('/projects/:projectId/posts/:postId', auth, ProjectPost.remove);
 
 // Rate
 router.get('/rates/:id', Rate.get);
