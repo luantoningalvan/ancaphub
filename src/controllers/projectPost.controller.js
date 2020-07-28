@@ -3,8 +3,9 @@ const service = require('../services/projectPost.service');
 const projectService = require('../services/project.service');
 
 const getAll = async (req, res, next) => {
+  const { projectId } = req.params;
   try {
-    const data = await service.getAllProjectsPosts();
+    const data = await service.getAllProjectPosts(projectId);
     res.send(data);
     next();
   } catch (e) {

@@ -6,6 +6,7 @@ const ProjectPostSchema = new Schema(
   {
     title: String,
     content: String,
+    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }

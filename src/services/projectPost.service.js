@@ -1,6 +1,7 @@
 const ProjectPost = require('../models/ProjetPostModel');
 
-const getAllProjectsPosts = async () => ProjectPost.find({});
+const getAllProjectPosts = async (projectId) =>
+  ProjectPost.find({ project: projectId });
 
 const getProjectPost = async (id) => ProjectPost.findById(id);
 
@@ -12,7 +13,7 @@ const updateProjectPost = async (id, data) =>
 const deleteProjectPost = async (id) => ProjectPost.findByIdAndRemove(id);
 
 module.exports = {
-  getAllProjectsPosts,
+  getAllProjectPosts,
   getProjectPost,
   addProjectPost,
   updateProjectPost,
