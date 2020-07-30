@@ -57,7 +57,8 @@ const insert = async (req, res, next) => {
     }
 
     const post = await service.addProjectPost({
-      author: req.user.id,
+      author: userId,
+      project: projectId,
       title,
       content,
     });
