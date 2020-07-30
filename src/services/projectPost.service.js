@@ -1,7 +1,7 @@
 const ProjectPost = require('../models/ProjetPostModel');
 
 const getAllProjectPosts = async (projectId) =>
-  ProjectPost.find({ project: projectId });
+  ProjectPost.find({ project: projectId }).populate('author');
 
 const getProjectPost = async (id) => ProjectPost.findById(id);
 
