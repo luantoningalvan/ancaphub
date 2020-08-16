@@ -20,7 +20,6 @@ const getProject = async (id, user) => {
 const addProject = async (data) => Project.create(data);
 
 const updateProject = async (id, data, user) => {
-  console.log(user);
   const project = await Project.findById(id);
 
   if (!isEqual(JSON.stringify(project.createdBy), JSON.stringify(user)))
