@@ -17,23 +17,12 @@ const getAll = async (req, res, next) => {
 
 const getOne = async (req, res, next) => {
   try {
-    const project = await service.getProject(req.params.id);
-
     const auth = verifyToken(req);
-    const { id } = auth;
+    const { id: userId } = auth;
+    const { id: projectId } = req.params;
 
-    if (id) {
-      // Check whether project is managed by current user
-      const projectObj = {
-        ...project.toObject(),
-        isAdmin: id === project.createdBy.toHexString(),
-      };
+    const project = await service.getProject(projectId, userId);
 
-      // Send new object with admin boolean information
-      res.send(projectObj);
-    }
-
-    // Else send only the plain project document
     res.send(project);
     next();
   } catch (e) {
@@ -55,40 +44,41 @@ const insert = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { id } = req.user;
+  const { id: userId } = req.user;
   const { id: projectId } = req.params;
+  const { title, description, category, links } = req.body;
 
   try {
-    const project = await service.getProject(projectId);
-
-    if (
-      project.mantainers.includes(id) ||
-      project.createdBy.toHexString() === id
-    ) {
-      const updated = await service.updateProject(projectId, req.body);
-      res.send(updated);
-      next();
-    }
+    const updated = await service.updateProject(
+      projectId,
+      { title, description, category, links },
+      userId
+    );
+    res.send(updated);
+    next();
   } catch (e) {
     next(e);
   }
-
-  res
-    .status(403)
-    .send({ error: 'You have no permission to modify this project.' });
-
-  next();
 };
 
-/**
- * Updates the avatar for a given project using its ID as an argument.
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- */
+const remove = async (req, res, next) => {
+  try {
+    const { id: userId } = req.user;
+    const { id: projectId } = req.params;
+
+    const removed = await service.deleteProject(projectId, userId);
+    return res.send(removed);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+/* PROJECT AVATAR */
+
 const updateAvatar = async (req, res, next) => {
   // Get the updated project ID
   const { projectId } = req.params;
+  const { id: userId } = req.user;
 
   try {
     // Read the sent avatar file
@@ -114,9 +104,13 @@ const updateAvatar = async (req, res, next) => {
         const upload = await uploadToS3(req.file, content);
 
         // Update project entity
-        const project = await service.updateProject(projectId, {
-          avatar: upload._id,
-        });
+        const project = await service.updateProject(
+          projectId,
+          {
+            avatar: upload.url,
+          },
+          userId
+        );
 
         res.send(project);
       });
@@ -125,15 +119,30 @@ const updateAvatar = async (req, res, next) => {
   }
 };
 
-/**
- * Updates the cover picture for a given project using its ID as an argument.
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- */
-const updateCoverPicture = async (req, res, next) => {
+const removeAvatar = async (req, res, next) => {
+  try {
+    const { projectId } = req.params;
+    const { id: userId } = req.user;
+
+    const project = await service.updateProject(
+      projectId,
+      {
+        avatar: null,
+      },
+      userId
+    );
+
+    return res.send(project);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+/* PROJECT COVER */
+const updateCover = async (req, res, next) => {
   // Get the updated project ID
   const { projectId } = req.params;
+  const { id: userId } = req.user;
 
   try {
     // Read the sent avatar file
@@ -146,9 +155,9 @@ const updateCoverPicture = async (req, res, next) => {
 
     // Process the picture
     cover
-      .quality(60)
+      .quality(80)
       .crop(x, y, width, height)
-      .resize(1024, 300)
+      .resize(1200, 400)
       .write(`./public/uploads/projects/cover/${req.file.name}`, async () => {
         // Get file contents
         const content = fs.createReadStream(
@@ -159,38 +168,38 @@ const updateCoverPicture = async (req, res, next) => {
         const upload = await uploadToS3(req.file, content);
 
         // Update project entity
-        const project = await service.updateProject(projectId, {
-          cover: upload._id,
-        });
+        const project = await service.updateProject(
+          projectId,
+          {
+            cover: upload.url,
+          },
+          userId
+        );
 
-        res.send(project);
+        return res.send(project);
       });
   } catch (e) {
     next(e);
   }
 };
 
-const remove = async (req, res, next) => {
+const removeCover = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const { id: projectId } = req.params;
+    const { projectId } = req.params;
+    const { id: userId } = req.user;
 
-    const project = await service.getProject(projectId);
+    const project = await service.updateProject(
+      projectId,
+      {
+        cover: null,
+      },
+      userId
+    );
 
-    if (project.createdBy.toHexString() === id) {
-      const removed = await service.deleteProject(projectId);
-      res.send(removed);
-      next();
-    }
+    return res.send(project);
   } catch (e) {
-    next(e);
+    return next(e);
   }
-
-  res
-    .status(403)
-    .send({ error: 'You have no permission to delete this project.' });
-
-  next();
 };
 
 module.exports = {
@@ -200,5 +209,7 @@ module.exports = {
   update,
   remove,
   updateAvatar,
-  updateCoverPicture,
+  removeAvatar,
+  updateCover,
+  removeCover,
 };

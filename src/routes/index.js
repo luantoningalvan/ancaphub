@@ -114,20 +114,35 @@ router.put('/users/profile', auth, User.updateProfile);
 router.get('/projects', Project.getAll);
 router.get('/projects/:id', Project.getOne);
 router.post('/projects', auth, Project.insert);
-router.patch('/projects/:id', auth, Project.update);
-router.put(
-  '/projects/avatar/:id',
+router.put('/projects/:id', auth, Project.update);
+router.delete('/projects/:id', auth, Project.remove);
+
+// router.post('/projects/:projectId/donations', auth, Project.addDonate);
+// router.delete('/projects/:projectId/donations/:donateId', auth, Project.removeDonate);
+
+// router.post('/projects/:projectId/faq', auth, Project.addFAQ);
+// router.delete('/projects/:projectId/faq/:questionId', auth, Project.removeFAQ);
+
+router.patch(
+  '/projects/:projectId/avatar',
   auth,
   multer(multerConfig).single('file'),
   Project.updateAvatar
 );
-router.put(
-  '/projects/cover/:id',
+router.delete('/projects/:projectId/avatar', auth, Project.removeAvatar);
+
+router.patch(
+  '/projects/:projectId/cover',
   auth,
   multer(multerConfig).single('file'),
-  Project.updateCoverPicture
+  Project.updateCover
 );
-router.delete('/projects/:id', auth, Project.remove);
+router.delete('/projects/:projectId/cover', auth, Project.removeCover);
+
+// router.patch('/projects/:projectId/about', Project.updateAbout);
+
+// router.post('/projects/:projectId/follow', auth, Project.followProject);
+// router.delete('/projects/:projectId/unfollow', auth, Project.unfollowProject);
 
 router.get('/projects/:projectId/posts', ProjectPost.getAll);
 router.get('/projects/:projectId/posts/:postId', ProjectPost.getOne);

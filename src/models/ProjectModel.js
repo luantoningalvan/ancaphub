@@ -8,12 +8,6 @@ const FrequentQuestion = new Schema({
   answer: String,
 });
 
-// Sub-model for links
-const ProjectLink = new Schema({
-  title: String,
-  url: String,
-});
-
 // Sub-model for donation methods
 const DonationMethod = new Schema({
   title: String,
@@ -29,14 +23,21 @@ const Project = new Schema(
       required: true,
     },
     category: {
-      type: ObjectId,
-      ref: 'Category',
+      type: String,
       required: true,
     },
-    links: {
-      type: [ProjectLink],
-      default: [],
-    },
+    links: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     faq: {
       type: [FrequentQuestion],
     },
@@ -53,14 +54,8 @@ const Project = new Schema(
       ref: 'User',
       required: true,
     },
-    avatar: {
-      type: ObjectId,
-      ref: 'File',
-    },
-    cover: {
-      type: ObjectId,
-      ref: 'File',
-    },
+    avatar: String,
+    cover: String,
   },
   {
     timestamps: true,
