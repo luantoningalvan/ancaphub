@@ -73,6 +73,59 @@ const remove = async (req, res, next) => {
   }
 };
 
+/* PROJECT FAQ */
+const addFAQ = async (req, res) => {
+  const { id: userId } = req.user;
+  const { projectId } = req.params;
+  const { answer, question } = req.body;
+
+  const faq = await service.addProjectFAQ(
+    { answer, question },
+    projectId,
+    userId
+  );
+
+  res.send(faq);
+};
+
+const removeFAQ = async (req, res) => {
+  const { id: userId } = req.user;
+  const { projectId, questionId } = req.params;
+
+  const faq = await service.removeProjectFAQ(questionId, projectId, userId);
+
+  res.send(faq);
+};
+
+/* PROJECT DONATIONS */
+
+const addDonation = async (req, res) => {
+  const { id: userId } = req.user;
+  const { projectId } = req.params;
+  const { type, title, description } = req.body;
+
+  const donation = await service.addProjectDonation(
+    { type, title, description },
+    projectId,
+    userId
+  );
+
+  res.send(donation);
+};
+
+const removeDonation = async (req, res) => {
+  const { id: userId } = req.user;
+  const { projectId, donationId } = req.params;
+
+  const donation = await service.removeProjectDonation(
+    donationId,
+    projectId,
+    userId
+  );
+
+  res.send(donation);
+};
+
 /* PROJECT AVATAR */
 
 const updateAvatar = async (req, res, next) => {
@@ -208,6 +261,10 @@ module.exports = {
   insert,
   update,
   remove,
+  addFAQ,
+  removeFAQ,
+  addDonation,
+  removeDonation,
   updateAvatar,
   removeAvatar,
   updateCover,

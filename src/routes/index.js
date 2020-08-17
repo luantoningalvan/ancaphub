@@ -117,11 +117,15 @@ router.post('/projects', auth, Project.insert);
 router.put('/projects/:id', auth, Project.update);
 router.delete('/projects/:id', auth, Project.remove);
 
-// router.post('/projects/:projectId/donations', auth, Project.addDonate);
-// router.delete('/projects/:projectId/donations/:donateId', auth, Project.removeDonate);
+router.post('/projects/:projectId/donations', auth, Project.addDonation);
+router.delete(
+  '/projects/:projectId/donations/:donationId',
+  auth,
+  Project.removeDonation
+);
 
-// router.post('/projects/:projectId/faq', auth, Project.addFAQ);
-// router.delete('/projects/:projectId/faq/:questionId', auth, Project.removeFAQ);
+router.post('/projects/:projectId/faq', auth, Project.addFAQ);
+router.delete('/projects/:projectId/faq/:questionId', auth, Project.removeFAQ);
 
 router.patch(
   '/projects/:projectId/avatar',

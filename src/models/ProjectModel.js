@@ -10,8 +10,8 @@ const FrequentQuestion = new Schema({
 
 // Sub-model for donation methods
 const DonationMethod = new Schema({
+  type: String,
   title: String,
-  url: String,
   description: String,
 });
 
