@@ -73,6 +73,21 @@ const remove = async (req, res, next) => {
   }
 };
 
+/* PROJECT ABOUT */
+const updateAbout = async (req, res, next) => {
+  const { id: userId } = req.user;
+  const { projectId } = req.params;
+  const { about } = req.body;
+
+  try {
+    const updated = await service.updateProject(projectId, { about }, userId);
+    res.send(updated);
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
+
 /* PROJECT FAQ */
 const addFAQ = async (req, res) => {
   const { id: userId } = req.user;
@@ -261,6 +276,7 @@ module.exports = {
   insert,
   update,
   remove,
+  updateAbout,
   addFAQ,
   removeFAQ,
   addDonation,

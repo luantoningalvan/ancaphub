@@ -143,7 +143,7 @@ router.patch(
 );
 router.delete('/projects/:projectId/cover', auth, Project.removeCover);
 
-// router.patch('/projects/:projectId/about', Project.updateAbout);
+router.patch('/projects/:projectId/about', auth, Project.updateAbout);
 
 // router.post('/projects/:projectId/follow', auth, Project.followProject);
 // router.delete('/projects/:projectId/unfollow', auth, Project.unfollowProject);
