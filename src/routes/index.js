@@ -150,7 +150,12 @@ router.patch('/projects/:projectId/about', auth, Project.updateAbout);
 
 router.get('/projects/:projectId/posts', ProjectPost.getAll);
 router.get('/projects/:projectId/posts/:postId', ProjectPost.getOne);
-router.post('/projects/:projectId/posts', auth, ProjectPost.insert);
+router.post(
+  '/projects/:projectId/posts',
+  multer(multerConfig).single('thumbnail'),
+  auth,
+  ProjectPost.insert
+);
 router.put('/projects/:projectId/posts/:postId', auth, ProjectPost.update);
 router.delete('/projects/:projectId/posts/:postId', auth, ProjectPost.remove);
 

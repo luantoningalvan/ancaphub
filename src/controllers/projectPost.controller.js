@@ -1,6 +1,10 @@
+const fs = require('fs');
 const verifyToken = require('../utils/verifyToken');
 const service = require('../services/projectPost.service');
 const projectService = require('../services/project.service');
+const { fileService } = require('../services');
+
+const { uploadToS3 } = fileService;
 
 const getAll = async (req, res, next) => {
   const { projectId } = req.params;
@@ -47,18 +51,13 @@ const insert = async (req, res, next) => {
   const { title, content } = req.body;
 
   try {
-    const project = await projectService.getProject(projectId);
-
-    if (
-      !project.mantainers.includes(userId) &&
-      project.createdBy.toHexString() !== userId
-    ) {
-      throw new Error('You have no permission to create a post.');
-    }
-
+    const fileContent = fs.createReadStream(req.file.path);
+    const upload = await uploadToS3(req.file, fileContent);
+    console.log(upload);
     const post = await service.addProjectPost({
       author: userId,
       project: projectId,
+      thumbnail: upload.url,
       title,
       content,
     });
