@@ -7,11 +7,13 @@ const { uploadToS3 } = require('../services/file.service');
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await service.getAllProjects();
-    res.send(data);
-    next();
+    const auth = verifyToken(req);
+    const { id: userId } = auth;
+
+    const data = await service.getAllProjects(userId);
+    return res.send(data);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -23,10 +25,9 @@ const getOne = async (req, res, next) => {
 
     const project = await service.getProject(projectId, userId);
 
-    res.send(project);
-    next();
+    return res.send(project);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -36,10 +37,9 @@ const insert = async (req, res, next) => {
       createdBy: req.user.id,
       ...req.body,
     });
-    res.send(project);
-    next();
+    return res.send(project);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -54,10 +54,9 @@ const update = async (req, res, next) => {
       { title, description, category, links },
       userId
     );
-    res.send(updated);
-    next();
+    return res.send(updated);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -113,7 +112,6 @@ const removeFAQ = async (req, res) => {
 };
 
 /* PROJECT DONATIONS */
-
 const addDonation = async (req, res) => {
   const { id: userId } = req.user;
   const { projectId } = req.params;
@@ -142,7 +140,6 @@ const removeDonation = async (req, res) => {
 };
 
 /* PROJECT AVATAR */
-
 const updateAvatar = async (req, res, next) => {
   // Get the updated project ID
   const { projectId } = req.params;
@@ -270,6 +267,19 @@ const removeCover = async (req, res, next) => {
   }
 };
 
+const followProject = async (req, res, next) => {
+  const { id: userId } = req.user;
+  const { projectId } = req.params;
+
+  try {
+    const result = await service.followProject(projectId, userId);
+
+    return res.send(result);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -285,4 +295,5 @@ module.exports = {
   removeAvatar,
   updateCover,
   removeCover,
+  followProject,
 };

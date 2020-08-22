@@ -54,6 +54,12 @@ const Project = new Schema(
       ref: 'User',
       required: true,
     },
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     avatar: String,
     cover: String,
   },

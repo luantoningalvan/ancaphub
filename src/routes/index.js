@@ -145,8 +145,7 @@ router.delete('/projects/:projectId/cover', auth, Project.removeCover);
 
 router.patch('/projects/:projectId/about', auth, Project.updateAbout);
 
-// router.post('/projects/:projectId/follow', auth, Project.followProject);
-// router.delete('/projects/:projectId/unfollow', auth, Project.unfollowProject);
+router.post('/projects/:projectId/follow', auth, Project.followProject);
 
 router.get('/projects/:projectId/posts', ProjectPost.getAll);
 router.get('/projects/:projectId/posts/:postId', ProjectPost.getOne);

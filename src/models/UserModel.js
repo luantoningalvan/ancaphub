@@ -50,12 +50,6 @@ const UserSchema = new Schema(
     currentCity: String,
     isVerified: { type: Boolean, default: false },
     geoLocation: { type: Boolean, default: false },
-    followedProjects: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
-      },
-    ],
     lastLocation: {
       type: PointSchema,
       index: '2dsphere',

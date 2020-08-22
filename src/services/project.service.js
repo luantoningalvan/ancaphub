@@ -2,7 +2,19 @@ const isEqual = require('lodash.isequal');
 
 const Project = require('../models/ProjectModel');
 
-const getAllProjects = async () => Project.find({});
+const getAllProjects = async (user) => {
+  let allProjects = await Project.find();
+
+  if (user) {
+    allProjects = allProjects.map((project) => ({
+      ...project.toObject(),
+      isAdmin: user === project.createdBy.toHexString(),
+      isFollowing: project.followers.includes(user),
+    }));
+  }
+
+  return allProjects;
+};
 
 const getProject = async (id, user) => {
   let project = await Project.findById(id);
@@ -11,6 +23,7 @@ const getProject = async (id, user) => {
     project = {
       ...project.toObject(),
       isAdmin: user === project.createdBy.toHexString(),
+      isFollowing: project.followers.includes(user),
     };
   }
 
@@ -80,6 +93,29 @@ const removeProjectDonation = async (donationId, projectId, userId) => {
   return project.save();
 };
 
+const followProject = async (projectId, userId) => {
+  const project = await Project.findById(projectId);
+
+  if (!project) throw new Error('Esse projeto não existe!');
+
+  if (project.followers.includes(userId)) {
+    project.followers.pull(userId);
+    await project.save();
+    return {
+      _id: project._id,
+      isFollowing: false,
+    };
+  }
+
+  project.followers.push(userId);
+  await project.save();
+
+  return {
+    _id: project._id,
+    isFollowing: true,
+  };
+};
+
 module.exports = {
   getAllProjects,
   getProject,
@@ -90,4 +126,5 @@ module.exports = {
   removeProjectFAQ,
   addProjectDonation,
   removeProjectDonation,
+  followProject,
 };
