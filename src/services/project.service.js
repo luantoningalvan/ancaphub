@@ -25,7 +25,7 @@ const updateProject = async (id, data, user) => {
   if (!isEqual(JSON.stringify(project.createdBy), JSON.stringify(user)))
     throw new Error('Unauthorized action');
 
-  return project.update(data, { new: true });
+  return Project.findByIdAndUpdate(id, data, { new: true });
 };
 
 const deleteProject = async (id, author) => {
