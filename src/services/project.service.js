@@ -3,7 +3,7 @@ const isEqual = require('lodash.isequal');
 const Project = require('../models/ProjectModel');
 
 const getAllProjects = async (user) => {
-  let allProjects = await Project.find();
+  let allProjects = await Project.find().sort('createdAt');
 
   if (user) {
     allProjects = allProjects.map((project) => ({

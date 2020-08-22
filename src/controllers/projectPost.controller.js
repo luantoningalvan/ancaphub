@@ -1,7 +1,6 @@
 const fs = require('fs');
 const verifyToken = require('../utils/verifyToken');
 const service = require('../services/projectPost.service');
-const projectService = require('../services/project.service');
 const { fileService } = require('../services');
 
 const { uploadToS3 } = fileService;
@@ -30,7 +29,7 @@ const getOne = async (req, res, next) => {
       // Check whether project is managed by current user
       const projectObj = {
         ...post.toObject(),
-        isAuthor: id === post.author.toHexString(),
+        isAuthor: id === post.author._id.toHexString(),
       };
 
       // Send new object with admin boolean information
@@ -53,8 +52,7 @@ const insert = async (req, res, next) => {
   try {
     const fileContent = fs.createReadStream(req.file.path);
     const upload = await uploadToS3(req.file, fileContent);
-    console.log(upload);
-    const post = await service.addProjectPost({
+    const post = await service.addProjectPost(projectId, userId, {
       author: userId,
       project: projectId,
       thumbnail: upload.url,
@@ -74,19 +72,7 @@ const update = async (req, res, next) => {
   const { title, content } = req.body;
 
   try {
-    const project = await projectService.getProject(projectId);
-    const post = await service.getProjectPost(postId);
-
-    if (!post) throw new Error('Post not found');
-
-    if (
-      project.createdBy.toHexString() !== userId &&
-      post.author.toHexString() !== userId
-    ) {
-      throw new Error('You have no permission to modify this post.');
-    }
-
-    const updated = await service.updateProjectPost(postId, {
+    const updated = await service.updateProjectPost(postId, projectId, userId, {
       title,
       content,
     });
@@ -102,19 +88,7 @@ const remove = async (req, res, next) => {
   const { projectId, postId } = req.params;
 
   try {
-    const project = await projectService.getProject(projectId);
-    const post = await service.getProjectPost(postId);
-
-    if (!post) throw new Error('Post not found');
-
-    if (
-      project.createdBy.toHexString() !== userId &&
-      post.author.toHexString() !== userId
-    ) {
-      throw new Error('You have no permission to delete this post.');
-    }
-
-    await service.deleteProjectPost(postId);
+    await service.deleteProjectPost(projectId, userId, postId);
     res.status(204).send();
     next();
   } catch (e) {
