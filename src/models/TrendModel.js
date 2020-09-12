@@ -26,4 +26,4 @@ const Trend = new Schema({
   },
 });
 
-module.exports = model(Trend);
+module.exports = model('Trend', Trend);
