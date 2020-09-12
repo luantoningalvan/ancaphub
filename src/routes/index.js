@@ -29,6 +29,8 @@ const {
   AccessCode,
   Project,
   ProjectPost,
+  Quote,
+  Trend,
 } = require('../controllers');
 
 // Routes
@@ -43,6 +45,23 @@ router.post(
   multer(multerConfig).single('file'),
   Ad.insert
 );
+
+// Quotes
+router.get('/quotes', Quote.getAll);
+router.get('/quotes/quoteofday', Quote.getQuoteOfDay);
+router.post(
+  '/quotes',
+  auth,
+  admin,
+  multer(multerConfig).single('author_pic'),
+  Quote.insert
+);
+
+// Trends
+router.get('/trends', Trend.getAll);
+router.get('/trends/:id', Trend.getById);
+router.post('/trends', Trend.insert);
+router.patch('/trends/:id', Trend.update);
 
 // Auth
 router.get('/auth', auth, Auth.get);
