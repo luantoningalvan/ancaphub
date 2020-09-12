@@ -10,6 +10,7 @@ const commentService = require('./comment.service');
 const postService = require('./post.service');
 const accesscodeService = require('./accesscode.service');
 const searchService = require('./search.service');
+const quoteService = require('./quote.service');
 
 module.exports = {
   adService,
@@ -24,4 +25,5 @@ module.exports = {
   commentService,
   accesscodeService,
   searchService,
+  quoteService,
 };

@@ -29,6 +29,7 @@ const {
   AccessCode,
   Project,
   ProjectPost,
+  Quote,
 } = require('../controllers');
 
 // Routes
@@ -42,6 +43,17 @@ router.post(
   admin,
   multer(multerConfig).single('file'),
   Ad.insert
+);
+
+// Quotes
+router.get('/quotes', Quote.getAll);
+router.get('/quotes/quoteofday', Quote.getQuoteOfDay);
+router.post(
+  '/quotes',
+  auth,
+  admin,
+  multer(multerConfig).single('author_pic'),
+  Quote.insert
 );
 
 // Auth
