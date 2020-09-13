@@ -5,7 +5,7 @@ const Trend = require('../models/TrendModel');
  * Nunca serão mais antigos que 7 dias.
  */
 const getAll = async () => {
-  return Trend.find({});
+  return Trend.find({}).sort({ createdAt: -1 });
 };
 
 /**
@@ -55,6 +55,24 @@ const remove = async (id) => {
   throw new Error('Trend não encontrado.');
 };
 
+const pin = async (id) => {
+  const trend = await Trend.findById(id);
+
+  if (!trend) throw new Error('Trend não encontrado');
+
+  if (trend.pinned) {
+    return Trend.findByIdAndUpdate(id, { pinned: false }, { new: true });
+  }
+
+  const findPinned = await Trend.findOne({ pinned: true });
+
+  if (findPinned) {
+    await findPinned.update({ pinned: false });
+  }
+
+  return Trend.findByIdAndUpdate(id, { pinned: true }, { new: true });
+};
+
 module.exports = {
   getAll,
   getById,
@@ -62,4 +80,5 @@ module.exports = {
   insert,
   update,
   remove,
+  pin,
 };

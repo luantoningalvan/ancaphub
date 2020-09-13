@@ -58,9 +58,31 @@ const update = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await trendService.remove(id);
+    return res.status(204).send();
+  } catch (e) {
+    next(e);
+  }
+};
+
+const pin = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const response = await trendService.pin(id);
+    return res.send(response);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   insert,
   update,
+  remove,
+  pin,
 };

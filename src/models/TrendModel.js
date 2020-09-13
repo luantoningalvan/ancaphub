@@ -10,7 +10,6 @@ const Trend = new Schema({
   },
   picture: {
     type: String,
-    required: true,
   },
   description: String,
   category: {
@@ -24,6 +23,7 @@ const Trend = new Schema({
     expires: '7d', // Trends expiram em 7 dias no máximo
     default: Date.now,
   },
+  pinned: Boolean,
 });
 
 module.exports = model('Trend', Trend);
