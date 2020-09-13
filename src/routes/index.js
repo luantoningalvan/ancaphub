@@ -49,6 +49,7 @@ router.post(
 // Quotes
 router.get('/quotes', Quote.getAll);
 router.get('/quotes/quoteofday', Quote.getQuoteOfDay);
+router.delete('/quotes/:id', Quote.remove);
 router.post(
   '/quotes',
   auth,
@@ -61,7 +62,9 @@ router.post(
 router.get('/trends', Trend.getAll);
 router.get('/trends/:id', Trend.getById);
 router.post('/trends', Trend.insert);
-router.patch('/trends/:id', Trend.update);
+router.put('/trends/:id', Trend.update);
+router.delete('/trends/:id', Trend.remove);
+router.patch('/trends/:id/pin', Trend.pin);
 
 // Auth
 router.get('/auth', auth, Auth.get);
