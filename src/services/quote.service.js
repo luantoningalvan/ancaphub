@@ -26,8 +26,16 @@ const insertQuote = async (data) => {
   return Quote.create(data);
 };
 
+const removeQuote = async (id) => {
+  const quote = await Quote.findById(id);
+  if (!quote) throw new Error('Item não encontrado');
+
+  return quote.remove();
+};
+
 module.exports = {
   getAll,
   getQuoteOfDay,
   insertQuote,
+  removeQuote,
 };
