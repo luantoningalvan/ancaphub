@@ -40,8 +40,19 @@ const insert = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await quoteService.removeQuote(id);
+    return res.status(204).send();
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   getAll,
   getQuoteOfDay,
   insert,
+  remove,
 };
