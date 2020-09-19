@@ -31,7 +31,7 @@ server.use(function (err, req, res) {
 
 server.use('/public', express.static('public'));
 
-server.listen(port, function () {
+const http = server.listen(port, function () {
   console.log(
     `BACKEND está rodando na porta ${port}.`,
     `http://localhost:${port}/`
@@ -39,28 +39,28 @@ server.listen(port, function () {
 });
 
 // Socket.io setup for real time communication
-const io = socket(server);
+const io = socket(http);
 
 // Connection events
 io.on('connection', (ws) => {
-  ws.on('new chat', async (data, cb) => {
+  ws.on('new chat', async (data) => {
     const { recipients, title, group } = data;
 
     // Create new chat
     const chat = await Chat.create({ recipients, title, group });
 
     // Pass data to listener in client side
-    cb(chat.toObject());
+    io.emit('new chat', chat.toObject());
   });
 
-  ws.on('new message', async (data, cb) => {
+  ws.on('new message', async (data) => {
     const { content, chat, replyingTo } = data;
 
     // Create new message
     const message = await Message.create({ content, chat, replyingTo });
 
     // Pass data to listener in client side
-    cb(message.toObject());
+    io.emit('new message', message.toObject());
   });
 });
 
