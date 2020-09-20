@@ -31,8 +31,6 @@ const {
   ProjectPost,
   Quote,
   Trend,
-  Chat,
-  Message,
 } = require('../controllers');
 
 // Routes
@@ -206,13 +204,5 @@ router.post(
   multer(multerConfig).single('file'),
   User.updateAvatar
 );
-
-// Chats
-router.get('/chats/:id', Chat.get);
-router.get('/chats', Chat.getAll);
-
-// Messages
-router.get('/messages/:chatId', Message.getFromChat);
-router.get('/messages/single/:id', Message.get);
 
 module.exports = router;

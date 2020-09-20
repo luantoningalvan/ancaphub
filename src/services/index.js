@@ -12,8 +12,6 @@ const accesscodeService = require('./accesscode.service');
 const searchService = require('./search.service');
 const quoteService = require('./quote.service');
 const trendService = require('./trend.service');
-const messageService = require('./message.service');
-const chatService = require('./chat.service');
 
 module.exports = {
   adService,
@@ -30,6 +28,4 @@ module.exports = {
   searchService,
   quoteService,
   trendService,
-  messageService,
-  chatService,
 };

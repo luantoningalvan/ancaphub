@@ -16,8 +16,6 @@ const Project = require('./project.controller');
 const ProjectPost = require('./projectPost.controller');
 const Quote = require('./quote.controller');
 const Trend = require('./trend.controller');
-const Chat = require('./chat.controller');
-const Message = require('./message.controller');
 
 module.exports = {
   Ad,
@@ -38,6 +36,4 @@ module.exports = {
   ProjectPost,
   Quote,
   Trend,
-  Chat,
-  Message,
 };
