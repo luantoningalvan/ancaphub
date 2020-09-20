@@ -20,9 +20,9 @@ server.use(morgan('tiny'));
 server.get('/', (req, res) => res.send('Bem vindo a API 1.0 do AncapHub'));
 server.use(apiBaseUrl, routes);
 
-// server.use(function (err, req, res) {
-//   res.status(500).json({ message: err.message });
-// });
+server.use(function (err, req, res) {
+  res.status(500).json({ message: err.message });
+});
 
 server.use('/public', express.static('public'));
 

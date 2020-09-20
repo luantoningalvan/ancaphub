@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const socketio = require('socket.io');
+const http = require('http');
 const auth = require('../middlewares/auth');
 const Chat = require('../models/ChatModel');
 const Message = require('../models/MessageModel');
@@ -12,7 +13,7 @@ const getSocket = (server) => socketio(server);
 const getSocketAttachedServer = (expressServer) => {
   // Create HTTP server from express instance
   // eslint-disable-next-line global-require
-  const httpServer = require('http').Server(expressServer);
+  const httpServer = http.createServer(expressServer);
 
   // Attach WebSocket to HTTP
   const io = getSocket(httpServer);
