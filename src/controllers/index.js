@@ -16,6 +16,7 @@ const Project = require('./project.controller');
 const ProjectPost = require('./projectPost.controller');
 const Quote = require('./quote.controller');
 const Trend = require('./trend.controller');
+const Feature = require('./feature.controller');
 
 module.exports = {
   Ad,
@@ -36,4 +37,5 @@ module.exports = {
   ProjectPost,
   Quote,
   Trend,
+  Feature,
 };

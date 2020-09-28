@@ -31,6 +31,7 @@ const {
   ProjectPost,
   Quote,
   Trend,
+  Feature,
 } = require('../controllers');
 
 // Routes
@@ -49,7 +50,7 @@ router.post(
 // Quotes
 router.get('/quotes', Quote.getAll);
 router.get('/quotes/quoteofday', Quote.getQuoteOfDay);
-router.delete('/quotes/:id', Quote.remove);
+router.delete('/quotes/:id', auth, admin, Quote.remove);
 router.post(
   '/quotes',
   auth,
@@ -61,10 +62,17 @@ router.post(
 // Trends
 router.get('/trends', Trend.getAll);
 router.get('/trends/:id', Trend.getById);
-router.post('/trends', Trend.insert);
-router.put('/trends/:id', Trend.update);
-router.delete('/trends/:id', Trend.remove);
-router.patch('/trends/:id/pin', Trend.pin);
+router.post('/trends', auth, admin, Trend.insert);
+router.put('/trends/:id', auth, admin, Trend.update);
+router.delete('/trends/:id', auth, admin, Trend.remove);
+router.patch('/trends/:id/pin', auth, admin, Trend.pin);
+
+// Feature
+router.get('/features', auth, admin, Feature.index);
+router.get('/features/:id', auth, admin, Feature.get);
+router.post('/features', auth, admin, Feature.insert);
+router.patch('/features/:id', auth, admin, Feature.update);
+router.delete('/features/:id', auth, admin, Feature.remove);
 
 // Auth
 router.get('/auth', auth, Auth.get);
