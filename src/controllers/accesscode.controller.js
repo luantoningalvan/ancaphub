@@ -9,7 +9,7 @@ const generate = async (req, res, next) => {
     res.json(accessCode);
     next();
   } catch (e) {
-    next(e);
+    return res.status(422).json({ error: e.message });
   }
 };
 
@@ -20,7 +20,7 @@ const getAll = async (req, res, next) => {
     res.json(accessCode);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

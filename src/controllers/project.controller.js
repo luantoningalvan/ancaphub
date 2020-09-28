@@ -5,7 +5,7 @@ const verifyToken = require('../utils/verifyToken');
 const service = require('../services/project.service');
 const { uploadToS3 } = require('../services/file.service');
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   try {
     const auth = verifyToken(req);
     const { id: userId } = auth;
@@ -13,11 +13,11 @@ const getAll = async (req, res, next) => {
     const data = await service.getAllProjects(userId);
     return res.send(data);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const getOne = async (req, res, next) => {
+const getOne = async (req, res) => {
   try {
     const auth = verifyToken(req);
     const { id: userId } = auth;
@@ -27,11 +27,11 @@ const getOne = async (req, res, next) => {
 
     return res.send(project);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const insert = async (req, res, next) => {
+const insert = async (req, res) => {
   try {
     const project = await service.addProject({
       createdBy: req.user.id,
@@ -39,11 +39,11 @@ const insert = async (req, res, next) => {
     });
     return res.send(project);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const update = async (req, res, next) => {
+const update = async (req, res) => {
   const { id: userId } = req.user;
   const { id: projectId } = req.params;
   const { title, description, category, links } = req.body;
@@ -56,11 +56,11 @@ const update = async (req, res, next) => {
     );
     return res.send(updated);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const remove = async (req, res, next) => {
+const remove = async (req, res) => {
   try {
     const { id: userId } = req.user;
     const { id: projectId } = req.params;
@@ -68,7 +68,7 @@ const remove = async (req, res, next) => {
     const removed = await service.deleteProject(projectId, userId);
     return res.send(removed);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -83,7 +83,7 @@ const updateAbout = async (req, res, next) => {
     res.send(updated);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -140,7 +140,7 @@ const removeDonation = async (req, res) => {
 };
 
 /* PROJECT AVATAR */
-const updateAvatar = async (req, res, next) => {
+const updateAvatar = async (req, res) => {
   // Get the updated project ID
   const { projectId } = req.params;
   const { id: userId } = req.user;
@@ -180,11 +180,11 @@ const updateAvatar = async (req, res, next) => {
         res.send(project);
       });
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const removeAvatar = async (req, res, next) => {
+const removeAvatar = async (req, res) => {
   try {
     const { projectId } = req.params;
     const { id: userId } = req.user;
@@ -199,12 +199,12 @@ const removeAvatar = async (req, res, next) => {
 
     return res.send(project);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
 /* PROJECT COVER */
-const updateCover = async (req, res, next) => {
+const updateCover = async (req, res) => {
   // Get the updated project ID
   const { projectId } = req.params;
   const { id: userId } = req.user;
@@ -244,11 +244,11 @@ const updateCover = async (req, res, next) => {
         return res.send(project);
       });
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const removeCover = async (req, res, next) => {
+const removeCover = async (req, res) => {
   try {
     const { projectId } = req.params;
     const { id: userId } = req.user;
@@ -263,11 +263,11 @@ const removeCover = async (req, res, next) => {
 
     return res.send(project);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const followProject = async (req, res, next) => {
+const followProject = async (req, res) => {
   const { id: userId } = req.user;
   const { projectId } = req.params;
 
@@ -276,7 +276,7 @@ const followProject = async (req, res, next) => {
 
     return res.send(result);
   } catch (e) {
-    return next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

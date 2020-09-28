@@ -10,7 +10,7 @@ const insert = async (req, res, next) => {
     res.status(200).json(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -21,7 +21,7 @@ const get = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

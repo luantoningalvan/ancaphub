@@ -4,21 +4,21 @@ const { fileService, quoteService } = require('../services');
 
 const { uploadToS3 } = fileService;
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   try {
     const quotes = await quoteService.getAll();
     return res.send(quotes);
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
-const getQuoteOfDay = async (req, res, next) => {
+const getQuoteOfDay = async (req, res) => {
   try {
     const ad = await quoteService.getQuoteOfDay();
     return res.send(ad);
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -40,13 +40,13 @@ const insert = async (req, res, next) => {
   }
 };
 
-const remove = async (req, res, next) => {
+const remove = async (req, res) => {
   const { id } = req.params;
   try {
     await quoteService.removeQuote(id);
     return res.status(204).send();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

@@ -36,7 +36,7 @@ const login = async (req, res, next) => {
       }
     );
   } catch (e) {
-    next(e);
+    return res.status(401).json({ error: 'E-mail ou senha não correspondem.' });
   }
 };
 
@@ -48,7 +48,9 @@ const recoverPasswordRequest = async (req, res, next) => {
     res.send(result);
     return next();
   } catch (e) {
-    return next(e);
+    return res
+      .status(400)
+      .json({ error: `Erro ao processar a solicitação: ${e.message}` });
   }
 };
 
@@ -60,7 +62,9 @@ const recoverPasswordCode = async (req, res, next) => {
     res.send(result);
     return next();
   } catch (e) {
-    return next(e);
+    return res
+      .status(400)
+      .json({ error: `Erro ao processar a solicitação: ${e.message}` });
   }
 };
 

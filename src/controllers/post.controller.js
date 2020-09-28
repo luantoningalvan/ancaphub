@@ -35,7 +35,7 @@ const getUserFeed = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -48,7 +48,7 @@ const getUserPosts = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -60,7 +60,7 @@ const getPostById = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -134,7 +134,7 @@ const insert = async (req, res, next) => {
       next();
     }
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -147,7 +147,7 @@ const remove = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -160,7 +160,7 @@ const like = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -174,7 +174,7 @@ const getComments = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -188,7 +188,7 @@ const getLikes = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -204,7 +204,7 @@ const vote = async (req, res, next) => {
     res.send(optionVote);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

@@ -12,7 +12,7 @@ const getAll = async (req, res, next) => {
     res.send(data);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -40,7 +40,7 @@ const getOne = async (req, res, next) => {
     res.send(post);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -62,7 +62,7 @@ const insert = async (req, res, next) => {
     res.send(post);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -79,7 +79,7 @@ const update = async (req, res, next) => {
     res.send(updated);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -92,7 +92,7 @@ const remove = async (req, res, next) => {
     res.status(204).send();
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

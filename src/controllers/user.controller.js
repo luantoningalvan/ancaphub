@@ -46,7 +46,7 @@ const getAll = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -65,7 +65,7 @@ const get = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -84,7 +84,7 @@ const getByHandle = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -111,7 +111,7 @@ const insert = async (req, res, next) => {
       }
     );
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -130,7 +130,7 @@ const updateProfile = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -143,7 +143,7 @@ const updateGeoLocation = async (req, res, next) => {
     res.status(200).send({ geoLocation: result.geoLocation });
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -182,7 +182,7 @@ const updateUsername = async (req, res, next) => {
     res.send({ _id: result._id, username: result.username });
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -196,7 +196,7 @@ const updateEmail = async (req, res, next) => {
     res.send({ _id: result._id, email: result.email });
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -209,7 +209,7 @@ const updatePassword = async (req, res, next) => {
     res.send({ success: true });
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

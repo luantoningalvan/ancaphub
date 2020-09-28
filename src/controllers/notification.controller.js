@@ -11,7 +11,7 @@ const getAll = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -24,7 +24,7 @@ const markAllAsRead = async (req, res, next) => {
     res.status(200).send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

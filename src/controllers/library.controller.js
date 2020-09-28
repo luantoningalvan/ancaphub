@@ -83,7 +83,7 @@ const getAll = async (req, res, next) => {
     }
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -95,7 +95,7 @@ const get = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -129,7 +129,7 @@ const insert = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -160,7 +160,7 @@ const update = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -172,7 +172,7 @@ const remove = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -195,7 +195,7 @@ const approve = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -207,7 +207,7 @@ const getAuthContributions = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -241,7 +241,7 @@ const addToLibrary = async (req, res, next) => {
     });
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

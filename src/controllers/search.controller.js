@@ -19,7 +19,7 @@ const searchTerm = async (req, res, next) => {
 
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -36,7 +36,7 @@ const searchMentionUsers = async (req, res, next) => {
     res.send(results);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -63,7 +63,7 @@ const searchNearbyUsers = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 module.exports = { searchTerm, searchMentionUsers, searchNearbyUsers };

@@ -16,7 +16,7 @@ const getAll = async (req, res, next) => {
     res.send(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -29,7 +29,7 @@ const insert = async (req, res, next) => {
     res.json(result);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

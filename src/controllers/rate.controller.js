@@ -56,7 +56,7 @@ const insert = async (req, res, next) => {
     res.send(rate);
     next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 

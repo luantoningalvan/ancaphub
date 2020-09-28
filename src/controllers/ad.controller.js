@@ -21,7 +21,7 @@ const getRandom = async (req, res, next) => {
     res.send(ad);
     return next();
   } catch (e) {
-    next(e);
+    return res.status(500).json({ error: e.message });
   }
 };
 
@@ -38,8 +38,8 @@ const insert = async (req, res, next) => {
     });
     res.send(ad);
     next();
-  } catch (err) {
-    throw new Error(err);
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
   }
 };
 
