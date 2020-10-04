@@ -64,8 +64,8 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const feature = await removeFeature(id);
-    return res.json(feature.toObject());
+    await removeFeature(id);
+    return res.status(204).json({});
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

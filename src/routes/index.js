@@ -68,11 +68,11 @@ router.delete('/trends/:id', auth, admin, Trend.remove);
 router.patch('/trends/:id/pin', auth, admin, Trend.pin);
 
 // Feature
-router.get('/features', auth, admin, Feature.index);
-router.get('/features/:id', auth, admin, Feature.get);
-router.post('/features', auth, admin, Feature.insert);
-router.patch('/features/:id', auth, admin, Feature.update);
-router.delete('/features/:id', auth, admin, Feature.remove);
+router.get('/featured', Feature.index);
+router.get('/featured/:id', Feature.get);
+router.post('/featured', auth, admin, Feature.insert);
+router.patch('/featured/:id', auth, admin, Feature.update);
+router.delete('/featured/:id', auth, admin, Feature.remove);
 
 // Auth
 router.get('/auth', auth, Auth.get);

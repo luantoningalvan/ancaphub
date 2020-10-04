@@ -7,6 +7,7 @@ const FeatureSchema = new Schema({
   },
   description: String,
   picture: String,
+  live: Boolean,
   uri: {
     type: String,
     required: true,

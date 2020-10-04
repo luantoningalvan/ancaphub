@@ -30,7 +30,7 @@ const remove = async (id) => {
 
   if (!feature) throw new Error('Destaque não encontrado');
 
-  return feature();
+  return feature;
 };
 
 const get = async (id) => {
@@ -42,7 +42,7 @@ const get = async (id) => {
 };
 
 const index = async () => {
-  const features = await Feature.find({});
+  const features = await Feature.find().sort({ createdAt: -1 }).limit(5);
   return features;
 };
 
