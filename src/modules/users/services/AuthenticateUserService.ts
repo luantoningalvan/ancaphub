@@ -1,10 +1,8 @@
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import authConfig from '@config/auth';
-import AppError from '@shared/errors/AppError';
-import { Injectable } from 'snake-di';
-import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
+import AppError from '@shared/errors/AppError';
+import IUsersRepository from '../repositories/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface Request {
@@ -12,17 +10,20 @@ interface Request {
   password: string;
 }
 
-@Injectable()
+@injectable()
 class AuthenticateUserService {
   constructor(
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
     private hashProvider: IHashProvider
   ) {}
 
   public async execute({
     email,
     password,
-  }: Request): Promise<{ user: typeof User; token: string }> {
+  }: Request): Promise<{ user: User; token: string }> {
     const user = await this.usersRepository.findByEmail(email);
     if (!user) throw new AppError('Incorrect email/password combination', 401);
 
@@ -34,9 +35,9 @@ class AuthenticateUserService {
     if (!passwordMatched)
       throw new AppError('Incorrect email/password combination', 401);
 
-    const token = sign({}, String(process.env.JWT_SECRET), {
+    const token = sign({}, process.env.JWT_SECRET, {
       subject: user.id,
-      expiresIn: process.env.JWT_DURATION,
+      expiresIn: process.env.JWT_EXPIRATION,
     });
     return { user, token };
   }

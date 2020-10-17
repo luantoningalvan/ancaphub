@@ -64,5 +64,5 @@ typings/
 # npm lockfile, because we recommend using Yarn
 package-lock.json
 
-/public/uploads/*
-!/public/uploads/.gitkeep
+/tmp/*
+!/tmp/.gitkeep

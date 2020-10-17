@@ -1,28 +1,33 @@
 version: '2.4'
 
-services: 
-
-  mongo: 
+services:
+  mongo:
     image: mongo:4.2.6-bionic
     container_name: ancaphub_mongo
-    ports: 
-      - "27017:27017"
-    volumes: 
+    ports:
+      - '5432:5432'
+    volumes:
       - ancaphub_mongo_data:/data/db
-
+  postgres:
+    image: postgres:13.0-alpine
+    container_name: ancaphub_postgres
+    ports:
+      - '27017:27017'
+    volumes:
+      - ancaphub_postgres_data:/data/db
   localstack:
     image: localstack/localstack:0.11.1
     container_name: ancaphub_localstack
-    ports: 
-      - "4566:4566"
-      - "8055:8055"
-    volumes: 
+    ports:
+      - '4566:4566'
+      - '8055:8055'
+    volumes:
       - ancaphub_localstack_data:/tmp/localstack
       - ./scripts:/docker-entrypoint-initaws.d
       - type: bind
         source: ./../.env
         target: /.env
-    environment: 
+    environment:
       - SERVICES=s3
       - PORT_WEB_UI=8055
       - EDGE_PORT=4566
@@ -30,3 +35,4 @@ services:
 volumes:
   ancaphub_mongo_data:
   ancaphub_localstack_data:
+  ancaphub_postgres_data:

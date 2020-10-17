@@ -15,6 +15,9 @@ class User {
   name: string;
 
   @Column()
+  username: string;
+
+  @Column()
   avatar: string;
 
   @Column()
