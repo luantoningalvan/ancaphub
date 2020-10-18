@@ -20,6 +20,7 @@ class PostsRepository implements IPostRepository {
 
     const posts = this.ormRepository
       .createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user_id')
       .where('post.user_id IN (:...authors)', { authors: userIds })
       .limit(10)
       .getMany();
