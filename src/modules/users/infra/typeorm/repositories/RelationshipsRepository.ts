@@ -1,4 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
+import User from '../entities/User';
 import Relationship from '../entities/Relationship';
 import IRelationshipsRepository from '@modules/users/repositories/IRelationshipsRepository';
 
@@ -11,23 +12,21 @@ class RelationshipsRepository implements IRelationshipsRepository {
 
   public async getRelationships(
     id?: string,
-    type?: 'following' | 'followers',
-  ): Promise<Relationship[]> {
-    if (id) {
-      if (type === 'followers') {
-        return this.ormRepository.find({ where: { followed_id: id } });
-      }
-
-      if (type === 'following') {
-        return this.ormRepository.find({ where: { follower_id: id } });
-      }
-
-      return this.ormRepository.find({
-        where: [{ follower_id: id }, { followed_id: id }],
+    type?: 'following' | 'followers'
+  ): Promise<User[]> {
+    if (type === 'followers') {
+      const followers = await this.ormRepository.find({
+        where: { followed_id: id },
+        relations: ['follower'],
       });
+      return followers.map((relation) => relation.follower) || [];
+    } else {
+      const followers = await this.ormRepository.find({
+        where: { follower_id: id },
+        relations: ['followed'],
+      });
+      return followers.map((relation) => relation.followed) || [];
     }
-
-    return this.ormRepository.find();
   }
 
   public async create(postData: {

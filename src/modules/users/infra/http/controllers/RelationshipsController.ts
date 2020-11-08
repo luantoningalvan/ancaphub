@@ -8,8 +8,10 @@ import { container } from 'tsyringe';
 
 class RelationshipsController {
   public async show(request: Request, response: Response): Promise<Response> {
+    const { id: userId, relationType } = request.params;
+
     const showRelationships = container.resolve(ShowRelationshipsService);
-    const relationships = await showRelationships.execute();
+    const relationships = await showRelationships.execute(userId, relationType);
 
     return response.json(relationships);
   }
@@ -17,8 +19,6 @@ class RelationshipsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { id: followedId } = request.params;
     const { id: followerId } = request.user;
-
-    console.log(followedId, followerId);
 
     const createRelationships = container.resolve(FollowUserService);
 

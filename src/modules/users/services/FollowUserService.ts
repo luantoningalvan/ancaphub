@@ -11,7 +11,7 @@ interface Request {
 export default class CreatePostService {
   constructor(
     @inject('RelationshipsRepository')
-    private relationshipsRepository: IRelationshipsRepository,
+    private relationshipsRepository: IRelationshipsRepository
   ) {}
 
   public async execute({

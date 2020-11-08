@@ -7,7 +7,11 @@ const usersRouter = Router();
 
 const relationshipsController = new RelationshipsController();
 
-usersRouter.get('/:id', ensureAuthenticated, relationshipsController.show);
+usersRouter.get(
+  '/:id/:relationType',
+  ensureAuthenticated,
+  relationshipsController.show
+);
 usersRouter.post('/:id', ensureAuthenticated, relationshipsController.create);
 usersRouter.delete('/:id', ensureAuthenticated, relationshipsController.remove);
 
