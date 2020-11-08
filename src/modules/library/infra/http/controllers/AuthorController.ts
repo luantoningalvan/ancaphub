@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import IndexAuthorsService from '@modules/library/services/IndexAuthorsService';
+import ShowAuthorService from '@modules/library/services/ShowAuthorService';
 import CreateAuthorService from '@modules/library/services/CreateAuthorService';
 import UpdateAuthorService from '@modules/library/services/UpdateAuthorService';
 import RemoveAuthorService from '@modules/library/services/RemoveAuthorService';
@@ -7,6 +9,24 @@ import RemoveAuthorService from '@modules/library/services/RemoveAuthorService';
 import { container } from 'tsyringe';
 
 class AuthorsController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const indexAuthorsService = container.resolve(IndexAuthorsService);
+    const items = await indexAuthorsService.execute();
+
+    return response.json(items);
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { username } = request.params;
+
+    const showAuthorService = container.resolve(ShowAuthorService);
+    console.log(username);
+
+    const author = await showAuthorService.execute(username);
+
+    return response.json(author);
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, username, avatar } = request.body;
 

@@ -24,6 +24,13 @@ class AuthorsRepository implements IAuthorsRepository {
     return author;
   }
 
+  public async findByUsername(username: string): Promise<Author | undefined> {
+    const author = await this.ormRepository.findOne({ username });
+    if (!author) throw new AppError('Autor não encontrado', 404);
+
+    return author;
+  }
+
   public async create(postData: ICreateAuthor): Promise<Author> {
     const author = this.ormRepository.create(postData);
     await this.ormRepository.save(author);

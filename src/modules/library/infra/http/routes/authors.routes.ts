@@ -7,6 +7,8 @@ const authorRouter = Router();
 
 const authorController = new AuthorController();
 
+authorRouter.get('/', authorController.index);
+authorRouter.get('/:username', authorController.show);
 authorRouter.post('/', ensureAuthenticated, authorController.create);
 authorRouter.put('/:id', ensureAuthenticated, authorController.update);
 authorRouter.delete('/:id', ensureAuthenticated, authorController.remove);
