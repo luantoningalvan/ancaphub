@@ -18,12 +18,18 @@ export class LibraryItem1602299249069 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'content',
+            type: 'text',
+            isNullable: true,
+          },
+          {
             name: 'author_id',
             type: 'uuid',
           },
           {
             name: 'cover',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'type',
@@ -66,7 +72,7 @@ export class LibraryItem1602299249069 implements MigrationInterface {
             onUpdate: 'CASCADE',
           },
         ],
-      }),
+      })
     );
   }
 
