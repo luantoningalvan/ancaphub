@@ -25,7 +25,8 @@ class PostsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { author_id, title, type, contributor_id, cover } = request.body;
+    const { author_id, title, type, cover } = request.body;
+    const contributor_id = request.user.id;
 
     const createLibraryItem = container.resolve(CreateLibraryItemService);
 

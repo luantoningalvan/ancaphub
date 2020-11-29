@@ -17,6 +17,7 @@ class PostsRepository implements IPostRepository {
 
   public async findByUser(userId: string | string[]): Promise<Post[]> {
     const userIds = typeof userId === 'string' ? [userId] : userId;
+    if (Array.isArray(userId) && userId.length === 0) return [];
 
     const posts = this.ormRepository
       .createQueryBuilder('post')

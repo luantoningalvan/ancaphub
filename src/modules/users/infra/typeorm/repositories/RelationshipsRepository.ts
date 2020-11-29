@@ -2,12 +2,15 @@ import { getRepository, Repository } from 'typeorm';
 import User from '../entities/User';
 import Relationship from '../entities/Relationship';
 import IRelationshipsRepository from '@modules/users/repositories/IRelationshipsRepository';
+import AppError from '@shared/errors/AppError';
 
 class RelationshipsRepository implements IRelationshipsRepository {
   private ormRepository: Repository<Relationship>;
+  private userRepository: Repository<User>;
 
   constructor() {
     this.ormRepository = getRepository(Relationship);
+    this.userRepository = getRepository(User);
   }
 
   public async getRelationships(
@@ -33,10 +36,18 @@ class RelationshipsRepository implements IRelationshipsRepository {
     followedId: string;
     followerId: string;
   }): Promise<Relationship> {
+    const followed = await this.userRepository.findOne({
+      where: { username: postData.followedId },
+    });
+
+    if (!followed)
+      throw new AppError('Usuário a ser seguido não foi encontrado', 400);
+
     const relationship = this.ormRepository.create({
       follower_id: postData.followerId,
-      followed_id: postData.followedId,
+      followed_id: followed.id,
     });
+
     await this.ormRepository.save(relationship);
 
     return relationship;

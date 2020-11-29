@@ -11,18 +11,17 @@ class ShowPostService {
     private relationshipsRepository: IRelationshipsRepository,
 
     @inject('PostsRepository')
-    private postsRepository: IPostRepository,
+    private postsRepository: IPostRepository
   ) {}
 
   public async execute(id: string): Promise<Post[]> {
     const relationships = await this.relationshipsRepository.getRelationships(
       id,
-      'following',
+      'following'
     );
 
-    const relationshipsIds = relationships.map(
-      relation => relation.followed_id,
-    );
+    const relationshipsIds = relationships.map((relation) => relation.id);
+    console.log(relationshipsIds);
 
     const posts = await this.postsRepository.findByUser(relationshipsIds);
 
