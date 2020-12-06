@@ -57,6 +57,7 @@ typings/
 
 # dotenv environment variables file
 .env
+ormconfig.json
 
 # next.js build output
 .next
@@ -64,5 +65,7 @@ typings/
 # npm lockfile, because we recommend using Yarn
 package-lock.json
 
-/public/uploads/*
-!/public/uploads/.gitkeep
+/tmp/*
+!/tmp/.gitkeep
+
+/dist
