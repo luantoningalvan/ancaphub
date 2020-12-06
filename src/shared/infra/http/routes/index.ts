@@ -19,6 +19,8 @@ import projectsRouter from '@modules/projects/infra/http/routes/projects.routes'
 import projectPosts from '@modules/projects/infra/http/routes/projectPosts.routes';
 import projectQuestion from '@modules/projects/infra/http/routes/projectQuestion.routes';
 
+import profilesRouter from '@modules/profiles/infra/http/routes/profiles.routes';
+
 const routes = Router();
 
 routes.use('/users', usersRouter);
@@ -39,5 +41,7 @@ routes.use('/authors', authorsRouter);
 routes.use('/projects', projectsRouter);
 routes.use('/projects', projectPosts);
 routes.use('/projects', projectQuestion);
+
+routes.use('/profiles', profilesRouter);
 
 export default routes;
