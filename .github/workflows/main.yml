@@ -22,12 +22,43 @@ jobs:
       - name: Run build
         run: yarn build
       
-      - name: copy dist to Digital Ocean
+      - name: Copy dist to Digital Ocean
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "dist"
-          target: "test"
+          source: "., !node_modules"
+          target: "~/app/server"
+          
+      - name: Install dependencies on DigitalOcean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: | 
+            cd ~/app/server
+            yarn
+            
+      - name: Run migrations on DigitalOcean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: | 
+            cd ~/app/server
+            ./node_modules/.bin/typeorm migration:run
+            
+      - name: Restart server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: pm2 restart server          
