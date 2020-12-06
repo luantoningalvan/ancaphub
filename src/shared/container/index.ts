@@ -35,55 +35,62 @@ import ProjectsRepository from '@modules/projects/infra/typeorm/repositories/Pro
 
 import IProjectPostsRepository from '@modules/projects/repositories/IProjectPostsRepository';
 import ProjectPostsRepository from '@modules/projects/infra/typeorm/repositories/ProjectPostsRepository';
+import IProfilesRepository from '@modules/profiles/repositories/IProfilesRepository';
+import ProfilesRepository from '@modules/profiles/infra/typeorm/repositories/ProfilesRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
-  UsersRepository,
+  UsersRepository
 );
 
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
-  UserTokensRepository,
+  UserTokensRepository
 );
 
 container.registerSingleton<IPostLikesRepository>(
   'PostLikesRepository',
-  PostLikesRepository,
+  PostLikesRepository
 );
 
 container.registerSingleton<IPostCommentsRepository>(
   'PostCommentsRepository',
-  PostCommentsRepository,
+  PostCommentsRepository
 );
 
 container.registerSingleton<IRelationshipsRepository>(
   'RelationshipsRepository',
-  RelationshipsRepository,
+  RelationshipsRepository
 );
 
 container.registerSingleton<ICategoryRepository>(
   'CategoriesRepository',
-  CategoriesRepository,
+  CategoriesRepository
 );
 
 container.registerSingleton<ILibraryRepository>(
   'LibraryRepository',
-  LibraryRepository,
+  LibraryRepository
 );
 
 container.registerSingleton<IAuthorsRepository>(
   'AuthorsRepository',
-  AuthorsRepository,
+  AuthorsRepository
 );
 
 container.registerSingleton<IProjectsRepository>(
   'ProjectsRepository',
-  ProjectsRepository,
+  ProjectsRepository
 );
 
 container.registerSingleton<IProjectPostsRepository>(
   'ProjectPostsRepository',
-  ProjectPostsRepository,
+  ProjectPostsRepository
 );
 
 container.registerSingleton<IPostRepository>('PostsRepository', PostRepository);
+
+container.registerSingleton<IProfilesRepository>(
+  'ProfilesRepository',
+  ProfilesRepository
+);
