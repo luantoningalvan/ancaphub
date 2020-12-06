@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import authConfig from '@config/auth';
 
 interface Request {
   email: string;
@@ -35,9 +36,9 @@ class AuthenticateUserService {
     if (!passwordMatched)
       throw new AppError('Incorrect email/password combination', 401);
 
-    const token = sign({}, process.env.JWT_SECRET, {
+    const token = sign({}, authConfig.jwt.secret, {
       subject: user.id,
-      expiresIn: process.env.JWT_EXPIRATION,
+      expiresIn: authConfig.jwt.expires,
     });
     return { user, token };
   }
