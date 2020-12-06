@@ -19,7 +19,7 @@ export default class SendForgotPasswordEmailSevice {
     private mailProvider: IMailProvider,
 
     @inject('UserTokensRepository')
-    private userTokensRepository: IUserTokensRepository,
+    private userTokensRepository: IUserTokensRepository
   ) {}
 
   public async execute({ email }: IRequest): Promise<void> {
@@ -33,7 +33,7 @@ export default class SendForgotPasswordEmailSevice {
       __dirname,
       '..',
       'views',
-      'forgot_password.hbs',
+      'forgot_password.hbs'
     );
 
     await this.mailProvider.sendMail({
@@ -44,7 +44,10 @@ export default class SendForgotPasswordEmailSevice {
       subject: 'Recuperação de Senha(GOBARBER)',
       templateData: {
         file: forgotPasswordTemplatePath,
-        variables: { name: user.name, link: `http://localhost:3000/reset_password?token=${token}` },
+        variables: {
+          name: user.name,
+          link: `${process.env.WEB_CLIENT_URL}/reset_password?token=${token}`,
+        },
       },
     });
   }
