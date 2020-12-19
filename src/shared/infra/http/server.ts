@@ -16,10 +16,11 @@ import morgan from 'morgan';
 const app = express();
 
 app.use(cors());
-app.use(express.json());
 app.use(morgan('short'));
-app.use('/files', express.static(uploadConfig.uploadsFolder));
+
+app.use(express.json());
 app.use('/api', routes);
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
@@ -29,9 +30,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  return res
-    .status(500)
-    .json({ status: 'error', message: 'Internal Server Error' });
+  console.log(err.message);
+
+  return res.status(500).json({ status: 'error', message: err.message });
 });
 
 app.listen(3333, () => {

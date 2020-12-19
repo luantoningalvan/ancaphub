@@ -6,7 +6,7 @@ import passwordRouter from '@modules/users/infra/http/routes/passwords.routes';
 import relationshipsRouter from '@modules/users/infra/http/routes/relationships.routes';
 
 import postsRouter from '@modules/posts/infra/http/routes/posts.routes';
-import postLikes from '@modules/posts/infra/http/routes/postLikes.routes';
+import postLikesRouter from '@modules/posts/infra/http/routes/postLikes.routes';
 import timelineRouter from '@modules/posts/infra/http/routes/timeline.routes';
 import commentsRouter from '@modules/posts/infra/http/routes/comments.routes';
 
@@ -16,10 +16,9 @@ import libraryRouter from '@modules/library/infra/http/routes/library.routes';
 import authorsRouter from '@modules/library/infra/http/routes/authors.routes';
 
 import projectsRouter from '@modules/projects/infra/http/routes/projects.routes';
-import projectPosts from '@modules/projects/infra/http/routes/projectPosts.routes';
-import projectQuestion from '@modules/projects/infra/http/routes/projectQuestion.routes';
+import projectPostsRouter from '@modules/projects/infra/http/routes/projectPosts.routes';
 
-import profilesRouter from '@modules/profiles/infra/http/routes/profiles.routes';
+import searchRouter from '@modules/search/infra/http/routes/search.routes';
 
 const routes = Router();
 
@@ -28,8 +27,10 @@ routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/relationships', relationshipsRouter);
 
+routes.use('/search', searchRouter);
+
 routes.use('/posts', postsRouter);
-routes.use('/posts', postLikes);
+routes.use('/posts', postLikesRouter);
 routes.use('/posts', commentsRouter);
 routes.use('/timeline', timelineRouter);
 
@@ -39,9 +40,6 @@ routes.use('/library', libraryRouter);
 routes.use('/authors', authorsRouter);
 
 routes.use('/projects', projectsRouter);
-routes.use('/projects', projectPosts);
-routes.use('/projects', projectQuestion);
-
-routes.use('/profiles', profilesRouter);
+routes.use('/projects', projectPostsRouter);
 
 export default routes;

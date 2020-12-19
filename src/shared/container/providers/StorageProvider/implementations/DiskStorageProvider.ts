@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import uploadConfig from '@config/upload';
 
-class DiskStorageProvider implements IStorageProvider{
+class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     await fs.promises.rename(
       path.resolve(uploadConfig.tmpFolder, file),
@@ -14,14 +14,16 @@ class DiskStorageProvider implements IStorageProvider{
   }
 
   public async deleteFile(file: string): Promise<void> {
-    const filePath =  path.resolve(uploadConfig.uploadsFolder, file)
+    const filePath = path.resolve(uploadConfig.uploadsFolder, file);
 
     try {
-      await fs.promises.stat(filePath)
-    } catch (error) { return;}
+      await fs.promises.stat(filePath);
+    } catch (error) {
+      return;
+    }
 
-    await fs.promises.unlink(filePath )
+    await fs.promises.unlink(filePath);
   }
 }
 
-export default DiskStorageProvider; 
+export default DiskStorageProvider;

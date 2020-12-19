@@ -6,6 +6,7 @@ import UpdateCommentService from '@modules/posts/services/UpdateCommentService';
 import RemoveCommentService from '@modules/posts/services/RemoveCommentService';
 
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 class PostsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -14,7 +15,7 @@ class PostsController {
     const showPostComments = container.resolve(IndexCommentsService);
     const post = await showPostComments.execute(postId);
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -30,7 +31,7 @@ class PostsController {
       authorId,
     });
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -46,7 +47,7 @@ class PostsController {
       content,
     });
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async remove(request: Request, response: Response): Promise<Response> {

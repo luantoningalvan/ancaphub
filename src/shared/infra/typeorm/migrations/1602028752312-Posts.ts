@@ -47,7 +47,7 @@ export class Posts1602028752312 implements MigrationInterface {
             onUpdate: 'CASCADE',
           },
         ],
-      }),
+      })
     );
   }
 

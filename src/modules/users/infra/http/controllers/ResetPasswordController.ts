@@ -1,10 +1,10 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
-import { container } from 'tsyringe'
+import { container } from 'tsyringe';
 
 import ResetPasswordService from '@modules/users/services/ResetPasswordService';
 
-class ForgorPasswordController {
+class ResetPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { password, token } = request.body;
 
@@ -15,4 +15,4 @@ class ForgorPasswordController {
   }
 }
 
-export default ForgorPasswordController;
+export default ResetPasswordController;

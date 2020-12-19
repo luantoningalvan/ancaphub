@@ -1,44 +1,59 @@
 import { Request, Response } from 'express';
 
-import IndexLibraryItemsService from '@modules/library/services/IndexLibraryItemsService copy';
+import IndexLibraryItemsService from '@modules/library/services/IndexLibraryItemsService';
 import ShowLibraryItemService from '@modules/library/services/ShowLibraryItemService';
 import CreateLibraryItemService from '@modules/library/services/CreateLibraryItemService';
 import UpdateLibraryItemService from '@modules/library/services/UpdateLibraryItemService';
 import RemoveLibraryItemService from '@modules/library/services/RemoveLibraryItemService';
+import { classToClass } from 'class-transformer';
 
 import { container } from 'tsyringe';
 
-class PostsController {
+class LibraryController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const indexLibraryItems = container.resolve(IndexLibraryItemsService);
-    const items = await indexLibraryItems.execute();
+    const {
+      currentPage: current_page = 1,
+      pageSize: page_size = 20,
+      orderBy: order_by,
+      ...query
+    } = request.query;
 
-    return response.json(items);
+    const indexLibraryItems = container.resolve(IndexLibraryItemsService);
+    const posts = await indexLibraryItems.execute({
+      current_page: Number(current_page),
+      page_size: Number(page_size),
+      order_by,
+      ...query,
+    });
+
+    return response.json(classToClass(posts));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const showLibraryItem = container.resolve(ShowLibraryItemService);
-    const items = await showLibraryItem.execute(id);
+    const posts = await showLibraryItem.execute(id);
 
-    return response.json(items);
+    return response.json(classToClass(posts));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { author_id, title, type, cover } = request.body;
+    const { author_id, title, type, content, video_url } = request.body;
+
     const contributor_id = request.user.id;
 
     const createLibraryItem = container.resolve(CreateLibraryItemService);
-
     const post = await createLibraryItem.execute({
       author_id,
       title,
       type,
       contributor_id,
-      cover,
+      content,
+      video_url,
+      ...(request.file && { cover: request.file.filename }),
     });
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -47,14 +62,14 @@ class PostsController {
 
     const updateLibraryItem = container.resolve(UpdateLibraryItemService);
 
-    const item = await updateLibraryItem.execute({
+    const post = await updateLibraryItem.execute({
       id,
       title,
       author_id,
       cover,
     });
 
-    return response.json(item);
+    return response.json(classToClass(post));
   }
 
   public async remove(request: Request, response: Response): Promise<Response> {
@@ -67,4 +82,4 @@ class PostsController {
   }
 }
 
-export default PostsController;
+export default LibraryController;

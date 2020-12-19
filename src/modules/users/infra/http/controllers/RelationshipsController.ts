@@ -34,8 +34,6 @@ class RelationshipsController {
     const { id: followedId } = request.params;
     const { id: followerId } = request.user;
 
-    console.log(followedId, followerId);
-
     const removeRelationships = container.resolve(UnfollowUserService);
 
     await removeRelationships.execute({

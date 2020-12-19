@@ -9,6 +9,9 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
+
 import IRelationshipsRepository from '@modules/users/repositories/IRelationshipsRepository';
 import RelationshipsRepository from '@modules/users/infra/typeorm/repositories/RelationshipsRepository';
 
@@ -35,8 +38,6 @@ import ProjectsRepository from '@modules/projects/infra/typeorm/repositories/Pro
 
 import IProjectPostsRepository from '@modules/projects/repositories/IProjectPostsRepository';
 import ProjectPostsRepository from '@modules/projects/infra/typeorm/repositories/ProjectPostsRepository';
-import IProfilesRepository from '@modules/profiles/repositories/IProfilesRepository';
-import ProfilesRepository from '@modules/profiles/infra/typeorm/repositories/ProfilesRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -46,6 +47,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository
+);
+
+container.registerSingleton<INotificationsRepository>(
+  'NotificationsRepository',
+  NotificationsRepository
 );
 
 container.registerSingleton<IPostLikesRepository>(
@@ -89,8 +95,3 @@ container.registerSingleton<IProjectPostsRepository>(
 );
 
 container.registerSingleton<IPostRepository>('PostsRepository', PostRepository);
-
-container.registerSingleton<IProfilesRepository>(
-  'ProfilesRepository',
-  ProfilesRepository
-);

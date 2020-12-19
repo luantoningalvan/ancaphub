@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import slugify from 'slugify';
 
 @Entity('authors')
 class Author {
@@ -13,6 +14,11 @@ class Author {
 
   @Column()
   avatar: string;
+
+  @BeforeInsert()
+  generateSlug(): void {
+    this.username = this.username || slugify(this.name);
+  }
 }
 
 export default Author;

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import IndexUserPostsService from '@modules/posts/services/IndexUserPostsService';
 import ShowUserPostsService from '@modules/posts/services/ShowUserPostsService';
+import { classToClass } from 'class-transformer';
 
 import { container } from 'tsyringe';
 
@@ -12,16 +13,16 @@ class UsersPostsController {
     const indexUserPosts = container.resolve(IndexUserPostsService);
     const posts = await indexUserPosts.execute(userId);
 
-    return response.json(posts);
+    return response.json(classToClass(posts));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { username } = request.params;
 
     const showUserPosts = container.resolve(ShowUserPostsService);
-    const post = await showUserPosts.execute(username);
+    const posts = await showUserPosts.execute(username);
 
-    return response.json(post);
+    return response.json(classToClass(posts));
   }
 }
 

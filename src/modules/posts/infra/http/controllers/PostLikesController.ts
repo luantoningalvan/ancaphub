@@ -9,8 +9,6 @@ class PostsController {
     const postId = request.params.postId;
     const userId = request.user.id;
 
-    console.log(request.params);
-
     const favoritePost = container.resolve(FavoritePost);
 
     const like = await favoritePost.execute({ postId, userId });
@@ -21,8 +19,6 @@ class PostsController {
   public async remove(request: Request, response: Response): Promise<Response> {
     const postId = request.params.postId;
     const userId = request.user.id;
-
-    console.log(request.params);
 
     const unfavoritePost = container.resolve(UnfavoritePost);
 

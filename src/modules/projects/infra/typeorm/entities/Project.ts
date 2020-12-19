@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import User from '@modules/users/infra/typeorm/entities/User';
+import { Expose } from 'class-transformer';
 
 @Entity('projects')
 class Project {
@@ -19,6 +20,12 @@ class Project {
 
   @Column()
   description: string;
+
+  @Column()
+  avatar: string;
+
+  @Column()
+  cover: string;
 
   @Column()
   category: string;
@@ -43,6 +50,20 @@ class Project {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' })
+  get getAvatarUrl(): string | null {
+    return this.avatar
+      ? `${process.env.API_BASE_URL}/files/${this.avatar}`
+      : null;
+  }
+
+  @Expose({ name: 'cover_url' })
+  get getCoverUrl(): string | null {
+    return this.cover
+      ? `${process.env.API_BASE_URL}/files/${this.cover}`
+      : null;
+  }
 }
 
 export default Project;

@@ -21,9 +21,11 @@ class ShowPostService {
     );
 
     const relationshipsIds = relationships.map((relation) => relation.id);
-    console.log(relationshipsIds);
 
-    const posts = await this.postsRepository.findByUser(relationshipsIds);
+    const posts = await this.postsRepository.findByUser([
+      ...relationshipsIds,
+      id,
+    ]);
 
     return posts;
   }

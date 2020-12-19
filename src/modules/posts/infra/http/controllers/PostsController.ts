@@ -4,6 +4,7 @@ import CreatePostService from '@modules/posts/services/CreatePostService';
 import ShowPostService from '@modules/posts/services/ShowPostService';
 import UpdatePostService from '@modules/posts/services/UpdatePostService';
 import RemovePostService from '@modules/posts/services/RemovePostService';
+import { classToClass } from 'class-transformer';
 
 import { container } from 'tsyringe';
 
@@ -14,11 +15,12 @@ class PostsController {
     const showPost = container.resolve(ShowPostService);
     const post = await showPost.execute(id);
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { content } = request.body;
+    const { content, media } = request.body;
+
     const userId = request.user.id;
 
     const createPost = container.resolve(CreatePostService);
@@ -26,9 +28,11 @@ class PostsController {
     const post = await createPost.execute({
       content,
       user_id: userId,
+      ...(request.file && { image: request.file.filename }),
+      ...(media && { media }),
     });
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -40,7 +44,7 @@ class PostsController {
       content: request.body.content,
     });
 
-    return response.json(post);
+    return response.json(classToClass(post));
   }
 
   public async remove(request: Request, response: Response): Promise<Response> {

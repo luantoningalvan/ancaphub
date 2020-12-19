@@ -23,6 +23,21 @@ class User {
   avatar: string;
 
   @Column()
+  cover: string;
+
+  @Column()
+  bio: string;
+
+  @Column()
+  location: string;
+
+  @Column()
+  birthday: Date;
+
+  @Column()
+  url: string;
+
+  @Column()
   email: string;
 
   @Column()
@@ -37,8 +52,13 @@ class User {
 
   @Expose({ name: 'avatar_url' })
   get getAvatarUrl(): string | null {
-    return this.avatar
-      ? `${process.env.API_BASE_URL}/files/${this.avatar}`
+    return this.avatar ? this.avatar : null;
+  }
+
+  @Expose({ name: 'cover_url' })
+  get getCoverUrl(): string | null {
+    return this.cover
+      ? `${process.env.API_BASE_URL}/files/${this.cover}`
       : null;
   }
 }

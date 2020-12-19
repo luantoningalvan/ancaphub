@@ -10,12 +10,12 @@ const postLikes = new PostLikesController();
 postLikesRouter.post(
   '/:postId/favorites',
   ensureAuthenticated,
-  postLikes.create,
+  postLikes.create
 );
 postLikesRouter.delete(
   '/:postId/favorites',
   ensureAuthenticated,
-  postLikes.remove,
+  postLikes.remove
 );
 
 export default postLikesRouter;

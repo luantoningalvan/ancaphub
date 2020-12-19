@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import Author from './Author';
 import User from '@modules/users/infra/typeorm/entities/User';
+import { Expose } from 'class-transformer';
 
 @Entity('library_item')
 class LibraryItem {
@@ -28,8 +29,21 @@ class LibraryItem {
   @Column()
   cover: string;
 
+  @Expose({ name: 'cover_url' })
+  get getAvatarUrl(): string | null {
+    return this.cover
+      ? `${process.env.API_BASE_URL}/files/${this.cover}`
+      : null;
+  }
+
   @Column()
   type: string;
+
+  @Column()
+  content: string;
+
+  @Column()
+  video_url: string;
 
   @Column()
   status: string;

@@ -20,7 +20,6 @@ class AuthorsController {
     const { username } = request.params;
 
     const showAuthorService = container.resolve(ShowAuthorService);
-    console.log(username);
 
     const author = await showAuthorService.execute(username);
 

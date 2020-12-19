@@ -1,8 +1,9 @@
 import LibraryItem from '../infra/typeorm/entities/LibraryItem';
 import ICreateLibraryItem from '../dtos/ICreateLibraryItem';
+import IFilterLibrary from '../dtos/IFilterLibrary';
 
 interface ICategoryRepository {
-  findAll(): Promise<LibraryItem[]>;
+  findAll(filters?: IFilterLibrary): Promise<LibraryItem[]>;
   findById(id: string): Promise<LibraryItem | undefined>;
   create(data: ICreateLibraryItem): Promise<LibraryItem>;
   save(data: LibraryItem): Promise<LibraryItem>;

@@ -19,7 +19,7 @@ class UpdateProfileService {
     private usersRepository: IUsersRepository,
 
     @inject('HashProvider')
-    private hashProvider: IHashProvider,
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({
@@ -35,7 +35,7 @@ class UpdateProfileService {
 
     if (user.email !== email) {
       const userWithUpdatedEmail = await this.usersRepository.findByEmail(
-        email,
+        email
       );
       if (userWithUpdatedEmail) throw new AppError('Email already used');
     }
@@ -49,7 +49,7 @@ class UpdateProfileService {
     if (password && old_password) {
       const comparePassword = await this.hashProvider.compareHash(
         user.password,
-        old_password,
+        old_password
       );
 
       if (!comparePassword) throw new AppError('Incorret old password');

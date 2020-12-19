@@ -11,8 +11,8 @@ class PostsRepository implements IPostRepository {
   }
 
   public async findById(id: string): Promise<Post | undefined> {
-    const user = await this.ormRepository.findOne(id);
-    return user;
+    const post = await this.ormRepository.findOne(id);
+    return post;
   }
 
   public async findByUser(userId: string | string[]): Promise<Post[]> {
@@ -30,10 +30,10 @@ class PostsRepository implements IPostRepository {
   }
 
   public async create(postData: ICreatePostDTO): Promise<Post> {
-    const user = this.ormRepository.create(postData);
-    await this.ormRepository.save(user);
+    const post = this.ormRepository.create(postData);
+    await this.ormRepository.save(post, { reload: true });
 
-    return user;
+    return post;
   }
 
   public async save(post: Post): Promise<Post> {
