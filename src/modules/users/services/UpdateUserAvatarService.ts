@@ -7,6 +7,8 @@ import IStorageProvider from '@shared/container/providers/StorageProvider/models
 interface Request {
   user_id: string;
   avatarFileName: string;
+  avatarPath: string;
+  crop: any;
 }
 
 @injectable()
@@ -19,8 +21,13 @@ class UpdateUserAvatarService {
     private storageProvider: IStorageProvider
   ) {}
 
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
+  public async execute({
+    user_id,
+    avatarFileName,
+    crop,
+  }: Request): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
+    const { x, y, width: w, height: h } = crop.croppedAreaPixels;
 
     if (!user)
       throw new AppError(
@@ -32,7 +39,12 @@ class UpdateUserAvatarService {
       await this.storageProvider.deleteFile(user.avatar);
     }
 
-    const fileName = await this.storageProvider.saveFile(avatarFileName);
+    const fileName = await this.storageProvider.saveFile(avatarFileName, {
+      x,
+      y,
+      w,
+      h,
+    });
 
     user.avatar = fileName;
 

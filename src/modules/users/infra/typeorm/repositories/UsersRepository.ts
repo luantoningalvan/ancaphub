@@ -16,7 +16,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id);
+    const user = await this.ormRepository.findOne(id, {
+      relations: ['followers'],
+    });
     return user;
   }
 
@@ -25,8 +27,25 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async search(term: string): Promise<User[]> {
+    const users = await this.ormRepository
+      .createQueryBuilder('user')
+      .select('name')
+      .where('to_tsvector(username) @@ plainto_tsquery(:query)', {
+        query: term,
+      })
+      .getMany();
+
+    console.log(users);
+
+    return users;
+  }
+
   public async findByUsername(username: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({ where: { username } });
+    const user = await this.ormRepository.findOne({
+      where: { username },
+      relations: ['followers', 'following'],
+    });
     return user;
   }
 

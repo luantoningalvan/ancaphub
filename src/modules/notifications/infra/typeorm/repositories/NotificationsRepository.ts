@@ -20,6 +20,14 @@ class NotificationsRepository implements INotificationsRepository {
 
     return notification;
   }
+
+  public async findUserNotifications(user: string): Promise<Notification[]> {
+    const notifications = this.ormRepository.find({
+      where: { recipient_id: user },
+    });
+
+    return notifications;
+  }
 }
 
 export default NotificationsRepository;

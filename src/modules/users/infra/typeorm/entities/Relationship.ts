@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  AfterInsert,
 } from 'typeorm';
 import User from './User';
 
@@ -26,11 +25,6 @@ class Relationships {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'follower_id' })
   follower: User;
-
-  @AfterInsert()
-  changeUserFollowerCount() {
-    console.log('Inseriu');
-  }
 }
 
 export default Relationships;

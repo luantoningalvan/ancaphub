@@ -7,7 +7,7 @@ import { inject, injectable } from 'tsyringe';
 class UpdateProfileService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUsersRepository
   ) {}
 
   public async execute(user_id: string): Promise<User> {

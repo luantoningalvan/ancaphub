@@ -10,6 +10,7 @@ import {
 import Author from './Author';
 import User from '@modules/users/infra/typeorm/entities/User';
 import { Expose } from 'class-transformer';
+import uploadConfig from '@config/upload';
 
 @Entity('library_item')
 class LibraryItem {
@@ -30,10 +31,19 @@ class LibraryItem {
   cover: string;
 
   @Expose({ name: 'cover_url' })
-  get getAvatarUrl(): string | null {
-    return this.cover
-      ? `${process.env.API_BASE_URL}/files/${this.cover}`
-      : null;
+  getAvatarUrl(): string | null {
+    if (!this.cover) {
+      return null;
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.cover}`;
+      case 's3':
+        return `https://ancaphub.s3.amazonaws.com/${this.cover}`;
+      default:
+        return null;
+    }
   }
 
   @Column()

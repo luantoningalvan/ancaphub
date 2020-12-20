@@ -22,6 +22,7 @@
     "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.6",
     "ioredis": "^4.19.2",
+    "jimp": "^0.16.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
     "morgan": "^1.10.0",
@@ -32,6 +33,7 @@
     "slugify": "^1.4.6",
     "tsyringe": "^4.3.0",
     "typeorm": "^0.2.24",
+    "typeorm-text-search": "^1.1.2",
     "uuidv4": "^6.0.8"
   },
   "devDependencies": {

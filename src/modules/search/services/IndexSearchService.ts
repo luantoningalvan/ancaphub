@@ -28,12 +28,12 @@ class ShowProjectService {
     private libraryRepository: ILibraryRepository
   ) {}
 
-  public async execute(search: string): Promise<Response> {
-    const users = await this.usersRepository.findAll();
-    const projects = await this.projectsRepository.findAll();
-    const library = await this.libraryRepository.findAll();
+  public async execute(term: string): Promise<Response> {
+    const users = await this.usersRepository.search(term);
+    // const projects = await this.projectsRepository.search(term);
+    // const library = await this.libraryRepository.search(term);
 
-    return { users, projects, library };
+    return { users, projects: [], library: [] };
   }
 }
 

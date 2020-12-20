@@ -23,7 +23,8 @@ class PostsRepository implements IPostRepository {
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user_id')
       .where('post.user_id IN (:...authors)', { authors: userIds })
-      .limit(10)
+      .limit(200)
+      .orderBy('post.created_at', 'DESC')
       .getMany();
 
     return posts;
@@ -31,9 +32,11 @@ class PostsRepository implements IPostRepository {
 
   public async create(postData: ICreatePostDTO): Promise<Post> {
     const post = this.ormRepository.create(postData);
-    await this.ormRepository.save(post, { reload: true });
+    await this.ormRepository.save(post);
 
-    return post;
+    return (await this.ormRepository.findOne(post.id, {
+      relations: ['user'],
+    })) as Post;
   }
 
   public async save(post: Post): Promise<Post> {

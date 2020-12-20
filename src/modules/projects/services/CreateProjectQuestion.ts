@@ -4,12 +4,13 @@ import ICreateProjectQuestionDTO from '../dtos/ICreateProjectQuestionDTO';
 
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
+import { uuid } from 'uuidv4';
 
 @injectable()
 export default class CreateProjectService {
   constructor(
     @inject('ProjectsRepository')
-    private projectsRepository: IProjectsRepository,
+    private projectsRepository: IProjectsRepository
   ) {}
 
   public async execute({
@@ -17,20 +18,17 @@ export default class CreateProjectService {
     question,
     project_id,
   }: ICreateProjectQuestionDTO): Promise<Project> {
-    try {
-      const project = await this.projectsRepository.findById(project_id);
+    const id = uuid();
+    const project = await this.projectsRepository.findById(project_id);
 
-      if (!project) throw new AppError('Projeto não encontrado');
+    if (!project) throw new AppError('Projeto não encontrado');
 
-      if (project.faq === null) {
-        project.faq = [{ question, answer }];
-      } else {
-        project.faq = [...project.faq, { question, answer }];
-      }
+    project.faq = [
+      //@ts-ignore
+      ...(project.faq === null ? [] : project.faq),
+      { id, answer, question },
+    ];
 
-      return await this.projectsRepository.save(project);
-    } catch (error) {
-      console.log(error);
-    }
+    return await this.projectsRepository.save(project);
   }
 }

@@ -7,6 +7,7 @@ interface IProjectsRepository {
   create(data: ICreateProjectDTO): Promise<Project>;
   save(data: Project): Promise<Project>;
   remove(id: string): void;
+  search(term: string): Promise<Project[]>;
 }
 
 export default IProjectsRepository;

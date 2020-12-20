@@ -1,11 +1,26 @@
 import ICacheProvider from '../models/ICacheProvider';
-import Redis from 'ioredis';
+import Redis, { Redis as RedisClient } from 'ioredis';
+import cacheConfig from '@config/cache';
 
 export default class RedisCacheProvider implements ICacheProvider {
-  constructor() {}
-  save(key: string, value: string): Promise<void> {}
+  private client: RedisClient;
 
-  recover(key: string): Promise<string> {}
+  constructor() {
+    this.client = new Redis(cacheConfig.config.redis);
+  }
 
-  invalidate(key: string): Promise<void> {}
+  public async save(key: string, value: any): Promise<void> {
+    await this.client.set(key, JSON.stringify(value));
+  }
+
+  public async recover<T>(key: string): Promise<T | null> {
+    const data = await this.client.get(key);
+
+    if (!data) return null;
+
+    const parsedData = JSON.parse(data) as T;
+    return parsedData;
+  }
+
+  public async invalidate(key: string): Promise<void> {}
 }

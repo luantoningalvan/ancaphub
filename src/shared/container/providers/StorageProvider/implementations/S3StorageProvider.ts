@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import uploadConfig from '@config/upload';
 import aws, { S3 } from 'aws-sdk';
+import Jimp from 'jimp';
 
 class DiskStorageProvider implements IStorageProvider {
   private client: S3;
@@ -11,19 +12,26 @@ class DiskStorageProvider implements IStorageProvider {
     this.client = new aws.S3();
   }
 
-  public async saveFile(file: string): Promise<string> {
+  public async saveFile(file: string, crop?: any): Promise<string> {
     const originalPath = path.resolve(uploadConfig.tmpFolder, file);
+    const { x, y, w, h } = crop;
 
-    const fileContent = await fs.promises.readFile(originalPath, {
-      encoding: 'utf-8',
-    });
+    const fileContentWithCompression = await Jimp.read(originalPath).then(
+      async (image) => {
+        image.quality(60);
+        image.crop(x, y, w, h);
+        image.resize(256, 256);
+
+        return image.getBufferAsync(Jimp.AUTO);
+      }
+    );
 
     await this.client
       .putObject({
         Bucket: 'ancaphub',
         Key: file,
         ACL: 'public-read',
-        Body: fileContent,
+        Body: fileContentWithCompression,
       })
       .promise();
 
@@ -31,17 +39,12 @@ class DiskStorageProvider implements IStorageProvider {
   }
 
   public async deleteFile(file: string): Promise<void> {
-    /*
-    const filePath = path.resolve(uploadConfig.uploadsFolder, file);
-
-    try {
-      await fs.promises.stat(filePath);
-    } catch (error) {
-      return;
-    }
-
-    await fs.promises.unlink(filePath);*/
-    return;
+    await this.client
+      .deleteObject({
+        Bucket: 'ancaphub',
+        Key: file,
+      })
+      .promise();
   }
 }
 

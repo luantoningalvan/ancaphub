@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import User from '@modules/users/infra/typeorm/entities/User';
 import { Expose } from 'class-transformer';
+import uploadConfig from '@config/upload';
 
 @Entity('projects')
 class Project {
@@ -22,6 +23,9 @@ class Project {
   description: string;
 
   @Column()
+  about: string;
+
+  @Column()
   avatar: string;
 
   @Column()
@@ -30,13 +34,14 @@ class Project {
   @Column()
   category: string;
 
-  @Column({
-    type: 'jsonb',
-    array: false,
-    default: () => "'[]'",
-    nullable: false,
-  })
-  faq: Array<{ question: string; answer: string }>;
+  @Column({ nullable: true })
+  faq: string;
+
+  @Column({ nullable: true })
+  donation_methods: string;
+
+  @Column({ nullable: true })
+  links: string;
 
   @Column()
   created_by: string;
@@ -52,17 +57,35 @@ class Project {
   updated_at: Date;
 
   @Expose({ name: 'avatar_url' })
-  get getAvatarUrl(): string | null {
-    return this.avatar
-      ? `${process.env.API_BASE_URL}/files/${this.avatar}`
-      : null;
+  getAvatarUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+      case 's3':
+        return `https://ancaphub.s3.amazonaws.com/${this.avatar}`;
+      default:
+        return null;
+    }
   }
 
   @Expose({ name: 'cover_url' })
-  get getCoverUrl(): string | null {
-    return this.cover
-      ? `${process.env.API_BASE_URL}/files/${this.cover}`
-      : null;
+  getCoverUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.cover}`;
+      case 's3':
+        return `https://ancaphub.s3.amazonaws.com/${this.cover}`;
+      default:
+        return null;
+    }
   }
 }
 

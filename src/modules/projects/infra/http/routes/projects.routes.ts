@@ -39,14 +39,13 @@ projectsRouter.put(
 );
 
 // FAQ
-projectsRouter.get('/:id/faq', projectFAQController.show);
 projectsRouter.post(
   '/:id/faq',
   ensureAuthenticated,
   projectFAQController.create
 );
 projectsRouter.delete(
-  '/:id/faq',
+  '/:id/faq/:id',
   ensureAuthenticated,
   projectFAQController.remove
 );

@@ -1,21 +1,11 @@
 import { Request, Response } from 'express';
 
-import ShowProjectService from '@modules/projects/services/ShowProjectService';
-import RemoveProjectService from '@modules/projects/services/RemoveProjectService';
+import RemoveProjectQuestion from '@modules/projects/services/RemoveProjectQuestion';
 import CreateProjectQuestion from '@modules/projects/services/CreateProjectQuestion';
 
 import { container } from 'tsyringe';
 
 class ProjectsController {
-  public async show(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
-
-    const showProject = container.resolve(ShowProjectService);
-    const project = await showProject.execute(id);
-
-    return response.json(project);
-  }
-
   public async create(request: Request, response: Response): Promise<Response> {
     const { projectId } = request.params;
     const { answer, question } = request.body;
@@ -32,10 +22,12 @@ class ProjectsController {
   }
 
   public async remove(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
-    const removeProject = container.resolve(RemoveProjectService);
+    const { projectId } = request.params;
 
-    await removeProject.execute(id);
+    const { id } = request.params;
+    const removeProject = container.resolve(RemoveProjectQuestion);
+
+    await removeProject.execute({ project_id: projectId, id });
 
     return response.status(204).json({});
   }

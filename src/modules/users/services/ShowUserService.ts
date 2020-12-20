@@ -6,12 +6,11 @@ import { inject, injectable } from 'tsyringe';
 class ShowRelationshipsService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUsersRepository
   ) {}
 
   public async execute(username: string): Promise<User | undefined> {
     const user = await this.usersRepository.findByUsername(username);
-
     return user;
   }
 }

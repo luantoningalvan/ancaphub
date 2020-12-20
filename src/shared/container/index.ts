@@ -6,6 +6,12 @@ import './providers';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
+import IUsersSettingsRepository from '@modules/users/repositories/IUsersSettingsRepository';
+import UsersSettingsRepository from '@modules/users/infra/typeorm/repositories/UsersSettingsRepository';
+
+import IUserLocationRepository from '@modules/users/repositories/IUserLocationRepository';
+import UsersLocationRepository from '@modules/users/infra/typeorm/repositories/UsersLocationRepository';
+
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
@@ -49,9 +55,19 @@ container.registerSingleton<IUserTokensRepository>(
   UserTokensRepository
 );
 
+container.registerSingleton<IUsersSettingsRepository>(
+  'UsersSettingsRepository',
+  UsersSettingsRepository
+);
+
 container.registerSingleton<INotificationsRepository>(
   'NotificationsRepository',
   NotificationsRepository
+);
+
+container.registerSingleton<IUserLocationRepository>(
+  'UsersLocationRepository',
+  UsersLocationRepository
 );
 
 container.registerSingleton<IPostLikesRepository>(

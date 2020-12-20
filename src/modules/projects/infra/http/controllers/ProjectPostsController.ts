@@ -33,6 +33,8 @@ class ProjectPostsController {
 
     const { title, content, thumbnail } = request.body;
 
+    console.log(request.body);
+
     const createPost = container.resolve(CreateProjectPostService);
 
     const post = await createPost.execute({

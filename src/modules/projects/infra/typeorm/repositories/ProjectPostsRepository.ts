@@ -12,11 +12,13 @@ class CategoriesRepository implements IProjectPostsRepository {
   }
 
   public async findAll(): Promise<ProjectPost[]> {
-    return this.ormRepository.find({ relations: ['project'] });
+    return this.ormRepository.find({ relations: ['project', 'author'] });
   }
 
   public async findById(id: string): Promise<ProjectPost | undefined> {
-    const post = await this.ormRepository.findOne(id);
+    const post = await this.ormRepository.findOne(id, {
+      relations: ['project', 'author'],
+    });
 
     if (!post) throw new AppError('Publicação não encontrada', 404);
 
@@ -26,7 +28,7 @@ class CategoriesRepository implements IProjectPostsRepository {
   public async findByProject(id: string): Promise<ProjectPost[]> {
     return this.ormRepository.find({
       where: { project_id: id },
-      relations: ['project'],
+      relations: ['project', 'author'],
     });
   }
 

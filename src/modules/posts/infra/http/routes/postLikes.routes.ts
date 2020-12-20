@@ -7,6 +7,8 @@ const postLikesRouter = Router();
 
 const postLikes = new PostLikesController();
 
+postLikesRouter.get('/:postId/favorites', postLikes.show);
+
 postLikesRouter.post(
   '/:postId/favorites',
   ensureAuthenticated,

@@ -9,6 +9,15 @@ class PostLikesRepository implements IPostLikesRepository {
     this.ormRepository = getRepository(PostLike);
   }
 
+  public async findByPost(postId: string): Promise<PostLike[]> {
+    const likes = this.ormRepository.find({
+      where: { post_id: postId },
+      relations: ['user'],
+    });
+
+    return likes;
+  }
+
   public async create(postData: {
     postId: string;
     userId: string;
