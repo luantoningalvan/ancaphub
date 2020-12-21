@@ -10,8 +10,9 @@ import { classToClass } from 'class-transformer';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
+    const { id } = request.user;
     const showUsers = container.resolve(GetUserListService);
-    const users = await showUsers.execute();
+    const users = await showUsers.execute(id);
 
     return response.json(classToClass(users));
   }

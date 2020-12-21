@@ -2,6 +2,7 @@ import { getRepository, Repository, Not } from 'typeorm';
 import User from '../entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import { Raw } from 'typeorm';
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
@@ -10,9 +11,17 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
-  public async findAll(): Promise<User[]> {
-    const users = await this.ormRepository.find();
-    return users;
+  public async findAll(authUser: string): Promise<User[]> {
+    console.log(authUser);
+
+    const users = await this.ormRepository.find({
+      relations: ['followers'],
+      take: 20,
+    });
+    return users.map((usr) => ({
+      ...usr,
+      following: usr.followers.find((f) => f.followed_id === authUser) != -1,
+    }));
   }
 
   public async findById(id: string): Promise<User | undefined> {
@@ -28,16 +37,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async search(term: string): Promise<User[]> {
-    const users = await this.ormRepository
-      .createQueryBuilder('user')
-      .select('name')
-      .where('to_tsvector(username) @@ plainto_tsquery(:query)', {
-        query: term,
-      })
-      .getMany();
-
-    console.log(users);
-
+    const users = this.ormRepository.find({
+      where: { username: Raw((alias) => `${alias} ILIKE '%${term}%'`) },
+    });
     return users;
   }
 

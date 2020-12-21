@@ -5,7 +5,7 @@ import IUpdateUserDTO from '../dtos/IUpdateUserDTO';
 interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<User>;
   save(data: IUpdateUserDTO): Promise<User>;
-  findAll(): Promise<User[]>;
+  findAll(authUser: string): Promise<User[]>;
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
   findByUsername(username: string): Promise<User | undefined>;

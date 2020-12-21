@@ -19,9 +19,9 @@ const usersCoverController = new UserCoverController();
 const emailController = new EmailController();
 const usernameController = new UsernameController();
 
-usersRouter.get('/', usersController.index);
-usersRouter.get('/:username', usersController.show);
-usersRouter.post('/', usersController.create);
+usersRouter.get('/', ensureAuthenticated, usersController.index);
+usersRouter.get('/:username', ensureAuthenticated, usersController.show);
+usersRouter.post('/', ensureAuthenticated, usersController.create);
 
 usersRouter.put('/profile', ensureAuthenticated, usersController.update);
 

@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.6",
+    "haversine": "^1.1.1",
     "ioredis": "^4.19.2",
     "jimp": "^0.16.1",
     "jsonwebtoken": "^8.5.1",

@@ -19,11 +19,12 @@ class PostsRepository implements IPostRepository {
     const userIds = typeof userId === 'string' ? [userId] : userId;
     if (Array.isArray(userId) && userId.length === 0) return [];
 
+    console.log('akkkk');
     const posts = this.ormRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user_id')
       .where('post.user_id IN (:...authors)', { authors: userIds })
-      .limit(200)
+      .limit(20)
       .orderBy('post.created_at', 'DESC')
       .getMany();
 
