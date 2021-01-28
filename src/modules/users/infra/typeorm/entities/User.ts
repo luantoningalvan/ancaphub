@@ -58,9 +58,6 @@ class User {
   @OneToMany(() => Relationship, (follow) => follow.followed)
   followers: Relationship[];
 
-  @Column('tsvector', { select: false })
-  document_with_weights: any;
-
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
     if (!this.avatar) {
