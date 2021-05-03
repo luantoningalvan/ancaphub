@@ -14,12 +14,13 @@ export class CreateUserSettingS1611799478762 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'user',
+            name: 'user_id',
             type: 'uuid',
           },
           {
             name: 'geolocation',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'created_at',
