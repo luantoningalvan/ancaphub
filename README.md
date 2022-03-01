@@ -12,7 +12,7 @@ server. It is written mainly in Javascript, making use of Node.js as the runtime
 
 AncapHub is a community-driven effort to build a platform focused on
 connecting libertarians, providing an environment that while directed to studies,
-provides full-fledged social experience. 
+provides full-fledged social experience.
 
 ## We're completely open source
 
@@ -29,19 +29,13 @@ template you should follow in order to keep things organized.
 
 ### How to run the code locally?
 
- - Clone this repository.
- - Open the cloned repository folder and type ```npm install``` to install dependencies.
- - Create a ```.env``` file following the ```.env.example``` file located in the folder.
- - Ensure you have Docker and Docker Compose installed in your machine so you can run the containerized database and AWS localstack instances.
- - After your Docker installation is all set, run ```npm run docker:up``` to start the containers.
- - Run ```npm run dev``` to start the development server.
+- Clone this repository.
+- Open the cloned repository folder and type `npm install` to install dependencies.
+- Create a `.env` file following the `.env.example` file located in the folder.
+- Ensure you have Docker and Docker Compose installed in your machine so you can run the containerized database and AWS localstack instances.
+- After your Docker installation is all set, run `npm run docker:up` to start the containers.
+- Run `npm run dev` to start the development server.
 
 #### Other repositories
 
-- [Web client](https://github.com/ancaphub/ancaphub-web)
-- [Presentation site WordPress Theme](https://github.com/ancaphub/presentation-website-wordpress-theme)
-
-#### Social media
-
-You can find us on [Twitter](https://twitter.com/ancaphub), [Instagram](https://instagram.com/ancaphub) and [Facebook](https://facebook.com/ancaphub), as well as in AncapHub if you're already
-an alpha tester :zap:
+- [Web client](https://github.com/luantoningalvan/ancaphub-web)
