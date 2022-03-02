@@ -55,7 +55,7 @@ class Post {
 
     switch (uploadConfig.driver) {
       case 'disk':
-        return `${process.env.APP_API_URL}/files/${this.image}`;
+        return `${process.env.API_BASE_URL}/files/${this.image}`;
       case 's3':
         return `https://ancaphub.s3.amazonaws.com/${this.image}`;
       default:

@@ -38,7 +38,7 @@ class LibraryItem {
 
     switch (uploadConfig.driver) {
       case 'disk':
-        return `${process.env.APP_API_URL}/files/${this.cover}`;
+        return `${process.env.API_BASE_URL}/files/${this.cover}`;
       case 's3':
         return `https://ancaphub.s3.amazonaws.com/${this.cover}`;
       default:
