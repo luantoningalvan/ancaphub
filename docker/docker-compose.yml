@@ -9,12 +9,18 @@ services:
     volumes:
       - ancaphub_mongo_data:/data/db
   postgres:
-    image: postgres:13.0-alpine
+    image: postgres:15.0-alpine
+    env_file:
+      - ./.env
     container_name: ancaphub_postgres
+    environment:
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
+      POSTGRES_USER: '${POSTGRES_USER}'
+      POSTGRES_DB: '${POSTGRES_DB}'
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:5432'
     volumes:
-      - ancaphub_postgres_data:/data/db
+      - ancaphub_postgress_data:/data/db
   redis:
     image: redis:alpine
     container_name: ancaphub_redis
@@ -23,24 +29,19 @@ services:
     volumes:
       - ancaphub_redis_data:/data/db
   localstack:
-    image: localstack/localstack:0.11.1
-    container_name: ancaphub_localstack
+    container_name: 'ancaphub_localstack'
+    image: localstack/localstack
     ports:
-      - '4566:4566'
-      - '8055:8055'
-    volumes:
-      - ancaphub_localstack_data:/tmp/localstack
-      - ./scripts:/docker-entrypoint-initaws.d
-      - type: bind
-        source: ./../.env
-        target: /.env
+      - '127.0.0.1:4566:4566'
+      - '127.0.0.1:4510-4559:4510-4559'
     environment:
-      - SERVICES=s3
-      - PORT_WEB_UI=8055
-      - EDGE_PORT=4566
-
+      - DEBUG=${DEBUG-}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - 'ancaphub_localstack_data:/var/lib/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
 volumes:
+  ancaphub_postgress_data:
+  ancaphub_localstack_data:
   ancaphub_mongo_data:
   ancaphub_redis_data:
-  ancaphub_localstack_data:
-  ancaphub_postgres_data:
