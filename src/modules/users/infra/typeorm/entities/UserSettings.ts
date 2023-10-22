@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('user_settings')
 class UserSettings {
@@ -7,6 +13,10 @@ class UserSettings {
 
   @Column()
   user_id: string;
+
+  @OneToOne(() => UserSettings)
+  @JoinColumn({ name: 'user_id' })
+  user: UserSettings;
 
   @Column()
   geolocation: boolean;

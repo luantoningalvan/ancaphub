@@ -38,7 +38,7 @@ export class CreateUserSettingS1611799478762 implements MigrationInterface {
             name: 'User',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            columnNames: ['user'],
+            columnNames: ['user_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
